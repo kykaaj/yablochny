@@ -97,27 +97,59 @@
             box-sizing: border-box;
         }
 
-        @media (min-width: 900px) {
-            .main-container {
-                flex-direction: row;
-                align-items: flex-start;
-                gap: 40px;
-                padding: 0 40px;
-                margin-top: -80px;
-            }
-            .tab-buttons {
-                /* ИЗМЕНЕНИЕ: Уменьшил ширину колонки кнопок с 260px до 200px */
-                min-width: 200px;
-                max-width: 200px; /* Фиксируем, чтобы не растягивались */
-                position: sticky; 
-                top: 40px;
-                z-index: 10;
-            }
-            .tab-content-wrapper {
-                flex-grow: 1;
-                width: 100%;
-            }
-        }
+/* --- Переключатели сверху в ряд на широкой (десктоп) версии --- */
+@media (min-width: 900px) {
+    /* Ставим основной контейнер в колонку — кнопки будут над контентом */
+    .main-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 28px;
+        padding: 0 40px;
+        margin-top: -80px; /* можно подправить под твой дизайн */
+    }
+
+    /* Кнопки: теперь горизонтально, центрированные, с переносом если мало места */
+    .tab-buttons {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        max-width: 1200px; /* ограничение ширины ряда кнопок */
+        padding: 0 10px;
+        position: static !important; /* отменяем sticky */
+        min-width: 0 !important;      /* отменяем фикс. ширину */
+    }
+
+    /* Подгоняем сами кнопки: не растягиваем в колонку, центрируем текст/иконку */
+    .tab-button {
+        width: auto;
+        min-width: 140px;      /* можно изменить */
+        max-width: none;
+        justify-content: center; /* центрирует текст и иконку */
+        text-align: center;
+        padding: 12px 18px;
+        font-size: 1.05rem;
+        border-radius: 14px;
+    }
+
+    /* Немного корректируем активное состояние (чтобы визуально не съезжало) */
+    .tab-button.active {
+        padding-left: 18px;  /* небольшое выравнивание */
+    }
+
+    .tab-button img {
+        margin-right: 8px;   /* иконка рядом с текстом, но не слишком */
+    }
+
+    /* Ограничиваем ширину контента под кнопками */
+    .tab-content-wrapper {
+        width: 100%;
+        max-width: 1200px;
+    }
+}
+
 
         /* ===================================== */
         /* АНИМАЦИИ */
