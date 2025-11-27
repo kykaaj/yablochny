@@ -81,7 +81,8 @@
         }
 
         .main-container {
-            /* Увеличена ширина для широкого контента на ПК */
+            /* ИЗМЕНЕНИЕ: Увеличил максимальную ширину с 1100px до 1300px, 
+               чтобы на ПК контент выглядел шире */
             max-width: 1300px; 
             margin: -50px auto 40px;
             padding: 15px; 
@@ -98,50 +99,23 @@
 
         @media (min-width: 900px) {
             .main-container {
-                /* ИЗМЕНЕНИЕ: Включаем вертикальное расположение (кнопки сверху, контент снизу) */
-                flex-direction: column; 
-                align-items: center;
-                gap: 30px; /* Отступ между кнопками и контентом */
+                flex-direction: row;
+                align-items: flex-start;
+                gap: 40px;
                 padding: 0 40px;
                 margin-top: -80px;
             }
             .tab-buttons {
-                /* ИЗМЕНЕНИЕ: Горизонтальный ряд кнопок */
-                display: flex; 
-                flex-direction: row; 
-                justify-content: center; /* Центрируем кнопки в ряду */
-                flex-wrap: wrap; 
-                gap: 15px; 
-                
-                width: 100%; 
-                max-width: 1000px; /* Ограничиваем ширину ряда кнопок */
-                
-                /* Удаление стилей бокового меню */
-                min-width: auto;
-                position: static; 
-                top: 0;
-            }
-            /* Стили для кнопок в горизонтальном ряду */
-            .tab-buttons .tab-button {
-                width: 220px; /* Фиксированная ширина */
-                padding: 18px 25px; 
-                text-align: left;
-                justify-content: flex-start;
-            }
-            /* Стили активной кнопки */
-            .tab-buttons .tab-button.active {
-                /* Увеличение и центрирование, без вертикальной полосы */
-                padding-left: 25px;
-                transform: scale(1.05);
-            }
-            /* Удаление зеленой вертикальной полосы */
-            .tab-buttons .tab-button.active::before {
-                display: none;
+                /* ИЗМЕНЕНИЕ: Уменьшил ширину колонки кнопок с 260px до 200px */
+                min-width: 200px;
+                max-width: 200px; /* Фиксируем, чтобы не растягивались */
+                position: sticky; 
+                top: 40px;
+                z-index: 10;
             }
             .tab-content-wrapper {
                 flex-grow: 1;
                 width: 100%;
-                max-width: 1000px; /* Широкий контент */
             }
         }
 
@@ -289,7 +263,7 @@
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             display: flex;
             align-items: center;
-            justify-content: flex-start; /* Базовое выравнивание */
+            justify-content: flex-start; 
             position: relative;
             overflow: hidden;
             text-align: left;
@@ -308,7 +282,6 @@
             border: 1px solid var(--color-primary);
             box-shadow: 0 0 20px rgba(153, 255, 153, 0.1);
             padding-left: 30px;
-            transform: scale(1.0); /* Сброс трансформации на моб.версии */
         }
 
         .tab-button.active::before {
@@ -364,7 +337,7 @@
         .tab-content h2 {
             font-family: var(--font-decorative);
             font-weight: 400;
-            /* Фикс шрифта */
+            /* Исправление из прошлого шага: шрифт */
             font-size: clamp(1.5rem, 3vw, 2.4rem);
             background: linear-gradient(45deg, var(--color-secondary), var(--color-primary));
             -webkit-background-clip: text;
@@ -375,7 +348,7 @@
             display: flex;
             align-items: center; 
             justify-content: center;
-            /* Фикс иконок: запрет переноса строки */
+            /* Исправление из прошлого шага: запрет переноса */
             flex-wrap: nowrap;
             filter: drop-shadow(0 0 15px rgba(153, 255, 153, 0.2));
         }
