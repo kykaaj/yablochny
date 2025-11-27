@@ -13,47 +13,52 @@
             --color-primary: #99ff99;
             --color-secondary: #ff9a9e;
             --color-bg: #050505;
-            --color-glass: rgba(20, 20, 20, 0.85);
+            --color-glass: rgba(20, 20, 20, 0.85); /* Чуть темнее для читаемости */
             --color-glass-border: rgba(255, 255, 255, 0.08);
             --font-decorative: 'Pacifico', cursive; 
             --font-readable: 'Montserrat', sans-serif;
         }
 
+        /* Убираем шум для чистоты на маленьких экранах, оставляем легкий градиент */
         body {
             font-family: var(--font-readable);
             background-color: var(--color-bg);
             color: #E0E0E0;
             margin: 0; padding: 0;
-            line-height: 1.6; /* Комфортный интерлиньяж */
+            line-height: 1.5; /* Компактный интерлиньяж */
             text-align: center;
             overflow-x: hidden;
-            font-size: 16px; /* Оптимальный размер для чтения */
+            font-size: 15px; /* Базовый шрифт чуть меньше */
         }
 
-        /* Тонкий скроллбар */
-        ::-webkit-scrollbar { width: 8px; }
+        /* КАСТОМНЫЙ СКРОЛЛБАР (Тонкий) */
+        ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--color-bg); }
-        ::-webkit-scrollbar-thumb { background: #444; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { 
+            background: #444; 
+            border-radius: 3px; 
+        }
 
-        /* ФОНЫ */
+        /* ФОНОВЫЕ ЭФФЕКТЫ */
         #bg-canvas, #spotlight, .noise-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
         }
         .noise-overlay { z-index: -1; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); }
-        #spotlight { z-index: -2; background: radial-gradient(800px circle at var(--x, 50%) var(--y, 50%), rgba(153, 255, 153, 0.05), transparent 45%); }
+        #spotlight { z-index: -2; background: radial-gradient(600px circle at var(--x, 50%) var(--y, 50%), rgba(153, 255, 153, 0.04), transparent 40%); }
         #bg-canvas { z-index: -3; }
 
         /* ===================================== */
-        /* ШАПКА */
+        /* ШАПКА (КОМПАКТНАЯ) */
         /* ===================================== */
         .header-banner {
             background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
             background-image: url('dark_header_new.jpg'); 
             background-size: cover; background-position: center;
-            height: 380px; /* Средняя высота */
+            height: 320px; /* Уменьшена высота */
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
-            clip-path: polygon(0 0, 100% 0, 100% 90%, 50% 100%, 0 90%);
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 50% 100%, 0 90%); /* Более пологий срез */
             position: relative; overflow: hidden;
             margin-bottom: 0;
         }
@@ -63,44 +68,44 @@
             background: rgba(0,0,0,0.6); z-index: 1;
         }
         
-        .header-content { z-index: 2; position: relative; padding: 0 20px; }
+        .header-content { z-index: 2; position: relative; padding: 0 15px; }
         
         .header-banner h1 { 
             font-family: var(--font-decorative);
             font-weight: 400;
-            font-size: clamp(2.2rem, 5vw, 3.5rem); /* Увеличили заголовки */
-            margin: 0; line-height: 1.2; color: #fff;
-            display: flex; align-items: center; justify-content: center; gap: 12px;
-            text-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            font-size: clamp(1.8rem, 4vw, 3rem); /* Сильно уменьшен шрифт */
+            margin: 0; line-height: 1.1; color: #fff;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.5);
         }
 
         .header-banner p { 
-            font-size: clamp(1rem, 2vw, 1.2rem); 
-            margin-top: 12px; font-weight: 600; letter-spacing: 1.5px;
+            font-size: clamp(0.9rem, 1.5vw, 1.1rem); 
+            margin-top: 10px; font-weight: 600; letter-spacing: 1px;
             text-transform: uppercase;
             background: linear-gradient(90deg, #fff, var(--color-primary));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
         
-        .apple-icon { height: clamp(45px, 7vw, 70px); filter: drop-shadow(0 0 15px rgba(153, 255, 153, 0.3)); }
+        .apple-icon { height: clamp(40px, 6vw, 60px); filter: drop-shadow(0 0 15px rgba(153, 255, 153, 0.3)); }
 
         /* ===================================== */
         /* ОСНОВНОЙ КОНТЕЙНЕР */
         /* ===================================== */
         .main-container {
-            max-width: 1050px;
-            margin: -50px auto 40px; 
-            padding: 0 20px;
+            max-width: 1000px; /* Чуть уже */
+            margin: -40px auto 30px; 
+            padding: 0 15px;
             display: flex; flex-direction: column; align-items: center;
             position: relative; z-index: 10;
         }
 
         @media (min-width: 900px) {
             .main-container {
-                flex-direction: row; align-items: flex-start; gap: 35px; padding: 0 35px;
+                flex-direction: row; align-items: flex-start; gap: 30px; padding: 0 30px;
             }
             .tab-buttons {
-                min-width: 250px; position: sticky; top: 30px; z-index: 10;
+                min-width: 240px; position: sticky; top: 20px; z-index: 10;
             }
             .tab-content-wrapper { flex-grow: 1; width: 100%; }
         }
@@ -109,34 +114,31 @@
         /* МЕНЮ (ТАБЫ) */
         /* ===================================== */
         .tab-buttons { 
-            display: flex; flex-direction: column; gap: 10px; width: 100%; margin-bottom: 25px;
+            display: flex; flex-direction: column; gap: 8px; width: 100%; margin-bottom: 20px;
         }
 
         /* Сетка для мобилок */
         @media (max-width: 899px) {
             .tab-buttons {
-                display: grid; grid-template-columns: 1fr 1fr;
-                gap: 10px;
+                display: grid; grid-template-columns: 1fr 1fr; /* Две колонки */
+                gap: 8px;
             }
-            .tab-button { 
-                justify-content: center; 
-                padding: 16px 10px !important; /* Удобный размер для пальца */
-                text-align: center; 
-            }
-            .tab-button img { margin-right: 8px !important; height: 24px !important; }
+            .tab-button { justify-content: center; padding: 12px !important; text-align: center; }
+            .tab-button img { margin-right: 8px !important; }
+            /* Убираем полоску слева на мобилках */
             .tab-button.active::before { display: none; }
             .tab-button.active { background: rgba(153, 255, 153, 0.1); border-color: var(--color-primary); }
         }
 
         .tab-button {
             background-color: var(--color-glass);
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
             color: #bbb;
-            padding: 16px 22px; 
+            padding: 12px 18px; /* Компактные отступы */
             border: 1px solid var(--color-glass-border);
-            border-radius: 14px; cursor: pointer;
+            border-radius: 12px; cursor: pointer;
             font-family: var(--font-decorative);
-            font-size: 1.25em; /* Чуть крупнее */
+            font-size: 1.1em; /* Шрифт меньше */
             transition: all 0.3s;
             display: flex; align-items: center; justify-content: flex-start; 
             position: relative; overflow: hidden;
@@ -146,18 +148,18 @@
         
         .tab-button.active {
             color: var(--color-primary); border-color: var(--color-primary);
-            box-shadow: 0 0 15px rgba(153, 255, 153, 0.15);
+            box-shadow: 0 0 15px rgba(153, 255, 153, 0.1);
         }
         
         @media (min-width: 900px) {
-            .tab-button.active { padding-left: 32px; background: linear-gradient(90deg, rgba(153, 255, 153, 0.1), transparent); }
+            .tab-button.active { padding-left: 28px; background: linear-gradient(90deg, rgba(153, 255, 153, 0.1), transparent); }
             .tab-button.active::before {
-                content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px;
+                content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
                 background: var(--color-primary);
             }
         }
         
-        .tab-button img { height: 26px; margin-right: 14px; transition: transform 0.3s; }
+        .tab-button img { height: 22px; margin-right: 12px; transition: transform 0.3s; }
         .tab-button:hover img { transform: rotate(-10deg); }
 
         /* ===================================== */
@@ -165,68 +167,68 @@
         /* ===================================== */
         .tab-content {
             background-color: var(--color-glass);
-            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            padding: 40px; 
-            border-radius: 24px;
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 30px; /* Уменьшено с 50px */
+            border-radius: 20px;
             border: 1px solid var(--color-glass-border);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             text-align: center;
             display: none; width: 100%; box-sizing: border-box;
             animation: fadeIn 0.4s ease;
         }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
         .tab-content.active { display: block; }
 
         .tab-content h2 {
             font-family: var(--font-decorative); font-weight: 400;
-            font-size: 2.4em; /* Оптимальный размер */
+            font-size: 2em; /* Уменьшено с 2.8em */
             background: linear-gradient(45deg, var(--color-secondary), var(--color-primary));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            margin: 0 0 25px 0;
+            margin: 0 0 20px 0;
             display: flex; align-items: center; justify-content: center;
         }
         
-        .tab-content h2 img { height: 42px; margin-right: 14px; -webkit-text-fill-color: initial; }
+        .tab-content h2 img { height: 36px; margin-right: 12px; -webkit-text-fill-color: initial; }
 
-        .tab-content p { font-size: 1.05em; margin-bottom: 30px; color: #ccc; font-weight: 300; }
+        .tab-content p { font-size: 0.95em; margin-bottom: 25px; color: #ccc; font-weight: 300; }
 
         /* ===================================== */
-        /* КНОПКИ ДЕЙСТВИЙ */
+        /* КНОПКИ */
         /* ===================================== */
         .download-button {
             position: relative; overflow: hidden;
             display: flex; align-items: center; justify-content: center; 
-            width: 100%; max-width: 380px; 
-            margin: 30px auto;
-            box-sizing: border-box; /* Важно для центрирования */
+            width: 100%; max-width: 350px; /* У́же */
+            margin: 25px auto;
+            box-sizing: border-box; /* ВАЖНО для центрирования */
             
             background: linear-gradient(270deg, #ff9a9e, #a8e6cf, #99ff99, #ff9a9e);
             background-size: 300% 300%; animation: bg-shift 8s ease infinite;
             color: #121212; 
-            font-weight: 800; font-size: 1.2em; /* Читабельный шрифт */
-            text-transform: uppercase; letter-spacing: 1.2px;
-            padding: 20px 25px; 
-            text-decoration: none; border-radius: 16px; 
-            box-shadow: 0 10px 30px rgba(153, 255, 153, 0.3);
+            font-weight: 800; font-size: 1.1em; /* Шрифт меньше */
+            text-transform: uppercase; letter-spacing: 1px;
+            padding: 16px 20px; /* Компактные отступы */
+            text-decoration: none; border-radius: 12px; 
+            box-shadow: 0 8px 25px rgba(153, 255, 153, 0.3);
             transition: transform 0.2s;
         }
-        .download-button:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(168, 230, 207, 0.6); color: #000; }
-        .download-button img { height: 28px; margin-right: 12px; } 
+        .download-button:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(168, 230, 207, 0.5); color: #000; }
+        .download-button img { height: 24px; margin-right: 10px; } 
 
         .link-button {
-            display: flex; align-items: center; padding: 18px 24px; 
+            display: flex; align-items: center; padding: 14px 20px; 
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #ddd; text-decoration: none; border-radius: 14px; 
-            font-weight: 600; font-size: 1em;
-            transition: all 0.3s; width: 100%; max-width: 380px; 
+            color: #ddd; text-decoration: none; border-radius: 12px; 
+            font-weight: 600; font-size: 0.95em;
+            transition: all 0.3s; width: 100%; max-width: 350px; 
             margin: 0 auto; box-sizing: border-box;
         }
-        .link-button:hover { background: rgba(255, 255, 255, 0.08); border-color: var(--color-primary); transform: translateX(5px); }
-        .link-button img { height: 26px; margin-right: 14px; }
+        .link-button:hover { background: rgba(255, 255, 255, 0.08); border-color: var(--color-primary); transform: translateX(3px); }
+        .link-button img { height: 22px; margin-right: 12px; }
 
-        .no-bullets { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+        .no-bullets { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
 
         /* ===================================== */
         /* МЕЛКИЕ ЭЛЕМЕНТЫ */
@@ -239,30 +241,30 @@
         @keyframes ripple { to { transform: scale(4); opacity: 0; } }
 
         /* ===================================== */
-        /* МОБИЛЬНАЯ АДАПТАЦИЯ (Твики) */
+        /* МОБИЛЬНАЯ АДАПТАЦИЯ */
         /* ===================================== */
         @media (max-width: 600px) {
-            .header-banner { height: 290px; } /* Чуть выше чем прошлый раз */
-            .header-banner h1 { font-size: 2.2rem; }
-            .tab-content { padding: 30px 20px; border-radius: 20px; }
-            .tab-content h2 { font-size: 2em; }
-            .download-button { width: 100%; font-size: 1.1em; padding: 18px; }
-            .link-button { padding: 16px; }
-            .apple-icon { height: 55px; }
+            .header-banner { height: 240px; clip-path: polygon(0 0, 100% 0, 100% 92%, 50% 100%, 0 92%); }
+            .header-banner h1 { font-size: 1.8rem; }
+            .tab-content { padding: 20px 15px; border-radius: 15px; }
+            .tab-content h2 { font-size: 1.6em; }
+            .download-button { width: 100%; font-size: 1em; padding: 14px; }
+            .link-button { padding: 12px; }
+            .apple-icon { height: 40px; }
         }
 
         /* Toast notifications */
-        #toast-container { position: fixed; bottom: 25px; right: 25px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; }
+        #toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
         .toast {
             background: rgba(15, 15, 15, 0.95); border: 1px solid #333; border-left: 3px solid var(--color-primary);
-            padding: 14px 20px; border-radius: 10px; font-size: 0.95em; display: flex; align-items: center;
-            transform: translateX(120%); transition: transform 0.3s ease; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            padding: 12px 16px; border-radius: 8px; font-size: 0.9em; display: flex; align-items: center;
+            transform: translateX(120%); transition: transform 0.3s ease; box-shadow: 0 5px 15px rgba(0,0,0,0.5);
         }
         .toast.show { transform: translateX(0); }
-        .toast img { width: 22px; height: 22px; margin-right: 14px; }
-        .toast-title { font-weight: 700; color: var(--color-primary); font-size: 1.05em; margin-bottom: 2px;}
+        .toast img { width: 20px; height: 20px; margin-right: 12px; }
+        .toast-title { font-weight: 700; color: var(--color-primary); font-size: 1em; }
         
-        footer { margin-top: 60px; color: #666; font-size: 0.9em; padding-bottom: 25px; }
+        footer { margin-top: 50px; color: #555; font-size: 0.8em; padding-bottom: 20px; }
     </style>
 </head>
 <body>
@@ -310,11 +312,11 @@
                     <img src="icon_clip.png" alt="" onerror="this.style.display='none'"> 
                     О Пресете
                 </h2>
-                <p style="text-align: left; padding: 0 5px; line-height: 1.8;">
+                <p style="text-align: left; padding: 0 5px; line-height: 1.6;">
                     Модульный пресет с большим количеством тоглов. Основан на ядре Селии. Оптимизирован для <b style="color:white">максимального погружения</b>.
                     <br><br>
-                    <span style="color: var(--color-primary); font-weight: 700; text-transform: uppercase; font-size: 0.95em; border-bottom: 2px solid var(--color-secondary); padding-bottom: 3px;">Поддерживаемые модели:</span><br>
-                    <span style="display: block; margin-top: 12px; font-size: 0.95em; opacity: 0.95;">
+                    <span style="color: var(--color-primary); font-weight: 700; text-transform: uppercase; font-size: 0.9em; border-bottom: 1px solid var(--color-secondary); padding-bottom: 2px;">Поддерживаемые модели:</span><br>
+                    <span style="display: block; margin-top: 8px; font-size: 0.9em; opacity: 0.9;">
                         ✨ Gemini 2.5/3.0 &nbsp;|&nbsp; ✨ Claude Opus/Sonnet 4.5
                     </span>
                 </p>
@@ -332,7 +334,7 @@
                     СКАЧАТЬ V1.581
                 </a>
                 
-                <h3 style="color: #666; text-transform: uppercase; font-size: 0.85em; letter-spacing: 1.5px; margin-top: 35px; margin-bottom: 20px;">Файлы RegEx</h3>
+                <h3 style="color: #666; text-transform: uppercase; font-size: 0.8em; letter-spacing: 1px; margin-top: 30px; margin-bottom: 15px;">Файлы RegEx</h3>
                 <div class="no-bullets"> 
                     <a class="link-button ripple-btn" href="regex-renette_html_depth_5_vanquisher__.json" download onclick="showToast('RegEx', 'HTML Depth 5 загружается...')">
                         <img src="leaf_red.png" alt="" onerror="this.style.display='none'">
@@ -340,7 +342,7 @@
                     </a> 
                     <a class="link-button ripple-btn" href="regex-renette_hidethink.json" download onclick="showToast('RegEx', 'Hide Think загружается...')">
                         <img src="leaf_green.png" alt="" onerror="this.style.display='none'">
-                        <span><b style="color:var(--color-primary)">Опционально:</b> Renette Hide Think</span>
+                        <span><b style="color:var(--color-primary)">Опц:</b> Renette Hide Think</span>
                     </a>
                 </div>
             </div>
@@ -398,35 +400,39 @@
             startTypewriter();
         });
 
+        // Частицы фона (облегченная версия)
         const canvas = document.getElementById('bg-canvas'), ctx = canvas.getContext('2d');
         let width, height, particles = [];
         function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
         window.addEventListener('resize', resize); resize();
         class Particle {
             constructor() { this.reset(); }
-            reset() { this.x = Math.random() * width; this.y = Math.random() * height; this.size = Math.random() * 2.2; this.speed = Math.random() * 0.3 + 0.1; this.opacity = Math.random() * 0.5; }
+            reset() { this.x = Math.random() * width; this.y = Math.random() * height; this.size = Math.random() * 2; this.speed = Math.random() * 0.3 + 0.1; this.opacity = Math.random() * 0.5; }
             update() { this.y -= this.speed; if(this.y < 0) this.reset(); }
             draw() { ctx.fillStyle = `rgba(153, 255, 153, ${this.opacity})`; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fill(); }
         }
-        for(let i=0; i<60; i++) particles.push(new Particle());
+        for(let i=0; i<50; i++) particles.push(new Particle());
         function animateBg() { ctx.clearRect(0,0,width,height); particles.forEach(p=>{p.update();p.draw()}); requestAnimationFrame(animateBg); }
         animateBg();
 
+        // 3D Tilt шапки (только для ПК)
         const header = document.getElementById('headerBanner'), content = document.getElementById('headerContent');
         if(window.innerWidth > 900) {
             header.addEventListener('mousemove', (e) => {
                 const r = header.getBoundingClientRect();
-                content.style.transform = `perspective(800px) rotateX(${((e.clientY-r.top)-r.height/2)/-12}deg) rotateY(${((e.clientX-r.left)-r.width/2)/18}deg)`;
+                content.style.transform = `perspective(800px) rotateX(${((e.clientY-r.top)-r.height/2)/-10}deg) rotateY(${((e.clientX-r.left)-r.width/2)/15}deg)`;
             });
             header.addEventListener('mouseleave', () => content.style.transform = 'none');
         }
 
+        // Ripple Effect
         document.querySelectorAll('.ripple-btn').forEach(b => b.addEventListener('click', function(e) {
             let r = this.getBoundingClientRect(), s = document.createElement('span');
             s.className = 'ripple'; s.style.left = (e.clientX-r.left)+'px'; s.style.top = (e.clientY-r.top)+'px';
             this.appendChild(s); setTimeout(() => s.remove(), 600);
         }));
 
+        // Печатная машинка
         function typeWriter(id, txt, spd, cb) {
             let i=0, e=document.getElementById(id); e.innerHTML="";
             function t() { if(i<txt.length) { e.innerHTML+=txt.charAt(i++); setTimeout(t, spd); } else if(cb) cb(); } t();
@@ -439,6 +445,7 @@
             });
         }
 
+        // Toast
         function showToast(title, msg) {
             const c = document.getElementById('toast-container'), t = document.createElement('div');
             t.className = 'toast'; t.innerHTML = `<img src="icon_clip.png" onerror="this.style.display='none'"><div class="toast-content"><div class="toast-title">${title}</div><div>${msg}</div></div>`;
