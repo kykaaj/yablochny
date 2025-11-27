@@ -68,7 +68,7 @@
             font-weight: bold;
             font-size: 1.1em;
             transition: background-color 0.3s, transform 0.1s;
-            margin-bottom: 10px; /* Добавим отступ для кнопок */
+            margin-bottom: 10px; 
         }
         .download-button:hover {
             background-color: #FFD54F;
@@ -88,7 +88,7 @@
             padding-left: 0;
         }
         ul li {
-            margin-bottom: 15px; /* Увеличим отступ */
+            margin-bottom: 15px;
             padding-left: 20px;
             position: relative;
         }
@@ -100,15 +100,16 @@
         }
         /* Стили для маленьких кнопок RegEx */
         .regex-link {
-            display: inline-block;
+            display: block; /* Каждая кнопка на новой строке */
             background-color: #66BB6A; /* Светло-зеленый */
             color: white;
-            padding: 8px 15px;
+            padding: 12px 20px;
             text-decoration: none;
             border-radius: 5px;
             font-weight: bold;
             transition: background-color 0.3s;
-            margin-right: 10px;
+            margin-bottom: 10px;
+            text-align: center;
         }
         .regex-link:hover {
             background-color: #81C784;
@@ -123,7 +124,7 @@
     <div class="main-container">
         
         <div class="card" style="text-align: center;">
-            <h2>Основной Пресет</h2>
+            <h2>Пресет</h2>
             <p>
                 Ваш главный пресет для SillyTavern, версия 1.581. <br>
                 Нажмите, чтобы загрузить файл JSON.
@@ -135,28 +136,22 @@
 
         <div class="card">
             <h2>📝 Файлы Регулярных Выражений (RegEx)</h2>
-            <p>Нажмите, чтобы скачать и импортировать файлы с настройками RegEx в SillyTavern:</p>
+            <p>Скачайте и импортируйте эти файлы в раздел **Regex Scripting** в SillyTavern:</p>
             
-            <a class="regex-link" href="Fix_Quotes.json" download>
-                Скачать Fix_Quotes.json 
+            <a class="regex-link" href="regex-celia_html_depth_5_vanquisher__.json" download>
+                1. Скачать Celia HTML Depth 5 Vanquisher
             </a> 
-            <a class="regex-link" href="Remove_Brackets.json" download>
-                Скачать Remove_Brackets.json 
-            </a>
-            <a class="regex-link" href="Custom_Formatting.json" download>
-                Скачать Custom_Formatting.json
+            <a class="regex-link" href="regex-celia_hidethink.json" download>
+                2. Скачать Celia Hide Think
             </a>
             
-            <p style="margin-top: 15px; font-size: 0.9em; color: #666;">
-                **ОБЯЗАТЕЛЬНО:** Замените `Fix_Quotes.json`, `Remove_Brackets.json` и `Custom_Formatting.json` на точные имена ваших файлов RegEx в коде, чтобы ссылки работали.
-            </p>
         </div>
 
         <div class="card">
-            <h2>📚 Полезный Гайд</h2>
+            <h2>📚 Полезный Гайд и Сообщество</h2>
             <ul>
-                <li><a href="**ССЫЛКА НА ВАШ ГАЙД**" target="_blank">Видео-гайд или текстовая инструкция по установке (Нажмите для перехода)</a></li>
-                <li><a href="**ССЫЛКА НА ВАШ ДИСКОРД/ТГ**" target="_blank">Обсуждение в Дискорде/Телеграме</a></li>
+                <li><a href="https://sites.google.com/view/testijhfrr/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F-%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0#h.t3t6sw19ia3y" target="_blank">📺 Гайд (Нажмите для перехода)</a></li>
+                <li><a href="https://t.me/YablochnyAI" target="_blank">💬 Мой тгк</a></li>
             </ul>
         </div>
     </div>
