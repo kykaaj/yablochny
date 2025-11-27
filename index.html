@@ -525,25 +525,18 @@
         // === ЛОГИКА ВКЛАДОК ===
         function openTab(evt, tabName) {
             var i, tabcontent, tablinks;
-            
             tabcontent = document.getElementsByClassName("tab-content");
             for (i = 0; i < tabcontent.length; i++) {
                 tabcontent[i].style.display = "none";
                 tabcontent[i].classList.remove('active');
             }
-            
             tablinks = document.getElementsByClassName("tab-button");
             for (i = 0; i < tablinks.length; i++) {
                 tablinks[i].classList.remove("active");
             }
-            
             var selectedTab = document.getElementById(tabName);
             selectedTab.style.display = "block";
-            
-            setTimeout(() => {
-                selectedTab.classList.add('active');
-            }, 10);
-            
+            setTimeout(() => selectedTab.classList.add('active'), 10);
             evt.currentTarget.classList.add("active");
         }
         
@@ -552,65 +545,46 @@
             setTimeout(() => document.getElementById('Description').classList.add('active'), 10);
         });
 
-        // === 1. АНИМИРОВАННЫЙ ФОН (ЧАСТИЦЫ - ОБНОВЛЕННЫЕ) ===
-        const canvas = document.getElementById('bg-canvas');
-        const ctx = canvas.getContext('2d');
+        // === 1. АНИМИРОВАННЫЙ ФОН (ЧАСТИЦЫ) ===
+        const bgCanvas = document.getElementById('bg-canvas');
+        const bgCtx = bgCanvas.getContext('2d');
         let width, height;
-        let particles = [];
 
         function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
+            width = bgCanvas.width = window.innerWidth;
+            height = bgCanvas.height = window.innerHeight;
+            // Размер для курсора тоже
+            cursorCanvas.width = window.innerWidth;
+            cursorCanvas.height = window.innerHeight;
         }
-        window.addEventListener('resize', resize);
-        resize();
-
-        class Particle {
+        
+        // Массив для фона
+        let bgParticles = [];
+        class BgParticle {
             constructor() {
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 0.3; 
-                this.vy = (Math.random() - 0.5) * 0.3;
-                this.size = Math.random() * 2;
-                this.opacity = Math.random() * 0.5 + 0.1;
-                this.color = Math.random() > 0.6 ? `rgba(153, 255, 153, ` : `rgba(255, 154, 158, `;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 3 + 1;
+                this.color = Math.random() > 0.5 ? 'rgba(153, 255, 153, 0.15)' : 'rgba(255, 154, 158, 0.15)';
             }
             update() {
                 this.x += this.vx;
                 this.y += this.vy;
                 if (this.x < 0) this.x = width;
-                if (this.x > width) this.x = 0;
+                else if (this.x > width) this.x = 0;
                 if (this.y < 0) this.y = height;
-                if (this.y > height) this.y = 0;
+                else if (this.y > height) this.y = 0;
             }
             draw() {
-                ctx.fillStyle = this.color + this.opacity + ')';
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
+                bgCtx.fillStyle = this.color;
+                bgCtx.beginPath();
+                bgCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                bgCtx.fill();
             }
         }
-
-        for (let i = 0; i < 70; i++) particles.push(new Particle());
-
-        function animateBg() {
-            ctx.clearRect(0, 0, width, height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-            requestAnimationFrame(animateBg);
-        }
-        animateBg();
-
-        // === 2. ЭФФЕКТ ПРОЖЕКТОРА ===
-        const spotlight = document.getElementById('spotlight');
-        document.addEventListener('mousemove', (e) => {
-            spotlight.style.setProperty('--x', e.clientX + 'px');
-            spotlight.style.setProperty('--y', e.clientY + 'px');
-        });
-        
-        });
+        for (let i = 0; i < 60; i++) bgParticles.push(new BgParticle());
 
         // === 4. ЭФФЕКТ КОНФЕТТИ (САЛЮТ) ПРИ СКАЧИВАНИИ ===
         function fireConfetti(e) {
@@ -648,6 +622,23 @@
                 setTimeout(() => confetto.remove(), 1000);
             }
         }
+        for (let i = 0; i < 60; i++) bgParticles.push(new BgParticle());
+
+        // === 2. МАГИЧЕСКИЙ ШЛЕЙФ КУРСОРА ===
+        const cursorCanvas = document.getElementById('cursor-canvas');
+        const cursorCtx = cursorCanvas.getContext('2d');
+        let trailParticles = [];
+        let mouseX = 0, mouseY = 0;
+
+        // Следим за мышью
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            // Добавляем частицы при движении
+            for(let i=0; i<3; i++) {
+                trailParticles.push(new TrailParticle(mouseX, mouseY));
+            }
+        });
 
         // === 5. RIPPLE ЭФФЕКТ ===
         document.querySelectorAll('.ripple-btn').forEach(btn => {
