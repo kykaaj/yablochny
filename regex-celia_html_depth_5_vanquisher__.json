@@ -1,6 +1,6 @@
 {
     "id": "40f46894-113c-4dbe-a77e-5ddeb154932c",
-    "scriptName": "Celia HTML Depth 5 Vanquisher. ",
+    "scriptName": "Renette HTML Depth 5 Vanquisher. ",
     "findRegex": "/<([a-zA-Z0-9]+)(?:[^>]*)?>[\\s\\S]*?<\\/\\1>|<[a-zA-Z0-9]+(?:[^>]*)?\\s*\\/?>/g",
     "replaceString": "",
     "trimStrings": [],
