@@ -10,45 +10,39 @@
         /* БАЗОВЫЕ СТИЛИ И ПЕРЕМЕННЫЕ */
         /* ===================================== */
         :root {
-            --color-primary: #99ff99;
- /* Яблочный зеленый */
-            --color-secondary: #ff9a9e;
- /* Мягкий красный */
-            --color-bg: #050505;
- /* Глубокий черный */
+            --color-primary: #99ff99; /* Яблочный зеленый */
+            --color-secondary: #ff9a9e; /* Мягкий красный */
+            --color-bg: #050505; /* Глубокий черный */
             --color-glass: rgba(20, 20, 20, 0.75);
- --color-glass-border: rgba(255, 255, 255, 0.08);
+            --color-glass-border: rgba(255, 255, 255, 0.08);
             --font-decorative: 'Pacifico', cursive; 
             --font-readable: 'Montserrat', sans-serif;
             --shadow-glow: 0 0 20px rgba(153, 255, 153, 0.15);
- }
+        }
 
         /* ШУМОВАЯ ТЕКСТУРА */
         .noise-overlay {
             position: fixed;
- top: 0; left: 0; width: 100%; height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none;
             z-index: -1;
             opacity: 0.04;
- background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
- }
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
 
         /* КАСТОМНЫЙ СКРОЛЛБАР */
-        ::-webkit-scrollbar { width: 6px;
- }
-        ::-webkit-scrollbar-track { background: var(--color-bg);
- }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--color-bg); }
         ::-webkit-scrollbar-thumb { 
             background: linear-gradient(180deg, var(--color-secondary), var(--color-primary));
- border-radius: 4px; 
+            border-radius: 4px; 
         }
         
-        ::selection { background: var(--color-primary);
- color: #000; text-shadow: none; }
+        ::selection { background: var(--color-primary); color: #000; text-shadow: none; }
 
         body {
             font-family: var(--font-readable);
- background-color: var(--color-bg);
+            background-color: var(--color-bg);
             color: #E0E0E0;
             margin: 0;
             padding: 0;
@@ -57,54 +51,54 @@
             overflow-x: hidden;
             scroll-behavior: smooth;
             -webkit-font-smoothing: antialiased;
- }
+        }
 
         /* АНИМИРОВАННЫЙ ФОН (КАНВАС) */
         #bg-canvas {
             position: fixed;
- top: 0; left: 0; width: 100%; height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             z-index: -3;
             pointer-events: none;
- }
+        }
 
         /* ЭФФЕКТ ПРОЖЕКТОРА */
         #spotlight {
             position: fixed;
- top: 0; left: 0; width: 100%; height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(800px circle at var(--x, 50%) var(--y, 50%), rgba(153, 255, 153, 0.05), transparent 50%);
- z-index: -2;
+            z-index: -2;
             pointer-events: none;
         }
 
         .main-container {
             max-width: 1100px;
- /* ИЗМЕНЕНО: Отступ уменьшен, но будет скорректирован для мобильных */
+            /* ИЗМЕНЕНО: Отступ уменьшен, но будет скорректирован для мобильных */
             margin: -50px auto 40px;
- padding: 15px; 
+            padding: 15px; 
             display: flex; 
             flex-direction: column; 
             align-items: center;
             position: relative;
             z-index: 10;
- }
+        }
 
         @media (min-width: 900px) {
             .main-container {
                 flex-direction: row;
- align-items: flex-start;
+                align-items: flex-start;
                 gap: 40px;
                 padding: 0 40px;
                 margin-top: -80px;
             }
             .tab-buttons {
                 min-width: 260px;
- position: sticky; 
+                position: sticky; 
                 top: 40px;
                 z-index: 10;
             }
             .tab-content-wrapper {
                 flex-grow: 1;
- width: 100%;
+                width: 100%;
             }
         }
 
@@ -112,41 +106,32 @@
         /* АНИМАЦИИ */
         /* ===================================== */
         @keyframes float-slight {
-            0%, 100% { transform: translateY(0px);
- }
-            50% { transform: translateY(-8px);
- }
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
         }
 
         @keyframes bg-shift {
-            0% { background-position: 0% 50%;
- }
-            50% { background-position: 100% 50%;
- }
-            100% { background-position: 0% 50%;
- }
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        @keyframes blink { 50% { opacity: 0;
- } }
+        @keyframes blink { 50% { opacity: 0; } }
 
         /* Эффект курсора */
         .typing-cursor::after {
             content: '|';
- animation: blink 1s step-end infinite;
+            animation: blink 1s step-end infinite;
             color: var(--color-primary);
             margin-left: 2px;
             text-shadow: 0 0 10px var(--color-primary);
- }
+        }
 
         /* Эффект блика (Shine) для кнопок */
         @keyframes shine-sweep {
-            0% { left: -100%;
- opacity: 0; }
-            50% { opacity: 1;
- }
-            100% { left: 200%; opacity: 0;
- }
+            0% { left: -100%; opacity: 0; }
+            50% { opacity: 1; }
+            100% { left: 200%; opacity: 0; }
         }
 
         /* ===================================== */
@@ -154,45 +139,45 @@
         /* ===================================== */
         .header-banner {
             background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
- background-image: url('dark_header_new.jpg'); 
+            background-image: url('dark_header_new.jpg'); 
             background-size: cover; 
             background-position: center;
             /* ВЫСОТА ДЛЯ ПК */
             height: 350px;
- display: flex;
+            display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             color: white;
- clip-path: polygon(0 0, 100% 0, 100% 90%, 50% 100%, 0 90%);
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 50% 100%, 0 90%);
             position: relative;
             overflow: hidden;
             perspective: 1000px; 
             padding-bottom: 30px;
- }
+        }
 
         .header-banner::before {
             content: '';
- position: absolute;
+            position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
             background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.85)); 
             z-index: 1;
- }
+        }
         
         .header-content {
             z-index: 2;
- position: relative;
+            position: relative;
             transition: transform 0.1s ease-out;
             transform-style: preserve-3d;
             padding: 0 15px;
             width: 100%;
             max-width: 800px;
             box-sizing: border-box;
- }
+        }
         
         .header-banner h1 { 
             font-family: var(--font-decorative);
- font-weight: 400;
+            font-weight: 400;
             font-size: clamp(2.2rem, 6vw, 4.5rem); 
             margin: 0;
             line-height: 1.1;
@@ -201,14 +186,14 @@
             align-items: center;
             justify-content: center;
             gap: 15px;
- flex-wrap: wrap;
+            flex-wrap: wrap;
             text-shadow: 0 10px 30px rgba(0,0,0,0.5);
             transform: translateZ(30px);
         }
 
         .header-banner p { 
             font-size: clamp(0.85rem, 2.5vw, 1.3rem);
- margin-top: 15px; 
+            margin-top: 15px; 
             font-weight: 600;
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -217,29 +202,29 @@
             -webkit-text-fill-color: transparent;
             min-height: 1.5em;
             transform: translateZ(20px);
- padding: 0 10px;
+            padding: 0 10px;
         }
         
         .apple-icon { 
             height: clamp(45px, 10vw, 80px);
- filter: drop-shadow(0 0 20px rgba(153, 255, 153, 0.4));
+            filter: drop-shadow(0 0 20px rgba(153, 255, 153, 0.4));
             animation: float-slight 4s ease-in-out infinite; 
             flex-shrink: 0;
- }
+        }
 
         /* ===================================== */
         /* СТИЛИ ВКЛАДОК */
         /* ===================================== */
         .tab-buttons { 
             display: flex;
- flex-direction: column; 
+            flex-direction: column; 
             gap: 10px; 
             width: 100%; 
         }
 
         .tab-button {
             background-color: var(--color-glass);
- backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             color: #ccc;
             padding: 16px 22px;
@@ -247,85 +232,83 @@
             border-radius: 16px;
             cursor: pointer;
             font-family: var(--font-decorative);
- font-size: 1.2rem;
+            font-size: 1.2rem;
             letter-spacing: 0.5px;
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             display: flex;
             align-items: center;
             justify-content: flex-start; 
             position: relative;
- overflow: hidden;
+            overflow: hidden;
             text-align: left;
         }
 
         .tab-button:hover, .tab-button:active { 
             background-color: rgba(50, 50, 50, 0.85);
- transform: translateX(5px);
+            transform: translateX(5px);
             color: #fff;
             border-color: rgba(255,255,255,0.25);
         }
         
         .tab-button.active {
             background: linear-gradient(90deg, rgba(153, 255, 153, 0.12), transparent);
- color: var(--color-primary);
+            color: var(--color-primary);
             border: 1px solid var(--color-primary);
             box-shadow: 0 0 20px rgba(153, 255, 153, 0.1);
             padding-left: 30px;
- }
+        }
 
         .tab-button.active::before {
             content: '';
- position: absolute;
+            position: absolute;
             left: 0; top: 0; bottom: 0;
             width: 5px;
             background: var(--color-primary);
             box-shadow: 2px 0 10px var(--color-primary);
- }
+        }
         
         .tab-button img {
             height: 24px;
- margin-right: 12px;
+            margin-right: 12px;
             filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5));
             transition: transform 0.3s;
- }
-        .tab-button:hover img { transform: rotate(-10deg) scale(1.1);
- }
+        }
+        .tab-button:hover img { transform: rotate(-10deg) scale(1.1); }
 
         /* ===================================== */
         /* КОНТЕНТ */
         /* ===================================== */
         .tab-content {
             background-color: var(--color-glass);
- backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             padding: 30px 20px;
             border-radius: 24px;
             border: 1px solid var(--color-glass-border);
- box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
             text-align: center;
             min-height: 300px; 
             display: none; 
             width: 100%; 
             box-sizing: border-box;
             opacity: 0;
- transform: translateY(20px);
+            transform: translateY(20px);
             transition: opacity 0.4s ease, transform 0.4s ease;
         }
         
         @media (min-width: 768px) {
-            .tab-content { padding: 50px;
- }
+            .tab-content { padding: 50px; }
         }
 
         .tab-content.active { 
             display: block;
- opacity: 1;
+            opacity: 1;
             transform: translateY(0);
         }
 
         .tab-content h2 {
             font-family: var(--font-decorative);
- font-weight: 400;
+            font-weight: 400;
             font-size: clamp(2rem, 4vw, 2.8em);
             background: linear-gradient(45deg, var(--color-secondary), var(--color-primary));
             -webkit-background-clip: text;
@@ -333,22 +316,22 @@
             margin-top: 0;
             margin-bottom: 25px;
             display: flex;
- align-items: center; 
+            align-items: center; 
             justify-content: center;
             flex-wrap: wrap;
             filter: drop-shadow(0 0 15px rgba(153, 255, 153, 0.2));
- }
+        }
         
         .tab-content h2 img {
             height: clamp(32px, 5vw, 48px);
- margin-right: 12px; 
+            margin-right: 12px; 
             -webkit-text-fill-color: initial; 
             animation: float-slight 5s ease-in-out infinite;
         }
 
         .tab-content p {
             font-size: clamp(0.95em, 2vw, 1.15em);
- margin-bottom: 25px;
+            margin-bottom: 25px;
             color: #dcdcdc;
             font-weight: 300;
             line-height: 1.8;
@@ -359,18 +342,17 @@
         /* ===================================== */
         .ripple {
             position: absolute;
- border-radius: 50%;
+            border-radius: 50%;
             transform: scale(0);
             animation: ripple 0.6s linear;
             background-color: rgba(255, 255, 255, 0.4);
             pointer-events: none;
- }
-        @keyframes ripple { to { transform: scale(4); opacity: 0;
- } }
+        }
+        @keyframes ripple { to { transform: scale(4); opacity: 0; } }
 
         .download-button {
             position: relative;
- overflow: hidden;
+            overflow: hidden;
             display: flex; 
             align-items: center; 
             justify-content: center; 
@@ -378,104 +360,98 @@
             max-width: 420px; 
             margin: 30px auto; 
             box-sizing: border-box;
- background: linear-gradient(270deg, #ff9a9e, #a8e6cf, #99ff99, #ff9a9e);
+            background: linear-gradient(270deg, #ff9a9e, #a8e6cf, #99ff99, #ff9a9e);
             background-size: 300% 300%;
             animation: bg-shift 6s ease infinite;
             color: #050505; 
             font-family: var(--font-readable); 
             font-weight: 800;
- font-size: clamp(1rem, 3vw, 1.3em);
+            font-size: clamp(1rem, 3vw, 1.3em);
             text-transform: uppercase;
             letter-spacing: 1px;
             padding: 20px 20px; 
             text-decoration: none; 
             border-radius: 18px;
- box-shadow: 0 10px 40px rgba(153, 255, 153, 0.3);
+            box-shadow: 0 10px 40px rgba(153, 255, 153, 0.3);
             transition: transform 0.2s, box-shadow 0.2s;
             border: 2px solid rgba(255,255,255,0.2);
- }
+        }
         
         .download-button::after {
             content: '';
- position: absolute;
+            position: absolute;
             top: 0; left: -100%;
             width: 50%; height: 100%;
             background: linear-gradient(to right, transparent, rgba(255,255,255,0.8), transparent);
             transform: skewX(-25deg);
- }
+        }
         
         .download-button:hover::after {
             animation: shine-sweep 0.7s ease-in-out;
- }
+        }
 
         .download-button:hover {
             transform: translateY(-4px) scale(1.02);
- box-shadow: 0 20px 50px rgba(153, 255, 153, 0.6); 
+            box-shadow: 0 20px 50px rgba(153, 255, 153, 0.6); 
         }
         
-        .download-button img { height: 28px;
- margin-right: 12px; } 
+        .download-button img { height: 28px; margin-right: 12px; } 
 
-        .no-bullets { list-style: none; padding: 0; margin: 0;
- display: flex; flex-direction: column; gap: 12px; }
+        .no-bullets { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
 
         .link-button {
             position: relative;
- overflow: hidden;
+            overflow: hidden;
             display: flex; 
             align-items: center; 
             padding: 18px 20px; 
             background: rgba(255, 255, 255, 0.03);
- border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             color: #E0E0E0; 
             text-decoration: none; 
             border-radius: 16px; 
             font-weight: 600; 
             font-size: 0.95em;
             transition: all 0.3s;
- width: 100%; max-width: 420px; 
+            width: 100%; max-width: 420px; 
             margin: 0 auto; 
             box-sizing: border-box;
         }
         
         .link-button:hover { 
             background: linear-gradient(135deg, rgba(46, 125, 50, 0.25), rgba(30, 60, 46, 0.4));
- border-color: var(--color-primary);
+            border-color: var(--color-primary);
             transform: translateX(5px); 
             box-shadow: 0 5px 20px rgba(0,0,0,0.3);
             color: #fff;
- }
+        }
         
-        .link-button img { height: 24px;
- margin-right: 15px; transition: transform 0.3s;}
-        .link-button:hover img { transform: scale(1.2) rotate(10deg);
- }
+        .link-button img { height: 24px; margin-right: 15px; transition: transform 0.3s;}
+        .link-button:hover img { transform: scale(1.2) rotate(10deg); }
 
         /* Искры */
         #sparks-container {
-            position: fixed;
- top:0; left:0; width:100%; height:100%; pointer-events: none; z-index: 9999;
+            position: fixed; top:0; left:0; width:100%; height:100%; pointer-events: none; z-index: 9999;
         }
         .spark {
-            position: absolute;
- width: 4px; height: 4px; border-radius: 50%; pointer-events: none;
+            position: absolute; width: 4px; height: 4px; border-radius: 50%; pointer-events: none;
         }
 
         footer {
             margin-top: 60px;
- color: #555;
+            color: #555;
             font-size: 0.85em;
             padding-bottom: 30px;
             font-weight: 500;
             letter-spacing: 1px;
- }
+        }
 
         /* ===================================== */
         /* СТИЛЬНЫЕ УВЕДОМЛЕНИЯ (TOASTS) */
         /* ===================================== */
         #toast-container {
             position: fixed;
- bottom: 20px;
+            bottom: 20px;
             right: 20px;
             left: 20px;
             z-index: 10000;
@@ -483,20 +459,19 @@
             flex-direction: column;
             gap: 10px;
             pointer-events: none;
- }
+        }
         @media (min-width: 600px) {
-             #toast-container { left: auto;
- width: auto; align-items: flex-end; }
+             #toast-container { left: auto; width: auto; align-items: flex-end; }
         }
 
         .toast {
             pointer-events: auto;
- background: rgba(15, 15, 15, 0.95);
+            background: rgba(15, 15, 15, 0.95);
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-left: 4px solid var(--color-primary);
             color: white;
- padding: 16px 20px;
+            padding: 16px 20px;
             border-radius: 12px;
             font-family: var(--font-readable);
             font-size: 0.9em;
@@ -504,57 +479,69 @@
             display: flex;
             align-items: center;
             width: fit-content;
- transform: translateY(50px);
+            transform: translateY(50px);
             opacity: 0;
             transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
- }
+        }
 
-        .toast.show { transform: translateY(0); opacity: 1;
- }
-        .toast img { width: 22px; height: 22px; margin-right: 12px;
- }
-        .toast-title { font-weight: 800; color: var(--color-primary); margin-bottom: 2px; font-size: 1.05em;
- }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast img { width: 22px; height: 22px; margin-right: 12px; }
+        .toast-title { font-weight: 800; color: var(--color-primary); margin-bottom: 2px; font-size: 1.05em; }
         
         /* ===================================== */
         /* МОБИЛЬНЫЕ ПРАВКИ (MAX-WIDTH: 600PX) */
         /* ===================================== */
         @media (max-width: 600px) {
-            /* ИЗМЕНЕНО 1: Шапка стала ещё короче */
+            /* ПРАВКА 1: Шапка стала значительно короче (было 240px, стало 190px) */
             .header-banner { 
-               
- height: 240px; 
-                padding-bottom: 20px; /* Уменьшаем внутренний отступ снизу */
+                height: 190px; 
+                padding-bottom: 10px;
             }
             
-            /* ИЗМЕНЕНО 2: Добавляем отступ для основного контейнера, чтобы он не сливался */
+            /* Подстраиваем отступ контейнера */
             .main-container {
-                margin-top: -30px;
- /* Смещаем вверх, чтобы "заехать" под скошенный край шапки */
-                padding: 15px 15px 40px 15px;
- /* Добавляем отступы по бокам и снизу, верхний отступ перенесен в margin-top */
+                margin-top: -20px; 
+                padding: 10px 15px 40px 15px;
             }
             
             .header-banner h1 { 
                 flex-direction: column;
- gap: 5px; 
+                gap: 5px; 
             }
-            .apple-icon { margin-bottom: 5px;
- }
+            .apple-icon { margin-bottom: 5px; }
             
-            .tab-content { padding: 25px 15px;
- }
-            .tab-buttons { display: grid; grid-template-columns: 1fr 1fr;
- gap: 8px; }
-            .tab-button { font-size: 1rem;
- padding: 12px 15px; flex-direction: column; align-items: center; text-align: center; justify-content: center;}
-            .tab-button.active { padding-left: 15px;
- padding-top: 15px; }
-            .tab-button img { margin-right: 0;
- margin-bottom: 5px; height: 22px; }
+            .tab-content { padding: 25px 15px; }
             
-            .download-button, .link-button { width: 100%;
- font-size: 0.9rem; }
+            .tab-buttons { 
+                display: grid; 
+                grid-template-columns: 1fr 1fr;
+                gap: 8px; 
+                /* ПРАВКА 2: Добавлен отступ снизу для разделения кнопок и контента */
+                margin-bottom: 25px; 
+            }
+            
+            .tab-button { 
+                font-size: 1rem;
+                padding: 12px 15px; 
+                flex-direction: column; 
+                align-items: center; 
+                text-align: center; 
+                justify-content: center;
+            }
+            .tab-button.active { 
+                padding-left: 15px;
+                padding-top: 15px; 
+            }
+            .tab-button img { 
+                margin-right: 0;
+                margin-bottom: 5px; 
+                height: 22px; 
+            }
+            
+            .download-button, .link-button { 
+                width: 100%;
+                font-size: 0.9rem; 
+            }
         }
     </style>
 </head>
@@ -570,8 +557,7 @@
         <div class="header-content" id="headerContent">
             <h1>
                 <img src="apple_icon.png" alt="Apple" class="apple-icon" onerror="this.style.display='none'"> 
-        
-         <span id="typewriter-h1"></span><span class="typing-cursor" id="cursor-h1"></span>
+                <span id="typewriter-h1"></span><span class="typing-cursor" id="cursor-h1"></span>
             </h1>
             <p>
                 <span id="typewriter-p"></span><span class="typing-cursor" style="display:none" id="cursor-p"></span>
@@ -581,22 +567,19 @@
     
     <div class="main-container">
         <div class="tab-buttons">
-   
-          <button class="tab-button active ripple-btn" onclick="openTab(event, 'Description')">
+            <button class="tab-button active ripple-btn" onclick="openTab(event, 'Description')">
                 <img src="icon_clip_red.png" alt="Info" onerror="this.src='https://cdn-icons-png.flaticon.com/512/10692/10692823.png'">
                 О Пресете
             </button>
             <button class="tab-button ripple-btn" onclick="openTab(event, 'Download')">
                 <img src="icon_book_open.png" alt="Download" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2983/2983816.png'">
-   
-             Скачивание
+                Скачивание
             </button>
             <button class="tab-button ripple-btn" onclick="openTab(event, 'Guides')">
                 <img src="icon_book_closed_red.png" alt="Guides" onerror="this.src='https://cdn-icons-png.flaticon.com/512/10743/10743169.png'">
                 Гайды
             </button>
-            
- <button class="tab-button ripple-btn" onclick="openTab(event, 'Contacts')">
+            <button class="tab-button ripple-btn" onclick="openTab(event, 'Contacts')">
                 <img src="icon_bag_green.png" alt="Contacts" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3059/3059446.png'">
                 Контакты
             </button>
@@ -605,129 +588,109 @@
         <div class="tab-content-wrapper">
             <div id="Description" class="tab-content active">
                 <h2>
- 
                     <img src="icon_clip.png" alt="Clip" class="icon-clip" onerror="this.style.display='none'"> 
                     О Пресете
                 </h2>
                 
-                <p style="text-align: left;
- padding: 0 10px; line-height: 1.9;">
+                <p style="text-align: left; padding: 0 10px; line-height: 1.9;">
                     Модульный пресет с огромным количеством тоглов, основанный на ядре Селии. Оптимизирован для <b style="color:white">максимального погружения</b>.
                     <br><br>
-                    <span style="color: var(--color-primary);
- font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; border-bottom: 2px solid var(--color-secondary);">Поддерживаемые модели:</span><br>
-                    <span style="display: block;
- margin-top: 10px; font-size: 0.95em;">
+                    <span style="color: var(--color-primary); font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; border-bottom: 2px solid var(--color-secondary);">Поддерживаемые модели:</span><br>
+                    <span style="display: block; margin-top: 10px; font-size: 0.95em;">
                         ✨ Gemini 2.5/3.0 <br> 
                         ✨ Claude Opus/Sonnet 4.5 <br> 
                         ✨ Sonnet 4, Opus 4.1
-            
-         </span>
+                    </span>
                 </p>
             </div>
 
             <div id="Download" class="tab-content">
                 <h2>
                     <img src="icon_book_open_red.png" alt="Files" onerror="this.style.display='none'">
-           
-           Файлы и RegEx
+                    Файлы и RegEx
                 </h2>
                 <p>
                     Пресет и необходимые файлы RegEx для корректной работы.
                 </p>
-              
-   
-                <a class="download-button ripple-btn" href="%D0%AF%D0%B1%D0%BB%D0%BE%D1%87%D0%BD%D1%8B%D0%B9%20V1.581.json" download onclick="createSparks(event);
- showToast('Загрузка началась', 'Файл V1.581 скачивается...')">
+                
+                <a class="download-button ripple-btn" href="%D0%AF%D0%B1%D0%BB%D0%BE%D1%87%D0%BD%D1%8B%D0%B9%20V1.581.json" download onclick="createSparks(event); showToast('Загрузка началась', 'Файл V1.581 скачивается...')">
                     <img src="icon_button_green.png" alt="DL" onerror="this.style.display='none'">
                     СКАЧАТЬ V1.581
                 </a>
                 
-                <h3 style="color: #888;
- text-transform: uppercase; font-size: 0.9em; letter-spacing: 2px; margin-top: 40px;">Файлы Регулярных Выражений</h3>
+                <h3 style="color: #888; text-transform: uppercase; font-size: 0.9em; letter-spacing: 2px; margin-top: 40px;">Файлы Регулярных Выражений</h3>
                 <div class="no-bullets"> 
-                    <a class="link-button ripple-btn" href="regex-renette_html_depth_5_vanquisher__.json" download onclick="createSparks(event);
- showToast('RegEx скачивается', 'Depth 5 загружается...')">
+                    <a class="link-button ripple-btn" href="regex-renette_html_depth_5_vanquisher__.json" download onclick="createSparks(event); showToast('RegEx скачивается', 'Depth 5 загружается...')">
                         <img src="leaf_red.png" alt="File" onerror="this.style.display='none'">
                         <span>Скачать Renette HTML Depth 5</span>
                     </a> 
-                    
- <a class="link-button ripple-btn" href="regex-renette_hidethink.json" download onclick="createSparks(event); showToast('RegEx скачивается', 'Hide Think загружается...')">
+                    <a class="link-button ripple-btn" href="regex-renette_hidethink.json" download onclick="createSparks(event); showToast('RegEx скачивается', 'Hide Think загружается...')">
                         <img src="leaf_green.png" alt="File" onerror="this.style.display='none'">
                         <span><b style="color:var(--color-primary)">Опционально:</b> Renette Hide Think</span>
                     </a>
-               
-  </div>
+                </div>
             </div>
             
             <div id="Guides" class="tab-content">
                 <h2>
                     <img src="icon_book_closed.png" alt="Guides" onerror="this.style.display='none'"> 
                     Инструкции
- 
                 </h2>
                 <p>
                     Правильная установка — залог успеха. Обязательно ознакомьтесь с гайдом перед использованием.
                 </p>
                 
-       
-          <div class="no-bullets"> 
-                    <a class="link-button ripple-btn" href="https://sites.google.com/view/testijhfrr/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F-%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0#h.t3t6sw19ia3y" target="_blank">
+                <div class="no-bullets"> 
+                    <a class="link-button ripple-btn" href="https://sites.google.com/view/testijhfrr/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F-%D1%81%D1%82%D1%80%D0%B0%D0%B0%D0%BD%D0%B8%D1%86%D0%B0#h.t3t6sw19ia3y" target="_blank">
                         <img src="sheets.png" alt="Guide" onerror="this.style.display='none'"> 
                         Гайд по установке
-           
-          </a>
+                    </a>
                 </div>
             </div>
 
             <div id="Contacts" class="tab-content">
                 <h2>
                     <img src="icon_bag.png" alt="Contact" onerror="this.style.display='none'"> 
-         
-           Связь с Автором
+                    Связь с Автором
                 </h2>
                 <p>Следите за обновлениями и задавайте вопросы в нашем сообществе.</p>
                 
                 <div class="no-bullets"> 
-             
-        <a class="link-button ripple-btn" href="https://t.me/YablochnyAI" target="_blank">
+                    <a class="link-button ripple-btn" href="https://t.me/YablochnyAI" target="_blank">
                         <img src="icon_tg_green.png" alt="TG" onerror="this.style.display='none'">
                         Телеграм Канал
                     </a>
-                 
-    <a class="link-button ripple-btn" href="https://t.me/YablochnyChat" target="_blank">
+                    <a class="link-button ripple-btn" href="https://t.me/YablochnyChat" target="_blank">
                         <img src="icon_tg.png" alt="Chat" onerror="this.style.display='none'">
                         Чат Поддержки
                     </a>
                 </div>
-     
-        </div>
+            </div>
         </div>
     </div>
 
     <footer>
-        &copy;
- 2025 Яблочный Пресет
+        &copy; 2025 Яблочный Пресет
     </footer>
 
     <script>
         // === ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК ===
         function openTab(evt, tabName) {
             var i, tabcontent, tablinks;
- tabcontent = document.getElementsByClassName("tab-content");
+            tabcontent = document.getElementsByClassName("tab-content");
             for (i = 0; i < tabcontent.length; i++) {
                 tabcontent[i].style.display = "none";
- tabcontent[i].classList.remove('active');
+                tabcontent[i].classList.remove('active');
             }
             tablinks = document.getElementsByClassName("tab-button");
- for (i = 0; i < tablinks.length; i++) {
+            for (i = 0; i < tablinks.length; i++) {
                 tablinks[i].classList.remove("active");
- }
+            }
             var selectedTab = document.getElementById(tabName);
             selectedTab.style.display = "block";
- // Небольшая задержка для запуска анимации CSS
+            // Небольшая задержка для запуска анимации CSS
             setTimeout(() => { selectedTab.classList.add('active'); }, 10);
- evt.currentTarget.classList.add("active");
+            evt.currentTarget.classList.add("active");
         }
         
         document.addEventListener('DOMContentLoaded', function() {
@@ -735,100 +698,108 @@
             setTimeout(() => document.getElementById('Description').classList.add('active'), 10);
             startTypewriter();
         });
- // === 1. АНИМИРОВАННЫЙ ФОН (ЧАСТИЦЫ) ===
+
+        // === 1. АНИМИРОВАННЫЙ ФОН (ЧАСТИЦЫ) ===
         const canvas = document.getElementById('bg-canvas');
- const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext('2d');
         let width, height;
         let particles = [];
- function resize() {
+
+        function resize() {
             width = canvas.width = window.innerWidth;
- height = canvas.height = window.innerHeight;
+            height = canvas.height = window.innerHeight;
         }
         window.addEventListener('resize', resize);
         resize();
- class Particle {
+
+        class Particle {
             constructor() {
                 this.x = Math.random() * width;
- this.y = Math.random() * height;
+                this.y = Math.random() * height;
                 this.vx = (Math.random() - 0.5) * 0.4; 
                 this.vy = (Math.random() - 0.5) * 0.4;
- this.size = Math.random() * 2.5;
+                this.size = Math.random() * 2.5;
                 this.baseAlpha = Math.random() * 0.4 + 0.1;
                 this.alpha = this.baseAlpha;
- this.pulseSpeed = 0.02 + Math.random() * 0.03;
+                this.pulseSpeed = 0.02 + Math.random() * 0.03;
                 this.pulseAngle = Math.random() * Math.PI * 2;
-                this.color = Math.random() > 0.5 ?
- '153, 255, 153' : '255, 154, 158'; // RGB
+                this.color = Math.random() > 0.5 ? '153, 255, 153' : '255, 154, 158'; // RGB
             }
             update() {
                 this.x += this.vx;
- this.y += this.vy;
+                this.y += this.vy;
                 
                 // Пульсация
                 this.pulseAngle += this.pulseSpeed;
- this.alpha = this.baseAlpha + Math.sin(this.pulseAngle) * 0.1;
+                this.alpha = this.baseAlpha + Math.sin(this.pulseAngle) * 0.1;
 
                 if (this.x < 0) this.x = width;
- if (this.x > width) this.x = 0;
+                if (this.x > width) this.x = 0;
                 if (this.y < 0) this.y = height;
- if (this.y > height) this.y = 0;
+                if (this.y > height) this.y = 0;
             }
             draw() {
                 ctx.fillStyle = `rgba(${this.color}, ${this.alpha})`;
- ctx.beginPath();
+                ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
             }
         }
         
         for (let i = 0; i < 80; i++) particles.push(new Particle());
- function animateBg() {
+
+        function animateBg() {
             ctx.clearRect(0, 0, width, height);
- particles.forEach(p => { p.update(); p.draw(); });
+            particles.forEach(p => { p.update(); p.draw(); });
             requestAnimationFrame(animateBg);
         }
         animateBg();
- // === 2. ЭФФЕКТ ПРОЖЕКТОРА ===
+
+        // === 2. ЭФФЕКТ ПРОЖЕКТОРА ===
         const spotlight = document.getElementById('spotlight');
- document.addEventListener('mousemove', (e) => {
+        document.addEventListener('mousemove', (e) => {
             spotlight.style.setProperty('--x', e.clientX + 'px');
             spotlight.style.setProperty('--y', e.clientY + 'px');
         });
- // === 3. ИСКРЫ ПРИ НАЖАТИИ ===
+
+        // === 3. ИСКРЫ ПРИ НАЖАТИИ ===
         function createSparks(e) {
             const container = document.getElementById('sparks-container');
- const rect = e.target.getBoundingClientRect();
+            const rect = e.target.getBoundingClientRect();
             // Если клик по кнопке, берем центр кнопки, если нет - координаты мыши
             const x = e.clientX;
- const y = e.clientY;
+            const y = e.clientY;
             const colors = ['#99ff99', '#ff9a9e', '#ffffff'];
- for (let i = 0; i < 25; i++) {
+
+            for (let i = 0; i < 25; i++) {
                 const spark = document.createElement('div');
- spark.classList.add('spark');
+                spark.classList.add('spark');
                 spark.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
                 spark.style.left = x + 'px';
                 spark.style.top = y + 'px';
- const angle = Math.random() * Math.PI * 2;
+                
+                const angle = Math.random() * Math.PI * 2;
                 const velocity = Math.random() * 80 + 30;
- const tx = Math.cos(angle) * velocity;
+                const tx = Math.cos(angle) * velocity;
                 const ty = Math.sin(angle) * velocity;
- spark.animate([
+
+                spark.animate([
                     { transform: 'translate(0, 0) scale(1)', opacity: 1 },
                     { transform: `translate(${tx}px, ${ty}px) scale(0)`, opacity: 0 }
                 ], {
                     duration: Math.random() * 600 + 400,
-    
-                 easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                    easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
                     fill: 'forwards'
                 });
- container.appendChild(spark);
+
+                container.appendChild(spark);
                 setTimeout(() => spark.remove(), 1000);
             }
         }
 
         // === 4. 3D НАКЛОН ШАПКИ (УЛУЧШЕННЫЙ) ===
         const headerBanner = document.getElementById('headerBanner');
- const headerContent = document.getElementById('headerContent');
+        const headerContent = document.getElementById('headerContent');
 
         headerBanner.addEventListener('mousemove', (e) => {
             // На мобильных отключаем наклон, чтобы не глючило при скролле
@@ -837,85 +808,87 @@
             const rect = headerBanner.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-       
-         
+            
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
             
             // Более мягкий наклон
             const rotateX = ((y - centerY) / centerY) * -8; 
-            
- const rotateY = ((x - centerX) / centerX) * 8;
+            const rotateY = ((x - centerX) / centerX) * 8;
 
             headerContent.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
         });
- headerBanner.addEventListener('mouseleave', () => {
+
+        headerBanner.addEventListener('mouseleave', () => {
              headerContent.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
         });
- // === 5. RIPPLE ЭФФЕКТ ===
+
+        // === 5. RIPPLE ЭФФЕКТ ===
         document.querySelectorAll('.ripple-btn').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 let rect = e.target.getBoundingClientRect();
                 let x = e.clientX - rect.left;
                 let y = e.clientY - rect.top;
-          
-              let ripples = document.createElement('span');
+                
+                let ripples = document.createElement('span');
                 ripples.style.left = x + 'px';
                 ripples.style.top = y + 'px';
                 ripples.classList.add('ripple');
                 this.appendChild(ripples);
-                setTimeout(() => { 
- ripples.remove(); }, 600);
+                setTimeout(() => { ripples.remove(); }, 600);
             });
         });
- // === 6. ЭФФЕКТ ПЕЧАТНОЙ МАШИНКИ ===
+
+        // === 6. ЭФФЕКТ ПЕЧАТНОЙ МАШИНКИ ===
         function typeWriter(elementId, text, speed, callback) {
             let i = 0;
- let elem = document.getElementById(elementId);
+            let elem = document.getElementById(elementId);
             elem.innerHTML = "";
             function type() {
                 if (i < text.length) {
                     elem.innerHTML += text.charAt(i);
- i++;
+                    i++;
                     setTimeout(type, speed);
                 } else if (callback) {
                     callback();
- }
+                }
             }
             type();
- }
+        }
+
         function startTypewriter() {
             const h1Text = "Яблочный Пресет";
- const pText = "by kykaaj | Для SillyTavern (V 1.581)";
- typeWriter("typewriter-h1", h1Text, 60, function() {
+            const pText = "by kykaaj | Для SillyTavern (V 1.581)";
+            
+            typeWriter("typewriter-h1", h1Text, 60, function() {
                 document.getElementById('cursor-h1').style.display = 'none';
                 document.getElementById('cursor-p').style.display = 'inline-block';
                 typeWriter("typewriter-p", pText, 25, function() {
                     // Конец анимации
                 });
-  
-           });
- }
+            });
+        }
 
         // === 7. УВЕДОМЛЕНИЯ (TOAST) ===
         function showToast(title, message) {
             const container = document.getElementById('toast-container');
- const toast = document.createElement('div');
+            const toast = document.createElement('div');
             toast.className = 'toast';
             // Используем встроенную SVG иконку для надежности, если картинки нет
             const iconHTML = `<img src="icon_clip.png" onerror="this.style.display='none'">`;
- toast.innerHTML = `${iconHTML}<div class="toast-content"><div class="toast-title">${title}</div><div>${message}</div></div>`;
+            toast.innerHTML = `${iconHTML}<div class="toast-content"><div class="toast-title">${title}</div><div>${message}</div></div>`;
             container.appendChild(toast);
             
             // Запуск анимации
             requestAnimationFrame(() => {
                 toast.classList.add('show');
             });
- setTimeout(() => {
+
+            setTimeout(() => {
                 toast.classList.remove('show');
                 setTimeout(() => toast.remove(), 600);
             }, 3000);
- }
+        }
     </script>
 </body>
 </html>
