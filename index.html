@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
-    <title>Яблочный Пресет</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Pacifico&display=swap" rel="stylesheet">
+    <title>🖤 Яблочный Пресет - Тёмная тема</title>
     <style>
         /* ===================================== */
         /* БАЗОВЫЕ СТИЛИ И ЦВЕТОВАЯ СХЕМА */
@@ -12,15 +12,18 @@
         
         /* ЦВЕТА И ШРИФТЫ */
         :root {
-            --color-active: #99ff99; /* Нежно-зеленый для выделения */
+            --color-active: #99ff99; 
             --color-dark-bg: #121212;
             --color-card-bg: #1E1E1E;
-            --font-decorative: 'Lobster', cursive; /* Шрифт с завитками */
-            --font-readable: 'Montserrat', sans-serif; /* Читаемый шрифт */
+            
+            /* ВАРИАНТ ШРИФТА 2: Pacifico */
+            --font-decorative: 'Pacifico', cursive; 
+            
+            --font-readable: 'Montserrat', sans-serif;
         }
 
         body {
-            font-family: var(--font-readable); /* Применяем новый читаемый шрифт ко всему сайту */
+            font-family: var(--font-readable);
             background-color: var(--color-dark-bg);
             color: #E0E0E0;
             margin: 0;
@@ -46,7 +49,7 @@
                 gap: 20px;
             }
             .tab-buttons {
-                min-width: 220px; /* Чуть шире для нового шрифта */
+                min-width: 220px;
                 flex-direction: column;
                 position: sticky; 
                 top: 20px;
@@ -74,21 +77,14 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ШАПКА (ИЗМЕНЕНО) */
+        /* ШАПКА */
         .header-banner {
-            background-image: url('dark_header_new.jpg'); /* Убедись, что имя файла точное! */
-            
-            /* ВАЖНО: Используем cover, чтобы картинка заполнила всю высоту 350px без дыр. 
-               Тогда размытие ляжет идеально. */
+            background-image: url('dark_header_new.jpg'); /* Проверь имя файла! */
             background-size: cover; 
-            
             background-repeat: no-repeat;
             background-position: center center;
             background-color: #121212;
-            
-            /* ИЗМЕНЕНО: Высота 350px по запросу */
             height: 350px; 
-            
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -101,7 +97,7 @@
             overflow: hidden; 
         }
 
-        /* Затемнение и размытие (Работает поверх background-size: cover) */
+        /* Затемнение и размытие */
         .header-banner::before {
             content: '';
             position: absolute;
@@ -118,9 +114,9 @@
         .header-banner h1, .header-banner p { z-index: 2; position: relative; }
         
         .header-banner h1 { 
-            font-family: var(--font-decorative); /* Применяем шрифт с завитками */
-            font-weight: 400; /* У Lobster своя жирность */
-            font-size: 4em; 
+            font-family: var(--font-decorative);
+            font-weight: 400;
+            font-size: 4em; /* Для Pacifico размер чуть больше */
             text-shadow: 0 0 5px rgba(0,0,0,0.8), 0 0 20px rgba(255, 255, 255, 0.4); 
             padding: 0; 
             margin: 0;
@@ -141,11 +137,11 @@
         .header-img { 
             height: 70px; 
             margin-right: 15px; 
-            margin-bottom: 10px; /* Чуть опустил иконку относительно текста */
+            margin-bottom: 10px;
         }
 
         /* ===================================== */
-        /* СТИЛИ ВКЛАДОК (ИЗМЕНЕНО) */
+        /* СТИЛИ ВКЛАДОК */
         /* ===================================== */
         
         .tab-buttons { 
@@ -165,12 +161,9 @@
             border: none;
             border-radius: 12px;
             cursor: pointer;
-            
-            /* ИЗМЕНЕНО: Шрифт с завитками для кнопок */
             font-family: var(--font-decorative);
-            font-size: 1.3em;
+            font-size: 1.4em; /* Для Pacifico размер чуть больше */
             letter-spacing: 1px;
-            
             transition: all 0.3s ease;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             display: flex;
@@ -206,11 +199,11 @@
         }
         .tab-content.active { display: block; }
 
-        /* СТИЛИ ВНУТРИ ВКЛАДОК: ЗАГОЛОВКИ (ИЗМЕНЕНО) */
+        /* СТИЛИ ВНУТРИ ВКЛАДОК */
         .tab-content h2 {
-            font-family: var(--font-decorative); /* Шрифт с завитками */
+            font-family: var(--font-decorative);
             font-weight: 400;
-            font-size: 2.2em;
+            font-size: 2.4em; /* Для Pacifico размер чуть больше */
             color: var(--color-active); 
             border-bottom: 2px dashed #424242; 
             padding-bottom: 20px;
@@ -237,38 +230,48 @@
         }
         
         /* ===================================== */
-        /* КНОПКА СКАЧАТЬ (ИЗМЕНЕНО - УБРАНА КАРТИНКА) */
+        /* НОВЫЕ СТИЛИ КНОПОК (ИЗМЕНЕНО) */
         /* ===================================== */
+        
+        /* ГЛАВНАЯ КНОПКА СКАЧАТЬ */
         .download-button {
-            display: flex; align-items: center; justify-content: center; width: 95%; max-width: 420px; margin: 30px auto; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
             
-            /* ИЗМЕНЕНО: Убрана картинка, добавлен зеленый градиент */
-            background: linear-gradient(45deg, #2E7D32, #66BB6A);
+            /* ИЗМЕНЕНО: Уменьшена ширина и гарантировано центрирование */
+            width: 90%; 
+            max-width: 380px; /* Было 420px */
+            margin: 25px auto; /* auto по бокам центрирует */
+            
+            /* ИЗМЕНЕНО: Нежный красно-зеленый градиент (слева направо) */
+            background: linear-gradient(90deg, #ff9a9e 0%, #a8e6cf 100%);
             background-size: 200% auto;
             
             transition: all 0.3s ease; 
             color: white; 
-            
-            /* Для кнопки оставил читаемый шрифт, но сделал жирнее */
             font-family: var(--font-readable); 
             font-weight: 800; 
             font-size: 1.3em;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-
-            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-            padding: 20px 25px; text-decoration: none; border-radius: 12px; 
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5); /* Тень для текста, чтобы читался на светлом */
+            padding: 20px 25px; 
+            text-decoration: none; 
+            border-radius: 12px; 
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); 
         }
-        /* АНИМАЦИЯ КНОПКИ */
+        
+        /* АНИМАЦИЯ ГЛАВНОЙ КНОПКИ */
         .download-button:hover {
-            background-position: right center; /* Эффект переливания градиента */
+            background-position: right center;
             transform: translateY(-3px) scale(1.02); 
-            box-shadow: 0 10px 20px rgba(102, 187, 106, 0.4); 
+            /* Тень при наведении тоже цветная */
+            box-shadow: 0 10px 25px rgba(168, 230, 207, 0.5); 
         }
         .download-button img { height: 32px; margin-right: 15px; filter: drop-shadow(0 0 2px rgba(0,0,0,0.5)); } 
         
-        /* КОНТАКТЫ И ССЫЛКИ */
+        /* КОНТАКТЫ И ССЫЛКИ (БЫВШИЕ СЕРЫЕ КНОПКИ) */
         .no-bullets { 
             list-style: none; 
             padding: 0;
@@ -280,19 +283,26 @@
             align-items: center; 
             justify-content: left; 
             padding-left: 30px; 
-            background-color: #303030; color: #E0E0E0; padding-top: 14px; padding-bottom: 14px; text-decoration: none; border-radius: 10px; 
+            
+            /* ИЗМЕНЕНО: Вместо серого - глубокий темный цветной градиент */
+            background: linear-gradient(135deg, #1e3c2e, #2c3e50);
+            
+            color: #E0E0E0; 
+            padding-top: 14px; padding-bottom: 14px; text-decoration: none; border-radius: 10px; 
             font-weight: 600; 
             transition: all 0.3s; 
             margin-bottom: 12px; 
             width: 95%; max-width: 380px; 
             margin: 12px auto; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.05); /* Тонкая рамка для четкости */
         }
         .link-button:hover { 
-            background-color: #424242; 
+            /* При наведении становятся ярче */
+            background: linear-gradient(135deg, #2E7D32, #1e3c2e);
             transform: translateX(5px); 
-            box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.4); 
-            color: var(--color-active);
+            box-shadow: 3px 3px 15px rgba(46, 125, 50, 0.4); 
+            color: white;
         }
         
         .link-button img { 
@@ -360,10 +370,10 @@
             
             <h3>Файлы Регулярных Выражений (RegEx)</h3>
             <div class="no-bullets"> 
-                <a class="link-button" href="regex-celia_html_depth_5_vanquisher__.json" download>
+                <a class="link-button" href="regex-renette_html_depth_5_vanquisher__.json" download>
                     1. Скачать Celia HTML Depth 5 Vanquisher
                 </a> 
-                <a class="link-button" href="regex-celia_hidethink.json" download>
+                <a class="link-button" href="regex-renette_hidethink.json" download>
                     2. Скачать Celia Hide Think
                 </a>
             </div>
