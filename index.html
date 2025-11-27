@@ -91,8 +91,13 @@
             padding-bottom: 15px;
             margin-top: 0;
         }
+
+        /* НОВОЕ: Тень для нижнего текста, чтобы не сливался */
+        .card p, .card ul li {
+            text-shadow: 0 0 1px #000;
+        }
         
-        /* КНОПКА: ФОН-КАРТИНКА + УЛУЧШЕННЫЙ ТЕКСТ */
+        /* КНОПКА: ФОН-КАРТИНКА + ПЛАВНЫЙ ПЕРЕХОД + УЛУЧШЕННЫЙ ТЕКСТ */
         .download-button {
             display: flex; 
             align-items: center;
@@ -103,34 +108,37 @@
             max-width: 400px; 
             margin: 10px auto; 
             
-            /* ФОН-КАРТИНКА + ЛЕГКОЕ ЗАТЕМНЕНИЕ */
-            background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('download_button_image.png'); /* Слой затемнения */
+            /* ФОН-КАРТИНКА + ПЛАВНОСТЬ */
+            background-image: url('download_button_image.png'); 
             background-size: cover; 
             background-position: center;
             
-            /* СТИЛИЗАЦИЯ ТЕКСТА (БЕЛЫЙ КОНТУР И СВЕЧЕНИЕ) */
+            /* Плавное затемнение картинки и переход */
+            filter: brightness(0.85); /* Изначальное небольшое затемнение */
+            transition: filter 0.3s ease, transform 0.2s, box-shadow 0.2s; /* Плавный переход */
+            
+            /* СТИЛИЗАЦИЯ ТЕКСТА (БЕЗ ЧЁРНОЙ ОБВОДКИ) */
             color: white; 
             font-weight: 900; 
             font-family: 'Roboto', sans-serif;
             
-            /* МНОЖЕСТВЕННАЯ ТЕНЬ: ИМИТАЦИЯ БЕЛОГО КОНТУРА И ЯРКОЕ СВЕЧЕНИЕ */
+            /* МЯГКАЯ ТЕНЬ И СВЕЧЕНИЕ (ТИХИЙ ШЕЙД) */
             text-shadow: 
-                -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, /* Черный контур */
-                0 0 8px rgba(255, 255, 255, 0.8), /* Белое свечение */
-                0 0 15px rgba(255, 255, 255, 0.5); /* Более мягкое свечение */
+                0 0 4px #000, /* Мягкая тёмная тень для контраста */
+                0 0 10px rgba(255, 255, 255, 0.8), /* Яркое белое свечение */
+                0 0 20px rgba(255, 255, 255, 0.5); /* Более мягкое свечение */
             
             /* ВИЗУАЛ */
             padding: 18px 20px; 
             text-decoration: none;
             border-radius: 12px; 
             font-size: 1.3em; 
-            transition: all 0.2s;
             box-shadow: 0 4px 0 rgba(0, 0, 0, 0.5); 
         }
         .download-button:hover {
-            opacity: 1; /* Убираем прозрачность, чтобы сделать ярче */
-            background-image: url('download_button_image.png'); /* Убираем затемнение при наведении */
+            filter: brightness(1); /* Плавный переход к полной яркости (0.85 -> 1) */
             transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6); 
         }
         .download-button:active {
             transform: translateY(2px); 
