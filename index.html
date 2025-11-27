@@ -8,9 +8,9 @@
     <style>
         /* БАЗОВЫЕ СТИЛИ И ФОН (ТЕМНАЯ ТЕМА) */
         body {
-            font-family: 'Roboto', sans-serif; /* Ваш новый шрифт */
-            background-color: #121212; /* Очень темный фон */
-            color: #E0E0E0; /* Светлый текст */
+            font-family: 'Roboto', sans-serif;
+            background-color: #121212;
+            color: #E0E0E0;
             margin: 0;
             padding: 0;
             line-height: 1.6;
@@ -22,7 +22,7 @@
             padding: 20px;
         }
 
-        /* АНИМАЦИИ (Остаются, но цвет свечения поменяем) */
+        /* АНИМАЦИИ */
         @keyframes bounce {
             0%, 100%, 20%, 50%, 80% { transform: translateY(0); }
             40% { transform: translateY(-5px); }
@@ -33,7 +33,7 @@
             display: inline-block;
             animation: bounce 2s infinite; 
             vertical-align: middle; 
-            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.4)); 
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.4));
         }
         .header-img {
             height: 60px;
@@ -42,7 +42,7 @@
 
         /* ШАПКА С КАРТИНКОЙ */
         .header-banner {
-            /* ЗАМЕНИТЕ 'dark_header_bg.jpg' НА ИМЯ ВАШЕГО ФАЙЛА-ШАПКИ */
+            /* Убедитесь, что файл 'dark_header_bg.jpg' загружен в репозиторий! */
             background-image: url('dark_header_bg.jpg'); 
             background-size: cover; 
             background-position: center; 
@@ -56,7 +56,6 @@
             border-radius: 15px;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5); 
             margin-bottom: 40px;
-            transition: all 0.3s;
         }
         .header-banner h1 {
             margin: 0;
@@ -74,7 +73,7 @@
 
         /* КАРТОЧКИ (ТЕМНЫЕ) */
         .card {
-            background-color: #1E1E1E; 
+            background-color: #1E1E1E;
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
@@ -87,44 +86,50 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
         }
         .card h2 {
-            color: #90CAF9; 
+            color: #90CAF9;
             border-bottom: 2px dashed #424242; 
             padding-bottom: 15px;
             margin-top: 0;
         }
         
-        /* СТИЛЬ КНОПКИ-КАРТИНКИ (ТОЛЬКО ДЛЯ ОСНОВНОГО ПРЕСЕТА) */
-        .image-button {
-            display: inline-block; /* Позволяет применять transform */
-            border: none; /* Убираем стандартную рамку */
-            padding: 0;
-            background: none;
-            cursor: pointer;
-            transition: transform 0.2s;
-            max-width: 100%; /* Чтобы кнопка не вылезала за пределы карточки */
-            height: auto; /* Сохраняем пропорции */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Тень для объема */
-            border-radius: 10px; /* Если ваша картинка не скруглена, CSS скруглит */
-            overflow: hidden; /* Обрезаем углы, если картинка не имеет прозрачности */
+        /* НОВАЯ КНОПКА: ФОН-КАРТИНКА + ТЕКСТ */
+        .download-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center; 
+            
+            /* СТИЛИЗАЦИЯ ФОНА КАРТИНКОЙ */
+            background-image: url('button_background.png'); /* <<< ВАША КАРТИНКА! */
+            background-size: cover; /* Заполняем всю кнопку картинкой */
+            background-position: center;
+            
+            /* СТИЛИЗАЦИЯ ТЕКСТА */
+            color: white; /* Цвет текста, который будет поверх картинки */
+            text-shadow: 0 0 5px #000; /* Тень для текста, чтобы он читался на любом фоне */
+            
+            /* РАЗМЕР И ВИЗУАЛ */
+            padding: 15px 35px;
+            text-decoration: none;
+            border-radius: 10px; /* Скругление углов */
+            font-weight: bold;
+            font-size: 1.2em;
+            transition: all 0.2s;
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.5); /* Тень для объема */
+            margin-top: 10px;
         }
-        .image-button:hover {
+        .download-button:hover {
+            opacity: 0.9; /* Небольшая прозрачность при наведении */
             transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
         }
-        .image-button:active {
-            transform: translateY(2px);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-        .image-button img {
-            display: block; /* Убираем лишние отступы */
-            width: 100%; /* Картинка займет всю ширину ссылки */
-            height: auto;
+        .download-button:active {
+            transform: translateY(2px); 
+            box-shadow: none;
         }
 
-        /* СТИЛИ ДЛЯ КНОПОК REGEX (Остаются текстовыми) */
+        /* СТИЛИ ДЛЯ КНОПОК REGEX */
         .regex-link {
             display: block;
-            background-color: #424242; 
+            background-color: #424242;
             color: #E0E0E0;
             padding: 12px 20px;
             text-decoration: none;
@@ -178,8 +183,9 @@
             <p>
                 Ваш главный пресет для SillyTavern. Нажмите, чтобы загрузить файл JSON.
             </p>
-            <a class="image-button" href="%D0%AF%D0%B1%D0%BB%D0%BE%D1%87%D0%BD%D1%8B%D0%B9%20V1.581.json" download>
-                <img src="download_button_image.png" alt="Скачать Яблочный V1.581">
+            
+            <a class="download-button" href="%D0%AF%D0%B1%D0%BB%D0%BE%D1%87%D0%BD%D1%8B%D0%B9%20V1.581.json" download>
+                ⬇️ СКАЧАТЬ ЯБЛОЧНЫЙ V1.581
             </a>
         </div>
 
