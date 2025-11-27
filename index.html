@@ -24,7 +24,6 @@
         ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #ff9a9e, #99ff99); border-radius: 5px; }
         ::-webkit-scrollbar-thumb:hover { background: #ffffff; }
 
-        /* ВЫДЕЛЕНИЕ ТЕКСТА */
         ::selection { background: var(--color-active); color: #000; }
 
         body {
@@ -48,7 +47,7 @@
             pointer-events: none;
         }
 
-        /* ЭФФЕКТ ПРОЖЕКТОРА (СЛЕДИТ ЗА МЫШЬЮ) */
+        /* ЭФФЕКТ ПРОЖЕКТОРА */
         #spotlight {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -64,10 +63,8 @@
             display: flex; 
             flex-direction: column; 
             align-items: center;
-            /* 3D removed for container, kept for structure */
         }
 
-        /* АДАПТИВНОСТЬ */
         @media (min-width: 768px) {
             .main-container {
                 flex-direction: row;
@@ -106,6 +103,14 @@
             100% { transform: translateY(0px); }
         }
 
+        /* Эффект курсора печатной машинки */
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s step-end infinite;
+            color: var(--color-active);
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
         /* ШАПКА */
         .header-banner {
             background-image: url('dark_header_new.jpg'); 
@@ -119,12 +124,11 @@
             justify-content: center;
             align-items: center;
             color: white;
-            border-radius: 0 0 40px 40px; /* Скруглим только низ */
+            border-radius: 0 0 40px 40px;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
             margin-bottom: 40px;
             position: relative;
             overflow: hidden; 
-            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         .header-banner::before {
@@ -140,7 +144,10 @@
         .header-content {
             z-index: 2;
             position: relative;
-            animation: float 6s ease-in-out infinite;
+            /* Убрал анимацию float отсюда, чтобы не конфликтовала с печатанием, добавим классу active позже */
+        }
+        .header-content.floater {
+             animation: float 6s ease-in-out infinite;
         }
         
         .header-banner h1 { 
@@ -151,6 +158,10 @@
             margin: 0;
             line-height: 1.2;
             color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
         }
         .header-banner p { 
             font-size: 1.3em; 
@@ -162,18 +173,14 @@
             background: linear-gradient(90deg, #fff, #99ff99);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            min-height: 1.5em; /* Чтобы не прыгало при печати */
         }
         
         .apple-icon { 
-            display: inline-block; 
-            vertical-align: middle; 
+            height: 70px; 
             filter: drop-shadow(0 0 15px rgba(153, 255, 153, 0.5));
             animation: bounce 3s infinite; 
-        }
-        .header-img { 
-            height: 70px; 
-            margin-right: 15px; 
-            margin-bottom: 15px;
+            /* Скрываем иконку до старта печати, если нужно, или оставляем */
         }
 
         /* ===================================== */
@@ -199,32 +206,42 @@
             font-family: var(--font-decorative);
             font-size: 1.4em;
             letter-spacing: 1px;
-            transition: all 0.1s ease-out; /* Быстрая реакция для 3D */
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             display: flex;
             align-items: center;
             justify-content: flex-start; 
             position: relative;
             overflow: hidden;
-            transform-style: preserve-3d; /* Важно для 3D */
-            will-change: transform;
         }
 
-        /* Блик на кнопке */
-        .tab-button::before {
+        /* НОВЫЙ ЭФФЕКТ ДЛЯ КНОПОК (Блик/Шиммер) */
+        .tab-button::after {
             content: '';
             position: absolute;
-            top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
             transform: skewX(-25deg);
-            transition: 0.5s;
+            pointer-events: none;
+            transition: none;
         }
-        .tab-button:hover::before { left: 150%; transition: 0.7s; }
+
+        .tab-button:hover::after {
+            animation: shimmer 0.7s;
+        }
+
+        @keyframes shimmer {
+            100% { left: 150%; }
+        }
 
         .tab-button:hover { 
             background-color: #2a2a2a; 
-            border-color: rgba(153, 255, 153, 0.3);
-            z-index: 5;
+            border-color: rgba(153, 255, 153, 0.5);
+            transform: translateX(5px) scale(1.02);
+            box-shadow: 0 5px 15px rgba(153, 255, 153, 0.15);
         }
         
         .tab-button.active {
@@ -233,17 +250,20 @@
             box-shadow: 0 0 25px rgba(153, 255, 153, 0.5); 
             font-weight: 800;
             border: none;
-            transform: scale(1.05) translateZ(10px);
+            transform: scale(1.05);
         }
         
         .tab-button img {
             height: 32px; 
             margin-right: 15px;
             filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));
-            transform: translateZ(20px); /* Иконка ближе к зрителю */
+            transition: transform 0.3s;
+        }
+        .tab-button:hover img {
+            transform: rotate(-10deg) scale(1.1);
         }
 
-        /* КОНТЕНТ (Стеклянная панель) */
+        /* КОНТЕНТ */
         .tab-content {
             background-color: var(--color-card-bg);
             backdrop-filter: blur(20px);
@@ -264,7 +284,6 @@
             animation: fadeInScale 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* Заголовки внутри вкладок */
         .tab-content h2 {
             font-family: var(--font-decorative);
             font-weight: 400;
@@ -285,13 +304,8 @@
             height: 48px; 
             vertical-align: middle;
             margin-right: 15px; 
-            transition: transform 0.3s;
-            /* Сброс прозрачного текста для картинки */
             -webkit-text-fill-color: initial; 
             background: none;
-        }
-        .tab-content:hover h2 img {
-            transform: rotate(15deg) scale(1.2);
         }
 
         .tab-content p {
@@ -303,10 +317,7 @@
             color: #d1d1d1;
         }
         
-        /* ===================================== */
         /* КНОПКИ ДЕЙСТВИЙ */
-        /* ===================================== */
-        
         .ripple {
             position: absolute;
             border-radius: 50%;
@@ -331,7 +342,7 @@
             margin: 30px auto; 
             background: linear-gradient(90deg, #ff9a9e 0%, #a8e6cf 50%, #99ff99 100%);
             background-size: 200% auto;
-            transition: all 0.1s ease-out; /* Для магнита */
+            transition: all 0.3s ease; 
             color: #121212; 
             font-family: var(--font-readable); 
             font-weight: 800; 
@@ -342,15 +353,15 @@
             text-decoration: none; 
             border-radius: 16px; 
             box-shadow: 0 10px 25px rgba(153, 255, 153, 0.3); 
-            transform-style: preserve-3d;
         }
         
         .download-button:hover {
             background-position: right center;
-            box-shadow: 0 20px 45px rgba(168, 230, 207, 0.5); 
+            box-shadow: 0 20px 45px rgba(168, 230, 207, 0.6); 
+            transform: translateY(-3px);
             color: black;
         }
-        .download-button img { height: 32px; margin-right: 15px; transform: translateZ(10px); } 
+        .download-button img { height: 32px; margin-right: 15px; } 
         
         .no-bullets { list-style: none; padding: 0; margin: 0; }
 
@@ -381,14 +392,8 @@
             color: white;
             border-color: #99ff99;
         }
-        
-        .link-button img { 
-            height: 28px; 
-            vertical-align: middle; 
-            margin-right: 15px; 
-        }
+        .link-button img { height: 28px; margin-right: 15px; }
 
-        /* Конфетти контейнер */
         #confetti-container {
             position: fixed; top:0; left:0; width:100%; height:100%; pointer-events: none; z-index: 9999;
         }
@@ -399,6 +404,58 @@
             font-size: 0.8em;
             padding-bottom: 20px;
         }
+
+        /* ===================================== */
+        /* СТИЛЬНЫЕ УВЕДОМЛЕНИЯ (TOASTS) */
+        /* ===================================== */
+        #toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            background: rgba(18, 18, 18, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 4px solid var(--color-active);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 12px;
+            font-family: var(--font-readable);
+            font-size: 0.9em;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            min-width: 250px;
+            transform: translateX(120%);
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast img {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+        }
+        
+        .toast-content {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .toast-title {
+            font-weight: 700;
+            color: var(--color-active);
+            margin-bottom: 2px;
+        }
     </style>
 </head>
 <body>
@@ -406,32 +463,35 @@
     <div id="spotlight"></div>
     <canvas id="bg-canvas"></canvas>
     <div id="confetti-container"></div>
+    <div id="toast-container"></div>
 
     <div class="header-banner">
-        <div class="header-content glitch-wrapper">
+        <div class="header-content">
             <h1>
                 <img src="apple_icon.png" alt="Иконка яблока" class="apple-icon header-img"> 
-                <span class="glitch-text" data-text="Яблочный Пресет">Яблочный Пресет</span>
+                <span id="typewriter-h1"></span><span class="typing-cursor" id="cursor-h1"></span>
             </h1>
-            <p>by kykaaj | Для SillyTavern (V 1.581)</p>
+            <p>
+                <span id="typewriter-p"></span><span class="typing-cursor" style="display:none" id="cursor-p"></span>
+            </p>
         </div>
     </div>
     
     <div class="main-container">
         <div class="tab-buttons">
-            <button class="tab-button active ripple-btn magnetic-btn" onclick="openTab(event, 'Description')">
+            <button class="tab-button active ripple-btn" onclick="openTab(event, 'Description')">
                 <img src="icon_clip_red.png" alt="Скрепочка">
                 О Пресете
             </button>
-            <button class="tab-button ripple-btn magnetic-btn" onclick="openTab(event, 'Download')">
+            <button class="tab-button ripple-btn" onclick="openTab(event, 'Download')">
                 <img src="icon_book_open.png" alt="Книга">
                 Скачивание
             </button>
-            <button class="tab-button ripple-btn magnetic-btn" onclick="openTab(event, 'Guides')">
+            <button class="tab-button ripple-btn" onclick="openTab(event, 'Guides')">
                 <img src="icon_book_closed_red.png" alt="Закрытая книга">
                 Гайды
             </button>
-            <button class="tab-button ripple-btn magnetic-btn" onclick="openTab(event, 'Contacts')">
+            <button class="tab-button ripple-btn" onclick="openTab(event, 'Contacts')">
                 <img src="icon_bag_green.png" alt="Сумочка">
                 Контакты
             </button>
@@ -461,18 +521,18 @@
                     Пресет и необходимые файлы RegEx для корректной работы.
                 </p>
                 
-                <a class="download-button ripple-btn magnetic-btn" href="%D0%AF%D0%B1%D0%BB%D0%BE%D1%87%D0%BD%D1%8B%D0%B9%20V1.581.json" download onclick="fireConfetti(event)">
+                <a class="download-button ripple-btn" href="%D0%AF%D0%B1%D0%BB%D0%BE%D1%87%D0%BD%D1%8B%D0%B9%20V1.581.json" download onclick="handleDownload(event, 'Яблочный Пресет V1.581')">
                     <img src="icon_button_green.png" alt="Кнопка">
                     СКАЧАТЬ V1.581
                 </a>
                 
                 <h3>Файлы Регулярных Выражений</h3>
                 <div class="no-bullets"> 
-                    <a class="link-button ripple-btn" href="regex-renette_html_depth_5_vanquisher__.json" download>
+                    <a class="link-button ripple-btn" href="regex-renette_html_depth_5_vanquisher__.json" download onclick="showToast('RegEx скачивается', 'Файл Depth 5 загружается...')">
                         <img src="leaf_red.png" alt="Кнопка">
                         <span>Скачать Renette HTML Depth 5</span>
                     </a> 
-                    <a class="link-button ripple-btn" href="regex-renette_hidethink.json" download>
+                    <a class="link-button ripple-btn" href="regex-renette_hidethink.json" download onclick="showToast('RegEx скачивается', 'Файл Hide Think загружается...')">
                         <img src="leaf_green.png" alt="Кнопка">
                         <span><b style="color:var(--color-active)">Опционально:</b> Renette Hide Think</span>
                     </a>
@@ -522,6 +582,7 @@
     </footer>
 
     <script>
+        // === ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК ===
         function openTab(evt, tabName) {
             var i, tabcontent, tablinks;
             
@@ -549,9 +610,12 @@
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('Description').style.display = 'block';
             setTimeout(() => document.getElementById('Description').classList.add('active'), 10);
+            
+            // Запуск печатной машинки
+            startTypewriter();
         });
 
-        // === 1. АНИМИРОВАННЫЙ ФОН (ЧАСТИЦЫ - ОБНОВЛЕННЫЕ) ===
+        // === 1. АНИМИРОВАННЫЙ ФОН (ЧАСТИЦЫ) ===
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let width, height;
@@ -609,34 +673,7 @@
             spotlight.style.setProperty('--y', e.clientY + 'px');
         });
 
-        // === 3. МАГНИТНЫЕ КНОПКИ (НОВЫЙ PARALLAX) ===
-        const magneticBtns = document.querySelectorAll('.magnetic-btn');
-
-        magneticBtns.forEach(btn => {
-            btn.addEventListener('mousemove', function(e) {
-                const rect = this.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                // Вычисляем смещение от центра
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                
-                const deltaX = (x - centerX) / 8; // Сила смещения
-                const deltaY = (y - centerY) / 8;
-
-                const rotateX = (centerY - y) / 5; // Наклон
-                const rotateY = (x - centerX) / 5;
-
-                this.style.transform = `perspective(500px) translate(${deltaX}px, ${deltaY}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
-            });
-
-            btn.addEventListener('mouseleave', function() {
-                this.style.transform = 'perspective(500px) translate(0, 0) rotateX(0) rotateY(0) scale(1)';
-            });
-        });
-
-        // === 4. ЭФФЕКТ КОНФЕТТИ (САЛЮТ) ПРИ СКАЧИВАНИИ ===
+        // === 3. ЭФФЕКТ КОНФЕТТИ ===
         function fireConfetti(e) {
             const colors = ['#ff9a9e', '#99ff99', '#ffffff', '#a8e6cf'];
             const container = document.getElementById('confetti-container');
@@ -653,17 +690,15 @@
                 confetto.style.left = originX + 'px';
                 confetto.style.top = originY + 'px';
                 
-                // Случайный угол и скорость
                 const angle = Math.random() * Math.PI * 2;
                 const velocity = Math.random() * 100 + 50;
                 const tx = Math.cos(angle) * velocity;
-                const ty = Math.sin(angle) * velocity - 100; // Немного вверх
+                const ty = Math.sin(angle) * velocity - 100;
                 const rot = Math.random() * 360;
 
                 confetto.style.transition = 'transform 1s cubic-bezier(0.25, 1, 0.5, 1), opacity 1s';
                 container.appendChild(confetto);
 
-                // Запуск анимации
                 setTimeout(() => {
                     confetto.style.transform = `translate(${tx}px, ${ty + 200}px) rotate(${rot}deg)`;
                     confetto.style.opacity = 0;
@@ -672,8 +707,14 @@
                 setTimeout(() => confetto.remove(), 1000);
             }
         }
+        
+        // Обработчик скачивания (Конфетти + Тост)
+        function handleDownload(e, fileName) {
+            fireConfetti(e);
+            showToast("Загрузка началась", `Файл "${fileName}" скоро будет у вас!`);
+        }
 
-        // === 5. RIPPLE ЭФФЕКТ ===
+        // === 4. RIPPLE ЭФФЕКТ ===
         document.querySelectorAll('.ripple-btn').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 let x = e.clientX - e.target.getBoundingClientRect().left;
@@ -686,12 +727,76 @@
                 setTimeout(() => { ripples.remove(); }, 600);
             });
         });
-        // === 5. TOAST NOTIFICATION ===
-        function showToast(message) {
-            var x = document.getElementById("toast");
-            x.textContent = message;
-            x.className = "show";
-            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+
+        // === 5. ЭФФЕКТ ПЕЧАТНОЙ МАШИНКИ (НОВЫЙ) ===
+        function typeWriter(elementId, text, speed, callback) {
+            let i = 0;
+            let elem = document.getElementById(elementId);
+            elem.innerHTML = "";
+            
+            function type() {
+                if (i < text.length) {
+                    elem.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                } else if (callback) {
+                    callback();
+                }
+            }
+            type();
+        }
+
+        function startTypewriter() {
+            const h1Text = "Яблочный Пресет";
+            const pText = "by kykaaj | Для SillyTavern (V 1.581)";
+            
+            // Печатаем заголовок
+            typeWriter("typewriter-h1", h1Text, 70, function() {
+                document.getElementById('cursor-h1').style.display = 'none'; // Скрыть курсор заголовка
+                document.getElementById('cursor-p').style.display = 'inline-block'; // Показать курсор описания
+                
+                // Печатаем описание
+                typeWriter("typewriter-p", pText, 30, function() {
+                     // Можно скрыть курсор описания или оставить мигать
+                     // document.getElementById('cursor-p').style.display = 'none';
+                     
+                     // Включаем плавание заголовка после завершения печати
+                     document.querySelector('.header-content').classList.add('floater');
+                });
+            });
+        }
+
+        // === 6. КРАСИВЫЕ УВЕДОМЛЕНИЯ (TOAST) ===
+        function showToast(title, message) {
+            const container = document.getElementById('toast-container');
+            
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            
+            const icon = `<img src="icon_clip.png">`; // Используем существующую иконку
+            
+            toast.innerHTML = `
+                ${icon}
+                <div class="toast-content">
+                    <div class="toast-title">${title}</div>
+                    <div>${message}</div>
+                </div>
+            `;
+            
+            container.appendChild(toast);
+            
+            // Анимация появления
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100);
+            
+            // Удаление
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    toast.remove();
+                }, 500);
+            }, 4000);
         }
     </script>
 </body>
