@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Pacifico&display=swap" rel="stylesheet">
     <title>Яблочный Пресет</title>
     <style>
@@ -12,13 +11,11 @@
         /* ===================================== */
         :root {
             --color-active: #99ff99; 
-            --color-success: #00c853;
             --color-accent-red: #ff9a9e;
             --color-dark-bg: #121212;
             --color-card-bg: rgba(30, 30, 30, 0.6);
             --font-decorative: 'Pacifico', cursive; 
             --font-readable: 'Montserrat', sans-serif;
-            --cursor-size: 20px;
         }
 
         /* КАСТОМНЫЙ СКРОЛЛБАР */
@@ -28,11 +25,6 @@
         ::-webkit-scrollbar-thumb:hover { background: #ffffff; }
 
         ::selection { background: var(--color-active); color: #000; }
-        
-        /* Скрываем стандартный курсор, чтобы показать кастомный */
-        body, a, button {
-            cursor: none !important;
-        }
 
         body {
             font-family: var(--font-readable);
@@ -45,6 +37,7 @@
             font-weight: 400;
             overflow-x: hidden;
             position: relative;
+            /* Вернули стандартный курсор */
         }
 
         /* АНИМИРОВАННЫЙ ФОН (КАНВАС) */
@@ -62,29 +55,6 @@
             background: radial-gradient(600px circle at var(--x, 50%) var(--y, 50%), rgba(153, 255, 153, 0.07), transparent 40%);
             z-index: -1;
             pointer-events: none;
-        }
-        
-        /* === НОВЫЙ КАСТОМНЫЙ КУРСОР === */
-        .custom-cursor {
-            position: fixed;
-            width: var(--cursor-size);
-            height: var(--cursor-size);
-            border-radius: 50%;
-            background-color: rgba(153, 255, 153, 0.6);
-            box-shadow: 0 0 15px rgba(153, 255, 153, 0.8);
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: width 0.3s, height 0.3s, background-color 0.3s;
-            mix-blend-mode: screen;
-        }
-        
-        /* Состояние курсора при наведении на активные элементы */
-        .custom-cursor.hovered {
-            width: 40px;
-            height: 40px;
-            background-color: rgba(255, 154, 158, 0.5); /* Немного красного при наведении */
-            box-shadow: 0 0 25px rgba(255, 154, 158, 0.8);
         }
 
         .main-container {
@@ -128,12 +98,6 @@
             to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-        
         /* Новая анимация для иконок в заголовках (медленное парение) */
         @keyframes float-slight {
             0% { transform: translateY(0px) rotate(0deg); }
@@ -166,7 +130,9 @@
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
             margin-bottom: 40px;
             position: relative;
-            overflow: hidden; 
+            overflow: hidden;
+            /* Важно для 3D эффекта наклона */
+            perspective: 1000px; 
         }
 
         .header-banner::before {
@@ -176,15 +142,16 @@
             backdrop-filter: blur(5px); 
             -webkit-backdrop-filter: blur(5px); 
             background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7)); 
-            z-index: 1; 
+            z-index: 1;
+            pointer-events: none; 
         }
         
         .header-content {
             z-index: 2;
             position: relative;
-        }
-        .header-content.floater {
-             animation: float 6s ease-in-out infinite;
+            /* Плавность для 3D наклона */
+            transition: transform 0.1s ease-out;
+            transform-style: preserve-3d;
         }
         
         .header-banner h1 { 
@@ -199,6 +166,7 @@
             align-items: center;
             justify-content: center;
             gap: 15px;
+            transform: translateZ(20px); /* Выдвигаем текст вперед в 3D */
         }
         .header-banner p { 
             font-size: 1.3em; 
@@ -211,6 +179,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             min-height: 1.5em;
+            transform: translateZ(10px); /* Выдвигаем текст вперед в 3D */
         }
         
         .apple-icon { 
@@ -231,11 +200,6 @@
             max-width: 350px; 
         }
 
-        /* Добавляем класс hover-target для кастомного курсора */
-        .tab-button, .download-button, .link-button {
-            /* ... существующие стили ... */
-        }
-
         .tab-button {
             background-color: rgba(30, 30, 30, 0.6);
             backdrop-filter: blur(12px);
@@ -243,7 +207,7 @@
             padding: 18px 25px;
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 16px;
-            /* cursor: pointer; Убрано, так как глобально скрыт */
+            cursor: pointer;
             font-family: var(--font-decorative);
             font-size: 1.4em;
             letter-spacing: 1px;
@@ -361,7 +325,7 @@
         }
         
         /* ===================================== */
-        /* КНОПКИ ДЕЙСТВИЙ И НОВЫЙ ЭФФЕКТ УСПЕХА */
+        /* КНОПКИ ДЕЙСТВИЙ */
         /* ===================================== */
         .ripple {
             position: absolute;
@@ -398,8 +362,6 @@
             text-decoration: none; 
             border-radius: 16px; 
             box-shadow: 0 10px 25px rgba(153, 255, 153, 0.3);
-            /* Важно для плавного перехода цвета текста при успехе */
-            transition: background 0.3s, color 0.3s, box-shadow 0.3s, transform 0.3s; 
         }
         
         .download-button:hover {
@@ -409,34 +371,6 @@
             color: black;
         }
         .download-button img, .link-button img { height: 32px; margin-right: 15px; transition: all 0.3s; } 
-        
-        /* === НОВЫЕ СТИЛИ ДЛЯ СОСТОЯНИЯ УСПЕХА === */
-        .button-success {
-            background: var(--color-success) !important; /* Перекрываем градиент */
-            color: white !important;
-            box-shadow: 0 0 30px rgba(0, 200, 83, 0.6) !important;
-            pointer-events: none; /* Блокируем повторные нажатия во время анимации */
-            animation: success-pulse 0.6s ease-out;
-        }
-
-        .button-success img {
-             /* Скрываем оригинальную иконку, чтобы показать галочку Material Icon */
-            display: none;
-        }
-
-        /* Анимация пульсации при успехе */
-        @keyframes success-pulse {
-            0% { box-shadow: 0 0 0 0 rgba(0, 200, 83, 0.7); }
-            70% { box-shadow: 0 0 0 20px rgba(0, 200, 83, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(0, 200, 83, 0); }
-        }
-
-        .material-icons-round.success-icon {
-            font-size: 32px;
-            margin-right: 10px;
-            animation: scaleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        @keyframes scaleIn { from {transform: scale(0);} to {transform: scale(1);}}
 
         .no-bullets { list-style: none; padding: 0; margin: 0; }
 
@@ -467,8 +401,20 @@
             color: white;
             border-color: #99ff99;
         }
+
+        /* Контейнер для новых искр */
+        #sparks-container {
+            position: fixed; top:0; left:0; width:100%; height:100%; pointer-events: none; z-index: 9999;
+        }
         
-        /* Контейнер конфетти УДАЛЕН */
+        .spark {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 1;
+        }
 
         footer {
             margin-top: 50px;
@@ -506,7 +452,6 @@
             min-width: 250px;
             transform: translateX(120%);
             transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            cursor: default !important; /* Возвращаем обычный курсор на тосты */
         }
 
         .toast.show {
@@ -532,14 +477,14 @@
     </style>
 </head>
 <body>
-    <div class="custom-cursor" id="cursor"></div>
     
     <div id="spotlight"></div>
     <canvas id="bg-canvas"></canvas>
+    <div id="sparks-container"></div>
     <div id="toast-container"></div>
 
-    <div class="header-banner">
-        <div class="header-content">
+    <div class="header-banner" id="headerBanner">
+        <div class="header-content" id="headerContent">
             <h1>
                 <img src="apple_icon.png" alt="Иконка яблока" class="apple-icon header-img"> 
                 <span id="typewriter-h1"></span><span class="typing-cursor" id="cursor-h1"></span>
@@ -552,19 +497,19 @@
     
     <div class="main-container">
         <div class="tab-buttons">
-            <button class="tab-button active ripple-btn hover-target" onclick="openTab(event, 'Description')">
+            <button class="tab-button active ripple-btn" onclick="openTab(event, 'Description')">
                 <img src="icon_clip_red.png" alt="Скрепочка">
                 О Пресете
             </button>
-            <button class="tab-button ripple-btn hover-target" onclick="openTab(event, 'Download')">
+            <button class="tab-button ripple-btn" onclick="openTab(event, 'Download')">
                 <img src="icon_book_open.png" alt="Книга">
                 Скачивание
             </button>
-            <button class="tab-button ripple-btn hover-target" onclick="openTab(event, 'Guides')">
+            <button class="tab-button ripple-btn" onclick="openTab(event, 'Guides')">
                 <img src="icon_book_closed_red.png" alt="Закрытая книга">
                 Гайды
             </button>
-            <button class="tab-button ripple-btn hover-target" onclick="openTab(event, 'Contacts')">
+            <button class="tab-button ripple-btn" onclick="openTab(event, 'Contacts')">
                 <img src="icon_bag_green.png" alt="Сумочка">
                 Контакты
             </button>
@@ -594,20 +539,20 @@
                     Пресет и необходимые файлы RegEx для корректной работы.
                 </p>
                 
-                <a class="download-button ripple-btn hover-target" href="%D0%AF%D0%B1%D0%BB%D0%BE%D1%87%D0%BD%D1%8B%D0%B9%20V1.581.json" download onclick="handleDownloadSuccess(event, this, 'Яблочный Пресет V1.581')">
-                    <img src="icon_button_green.png" alt="Кнопка" class="btn-icon">
-                    <span class="btn-text">СКАЧАТЬ V1.581</span>
+                <a class="download-button ripple-btn" href="%D0%AF%D0%B1%D0%BB%D0%BE%D1%87%D0%BD%D1%8B%D0%B9%20V1.581.json" download onclick="createSparks(event); showToast('Загрузка началась', 'Файл V1.581 скачивается...')">
+                    <img src="icon_button_green.png" alt="Кнопка">
+                    СКАЧАТЬ V1.581
                 </a>
                 
                 <h3>Файлы Регулярных Выражений</h3>
                 <div class="no-bullets"> 
-                    <a class="link-button ripple-btn hover-target" href="regex-renette_html_depth_5_vanquisher__.json" download onclick="handleDownloadSuccess(event, this, 'Renette HTML Depth 5', true)">
-                        <img src="leaf_red.png" alt="Кнопка" class="btn-icon">
-                        <span class="btn-text">Скачать Renette HTML Depth 5</span>
+                    <a class="link-button ripple-btn" href="regex-renette_html_depth_5_vanquisher__.json" download onclick="createSparks(event); showToast('RegEx скачивается', 'Depth 5 загружается...')">
+                        <img src="leaf_red.png" alt="Кнопка">
+                        <span>Скачать Renette HTML Depth 5</span>
                     </a> 
-                     <a class="link-button ripple-btn hover-target" href="regex-renette_hidethink.json" download onclick="handleDownloadSuccess(event, this, 'Renette Hide Think', true)">
-                        <img src="leaf_green.png" alt="Кнопка" class="btn-icon">
-                        <span class="btn-text"><b style="color:var(--color-active)">Опционально:</b> Renette Hide Think</span>
+                    <a class="link-button ripple-btn" href="regex-renette_hidethink.json" download onclick="createSparks(event); showToast('RegEx скачивается', 'Hide Think загружается...')">
+                        <img src="leaf_green.png" alt="Кнопка">
+                        <span><b style="color:var(--color-active)">Опционально:</b> Renette Hide Think</span>
                     </a>
                 </div>
             </div>
@@ -622,7 +567,7 @@
                 </p>
                 
                 <div class="no-bullets"> 
-                    <a class="link-button ripple-btn hover-target" href="https://sites.google.com/view/testijhfrr/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F-%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0#h.t3t6sw19ia3y" target="_blank">
+                    <a class="link-button ripple-btn" href="https://sites.google.com/view/testijhfrr/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F-%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0#h.t3t6sw19ia3y" target="_blank">
                         <img src="sheets.png" alt="Закрытая книга"> 
                         Гайд по установке
                     </a>
@@ -637,11 +582,11 @@
                 <p>Следите за обновлениями и задавайте вопросы в нашем сообществе.</p>
                 
                 <div class="no-bullets"> 
-                    <a class="link-button ripple-btn hover-target" href="https://t.me/YablochnyAI" target="_blank">
+                    <a class="link-button ripple-btn" href="https://t.me/YablochnyAI" target="_blank">
                         <img src="icon_tg_green.png" alt="ТГК">
                         Телеграм Канал
                     </a>
-                    <a class="link-button ripple-btn hover-target" href="https://t.me/YablochnyChat" target="_blank">
+                    <a class="link-button ripple-btn" href="https://t.me/YablochnyChat" target="_blank">
                         <img src="icon_tg.png" alt="ЧАТ">
                         Чат Поддержки
                     </a>
@@ -655,21 +600,6 @@
     </footer>
 
     <script>
-        // === НОВАЯ ФИШКА: КАСТОМНЫЙ КУРСОР ===
-        const cursor = document.getElementById('cursor');
-        const hoverTargets = document.querySelectorAll('.hover-target');
-
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
-
-        hoverTargets.forEach(target => {
-            target.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
-            target.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
-        });
-
-
         // === ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК ===
         function openTab(evt, tabName) {
             var i, tabcontent, tablinks;
@@ -745,40 +675,66 @@
             spotlight.style.setProperty('--y', e.clientY + 'px');
         });
 
-        // === 3. НОВЫЙ ЭФФЕКТ УСПЕШНОГО СКАЧИВАНИЯ (Вместо конфетти) ===
-        function handleDownloadSuccess(e, btnElement, fileName, isLinkButton = false) {
-            // Показываем тост
-            showToast("Загрузка началась", `Файл "${fileName}" скоро будет у вас!`);
+        // === 3. НОВАЯ ФИШКА: ИСКРЫ ПРИ НАЖАТИИ (Particle Burst) ===
+        function createSparks(e) {
+            const container = document.getElementById('sparks-container');
+            const rect = e.target.getBoundingClientRect();
+            const x = e.clientX;
+            const y = e.clientY;
+            const colors = ['#99ff99', '#ff9a9e', '#ffffff'];
 
-            // Сохраняем оригинальный контент кнопки
-            const originalContent = btnElement.innerHTML;
-            const textSpan = btnElement.querySelector('.btn-text');
-            const iconImg = btnElement.querySelector('.btn-icon');
+            for (let i = 0; i < 30; i++) {
+                const spark = document.createElement('div');
+                spark.classList.add('spark');
+                spark.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                spark.style.left = x + 'px';
+                spark.style.top = y + 'px';
+                
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 60 + 20;
+                const tx = Math.cos(angle) * velocity;
+                const ty = Math.sin(angle) * velocity;
 
-            // Применяем класс успеха
-            btnElement.classList.add('button-success');
-            
-            // Создаем иконку галочки
-            const successIcon = document.createElement('span');
-            successIcon.className = 'material-icons-round success-icon';
-            successIcon.innerText = 'check_circle';
+                spark.animate([
+                    { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+                    { transform: `translate(${tx}px, ${ty}px) scale(0)`, opacity: 0 }
+                ], {
+                    duration: Math.random() * 600 + 400,
+                    easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                    fill: 'forwards'
+                });
 
-            // Вставляем иконку перед текстом и меняем текст
-            if (iconImg) iconImg.style.display = 'none'; // Скрываем старую иконку
-            btnElement.insertBefore(successIcon, textSpan);
-            if (textSpan) textSpan.innerText = "УСПЕШНО!";
-            
-            // Возвращаем все как было через 3 секунды
-            setTimeout(() => {
-                btnElement.classList.remove('button-success');
-                successIcon.remove();
-                if (iconImg) iconImg.style.display = ''; // Возвращаем старую иконку
-                btnElement.innerHTML = originalContent; // Восстанавливаем оригинальный HTML (на всякий случай)
-            }, 3000);
+                container.appendChild(spark);
+                setTimeout(() => spark.remove(), 1000);
+            }
         }
 
+        // === 4. НОВАЯ ФИШКА: 3D НАКЛОН ШАПКИ (Только ПК) ===
+        const headerBanner = document.getElementById('headerBanner');
+        const headerContent = document.getElementById('headerContent');
 
-        // === 4. RIPPLE ЭФФЕКТ ===
+        headerBanner.addEventListener('mousemove', (e) => {
+            const rect = headerBanner.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            // Ограничиваем угол наклона
+            const rotateX = ((y - centerY) / centerY) * -10; 
+            const rotateY = ((x - centerX) / centerX) * 10;
+
+            headerContent.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+        
+        // Сброс наклона при уходе мыши
+        headerBanner.addEventListener('mouseleave', () => {
+             headerContent.style.transform = `rotateX(0deg) rotateY(0deg)`;
+        });
+
+
+        // === 5. RIPPLE ЭФФЕКТ ===
         document.querySelectorAll('.ripple-btn').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 let x = e.clientX - e.target.getBoundingClientRect().left;
@@ -792,7 +748,7 @@
             });
         });
 
-        // === 5. ЭФФЕКТ ПЕЧАТНОЙ МАШИНКИ ===
+        // === 6. ЭФФЕКТ ПЕЧАТНОЙ МАШИНКИ ===
         function typeWriter(elementId, text, speed, callback) {
             let i = 0;
             let elem = document.getElementById(elementId);
@@ -815,12 +771,12 @@
                 document.getElementById('cursor-h1').style.display = 'none';
                 document.getElementById('cursor-p').style.display = 'inline-block';
                 typeWriter("typewriter-p", pText, 30, function() {
-                     document.querySelector('.header-content').classList.add('floater');
+                   // Печать завершена
                 });
             });
         }
 
-        // === 6. УВЕДОМЛЕНИЯ (TOAST) ===
+        // === 7. УВЕДОМЛЕНИЯ (TOAST) ===
         function showToast(title, message) {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
