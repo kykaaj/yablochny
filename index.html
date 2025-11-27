@@ -70,12 +70,12 @@
         /* ШАПКА */
         .header-banner {
             background-image: url('dark_header_new.jpg'); 
-            background-size: cover; 
+            /* ФИНАЛЬНОЕ ИСПРАВЛЕНИЕ ШАПКИ: contain для сохранения всей картинки */
+            background-size: contain; 
             background-repeat: no-repeat; 
-            /* МАКСИМАЛЬНОЕ ИСПРАВЛЕНИЕ БАННЕРА: высота 500px, фокус на верху */
-            background-position: center top; 
-            background-color: #333; 
-            height: 500px; /* Увеличена высота */
+            background-position: center center; 
+            background-color: #121212; 
+            height: 500px; 
             display: flex;
             flex-direction: column;
             justify-content: center;
