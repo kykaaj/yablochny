@@ -522,22 +522,6 @@
     </footer>
 
     <script>
-        // === 0. ПЕЧАТНАЯ МАШИНКА ===
-        const textToType = "by kykaaj | Для SillyTavern (V 1.581)";
-        const typeWriterElement = document.getElementById('typewriter-text');
-        let typeIndex = 0;
-
-        function typeWriter() {
-            if (typeIndex < textToType.length) {
-                typeWriterElement.textContent += textToType.charAt(typeIndex);
-                typeIndex++;
-                typeWriterElement.style.width = 'auto'; 
-                setTimeout(typeWriter, 50); // Скорость печати
-            }
-        }
-        // Запуск через секунду после загрузки
-        setTimeout(typeWriter, 800);
-        // === ЛОГИКА ВКЛАДОК ===
         function openTab(evt, tabName) {
             var i, tabcontent, tablinks;
             
