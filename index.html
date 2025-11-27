@@ -69,38 +69,36 @@
 
         /* ШАПКА */
         .header-banner {
+            /* Убедись, что название файла тут совпадает ТОЧЬ-В-ТОЧЬ с файлом в папке (включая .jpg или .JPG) */
             background-image: url('dark_header_new.jpg'); 
-            /* ФИНАЛЬНОЕ ИСПРАВЛЕНИЕ ШАПКИ: contain для сохранения всей картинки */
-            background-size: contain; 
-            background-repeat: no-repeat; 
-            background-position: center center; 
-            background-color: #121212; 
-            height: 500px; 
+            
+            /* ИСПРАВЛЕНИЕ 1: Cover вместо Contain. 
+               Contain оставляет пустые полосы, если пропорции не совпадают. 
+               Cover заполнит весь блок красиво. */
+            background-size: cover; 
+            
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-color: #121212;
+            
+            height: 500px;
+            
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             color: white;
             border-radius: 15px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5); 
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
             margin-bottom: 40px;
-            background-attachment: fixed; 
+            
+            /* ИСПРАВЛЕНИЕ 2: Убрали fixed.
+               background-attachment: fixed; часто ломается на мобильных (iPhone) 
+               и конфликтует с размерами блока, из-за чего картинка исчезает. */
+            /* background-attachment: fixed;  <-- Я закомментировал это намеренно */
+            
             position: relative;
-            overflow: hidden; 
-        }
-
-        /* Затемнение и размытие */
-        .header-banner::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            backdrop-filter: blur(5px); 
-            -webkit-backdrop-filter: blur(5px); 
-            background: rgba(0, 0, 0, 0.35); 
-            z-index: 1; 
+            overflow: hidden;
         }
         
         .header-banner h1, .header-banner p { z-index: 2; position: relative; }
