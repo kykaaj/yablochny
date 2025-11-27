@@ -51,6 +51,11 @@
             overflow-x: hidden;
             scroll-behavior: smooth;
             -webkit-font-smoothing: antialiased;
+            
+            /* ИСПРАВЛЕНИЕ ФУТЕРА (STICKY FOOTER) */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Растягиваем body на всю высоту окна */
         }
 
         /* АНИМИРОВАННЫЙ ФОН (КАНВАС) */
@@ -79,6 +84,9 @@
             align-items: center;
             position: relative;
             z-index: 10;
+            flex: 1; /* Заставляет контент занимать все свободное место, толкая футер вниз */
+            width: 100%;
+            box-sizing: border-box;
         }
 
         @media (min-width: 900px) {
@@ -152,6 +160,7 @@
             overflow: hidden;
             perspective: 1000px; 
             padding-bottom: 30px;
+            flex-shrink: 0; /* Шапка не сжимается */
         }
 
         .header-banner::before {
@@ -312,7 +321,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-top: 0;
-            margin-bottom: 25px;
+            margin-bottom: 10px; /* Уменьшен отступ, т.к. ниже будет линия */
             display: flex;
             align-items: center; 
             justify-content: center;
@@ -325,6 +334,16 @@
             margin-right: 12px; 
             -webkit-text-fill-color: initial; 
             animation: float-slight 5s ease-in-out infinite;
+        }
+
+        /* НОВЫЙ СТИЛЬ: Разделительная линия */
+        .dashed-divider {
+            border: 0;
+            border-top: 2px dashed rgba(153, 255, 153, 0.3); /* Цвет пресета, полупрозрачный */
+            margin: 10px auto 25px auto;
+            width: 100%;
+            max-width: 100%;
+            opacity: 0.7;
         }
 
         .tab-content p {
@@ -436,12 +455,14 @@
         }
 
         footer {
-            margin-top: 60px;
+            /* ИСПРАВЛЕНИЕ: Футер теперь прижимается к низу */
+            margin-top: auto;
             color: #555;
             font-size: 0.85em;
-            padding-bottom: 30px;
+            padding: 20px 0 30px 0;
             font-weight: 500;
             letter-spacing: 1px;
+            width: 100%;
         }
 
         /* ===================================== */
@@ -590,18 +611,20 @@
                     О Пресете
                 </h2>
                 
+                <hr class="dashed-divider">
+                
                 <p style="text-align: left; padding: 0 10px; line-height: 1.9;">
-                    Модульный пресет с огромным количеством тоглов, основанный на ядре Селии.
+                    Модульный пресет с огромным количеством тоглов, основанный на ядре Селии. Оптимизирован для <b style="color:white">максимального погружения</b>.
                     <br><br>
                     <span style="color: var(--color-primary); font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; border-bottom: 2px solid var(--color-secondary);">Поддерживаемые модели:</span><br>
                     <span style="display: block; margin-top: 10px; font-size: 0.95em; line-height: 1.8;">
-                        <img src="leaf_green.png" style="height: 18px; vertical-align: middle; margin-right: 8px; margin-bottom: 3px;" alt="*">
-                        Gemini 2.5/3.0 pro <br> 
-                        
                         <img src="leaf_red.png" style="height: 18px; vertical-align: middle; margin-right: 8px; margin-bottom: 3px;" alt="*">
+                        Gemini 2.5/3.0 <br> 
+                        
+                        <img src="leaf_green.png" style="height: 18px; vertical-align: middle; margin-right: 8px; margin-bottom: 3px;" alt="*">
                         Claude Opus/Sonnet 4.5 <br> 
                         
-                        <img src="leaf_green.png" style="height: 18px; vertical-align: middle; margin-right: 8px; margin-bottom: 3px;" alt="*">
+                        <img src="leaf_red.png" style="height: 18px; vertical-align: middle; margin-right: 8px; margin-bottom: 3px;" alt="*">
                         Sonnet 4, Opus 4.1
                     </span>
                 </p>
@@ -612,6 +635,9 @@
                     <img src="icon_book_open_red.png" alt="Files" onerror="this.style.display='none'">
                     Файлы и RegEx
                 </h2>
+                
+                <hr class="dashed-divider">
+
                 <p>
                     Пресет и необходимые файлы RegEx для корректной работы.
                 </p>
@@ -639,6 +665,7 @@
                     <img src="icon_book_closed.png" alt="Guides" onerror="this.style.display='none'"> 
                     Инструкции
                 </h2>
+                <hr class="dashed-divider">
                 <p>
                     Правильная установка — залог успеха. Обязательно ознакомьтесь с гайдом перед использованием.
                 </p>
@@ -654,8 +681,9 @@
             <div id="Contacts" class="tab-content">
                 <h2>
                     <img src="icon_bag.png" alt="Contact" onerror="this.style.display='none'"> 
-                    Контакты
+                    Связь с Автором
                 </h2>
+                <hr class="dashed-divider">
                 <p>Следите за обновлениями и задавайте вопросы в нашем сообществе.</p>
                 
                 <div class="no-bullets"> 
@@ -665,7 +693,7 @@
                     </a>
                     <a class="link-button ripple-btn" href="https://t.me/YablochnyChat" target="_blank">
                         <img src="icon_tg.png" alt="Chat" onerror="this.style.display='none'">
-                        Телеграм Чат
+                        Чат Поддержки
                     </a>
                 </div>
             </div>
