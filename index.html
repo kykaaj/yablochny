@@ -49,14 +49,15 @@
         /* ШАПКА С КАРТИНКОЙ, РАЗМЫТИЕМ И ЗАТЕМНЕНИЕМ */
         .header-banner {
             
-            /* ИСПРАВЛЕНИЕ: Переходим на режим contain */
             background-image: url('dark_header_new.jpg'); 
-            background-size: contain; 
-            background-repeat: no-repeat; /* Важно, чтобы картинка не дублировалась */
-            background-position: center; /* Центруем картинку, чтобы полосы были симметричны */
+            background-size: cover; /* Возвращаем к cover, но с большей высотой контейнера */
+            background-repeat: no-repeat; 
+            background-position: top; /* Позиционируем по верху */
             
-            background-color: #333; /* Фоновый цвет для полос по бокам */
-            height: 350px; 
+            background-color: #333; 
+            /* ИСПРАВЛЕНИЕ: УВЕЛИЧИВАЕМ ВЫСОТУ */
+            height: 500px; 
+            
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -79,9 +80,7 @@
             right: 0;
             bottom: 0;
             
-            /* Важно: Затемнение и размытие накладываем на всю область, а не только на картинку */
             background: rgba(0, 0, 0, 0.35); 
-            
             backdrop-filter: blur(5px); 
             -webkit-backdrop-filter: blur(5px); 
             z-index: 1; 
