@@ -81,8 +81,7 @@
         }
 
         .main-container {
-            /* ИЗМЕНЕНИЕ: Увеличил максимальную ширину с 1100px до 1300px, 
-               чтобы на ПК контент выглядел шире */
+            /* Увеличена ширина для широкого контента на ПК */
             max-width: 1300px; 
             margin: -50px auto 40px;
             padding: 15px; 
@@ -99,23 +98,50 @@
 
         @media (min-width: 900px) {
             .main-container {
-                flex-direction: row;
-                align-items: flex-start;
-                gap: 40px;
+                /* Теперь элементы идут друг за другом по вертикали: сначала кнопки, потом контент */
+                flex-direction: column; 
+                align-items: center;
+                gap: 30px; /* Отступ между кнопками и контентом */
                 padding: 0 40px;
                 margin-top: -80px;
             }
             .tab-buttons {
-                /* ИЗМЕНЕНИЕ: Уменьшил ширину колонки кнопок с 260px до 200px */
-                min-width: 200px;
-                max-width: 200px; /* Фиксируем, чтобы не растягивались */
-                position: sticky; 
-                top: 40px;
-                z-index: 10;
+                /* ИЗМЕНЕНИЕ: Горизонтальный ряд кнопок */
+                display: flex; 
+                flex-direction: row; 
+                justify-content: center; /* Центрируем кнопки в ряду */
+                flex-wrap: wrap; 
+                gap: 15px; 
+                
+                width: 100%; 
+                max-width: 1000px; /* Ограничиваем ширину ряда кнопок */
+                
+                /* Удаление старых стилей бокового меню */
+                min-width: auto;
+                position: static; 
+                top: 0;
+            }
+            /* Стили для кнопок в горизонтальном ряду */
+            .tab-buttons .tab-button {
+                width: 220px; /* Фиксированная ширина */
+                padding: 18px 25px; 
+                text-align: left;
+                justify-content: flex-start;
+            }
+            /* Стили активной кнопки */
+            .tab-buttons .tab-button.active {
+                /* Увеличение и центрирование, без вертикальной полосы */
+                padding-left: 25px;
+                transform: scale(1.05); /* Легкое увеличение активной кнопки */
+            }
+            /* Удаление зеленой вертикальной полосы */
+            .tab-buttons .tab-button.active::before {
+                display: none;
             }
             .tab-content-wrapper {
                 flex-grow: 1;
                 width: 100%;
+                max-width: 1000px; /* Широкий контент */
             }
         }
 
@@ -263,7 +289,7 @@
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             display: flex;
             align-items: center;
-            justify-content: flex-start; 
+            justify-content: flex-start; /* Базовое выравнивание */
             position: relative;
             overflow: hidden;
             text-align: left;
@@ -282,15 +308,19 @@
             border: 1px solid var(--color-primary);
             box-shadow: 0 0 20px rgba(153, 255, 153, 0.1);
             padding-left: 30px;
+            transform: scale(1.0); /* Сброс трансформации на моб.версии */
         }
 
-        .tab-button.active::before {
-            content: '';
-            position: absolute;
-            left: 0; top: 0; bottom: 0;
-            width: 5px;
-            background: var(--color-primary);
-            box-shadow: 2px 0 10px var(--color-primary);
+        /* Вертикальная полоса для мобильной версии/бокового меню */
+        @media (max-width: 899px) {
+            .tab-button.active::before {
+                content: '';
+                position: absolute;
+                left: 0; top: 0; bottom: 0;
+                width: 5px;
+                background: var(--color-primary);
+                box-shadow: 2px 0 10px var(--color-primary);
+            }
         }
         
         .tab-button img {
@@ -337,7 +367,7 @@
         .tab-content h2 {
             font-family: var(--font-decorative);
             font-weight: 400;
-            /* Исправление из прошлого шага: шрифт */
+            /* Фикс шрифта */
             font-size: clamp(1.5rem, 3vw, 2.4rem);
             background: linear-gradient(45deg, var(--color-secondary), var(--color-primary));
             -webkit-background-clip: text;
@@ -348,7 +378,7 @@
             display: flex;
             align-items: center; 
             justify-content: center;
-            /* Исправление из прошлого шага: запрет переноса */
+            /* Фикс иконок: запрет переноса строки */
             flex-wrap: nowrap;
             filter: drop-shadow(0 0 15px rgba(153, 255, 153, 0.2));
         }
