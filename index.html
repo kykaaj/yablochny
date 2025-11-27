@@ -42,7 +42,8 @@
 
         /* ШАПКА С КАРТИНКОЙ */
         .header-banner {
-            background-image: url('dark_header_bg.jpg'); 
+            /* ИСПРАВЛЕНО: ССЫЛКА НА НОВОЕ ИМЯ ФАЙЛА */
+            background-image: url('dark_header_new.jpg'); 
             background-size: cover; 
             background-position: center; 
             background-color: #333; 
@@ -55,25 +56,23 @@
             border-radius: 15px;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5); 
             margin-bottom: 40px;
-            background-repeat: no-repeat; /* Исправлено повторение */
+            background-repeat: no-repeat; 
             background-size: cover; 
         }
 
-        /* НОВОЕ: Размытое пятно (Frosted Glass Effect) */
+        /* Размытое пятно (Frosted Glass Effect) */
         .header-content {
-            background: rgba(0, 0, 0, 0.4); /* Полупрозрачный темный фон */
-            backdrop-filter: blur(5px); /* Размывает фон, который находится за этим блоком */
-            -webkit-backdrop-filter: blur(5px); /* Для поддержки браузеров */
-            padding: 20px 30px; /* Отступы вокруг текста */
-            border-radius: 15px; /* Скругление пятна */
-            /* Чтобы текст не прыгал, когда курсор уходит */
+            background: rgba(0, 0, 0, 0.4); 
+            backdrop-filter: blur(5px); 
+            -webkit-backdrop-filter: blur(5px); 
+            padding: 20px 30px; 
+            border-radius: 15px; 
             transition: backdrop-filter 0.3s, background 0.3s; 
         }
 
         .header-banner h1 {
             margin: 0;
             font-size: 3.8em;
-            /* Тень для текста, чтобы он читался на размытом фоне */
             text-shadow: 
                 0 0 5px rgba(0,0,0,0.8), 
                 0 0 15px rgba(255, 255, 255, 0.7); 
@@ -82,7 +81,6 @@
         }
         .header-banner p {
             font-size: 1.4em;
-            /* Тень для текста */
             text-shadow: 0 0 5px rgba(0,0,0,0.9), 0 0 10px rgba(255, 255, 255, 0.2); 
             margin-top: 10px;
         }
@@ -113,7 +111,7 @@
             text-shadow: 0 0 1px #000;
         }
         
-        /* КНОПКА: ФОН-КАРТИНКА + ПЛАВНЫЙ ПЕРЕХОД + УЛУЧШЕННЫЙ ТЕКСТ */
+        /* КНОПКА (Все предыдущие улучшения сохранены) */
         .download-button {
             display: flex; 
             align-items: center;
@@ -130,8 +128,8 @@
             background-position: center;
             
             /* Плавное затемнение картинки и переход */
-            filter: brightness(0.85); /* Изначальное небольшое затемнение */
-            transition: filter 0.3s ease, transform 0.2s, box-shadow 0.2s; /* Плавный переход */
+            filter: brightness(0.85); 
+            transition: filter 0.3s ease, transform 0.2s, box-shadow 0.2s; 
             
             /* СТИЛИЗАЦИЯ ТЕКСТА (БЕЗ ЧЁРНОЙ ОБВОДКИ) */
             color: white; 
@@ -152,7 +150,7 @@
             box-shadow: 0 4px 0 rgba(0, 0, 0, 0.5); 
         }
         .download-button:hover {
-            filter: brightness(1); /* Плавный переход к полной яркости */
+            filter: brightness(1); 
             transform: translateY(-2px);
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6); 
         }
@@ -205,7 +203,8 @@
 </head>
 <body>
     <div class="header-banner">
-        <div class="header-content"> <h1>
+        <div class="header-content"> 
+            <h1>
                 <img src="apple_icon.png" alt="Иконка яблока" class="apple-icon header-img"> 
                 Яблочный Пресет
             </h1>
@@ -221,7 +220,7 @@
             </p>
             
             <a class="download-button" href="%D0%AF%D0%B1%D0%BB%D0%BE%D1%87%D0%BD%D1%8B%D0%B9%20V1.581.json" download>
-                ⬇️ СКАЧАТЬ ЯБЛОЧНЫЙ V1.581
+                СКАЧАТЬ V1.581
             </a>
         </div>
 
