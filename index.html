@@ -72,9 +72,10 @@
             background-image: url('dark_header_new.jpg'); 
             background-size: cover; 
             background-repeat: no-repeat; 
-            background-position: center 30%; /* Позиция для вертикальной картинки */
+            /* ИСПРАВЛЕНИЕ БАННЕРА: Увеличиваем высоту и сдвигаем позицию вниз */
+            background-position: center 40%; 
             background-color: #333; 
-            height: 350px; 
+            height: 400px; /* Увеличена высота */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -175,7 +176,7 @@
         }
         .tab-content.active { display: block; }
 
-        /* СТИЛИ ВНУТРИ ВКЛАДОК: ЗАГОЛОВКИ (ГРАФИЧНЫЙ ШРИФТ) */
+        /* СТИЛИ ВНУТРИ ВКЛАДОК: ЗАГОЛОВКИ (ГРАФИЧНЫЙ ШРИФТ + ТЕНЬ) */
         .tab-content h2 {
             color: var(--color-active); 
             border-bottom: 2px dashed #424242; 
@@ -186,6 +187,8 @@
             align-items: center;
             justify-content: center;
             font-weight: 900; 
+            /* Добавление графичного эффекта */
+            text-shadow: 0 0 4px rgba(153, 255, 153, 0.7), 0 0 10px rgba(0, 0, 0, 0.5); 
         }
         
         /* ИКОНКИ ВНУТРИ ЗАГОЛОВКОВ H2 */
@@ -290,7 +293,7 @@
 
         <div id="Description" class="tab-content active">
             <h2>
-                <img src="icon_clip.png" alt="Зеленая скрепочка"> 
+                <img src="icon_clip_red.png" alt="Красная скрепочка" class="icon-red-clip"> 
                 Основной Пресет
             </h2>
             
