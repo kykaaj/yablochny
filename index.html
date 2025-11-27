@@ -106,31 +106,6 @@
             100% { transform: translateY(0px); }
         }
 
-        /* ГЛИТЧ ЭФФЕКТ ДЛЯ ЗАГОЛОВКА */
-        .glitch-wrapper { position: relative; display: inline-block; }
-        .glitch-text { position: relative; z-index: 1; }
-        .glitch-text::before, .glitch-text::after {
-            content: attr(data-text);
-            position: absolute; top: 0; left: 0; right: 0;
-            background: #121212; overflow: hidden; opacity: 0; pointer-events: none;
-        }
-        .header-banner:hover .glitch-text::before {
-            opacity: 1; left: 2px; text-shadow: -1px 0 #ff9a9e; animation: glitch-anim-1 2s infinite linear alternate-reverse;
-        }
-        .header-banner:hover .glitch-text::after {
-            opacity: 1; left: -2px; text-shadow: -1px 0 #99ff99; animation: glitch-anim-2 3s infinite linear alternate-reverse;
-        }
-        @keyframes glitch-anim-1 {
-            0% { clip-path: inset(20% 0 80% 0); } 20% { clip-path: inset(60% 0 10% 0); }
-            40% { clip-path: inset(40% 0 50% 0); } 60% { clip-path: inset(80% 0 5% 0); }
-            80% { clip-path: inset(10% 0 60% 0); } 100% { clip-path: inset(30% 0 30% 0); }
-        }
-        @keyframes glitch-anim-2 {
-            0% { clip-path: inset(10% 0 60% 0); } 20% { clip-path: inset(30% 0 20% 0); }
-            40% { clip-path: inset(70% 0 20% 0); } 60% { clip-path: inset(10% 0 80% 0); }
-            80% { clip-path: inset(50% 0 10% 0); } 100% { clip-path: inset(0% 0 0% 0); }
-        }
-
         /* ШАПКА */
         .header-banner {
             background-image: url('dark_header_new.jpg'); 
@@ -542,11 +517,29 @@
         </div>
     </div>
 
+    <div id="toast">Уведомление</div>
+
     <footer>
-        &copy; 2025 Яблочный Пресет Design
+        &copy; 2025 Яблочный Пресет
     </footer>
 
     <script>
+        // === 0. ПЕЧАТНАЯ МАШИНКА ===
+        const textToType = "by kykaaj | Для SillyTavern (V 1.581)";
+        const typeWriterElement = document.getElementById('typewriter-text');
+        let typeIndex = 0;
+
+        function typeWriter() {
+            if (typeIndex < textToType.length) {
+                typeWriterElement.textContent += textToType.charAt(typeIndex);
+                typeIndex++;
+                typeWriterElement.style.width = 'auto'; 
+                setTimeout(typeWriter, 50); // Скорость печати
+            }
+        }
+        // Запуск через секунду после загрузки
+        setTimeout(typeWriter, 800);
+        
         // === ЛОГИКА ВКЛАДОК ===
         function openTab(evt, tabName) {
             var i, tabcontent, tablinks;
@@ -712,6 +705,13 @@
                 setTimeout(() => { ripples.remove(); }, 600);
             });
         });
+        // === 5. TOAST NOTIFICATION ===
+        function showToast(message) {
+            var x = document.getElementById("toast");
+            x.textContent = message;
+            x.className = "show";
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+        }
     </script>
 </body>
 </html>
