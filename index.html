@@ -1,851 +1,164 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="dark">
-    <title>Marinara's LLM Hub</title>
-    <link rel="stylesheet" href="assets/css/custom.css">
+    <title>🍏 Яблочный Пресет - SillyTavern</title>
     <style>
-        /* Ensure our styles load properly */
-        .tab-container { margin: 2rem 0; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
+        /* CSS (стили) находятся прямо здесь для надежности */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: #333;
+            text-align: center;
+        }
+        .main-container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+        .header-banner {
+            background-color: #4CAF50; /* Сочный зеленый */
+            color: white;
+            padding: 40px 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+            margin-bottom: 30px;
+        }
+        .header-banner h1 {
+            margin: 0;
+            font-size: 3em;
+            letter-spacing: 1px;
+        }
+        .header-banner p {
+            margin-top: 5px;
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        .card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+            text-align: left;
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+        }
+        .card h2 {
+            color: #2e7d32; /* Темно-зеленый */
+            border-bottom: 2px solid #e8f5e9;
+            padding-bottom: 12px;
+            margin-top: 0;
+        }
+        
+        /* Кнопки скачивания */
+        .download-button {
+            display: inline-block;
+            background-color: #FFC107;
+            color: #333;
+            padding: 15px 35px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: background-color 0.3s, transform 0.1s;
+            margin-bottom: 10px; /* Добавим отступ для кнопок */
+        }
+        .download-button:hover {
+            background-color: #FFD54F;
+            transform: translateY(-1px);
+        }
+        
+        /* Стили для ссылок в списке */
+        a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        ul {
+            list-style-type: none; 
+            padding-left: 0;
+        }
+        ul li {
+            margin-bottom: 15px; /* Увеличим отступ */
+            padding-left: 20px;
+            position: relative;
+        }
+        ul li::before {
+            content: "🍏"; 
+            position: absolute;
+            left: 0;
+            color: #4CAF50;
+        }
+        /* Стили для маленьких кнопок RegEx */
+        .regex-link {
+            display: inline-block;
+            background-color: #66BB6A; /* Светло-зеленый */
+            color: white;
+            padding: 8px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+        .regex-link:hover {
+            background-color: #81C784;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="neon-title">
-            <h1 class="neon-text">Marinara's LLM Hub</h1>
-            <a href="https://discord.gg/KdAkTg94ME" target="_blank" rel="noopener" class="neon-discord-link">
-                <h2 class="neon-text neon-discord">Join Our Discord Community</h2>
+    <div class="header-banner">
+        <h1>🍏 Яблочный Пресет</h1>
+        <p>by kykaaj | Для SillyTavern (V 1.581)</p>
+    </div>
+    <div class="main-container">
+        
+        <div class="card" style="text-align: center;">
+            <h2>Основной Пресет</h2>
+            <p>
+                Ваш главный пресет для SillyTavern, версия 1.581. <br>
+                Нажмите, чтобы загрузить файл JSON.
+            </p>
+            <a class="download-button" href="%D0%AF%D0%B1%D0%BB%D0%BE%D1%87%D0%BD%D1%8B%D0%B9%20V1.581.json" download>
+                ⬇️ СКАЧАТЬ ЯБЛОЧНЫЙ V1.581
             </a>
         </div>
-        
-        <img src="https://i.imgur.com/Qsszm6i.gif" alt="The Official Dottore Schizo Gooner" style="max-width: 400px; height: auto; display: block; margin: 1.5rem auto 1.5rem auto; border-radius: 8px;">
 
-        <div class="tab-container">
-            <div class="tab-nav">
-                <button class="tab-link active" onclick="showTab(event, 'about')">About</button>
-                <button class="tab-link" onclick="showTab(event, 'downloads')">Downloads</button>
-                <button class="tab-link" onclick="showTab(event, 'glossary')">Glossary</button>
-                <button class="tab-link" onclick="showTab(event, 'guides')">Guides</button>
-                <button class="tab-link" onclick="showTab(event, 'faq')">FAQ</button>
-                <button class="tab-link" onclick="showTab(event, 'recommendations')">Recommendations</button>
-                <button class="tab-link" onclick="showTab(event, 'contact')">Contact</button>
-                <button class="tab-link" onclick="showTab(event, 'fanarts')">Fanarts</button>
-            </div>
-
-
-            <div id="downloads" class="tab-content">
-                <img src="https://i.imgur.com/PplBbNg.png" alt="Dottore Banner" style="max-width: 100%; height: auto; margin: 0 auto 2rem auto; border-radius: 8px; display: block;">
-                
-                <h1>Downloads</h1>
-
-                <div class="notification-box note">
-                    <div class="notification-title">Note</div>
-                    <div class="notification-content">The newest version is 8.0. These presets are designed for <strong>SillyTavern</strong>.</div>
-                </div>
-
-                <div class="notification-box tip">
-                    <div class="notification-title">Tip</div>
-                    <div class="notification-content">The preset below is for Chat Completion only. For my older Text Completion presets, visit my <a href="https://huggingface.co/MarinaraSpaghetti/SillyTavern-Settings">HuggingFace</a>.</div>
-                </div>
-
-                <div class="notification-box warning">
-                    <div class="notification-title">Warning</div>
-                    <div class="notification-content">My presets are designed for chatting, roleplaying, and fiction writing with LLMs. Due to their uncensored nature, they are intended for adults only. <ins>By downloading the files below, you confirm that you are 18 years of age or older and acknowledge that I am not responsible for any content you create or share using these presets.</ins></div>
-                </div>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Link</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><a href="https://github.com/SpicyMarinara/SillyTavern-Settings/blob/main/Marinara's%20Essentials.zip">Master Download</a> <strong>ᴺᴱᵂ</strong></td>
-                            <td>Downloads the entire .zip file that includes the preset, regexes, logit bias, and character cards</td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://github.com/SpicyMarinara/SillyTavern-Settings/tree/main/Marinara's%20Essentials/Preset">Preset</a> <strong>ᴺᴱᵂ</strong></td>
-                            <td>Universal preset alone</td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://github.com/SpicyMarinara/SillyTavern-Settings/tree/main/Marinara's%20Essentials/Regexes">Regexes</a></td>
-                            <td>Regexes that customize the prompts' looks, clean formatting errors, remove em dashes, and unify formats</td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://github.com/SpicyMarinara/SillyTavern-Settings/tree/main/Marinara's%20Essentials/Logit%20Bias">Logit Bias</a></td>
-                            <td>Logit bias for OpenAI models</td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://github.com/SpicyMarinara/SillyTavern-Settings/blob/main/Marinara's%20Essentials/Cards/Professor%20Mari.png">Professor Mari</a></td>
-                            <td>Professor Mari's character card, an assistant who will teach you all about LLMs and help you out with creating character cards</td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://github.com/SpicyMarinara/SillyTavern-Settings/blob/main/Marinara's%20Essentials/Cards/Dottore.png">Dottore</a></td>
-                            <td>Dottore's character card, the Second of the Eleven Fatui Harbingers from Genshin Impact</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <img src="https://i.imgur.com/G610Q95.png" alt="How to download" style="max-width: 100%; height: auto;">
-
-                <h2>RPG Companion SillyTavern Extension</h2>
-
-                <p>Track your stats, scene, and characters in a fancy, customizable way with <a href="https://github.com/SpicyMarinara/rpg-companion-sillytavern">RPG Companion</a>! Enhance your role-play with immersive HTML/CSS/JS! Push the plot forward with randomized events or natural progression by clicking a button! Pass dice rolls to the model and let it decide whether you succeeded in your action based on your attributes! All that and more with the one and only RPG Companion (I'm bad with names, don't judge me)!</p>
-                
-                <img src="https://i.imgur.com/cVCAby0.png" alt="RPG Companion SillyTavern Extension" style="max-width: 80%; height: auto; display: block; margin: 1rem auto; border-radius: 8px;">
-
-                <h2>SillyTavern Lovense Extension <strong>ᴺᴱᵂ</strong></h2>
-
-                <p>Want to take your roleplay to the next level? Check out my <a href="https://github.com/SpicyMarinara/SillyTavern-Lovense">SillyTavern Lovense Extension</a>! This extension allows you to integrate your Lovense toys with SillyTavern for a more immersive experience.</p>
-
-                <img src="https://i.imgur.com/Zyuiqts.jpeg" alt="SillyTavern Lovense Extension" style="max-width: 80%; height: auto; display: block; margin: 1rem auto; border-radius: 8px;">
-
-                <h2>SillyTavern Spotify Music Extension</h2>
-
-                <p>Want to add some music to your SillyTavern experience? Check out my <a href="https://github.com/SpicyMarinara/SillyTavern-Spotify-Music-Extension">SillyTavern Spotify Music Extension</a>! This extension allows you to integrate Spotify with SillyTavern for an enhanced chatting experience.</p>
-
-                <img src="https://i.imgur.com/1bWVr7F.gif" alt="SillyTavern Spotify Music Extension" style="max-width: 80%; height: auto; display: block; margin: 1rem auto; border-radius: 8px;">
-
-                <h2>Discord Buddy</h2>
-
-                <p>Hey, while you're here, perhaps you could also check out my <a href="https://github.com/SpicyMarinara/Discord-Buddy">Discord Buddy</a> project? It's an LLM-powered Discord bot you can host. Open-source, free, with many, many great features. Check it out!</p>
-
-                <img src="https://camo.githubusercontent.com/e0a197fb672dc840d4b9e1a13887855ec3fff93a3bc820dc9afef0e0fe549153/68747470733a2f2f692e696d6775722e636f6d2f4d5a47776937632e6a706567" alt="Sevequiem" style="max-width: 60%; height: auto; display: block; margin: 1rem auto;">
-            </div>
-
-            <div id="about" class="tab-content active">
-                <h1>About</h1>
-                <p>Howdy, I'm Marinara!</p>
-                <p>An LLM enthusiast, teacher, merger, and prompt engineer since late 2023. Additionally, an artist and coder on occasion. I'm the author of models such as <a href="https://huggingface.co/MarinaraSpaghetti/NemoMix-Unleashed-12B">NemoMix Unleashed</a> and many universal prompts, including professional ones for companies like <a href="https://www.tolans.com/">Tolan</a>, <a href="https://www.mydreamcompanion.com/">MyDreamCompanion</a>, or <a href="https://toffee.ai/">Toffee.ai</a>. I consult for various AI services and offer commissions for cards, prompts, and artworks.</p>
-                <p>Here you can find my roleplaying and creative writing presets, as well as recommendations, cards, and guides. All related to LLMs. Feel free to suggest new sections to add or models to test. I hope you'll find it informative, helpful, and fun to read.</p>
-                <p>Cheers and happy gooning!</p>
-            </div>
-
-            <div id="glossary" class="tab-content">
-                <h1>Glossary</h1>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Term</th>
-                            <th>Definition</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>LLM</td><td>Large Language Model (AI Model)</td></tr>
-                        <tr><td>SillyTavern</td><td>Frontend for AI use, the one I create my presets for (<a href="https://github.com/SillyTavern/SillyTavern">https://github.com/SillyTavern/SillyTavern</a>)</td></tr>
-                        <tr><td>Prompt</td><td>What you send to the model. This includes everything: instructions, cards, lorebook entries, example messages, and the chat history</td></tr>
-                        <tr><td>Jailbreak</td><td>Part of the prompt that is responsible for "jailbreaking," aka "removing censorship" from the model</td></tr>
-                        <tr><td>Preset</td><td>A pre-set format of how you send the prompt to the model. These typically involve instructions, optional jailbreaks, and sampler settings</td></tr>
-                        <tr><td>(Character) Card</td><td>Typically a description of a character that may include their image, personality, and example message</td></tr>
-                        <tr><td>Persona</td><td>Like a character card, but for the character you play as</td></tr>
-                        <tr><td>Scenario</td><td>An outline of what happens in the roleplay</td></tr>
-                        <tr><td>Lorebooks (World Info)</td><td>Prompt entries that trigger based on activated keywords</td></tr>
-                        <tr><td>Samplers</td><td>Algorithms or methods used to decide which token the model should pick next when generating text</td></tr>
-                        <tr><td>Temperature</td><td>One of the samplers that controls how creative the output is allowed to be. Numbers closer to zero produce more deterministic outputs, while those closer to 1 and above are more creative</td></tr>
-                        <tr><td>Tokens</td><td>Building blocks of text sent to the models. These include symbols, letters, words, and codes</td></tr>
-                        <tr><td>Context</td><td>How many tokens the model can process at once, e.g., 32k. The larger the number, the more it remembers</td></tr>
-                        <tr><td>Chat Completion</td><td>Format of sending the prompt as a structured conversation, with clear distinctions between different roles (user, assistant, system). Used when you access models via API</td></tr>
-                        <tr><td>User</td><td>All the messages that count as being sent from the human (you)</td></tr>
-                        <tr><td>Assistant</td><td>All the messages that count as being sent from the AI (model)</td></tr>
-                        <tr><td>System</td><td>Instructions for the model, appended before the start of the conversation</td></tr>
-                        <tr><td>Text Completion</td><td>Format of sending the prompt to the model as a big wall of text, and asking it to "complete it" (hence the name). Used with locally run models</td></tr>
-                        <tr><td>Input</td><td>Your last sent message to the model</td></tr>
-                        <tr><td>Output</td><td>Model's response</td></tr>
-                        <tr><td>Logit Bias</td><td>A way to manipulate the probability of specific tokens by either banning them completely or encouraging the model to use them more often</td></tr>
-                        <tr><td>Regex</td><td>Search language for string, capable of finding specific symbols, words, or phrases, and editing them</td></tr>
-                        <tr><td>Proxy</td><td>A way for accessing models via a "middleman"</td></tr>
-                        <tr><td>Function Calling</td><td>Models can call actual functions you've defined and programmed, and pass structured data to them</td></tr>
-                        <tr><td>Prefill</td><td>Forcing the model to start its output with a specified text. Useful for jailbreaking</td></tr>
-                        <tr><td>Reasoning</td><td>Model thinking goes brrr</td></tr>
-                        <tr><td>Refusal</td><td>Skill issue</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div id="guides" class="tab-content">
-                <h1>Guides</h1>
-
-                <div class="notification-box tip">
-                    <div class="notification-title">Video Tutorial</div>
-                    <div class="notification-content">Check out my comprehensive video guide for a visual walkthrough!</div>
-                </div>
-
-                <div style="position: relative; width: 100%; height: 0; padding-bottom: 56.25%; margin: 2rem 0; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);">
-                    <iframe 
-                        src="https://www.youtube.com/embed/vG8q3CsBGQQ" 
-                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; border-radius: 12px;"
-                        allowfullscreen>
-                    </iframe>
-                </div>
-
-                <h2>Guide To Prompts</h2>
-
-                <img src="https://i.imgur.com/eWinVla.png" alt="Guide To Prompts Screenshot" style="max-width: 60%; height: auto; margin: 1rem auto; border-radius: 8px; display: block;">
-
-                <div class="notification-box warning">
-                    <div class="notification-title">Warning</div>
-                    <div class="notification-content">All the toggles on the screenshot above are mandatory, but you may have only one active at a time from their respective sections.</div>
-                </div>
-
-                <ol>
-                    <li><strong>Type</strong> decides the overall style of your use case.
-                        <ul style="list-style: none; padding-left: 1rem;">
-                            <li style="position: relative; padding-left: 1rem;"><span style="position: absolute; left: 0;">-</span> <strong>Game Master:</strong> For both group chats and single roleplays, allowing the model to roleplay for all the characters and the narrator.</li>
-                            <li style="position: relative; padding-left: 1rem;"><span style="position: absolute; left: 0;">-</span> <strong>Roleplayer:</strong> Specifically for one-on-one roleplays.</li>
-                            <li style="position: relative; padding-left: 1rem;"><span style="position: absolute; left: 0;">-</span> <strong>Writer:</strong> For fanfic writing.</li>
-                        </ul>
-                    </li>
-                    <li><strong>Tense</strong> decides the tense of the model's writing.
-                        <ul style="list-style: none; padding-left: 1rem;">
-                            <li style="position: relative; padding-left: 1rem;"><span style="position: absolute; left: 0;">-</span> <strong>Past:</strong> Example, "he did it."</li>
-                            <li style="position: relative; padding-left: 1rem;"><span style="position: absolute; left: 0;">-</span> <strong>Present:</strong> Example, "he is doing it."</li>
-                            <li style="position: relative; padding-left: 1rem;"><span style="position: absolute; left: 0;">-</span> <strong>Future:</strong> Example, "he will do it."</li>
-                        </ul>
-                    </li>
-                    <li><strong>Narration</strong> decides the type of narration.
-                        <ul style="list-style: none; padding-left: 1rem;">
-                            <li style="position: relative; padding-left: 1rem;"><span style="position: absolute; left: 0;">-</span> <strong>Third-Person:</strong> Example, "he said."</li>
-                            <li style="position: relative; padding-left: 1rem;"><span style="position: absolute; left: 0;">-</span> <strong>Second-Person:</strong> Example, "you said."</li>
-                            <li style="position: relative; padding-left: 1rem;"><span style="position: absolute; left: 0;">-</span> <strong>First-Person:</strong> Example, "I said."</li>
-                        </ul>
-                    </li>
-                    <li><strong>POV</strong> decides from which point of view the narration will be.
-                        <ul style="list-style: none; padding-left: 1rem;">
-                            <li style="position: relative; padding-left: 1rem;"><span style="position: absolute; left: 0;">-</span> <strong>Omniscient:</strong> POV of a third party, separate observer, who knows what all characters think, perceive, etc.</li>
-                            <li style="position: relative; padding-left: 1rem;"><span style="position: absolute; left: 0;">-</span> <strong>Character's:</strong> POV is filtered through what a specific character perceives, thinks, etc.</li>
-                            <li style="position: relative; padding-left: 1rem;"><span style="position: absolute; left: 0;">-</span> <strong>User's:</strong> Same as above, but from the user's perspective.</li>
-                        </ul>
-                    </li>
-                </ol>
-
-                <div class="notification-box note">
-                    <div class="notification-title">Note</div>
-                    <div class="notification-content">You can juxtapose these into your preferred style. Let's say you want the model to always reply in first person from the respective character's perspective. In that case, you select options "First-Person" and "Character's". If you want a third-person limited narration from your protagonist's POV, you should go for options "Third-Person" and "User's".</div>
-                </div>
-
-                <ol start="5">
-                    <li><strong>Length</strong> sets the final length of the bot's response.
-                        <ul style="list-style-type: '- ';">
-                            <li><strong>Flexible:</strong> You allow the model to choose the response's length dynamically, based on the current scene (short if in a dialogue, longer if the plot progresses).</li>
-                            <li><strong>Short:</strong> Below 150 words.</li>
-                            <li><strong>Moderate:</strong> Between 150 and 300 words.</li>
-                            <li><strong>Long:</strong> Above 300 words.</li>
-                        </ul>
-                    </li>
-                </ol>
-
-                <img src="https://i.imgur.com/WD6OnKX.png" alt="Optional Toggles Screenshot" style="max-width: 80%; height: auto; margin: 1rem 0; border-radius: 8px;">
-
-                <div class="notification-box warning">
-                    <div class="notification-title">Warning</div>
-                    <div class="notification-content">My regexes are required for the optional toggles to display properly in the same format as in the screenshot above.</div>
-                </div>
-
-                <ol>
-                    <li><span style="color: #ff9500;"><strong>User's Stats</strong></span> tracks your protagonist's statistics and current statuses. These will affect your roleplay.</li>
-                    <li><span style="color: #ffff00;"><strong>Info Box</strong></span> shows details about the current scene. Good for maintaining logical continuity.
-                        <ul style="list-style-type: '- ';">
-                            <li>Date & Weather</li>
-                            <li>Time</li>
-                            <li>Location</li>
-                            <li>Important Recollections</li>
-                            <li>Present Characters & Their Observable States</li>
-                        </ul>
-                    </li>
-                    <li><span style="color: #39ff14;"><strong>Mind Reading</strong></span> allows you to see the character's thoughts.</li>
-                    <li><span style="color: #00e0e6;"><strong>Immersive HTML</strong></span> adds active HTML/CSS/JS elements to the narrative.</li>
-                    <li><span style="color: #5865f2;"><strong>Randomized Plot Push</strong></span> pushes the narrative forward with a completely random thing. <strong>ENABLE ONLY ONCE AND TURN OFF AFTER THAT, UNLESS YOU WANT RANDOM THINGS HAPPENING EVERY TURN.</strong></li>
-                </ol>
-
-                <h2>How To Import A Preset?</h2>
-                <div class="notification-box tip">
-                    <div class="notification-title">Tip</div>
-                    <div class="notification-content">Presets include instructions and settings for models. Different ones offer different experiences. There is no "best" or "worst" preset; it's all a matter of your personal preference. Use the one you like best, and feel free to write your own, custom ones!</div>
-                </div>
-
-                <img src="https://i.imgur.com/liAlNTz.gif" alt="How to import a preset" style="max-width: 100%; height: auto;">
-
-                <ol>
-                    <li>Open SillyTavern.</li>
-                    <li>Go to the Chat Completion Presets tab by clicking the first icon from the left (sliders) at the top of the page.</li>
-                    <li>Click the Import preset button (the one with the little arrow pointing at paper) at the top of the screen.</li>
-                    <li>Select the file you want to import.</li>
-                    <li>Open it.</li>
-                </ol>
-
-                <p>You can access all of your imported presets at any time.</p>
-
-                <h2>How To Import A Regex?</h2>
-
-                <div class="notification-box tip">
-                    <div class="notification-title">Tip</div>
-                    <div class="notification-content">Regexes aren't required, but they can improve formatting and fix errors in the outputs. For example, my regexes remove overused em-dashes, fix quotation marks, and turn <code>...</code> into <code>…</code>, reducing the overall token count.</div>
-                </div>
-
-                <img src="https://i.imgur.com/t0GV1iq.gif" alt="How to import a regex" style="max-width: 100%; height: auto;">
-
-                <ol>
-                    <li>Open SillyTavern.</li>
-                    <li>Go to the Extensions tab by clicking the third icon from the right (cubes) at the top of the page.</li>
-                    <li>Click on Regex.</li>
-                    <li>Click the Import button (the one with the little arrow pointing at paper).</li>
-                    <li>Select the file you want to import.</li>
-                    <li>Open it.</li>
-                </ol>
-
-                <h2>How To Import A Logit Bias?</h2>
-
-                <div class="notification-box warning">
-                    <div class="notification-title">Warning</div>
-                    <div class="notification-content">Logit Bias works <strong>ONLY</strong> with OpenAI models (GPTs). I based mine on <a href="https://rentry.org/avaniJB">Avi's</a>, so all credit goes to them. <ins>Logit Bias is a must if you want to use OAI models, however, keep in mind GPT-5 Thinking does not support it.</ins></div>
-                </div>
-
-                <div class="notification-box tip">
-                    <div class="notification-title">Tip</div>
-                    <div class="notification-content">Logit Bias allows you to control which tokens are more or less likely to appear in the model's output. The values can be set between -100 (semi-banning the specified token) and 100 (encouraging the model to use a token at every opportunity). Number 0 is neutral. <a href="https://help.openai.com/en/articles/5247780-using-logit-bias-to-alter-token-probability-with-the-openai-api">Read more about it here</a>.</div>
-                </div>
-
-                <img src="https://i.imgur.com/gomeFrY.gif" alt="How to import a logit bias" style="max-width: 100%; height: auto;">
-
-                <ol>
-                    <li>Open SillyTavern.</li>
-                    <li>Go to the Chat Completion Presets tab by clicking the first icon from the left (sliders) at the top of the page.</li>
-                    <li>Slide all the way down to the Logit Bias section.</li>
-                    <li>Click the Import preset button (the one with the little arrow pointing at paper).</li>
-                    <li>Select the file you want to import.</li>
-                    <li>Open it.</li>
-                </ol>
-
-                <h2>How To Import A Character Card?</h2>
-
-                <div class="notification-box tip">
-                    <div class="notification-title">Tip</div>
-                    <div class="notification-content">Character cards are characters you chat or roleplay with. These don't necessarily have to be characters; they can also include assistants, narrators, and even entire worlds.</div>
-                </div>
-
-                <img src="https://i.imgur.com/VULGDg2.gif" alt="How to import a character card" style="max-width: 100%; height: auto;">
-
-                <ol>
-                    <li>Open SillyTavern.</li>
-                    <li>Go to the Character Management tab by clicking the first icon from the right (card) at the top of the page.</li>
-                    <li>Click the Import Character From File button (the one with the little arrow pointing at paper).</li>
-                    <li>Select the character you want to import.</li>
-                    <li>Open it.</li>
-                </ol>
-
-                <h2>How To Edit & Toggle Prompts?</h2>
-
-                <div class="notification-box tip">
-                    <div class="notification-title">Tip</div>
-                    <div class="notification-content">My prompt is plug-and-play, but you may want to edit it or toggle some optional stuff.</div>
-                </div>
-
-                <img src="https://i.imgur.com/jupZFMm.gif" alt="How to edit and toggle prompts" style="max-width: 100%; height: auto;">
-
-                <ol>
-                    <li>Open SillyTavern.</li>
-                    <li>Go to the Chat Completion Presets tab by clicking the first icon from the left (sliders) at the top of the page.</li>
-                    <li>Slide all the way down to the Prompts section.</li>
-                    <li>Click on the small pencil icon on the right side of the prompt to view its contents and edit it.</li>
-                    <li>Click on the small toggle button on the right side of the prompt to enable/disable it.</li>
-                </ol>
-            </div>
-
-            <div id="faq" class="tab-content">
-                <h1>FAQ</h1>
-
-                <div class="notification-box note">
-                    <div class="notification-title">Q: I see some parts of your prompts in {{// this format. }}{{trim}} What does it mean? Won't it confuse the models?</div>
-                    <div class="notification-content">A: This is formatting for comments on SillyTavern. Any text rendered like that won't be sent to the LLM with your request. Only you can read it. The trim part ensures no empty new lines are sent.</div>
-                </div>
-
-                <div class="notification-box note">
-                    <div class="notification-title">Q: Why are some of your prompts empty, but left enabled anyway?</div>
-                    <div class="notification-content">A: Some shared character cards include custom prompts and jailbreaks. They will be placed in those empty prompts.</div>
-                </div>
-
-                <div class="notification-box note">
-                    <div class="notification-title">Q: What preset should I use?</div>
-                    <div class="notification-content">A: Use whatever works for you. If you get too many refusals with mine, try someone else's or write your own. I can't test my prompt with every model in existence, in every possible scenario, with every possible character card.</div>
-                </div>
-
-                <div class="notification-box note">
-                    <div class="notification-title">Q: Can I edit your preset?</div>
-                    <div class="notification-content">A: Of course! I highly encourage it! You can use it as a base to build something personalized, or steal its parts to inject into other prompts. Experiment and find out what works best for you.</div>
-                </div>
-
-                <div class="notification-box note">
-                    <div class="notification-title">Q: Why do you recommend turning off reasoning?</div>
-                    <div class="notification-content">A: Because it's been <a href="https://ml-site.cdn-apple.com/papers/the-illusion-of-thinking.pdf">proven</a> that models do not reason the way we think. Reasoning is obsolete for roleplay/creative writing purposes, and eats up many tokens. It was created with solving complex issues, not gooning in mind, which severely limits creativity and makes the outputs more deterministic. Nowadays, models are smart enough to track the current scene well enough to not have to think about all the details before responding.</div>
-                </div>
-
-                <div class="notification-box note">
-                    <div class="notification-title">Q: What is the best format for writing character cards?</div>
-                    <div class="notification-content">A: Plain text, though, again, everything that works, works. Personally, I've noticed the best results with well-structured descriptions in paragraphs. You can also enclose parts in respective XML tags, such as:<br><br><code>&lt;appearance&gt;<br>Your character's appearance here.<br>&lt;/appearance&gt;</code></div>
-                </div>
-
-                <div class="notification-box note">
-                    <div class="notification-title">Q: Can I use AI to generate my cards/lorebooks/presets?</div>
-                    <div class="notification-content">A: Yes, though expect subpar results. The more effort you put into writing these yourself, the better the quality of output you'll get. By using synthetic data, you're encouraging models to fall into established patterns and get 'lazier'. You can always outline your ideas to the model or provide them with an example you want them to follow when generating stuff for you. Except, don't ever use AI-generated prompts; models <strong>do not</strong> know how to prompt themselves.</div>
-                </div>
-
-                <div class="notification-box note">
-                    <div class="notification-title">Q: Which Prompt Post-Processing do I use?</div>
-                    <div class="notification-content">A: Merge consecutive roles (no tools).</div>
-                </div>
-
-                <div class="notification-box note">
-                    <div class="notification-title">Q: Which frontend do you use?</div>
-                    <div class="notification-content">A: SillyTavern.</div>
-                </div>
-
-                <div class="notification-box note">
-                    <div class="notification-title">Q: What do you have in Advanced Formatting tab on SillyTavern (Text Completion)?</div>
-                    <div class="notification-content">A: Nothing. If you're using Chat Completion Presets, none of the prompts from Advanced Formatting are sent.</div>
-                </div>
-
-                <div class="notification-box note">
-                    <div class="notification-title">Q: I got a refusal?</div>
-                    <div class="notification-content">A: Skill issue.</div>
-                </div>
-            </div>
-
-            <div id="recommendations" class="tab-content">
-                <h1>Recommendations</h1>
-
-                <h2>Recommended Models</h2>
-
-                <div class="notification-box note">
-                    <div class="notification-title">Note</div>
-                    <div class="notification-content">Last updated on 24.11.2025</div>
-                </div>
-
-                <div class="notification-box tip">
-                    <div class="notification-title">Tip</div>
-                    <div class="notification-content">It's safe to assume the first model on the list is the one I'm currently using for main roleplay. Please keep in mind this is my subjective ranking, based on my own preferences.</div>
-                </div>
-
-                <div class="notification-box warning">
-                    <div class="notification-title">Warning</div>
-                    <div class="notification-content"><strong>ChatGPT-4o</strong> and <strong>GPT-4o</strong> are <ins>two different models!</ins> I know, not confusing at all. The one I recommend is <code>chatgpt-4o-latest</code> ('Latte'). The other one, GPT-4o, is pretty bad.</div>
-                </div>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Position</th>
-                            <th>Model</th>
-                            <th>Context</th>
-                            <th>Censorship</th>
-                            <th>Strengths</th>
-                            <th>Weaknesses</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="https://www.anthropic.com/news/claude-opus-4-5">Opus 4.5</a> <strong>ᴺᴱᵂ</strong></td>
-                            <td>200k</td>
-                            <td>Low</td>
-                            <td><a href="https://www.youtube.com/watch?v=Q-RGkVZFwtI">https://www.youtube.com/watch?v=Q-RGkVZFwtI</a></td>
-                            <td>Bruh, it doesn't even cost you an arm and a leg to use anymore</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td><a href="https://openai.com/index/gpt-5-1/">GPT-5.1</a> <strong>ᴺᴱᵂ</strong></td>
-                            <td>400k</td>
-                            <td>Low</td>
-                            <td>It's good, I liked it a lot even when it was known as Polaris Alpha. Use High Thinking for general roleplay and turn off thinking for gooning (it's more censored when it thinks). Doesn't require mental gymnastics like GPT-5 did with prompting to "just work"</td>
-                            <td>Doesn't support logit bias, so if you can't stand GPTisms, this might be a problem. Don't use the Chat version, it's terrible</td>
-                        </tr>
-                        </tr>
-                            <td>3</td>
-                            <td><a href="https://openrouter.ai/anthropic/claude-opus-4.1">Claude Opus 4.1</a></td>
-                            <td>200k</td>
-                            <td>Low</td>
-                            <td>Still the smartest one on the list, with a unique writing style and creativity. <span class="strikethrough">Opus can't be beat. It's impossible. The writing is too good. The smarts even more so. Nothing else compares right now.</span> Opus 4.5, where are you?</td>
-                            <td>Extremely expensive to use regularly and falls into repetetive patterns quickly. Works meh on higher contexts</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td><a href="https://openrouter.ai/anthropic/claude-sonnet-4.5">Sonnet 4.5</a></td>
-                            <td>1mln</td>
-                            <td>Low</td>
-                            <td>They cooked with this one. It's smart, follows instructions well, has a good writing style, and <span class="strikethrough">fixes Opus's repetition issue on higher contexts.</span> Not sure what happened, but the repetition is more prominent now, that's why it goes down in the ranking</td>
-                            <td>You can't really control its style, so if you don't like it, you have to either get used to it or switch a model</td>
-                        <tr>
-                            <td>5</td>
-                            <td><a href="https://deepmind.google/models/gemini/">Gemini 3</a> <strong>ᴺᴱᵂ</strong></td>
-                            <td>1 mln</td>
-                            <td>Medium</td>
-                            <td>Don't give it too much thought, the only reason why Gemini 3 is so high in my ranking is because all the models below are relatively outdated. It's slop. I hate it. They didn't fix any problems of 2.5, it still echoes, it still struggles with instructions, and it's still weirdly censored. Makes spelling errors even on the recommended Temperature of 1. Overuses the "didn't X" structure, and telling it to focus on describing what *did* happen, doesn't help. It's smarter than 2.5, but that's literally all the positivies I can say about it as of now. Given that it's a preview edition, they might address some of these issues in the future. But give it a go anyway, you may like it, it's just not for me personally</td>
-                            <td>I guess I listed everything already</td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td><a href="https://openrouter.ai/openai/chatgpt-4o-latest">ChatGPT-4o</a></td>
-                            <td>128k</td>
-                            <td>Low</td>
-                            <td>Best conversational style, big knowledge base, very smart, funny</td>
-                            <td>Unusable without proper regexes and a logit bias</td>
-                        </tr>
-                        <tr>
-                            <td>7</td>
-                            <td><a href="https://openrouter.ai/openai/gpt-5">GPT-5</a></td>
-                            <td>400k</td>
-                            <td>Medium</td>
-                            <td>Anthropic won again. GPT-5 falls down a few spots, because it works worse somehow recently? Not sure what they changed, but you can tell it got more robotic than it used to be</td>
-                            <td>A nightmare to prompt, and without a good one, it simply doesn't work. Is absolutely terrible without High thinking</td>
-                        </tr>
-                        <tr>
-                            <td>8</td>
-                            <td><a href="https://openrouter.ai/anthropic/claude-sonnet-4">Claude Sonnet 4</a></td>
-                            <td>200k</td>
-                            <td>Low</td>
-                            <td>Perhaps I have treated you too harshly, Sonnet 4. It's still not as creative as its predecessor, but it has its moments</td>
-                            <td>Lacks 3.7's creative spark and is very passive</td>
-                        </tr>
-                        <tr>
-                            <td>9</td>
-                            <td><a href="https://openrouter.ai/openai/gpt-5-chat">GPT-5 Chat</a></td>
-                            <td>128k</td>
-                            <td>None</td>
-                            <td><span class="strikethrough">A terrible disappointment at first, but they fixed it, especially with how good the prose feels; now it's a smarter ChatGPT-4o.</span> It's really dumb for me recently.</td>
-                            <td>As all the other OAI models, it requires regexes and a logit bias to be good, plus its prose is worse than ChatGPT-4o's</td>
-                        </tr>
-                        <tr>
-                            <td>10</td>
-                            <td><a href="https://openrouter.ai/anthropic/claude-3.7-sonnet">Claude Sonnet 3.7</a></td>
-                            <td>200k</td>
-                            <td>None</td>
-                            <td>Excellent at both writing and roleplaying, works great on higher contexts (above 32k)</td>
-                            <td>A little outdated</td>
-                        </tr>
-                        <tr>
-                            <td>11</td>
-                            <td><a href="https://openrouter.ai/x-ai/grok-4-fast:free">Grok 4 Fast (Free)</a> <strong>ᴺᴱᵂ</strong></td>
-                            <td>2mln</td>
-                            <td>Low</td>
-                            <td>A very hit-or-miss model - sometimes it's peak, sometimes it produces absolute garbage. It's only higher than Gemini 2.5, because it's available for free as of now</td>
-                            <td>You will have to re-generate a lot with this one</td>
-                        </tr>
-                        <tr>
-                            <td>12</td>
-                            <td><a href="https://openrouter.ai/google/gemini-2.5-pro">Gemini 2.5 Pro</a>/<a href="https://openrouter.ai/google/gemini-2.5-flash">Flash</a></td>
-                            <td>1mln</td>
-                            <td>Medium</td>
-                            <td>Very smart and good at instruction following. Jumped up in the ranking, since it got better with my newest prompt</td>
-                            <td>Echoing hell ("echoing?"), stiff prose with no logit bias to control some tokens' usage (prepare for a lot of "then" and "didn't"), it's a 50/50 chance the model is lobotomized on the day you use it</td>
-                        </tr>
-                        <tr>
-                            <td>13</td>
-                            <td><a href="https://openrouter.ai/moonshotai/kimi-k2-0905">Kimi K2 0905 <strong>ᴺᴱᵂ</strong></a></td>
-                            <td>260k</td>
-                            <td>Low</td>
-                            <td>Not the smartest, but it's slowly getting there. I have high hopes for these models in the future, given that their creators genuinely care about improving their creative writing capabilities</td>
-                            <td>Still not great at higher contexts (above 32k), and still lacking that extra polish</td>
-                        </tr>
-                        <tr>
-                            <td>14</td>
-                            <td><a href="https://openrouter.ai/deepseek/deepseek-r1-0528">DeepSeek R1</a>/<a href="https://openrouter.ai/deepseek/deepseek-chat-v3-0324">V3</a></td>
-                            <td>163k</td>
-                            <td>None</td>
-                            <td>Creative and wild</td>
-                            <td>Hard to control and struggles with repetition</td>
-                        </tr>
-                        <tr>
-                            <td>15</td>
-                            <td><a href="https://openrouter.ai/openai/gpt-4.1">GPT-4.1</a></td>
-                            <td>1mln</td>
-                            <td>Low</td>
-                            <td>Good style, doesn't have an annoyingly positive bias, has a large working context window</td>
-                            <td>Unusable without proper regexes and a logit bias, somewhat lacking in smarts</td>
-                        </tr>
-                        <tr>
-                            <td>16</td>
-                            <td><a href="https://openrouter.ai/x-ai/grok-4">Grok 4</a></td>
-                            <td>256k</td>
-                            <td>None</td>
-                            <td>Grok, is this true?</td>
-                            <td>It's like a teenager going through puberty, so horny and not very smart</td>
-                        </tr>
-                        <tr>
-                            <td>17</td>
-                            <td><a href="https://openrouter.ai/deepseek/deepseek-chat-v3.1">DeepSeek V3.1</a></td>
-                            <td>165k</td>
-                            <td>Low</td>
-                            <td>It just works</td>
-                            <td>Worse than V.3 and R1 in every single aspect. What were they thinking</td>
-                        </tr>
-                        <tr>
-                            <td>Extra</td>
-                            <td><a href="https://huggingface.co/MarinaraSpaghetti/NemoMix-Unleashed-12B">NemoMix-Unleashed-12B</a></td>
-                            <td>128k</td>
-                            <td>None</td>
-                            <td>Obligatory shill of my model, some claim it still holds up</td>
-                            <td>Old and small</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div class="notification-box warning">
-                    <div class="notification-title">Warning</div>
-                    <div class="notification-content"><span class="strikethrough">I noticed some underlying issues with GPT-5. I'm barely able to control it; it feels like every time I get a generation, it's like a different model responding. Requires further testing. It may be awful, actually. It's just shit. Stick to ChatGPT-4o while you can.</span> They fixed GPT-5 at last, so I've added it to the ranking officially.</div>
-                </div>
-
-                <h2>Model Providers</h2>
-
-                <div class="notification-box note">
-                    <div class="notification-title">Note</div>
-                    <div class="notification-content">If a proxy is listed here, it means I personally tested it and its owner agreed to being mentioned on this page.</div>
-                </div>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Provider</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><s><a href="https://crystalsraw.me/models">Crystal Proxy</a></s></td>
-                            <td><s>Proxy of my trusted friend. For just $20 a month, you can get access to every big model out there. I highly recommend checking it out, even if it's to hang out with us on her Discord server.</s> No longer accepting new members for now</td>
-                        </tr>
-                        <tr>
-                            <td><s><a href="https://rentry.org/anas_proxy">Anas Proxy</a></s></td>
-                            <td><s>Proxy recommended by a friend. It offers a few models to choose from, including Opus and Sonnet with unlimited contexts. You pay either around $1 for unlimited requests per day of use, or for $2, you can buy 100 requests to use whenever you like. Tested, and everything works</s> RIP.</td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://discord.gg/G3qVMhDZTe">4risu</a></td>
-                            <td>I accidentally stumbled upon this proxy, but it proved awesome, and the owners are kind. Has a <s>free tier</s> paid tier with many models to choose from. Just remember to grab an English role if you don't speak Spanish</td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://discord.gg/ba7kW26Gr2">Mprox</a></td>
-                            <td>Good friend of mine, he's been my main GPT-5 supplier for a while now. He doesn't have as many models to choose from as others, but his endpoints accept parameters such as temperature or logit bias. If you're looking to use OpenAI models, check him out</td>
-                        </tr>
-                        <tr>
-                            <td><s><a href="https://discord.gg/BGxfMgpxf">Gremory Proxy</a></s></td>
-                            <td><s>Tested. Verified. Had a pleasant experience with the owner. Has a wide variety of models with no context limits, including Opus, Gemini, and GPT. Price? Only $8 per two weeks or $14 for a month of usage</s> Currently on pause.</td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://openrouter.ai/">OpenRouter</a></td>
-                            <td>I hope this one needs no introduction. This is currently the safest and easiest way to access all the models. Pay-as-you-go when using them</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h2>Preset Creators</h2>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Creator</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><a href="https://rentry.org/avaniJB">AvaniJB</a></td>
-                            <td>Good prompts, regexes, and logit biases (the last one, I shamelessly stole from them). Also, I love their little cat character</td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://pixibots.neocities.org/">Pixi</a></td>
-                            <td>The grandparent of prompting. One of my biggest inspirations</td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://github.com/NemoVonNirgend/NemoPresetExt">Nemo Preset</a></td>
-                            <td>Personally, I find this preset too big and unnecessarily bloated, but it's still a very well-written and well-thought-out preset! If large token numbers and customization options don't scare you, I suggest checking this one out</td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://leafcanfly.neocities.org/">Celia</a></td>
-                            <td>Customizable, creative, overall a great prompt. Plus, Celia is cute</td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://discord.gg/GxwmKtSJV2">AI Presets</a> <strong>ᴺᴱᵂ</strong></td>
-                            <td>Discord server containing many great prompts from amazing creators such as Loggo, Gerodot, Ashu, Chi-Bi, Nara, and others.</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h2>SillyTavern Themes</h2>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Theme</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><a href="https://github.com/RivelleDays/SillyTavern-MoonlitEchoesTheme">MoonlitEchoes</a></td>
-                            <td>It's the one I'm currently using, and the one you can see on my screenshots! It's beautiful, I absolutely recommend it</td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://github.com/NemoVonNirgend/NemoPresetExt/">NemoEngine</a></td>
-                            <td>Very convenient for prompt management, allows you to play videos and streams as a background for your chats (with sound), and improves on tabs' design.</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h2>SillyTavern Alternatives</h2>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Alternative</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><a href="https://loreblendr.ai/app">LoreBlendr.AI</a> <strong>ᴺᴱᵂ</strong></td>
-                            <td>A free SillyTavern alternative available on iOS devices. Still in development. Useful for iPhone users like me. Supports custom presets, with mine being already integrated. Big recommend!</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div id="contact" class="tab-content">
-                <h1>Contact</h1>
-                
-                <h2>Discord:</h2>
-                <p><code>marinara_spaghetti</code></p>
-
-                <h2>E-mail:</h2>
-                <p><code>mgrabower97@gmail.com</code></p>
-
-                <h2>Socials:</h2>
-                <p><code><a href="https://linktr.ee/Spicy_Marinara">https://linktr.ee/Spicy_Marinara</a></code></p>
-            </div>
-
-            <div id="fanarts" class="tab-content">
-                <h1>Fanarts</h1>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0;">
-                    <div class="fanart-container">
-                        <img src="https://i.imgur.com/p6rhYTF.gif" alt="Huxnt3rx" style="border-radius: 8px;">
-                        <div class="fanart-artist">Huxnt3rx</div>
-                    </div>
-                    <div class="fanart-container">
-                        <img src="https://i.imgur.com/SjQYnZD.png" alt="Vynocchi" style="border-radius: 8px;">
-                        <div class="fanart-artist">Vynocchi</div>
-                    </div>
-                    <div class="fanart-container">
-                        <img src="https://i.imgur.com/NbRDrCt.jpeg" alt="Huxnt3rx" style="border-radius: 8px;">
-                        <div class="fanart-artist">Huxnt3rx</div>
-                    </div>
-                    <div class="fanart-container">
-                        <img src="https://i.imgur.com/cKRfHeM.png" alt="Huxnt3rx" style="border-radius: 8px;">
-                        <div class="fanart-artist">Huxnt3rx</div>
-                    </div>
-                    <div class="fanart-container">
-                        <img src="https://i.imgur.com/t4vn272.png" alt="Xixica" style="border-radius: 8px;">
-                        <div class="fanart-artist">Xixica</div>
-                    </div>
-                    <div class="fanart-container">
-                        <img src="https://i.imgur.com/dhGFKvc.png" alt="Xixica" style="border-radius: 8px;">
-                        <div class="fanart-artist">Xixica</div>
-                    </div>
-                    <div class="fanart-container">
-                        <img src="https://i.imgur.com/5X67Oks.jpeg" alt="s0lu" style="border-radius: 8px;">
-                        <div class="fanart-artist">s0lu</div>
-                    </div>
-                    <div class="fanart-container">
-                        <img src="https://i.imgur.com/6dEFpqW.png" alt="Vynocchi" style="border-radius: 8px;">
-                        <div class="fanart-artist">Vynocchi</div>
-                    </div>
-                    <div class="fanart-container">
-                        <img src="https://i.imgur.com/OG9jwmB.gif" alt="Huxnt3rx" style="border-radius: 8px;">
-                        <div class="fanart-artist">Huxnt3rx</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Additional tabs would go here with the same content structure -->
-            <div id="contact" class="tab-content">
-                <h1>Contact</h1>
-                <h2>Discord:</h2>
-                <p><code>marinara_spaghetti</code></p>
-                <h2>E-mail:</h2>
-                <p><code>mgrabower97@gmail.com</code></p>
-                <h2>Socials:</h2>
-                <p><a href="https://linktr.ee/Spicy_Marinara">https://linktr.ee/Spicy_Marinara</a></p>
-            </div>
+        <div class="card">
+            <h2>📝 Файлы Регулярных Выражений (RegEx)</h2>
+            <p>Нажмите, чтобы скачать и импортировать файлы с настройками RegEx в SillyTavern:</p>
+            
+            <a class="regex-link" href="Fix_Quotes.json" download>
+                Скачать Fix_Quotes.json 
+            </a> 
+            <a class="regex-link" href="Remove_Brackets.json" download>
+                Скачать Remove_Brackets.json 
+            </a>
+            <a class="regex-link" href="Custom_Formatting.json" download>
+                Скачать Custom_Formatting.json
+            </a>
+            
+            <p style="margin-top: 15px; font-size: 0.9em; color: #666;">
+                **ОБЯЗАТЕЛЬНО:** Замените `Fix_Quotes.json`, `Remove_Brackets.json` и `Custom_Formatting.json` на точные имена ваших файлов RegEx в коде, чтобы ссылки работали.
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>📚 Полезный Гайд</h2>
+            <ul>
+                <li><a href="**ССЫЛКА НА ВАШ ГАЙД**" target="_blank">Видео-гайд или текстовая инструкция по установке (Нажмите для перехода)</a></li>
+                <li><a href="**ССЫЛКА НА ВАШ ДИСКОРД/ТГ**" target="_blank">Обсуждение в Дискорде/Телеграме</a></li>
+            </ul>
         </div>
     </div>
-
-    <script>
-        function showTab(evt, tabName) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].classList.remove("active");
-            }
-            tablinks = document.getElementsByClassName("tab-link");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].classList.remove("active");
-            }
-            document.getElementById(tabName).classList.add("active");
-            evt.currentTarget.classList.add("active");
-        }
-        
-        // Set first tab as active by default
-        document.addEventListener('DOMContentLoaded', function() {
-            if (document.querySelector('.tab-link')) {
-                document.querySelector('.tab-link').click();
-            }
-        });
-    </script>
-
-    <!-- Footer -->
-    <footer style="margin-top: 4rem; padding: 2rem 0 1.5rem 0; border-top: 2px solid var(--dottore-primary); background: linear-gradient(135deg, var(--dottore-dark) 0%, rgba(0, 224, 230, 0.05) 100%); text-align: center;">
-      
-      <!-- Main Footer Content -->
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 1.5rem;">
-        
-        <!-- Left Side: Empty for spacing -->
-        <div style="flex: 1; display: flex; justify-content: flex-start;">
-        </div>
-        
-        <!-- Center: Ko-fi and Discord Buttons -->
-        <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
-          <a href="https://ko-fi.com/marinara_spaghetti" class="ko-fi-button" target="_blank" rel="noopener">
-            <img src="https://cdn.prod.website-files.com/5c14e387dab576fe667689cf/670f5a01229bf8a18f97a3c1_favion.png" alt="Ko-fi" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 8px;"> Support me on Ko-fi
-          </a>
-          <a href="https://discord.gg/KdAkTg94ME" class="discord-button" target="_blank" rel="noopener">
-            <img src="https://toppng.com/uploads/preview/discord-logo-01-discord-logo-11562849833clsolz2mbc.png" alt="Discord" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 8px;"> Join Our Discord
-          </a>
-        </div>
-
-        <!-- Right Side: Social Media Icons Only -->
-        <div style="flex: 1; display: flex; gap: 1rem; align-items: center; justify-content: flex-end;">
-          <a href="https://github.com/SpicyMarinara" target="_blank" rel="noopener" class="icon-link" title="GitHub">
-            <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" style="width: 28px; height: 28px;">
-          </a>
-          <a href="https://huggingface.co/MarinaraSpaghetti" target="_blank" rel="noopener" class="icon-link" title="Hugging Face">
-            <img src="https://registry.npmmirror.com/@lobehub/icons-static-png/1.65.0/files/dark/huggingface-color.png" alt="Hugging Face" style="width: 28px; height: 28px;">
-          </a>
-          <a href="https://x.com/Spicy_Marinara_" target="_blank" rel="noopener" class="icon-link" title="X (Twitter)">
-            <img src="https://assets.streamlinehq.com/image/private/w_300,h_300,ar_1/f_auto/v1/icons/all-icons/twitter-x-1fhy50xzcvkl246hf5ua4.png/twitter-x-jyw81k7vr85ry57c7ym2d.png?_a=DATAg1AAZAA0" alt="X (Twitter)" style="width: 28px; height: 28px;">
-          </a>
-        </div>
-
-      </div>
-
-      <!-- Copyright and Credits -->
-      <div style="border-top: 1px solid rgba(0, 224, 230, 0.2); padding-top: 1rem; color: rgba(255, 255, 255, 0.7); font-size: 0.85rem;">
-        <p>© MarinaraSpaghetti 2025</p>
-        <p style="margin-top: 0.3rem;">✨ Created with the help of <strong style="color: var(--dottore-primary);">Claude Sonnet 4</strong></p>
-      </div>
-
-    </footer>
 </body>
 </html>
