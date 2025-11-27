@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✨ Яблочный Пресет - Динамичная версия</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>🖤 Яблочный Пресет - Тёмная тема</title>
     <style>
-        /* БАЗОВЫЕ СТИЛИ И ФОН */
+        /* БАЗОВЫЕ СТИЛИ И ФОН (ТЕМНАЯ ТЕМА) */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #e3f2fd; 
-            background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%); 
+            font-family: 'Roboto', sans-serif; /* Ваш новый шрифт */
+            background-color: #121212; /* Очень темный фон */
+            color: #E0E0E0; /* Светлый текст */
             margin: 0;
             padding: 0;
             line-height: 1.6;
-            color: #333;
             text-align: center;
         }
         .main-container {
@@ -22,103 +22,110 @@
             padding: 20px;
         }
 
-        /* АНИМАЦИИ */
+        /* АНИМАЦИИ (Остаются, но цвет свечения поменяем) */
         @keyframes bounce {
-            0%, 100%, 20%, 50%, 80% {
-                transform: translateY(0);
-            }
-            40% {
-                transform: translateY(-5px);
-            }
-            60% {
-                transform: translateY(-3px);
-            }
+            0%, 100%, 20%, 50%, 80% { transform: translateY(0); }
+            40% { transform: translateY(-5px); }
+            60% { transform: translateY(-3px); }
         }
         
-        /* СТИЛИ ДЛЯ ВАШЕЙ НОВОЙ КАРТИНКИ-ИКОНКИ */
         .apple-icon {
             display: inline-block;
             animation: bounce 2s infinite; 
             vertical-align: middle; 
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.4)); 
         }
         .header-img {
-            height: 60px; /* Размер иконки */
+            height: 60px;
             margin-right: 15px; 
         }
 
-        /* ШАПКА С ЭФФЕКТАМИ */
+        /* ШАПКА С КАРТИНКОЙ */
         .header-banner {
-            background-color: #66BB6A; 
+            /* ЗАМЕНИТЕ 'dark_header_bg.jpg' НА ИМЯ ВАШЕГО ФАЙЛА-ШАПКИ */
+            background-image: url('dark_header_bg.jpg'); 
+            background-size: cover; 
+            background-position: center; 
+            background-color: #333; 
+            height: 350px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             color: white;
-            padding: 50px 20px;
             border-radius: 15px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5); 
             margin-bottom: 40px;
-            overflow: hidden; 
             transition: all 0.3s;
-        }
-        .header-banner:hover {
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
         .header-banner h1 {
             margin: 0;
-            font-size: 3.5em;
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3); 
+            font-size: 3.8em;
+            text-shadow: 0 0 10px rgba(0,0,0,0.9); 
+            background: rgba(0, 0, 0, 0.4); 
+            padding: 10px 20px;
+            border-radius: 10px;
         }
         .header-banner p {
+            font-size: 1.4em;
+            text-shadow: 0 0 5px rgba(0,0,0,0.9);
             margin-top: 10px;
-            font-size: 1.3em;
-            opacity: 0.95;
         }
 
-        /* КАРТОЧКИ (С анимацией при наведении) */
+        /* КАРТОЧКИ (ТЕМНЫЕ) */
         .card {
-            background-color: white;
+            background-color: #1E1E1E; 
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
             margin-bottom: 30px;
             text-align: left;
             transition: transform 0.3s, box-shadow 0.3s;
         }
         .card:hover {
             transform: translateY(-5px); 
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
         }
         .card h2 {
-            color: #1B5E20; 
-            border-bottom: 2px dashed #DCEDC8; 
+            color: #90CAF9; 
+            border-bottom: 2px dashed #424242; 
             padding-bottom: 15px;
             margin-top: 0;
         }
+        
+        /* СТИЛЬ КНОПКИ-КАРТИНКИ (ТОЛЬКО ДЛЯ ОСНОВНОГО ПРЕСЕТА) */
+        .image-button {
+            display: inline-block; /* Позволяет применять transform */
+            border: none; /* Убираем стандартную рамку */
+            padding: 0;
+            background: none;
+            cursor: pointer;
+            transition: transform 0.2s;
+            max-width: 100%; /* Чтобы кнопка не вылезала за пределы карточки */
+            height: auto; /* Сохраняем пропорции */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Тень для объема */
+            border-radius: 10px; /* Если ваша картинка не скруглена, CSS скруглит */
+            overflow: hidden; /* Обрезаем углы, если картинка не имеет прозрачности */
+        }
+        .image-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+        .image-button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .image-button img {
+            display: block; /* Убираем лишние отступы */
+            width: 100%; /* Картинка займет всю ширину ссылки */
+            height: auto;
+        }
 
-        /* КНОПКА ОСНОВНОГО СКАЧИВАНИЯ (С эффектом нажатия) */
-        .download-button {
-            display: inline-block;
-            background-color: #FFB300; 
-            color: #333;
-            padding: 18px 40px;
-            text-decoration: none;
-            border-radius: 10px;
-            font-weight: bold;
-            font-size: 1.2em;
-            transition: all 0.2s;
-            box-shadow: 0 4px 0 #FFA000; 
-        }
-        .download-button:hover {
-            background-color: #FFC107;
-        }
-        .download-button:active {
-            transform: translateY(4px); 
-            box-shadow: none;
-        }
-
-        /* СТИЛИ ДЛЯ КНОПОК REGEX */
+        /* СТИЛИ ДЛЯ КНОПОК REGEX (Остаются текстовыми) */
         .regex-link {
             display: block;
-            background-color: #4CAF50; 
-            color: white;
+            background-color: #424242; 
+            color: #E0E0E0;
             padding: 12px 20px;
             text-decoration: none;
             border-radius: 8px;
@@ -128,10 +135,10 @@
             text-align: center;
         }
         .regex-link:hover {
-            background-color: #388E3C; 
+            background-color: #616161; 
         }
         
-        /* СТИЛИ ДЛЯ СПИСКА */
+        /* СТИЛИ ДЛЯ СПИСКА И ССЫЛОК */
         ul {
             list-style-type: none; 
             padding-left: 0;
@@ -143,10 +150,16 @@
             font-size: 1.1em;
         }
         ul li::before {
-            content: "▶️"; 
+            content: "✨"; 
             position: absolute;
             left: 0;
-            color: #FFB300;
+            color: #90CAF9;
+        }
+        a {
+            color: #90CAF9;
+        }
+        a:hover {
+            color: #BBDEFB;
         }
     </style>
 </head>
@@ -163,17 +176,16 @@
         <div class="card" style="text-align: center;">
             <h2>Основной Пресет</h2>
             <p>
-                Ваш главный пресет для SillyTavern, версия 1.581. <br>
-                Нажмите, чтобы загрузить файл JSON.
+                Ваш главный пресет для SillyTavern. Нажмите, чтобы загрузить файл JSON.
             </p>
-            <a class="download-button" href="%D0%AF%D0%B1%D0%BB%D0%BE%D1%87%D0%BD%D1%8B%D0%B9%20V1.581.json" download>
-                ⬇️ СКАЧАТЬ ЯБЛОЧНЫЙ V1.581
+            <a class="image-button" href="%D0%AF%D0%B1%D0%BB%D0%BE%D1%87%D0%BD%D1%8B%D0%B9%20V1.581.json" download>
+                <img src="download_button_image.png" alt="Скачать Яблочный V1.581">
             </a>
         </div>
 
         <div class="card">
             <h2>📝 Файлы Регулярных Выражений (RegEx)</h2>
-            <p>Скачайте и импортируйте эти файлы в раздел **Regex Scripting**:</p>
+            <p>Скачайте и импортируйте эти файлы:</p>
             
             <a class="regex-link" href="regex-celia_html_depth_5_vanquisher__.json" download>
                 1. Скачать Celia HTML Depth 5 Vanquisher
@@ -187,7 +199,7 @@
         <div class="card">
             <h2>📚 Полезный Гайд и Сообщество</h2>
             <ul>
-                <li><a href="https://sites.google.com/view/testijhfrr/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F-%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0#h.t3t6sw19ia3y" target="_blank">📺 Видео-гайд или текстовая инструкция</a></li>
+                <li><a href="https://sites.google.com/view/testijhfrr/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F-%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0#h.t3t6sw19ia3y" target="_blank">📺 Гайд по установке</a></li>
                 <li><a href="https://t.me/YablochnyAI" target="_blank">💬 Обсуждение в Телеграме</a></li>
             </ul>
         </div>
