@@ -10,19 +10,19 @@
         /* БАЗОВЫЕ СТИЛИ И ПЕРЕМЕННЫЕ */
         /* ===================================== */
         :root {
-            --color-active: #99ff99; /* Ярко-зеленый */
-            --color-accent-red: #ff9a9e; /* Бледно-красный */
+            --color-active: #99ff99; 
+            --color-accent-red: #ff9a9e;
             --color-dark-bg: #121212;
-            --color-card-bg: rgba(30, 30, 30, 0.7); /* Прозрачность для стекла */
-            --font-decorative: 'Pacifico', cursive;
+            --color-card-bg: rgba(20, 20, 20, 0.65); /* Чуть темнее для контраста */
+            --font-decorative: 'Pacifico', cursive; 
             --font-readable: 'Montserrat', sans-serif;
-            --main-text-color: #E0E0E0;
+            --glass-border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         body {
             font-family: var(--font-readable);
             background-color: var(--color-dark-bg);
-            color: var(--main-text-color);
+            color: #E0E0E0;
             margin: 0;
             padding: 0;
             line-height: 1.6;
@@ -30,11 +30,7 @@
             font-weight: 400;
             overflow-x: hidden;
             position: relative;
-            opacity: 0; /* Для Fade-In при загрузке */
-            transition: opacity 1s ease-out;
-        }
-        body.loaded {
-            opacity: 1;
+            cursor: default; /* Обычный курсор */
         }
 
         /* АНИМИРОВАННЫЙ ФОН (КАНВАС) */
@@ -45,17 +41,19 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            pointer-events: none;
+            pointer-events: none; /* Чтобы мышь проходила сквозь канвас к элементам */
         }
 
+        /* Основной контейнер без 3D перспективы для контента, но с отступами */
         .main-container {
             max-width: 950px;
             margin: 40px auto;
             padding: 20px;
-            display: flex;
-            flex-direction: column;
+            display: flex; 
+            flex-direction: column; 
             align-items: center;
-            perspective: 1000px;
+            position: relative;
+            z-index: 10;
         }
 
         /* АДАПТИВНОСТЬ */
@@ -63,601 +61,322 @@
             .main-container {
                 flex-direction: row;
                 align-items: flex-start;
-                gap: 25px;
+                gap: 30px;
             }
             .tab-buttons {
-                min-width: 240px;
+                min-width: 260px;
                 flex-direction: column;
-                position: sticky;
-                top: 20px;
-                z-index: 10;
+                position: sticky; 
+                top: 30px;
+                z-index: 100;
             }
             .tab-content-wrapper {
                 flex-grow: 1;
-                /* 3D эффект убран по запросу, оставлена только обертка */
+                width: 100%;
             }
         }
 
         /* ===================================== */
-        /* НОВЫЕ АНИМАЦИИ */
+        /* АНИМАЦИИ */
         /* ===================================== */
         @keyframes bounce {
             0%, 100%, 20%, 50%, 80% { transform: translateY(0); }
-            40% { transform: translateY(-7px); }
+            40% { transform: translateY(-7px); } 
             60% { transform: translateY(-4px); }
         }
 
         @keyframes fadeInScale {
-            from { opacity: 0; transform: scale(0.95) translateY(10px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
+            from { opacity: 0; transform: scale(0.98) translateY(10px); filter: blur(4px); }
+            to { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
         }
 
         @keyframes float {
             0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-8px); }
             100% { transform: translateY(0px); }
         }
 
-        /* Анимация свечения текста */
-        @keyframes glowing-text {
-            0% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.5), 0 0 10px var(--color-active); }
-            50% { text-shadow: 0 0 10px rgba(255, 255, 255, 1), 0 0 20px var(--color-active); }
-            100% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.5), 0 0 10px var(--color-active); }
+        @keyframes neon-pulse {
+            0% { box-shadow: 0 0 5px rgba(153, 255, 153, 0.1); border-color: rgba(153, 255, 153, 0.1); }
+            50% { box-shadow: 0 0 20px rgba(153, 255, 153, 0.3); border-color: rgba(153, 255, 153, 0.3); }
+            100% { box-shadow: 0 0 5px rgba(153, 255, 153, 0.1); border-color: rgba(153, 255, 153, 0.1); }
         }
 
-        /* Анимация для link-button: сдвиг градиента */
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* Глитч эффект для заголовка */
+        .glitch-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        .glitch-wrapper:hover {
+            animation: glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+            color: var(--color-active);
+        }
+        @keyframes glitch-anim {
+            0% { transform: translate(0) }
+            20% { transform: translate(-2px, 2px) }
+            40% { transform: translate(-2px, -2px) }
+            60% { transform: translate(2px, 2px) }
+            80% { transform: translate(2px, -2px) }
+            100% { transform: translate(0) }
         }
 
-
-        /* ===================================== */
-        /* ШАПКА С ПАРАЛЛАКСОМ */
-        /* ===================================== */
+        /* ШАПКА */
         .header-banner {
-            background-image: url('dark_header_new.jpg');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-attachment: fixed; /* Эффект параллакса */
-            background-color: #121212;
-            height: 350px;
+            /* Заменил на градиент, если картинки нет, но оставил URL */
+            background: linear-gradient(to bottom, #1a1a1a, #0d0d0d), url('dark_header_new.jpg'); 
+            background-size: cover; 
+            background-position: center;
+            height: 320px; 
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             color: white;
-            border-radius: 20px;
+            border-radius: 24px;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
-            margin-bottom: 40px;
+            margin-bottom: 50px;
             position: relative;
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden; 
+            border: var(--glass-border);
+            transition: transform 0.3s ease;
         }
-
-        .header-banner:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 20px rgba(153, 255, 153, 0.1);
-        }
-
+        
         .header-banner::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6));
-            z-index: 1;
+            background: radial-gradient(circle at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 100%);
+            z-index: 1; 
         }
-
+        
         .header-content {
             z-index: 2;
             position: relative;
             animation: float 6s ease-in-out infinite;
         }
-
-        .header-banner h1 {
+        
+        .header-banner h1 { 
             font-family: var(--font-decorative);
             font-weight: 400;
-            font-size: 4em;
+            font-size: 3.5em; /* Чуть меньше для мобилок */
+            text-shadow: 0 5px 15px rgba(0,0,0,0.8); 
             margin: 0;
             line-height: 1.2;
-            /* Добавление анимации свечения */
-            color: white;
-            animation: glowing-text 3s ease-in-out infinite alternate;
+            cursor: default;
         }
-        .header-banner p {
-            font-size: 1.3em;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.9);
-            margin-top: 10px;
+        
+        /* Печатная машинка для подзаголовка */
+        .typewriter {
+            font-size: 1.2em;
             font-weight: 600;
             opacity: 0.9;
+            margin-top: 10px;
+            border-right: 2px solid var(--color-active);
+            white-space: nowrap;
+            overflow: hidden;
+            width: 0; /* Анимация JS раскроет ширину */
+            animation: blink-caret .75s step-end infinite;
         }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--color-active); } }
 
-        .apple-icon {
-            display: inline-block;
-            vertical-align: middle;
+        .apple-icon { 
+            display: inline-block; 
+            vertical-align: middle; 
             filter: drop-shadow(0 0 10px rgba(153, 255, 153, 0.3));
-            animation: bounce 3s infinite;
         }
-        .header-img {
-            height: 70px;
-            margin-right: 15px;
-            margin-bottom: 10px;
-        }
+        .header-img { height: 60px; margin-right: 15px; margin-bottom: 10px; }
 
         /* ===================================== */
         /* СТИЛИ ВКЛАДОК И КНОПОК */
         /* ===================================== */
-
-        .tab-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            width: 100%;
-            max-width: 350px;
+        
+        .tab-buttons { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+            width: 100%; 
+            max-width: 400px; 
         }
 
         .tab-button {
-            background-color: rgba(30, 30, 30, 0.8);
-            backdrop-filter: blur(10px);
-            color: var(--main-text-color);
+            background-color: rgba(30, 30, 30, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            color: #E0E0E0;
             padding: 18px 25px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
+            border: var(--glass-border);
+            border-radius: 18px;
             cursor: pointer;
             font-family: var(--font-decorative);
-            font-size: 1.4em;
+            font-size: 1.3em;
             letter-spacing: 1px;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Быстрая реакция */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             display: flex;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: flex-start; 
             position: relative;
             overflow: hidden;
+            user-select: none;
+            will-change: transform; /* Оптимизация для анимации */
         }
 
-        /* Эффект свечения при наведении */
-        .tab-button::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
-            transform: translateX(-100%);
-            transition: 0.5s;
+        /* МАГНИТНЫЙ ЭФФЕКТ для кнопок реализуется через JS, тут база */
+        .tab-button:hover { 
+            background-color: rgba(50, 50, 50, 0.8); 
+            border-color: rgba(255,255,255,0.2);
+            color: #fff;
+            z-index: 5; /* Чтобы кнопка была выше при увеличении */
         }
-        .tab-button:hover::after {
-            transform: translateX(100%);
-        }
-
-        .tab-button:hover {
-            background-color: #2a2a2a;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-            transform: translateX(5px) scale(1.02);
-            border-color: rgba(255,255,255,0.1);
-        }
-
-        .tab-button:hover img {
-            animation: bounce 0.8s infinite;
-        }
-
+        
         .tab-button.active {
-            background-color: var(--color-active);
-            color: var(--color-dark-bg);
-            box-shadow: 0 0 20px rgba(153, 255, 153, 0.4);
+            background: rgba(153, 255, 153, 0.15); /* Полупрозрачный активный */
+            color: var(--color-active);
+            border: 1px solid var(--color-active);
+            box-shadow: 0 0 25px rgba(153, 255, 153, 0.2); 
             font-weight: 800;
-            border: none;
         }
-
+        
         .tab-button img {
-            height: 32px;
+            height: 28px; 
             margin-right: 15px;
-            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));
+            transition: transform 0.3s;
         }
+        .tab-button:hover img { transform: scale(1.2) rotate(10deg); }
 
         /* КОНТЕНТ (Стеклянная панель) */
         .tab-content {
             background-color: var(--color-card-bg);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 50px;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
             text-align: center;
-            min-height: 250px;
-            display: none;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            width: 100%;
+            min-height: 400px; 
+            display: none; 
+            border: var(--glass-border);
+            width: 100%; 
             box-sizing: border-box;
             position: relative;
-            /* Убрано: transition: transform 0.1s ease-out; и transform-style: preserve-3d; */
+            /* Убрал 3D трансформации, добавил "Дыхание" */
+            animation: neon-pulse 4s infinite ease-in-out;
+        }
+        
+        .tab-content.active { 
+            display: block; 
+            /* Новая анимация появления */
+            animation: fadeInScale 0.6s cubic-bezier(0.16, 1, 0.3, 1), neon-pulse 4s infinite ease-in-out; 
         }
 
-        .tab-content.active {
-            display: block;
-            animation: fadeInScale 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        /* Заголовки внутри вкладок */
         .tab-content h2 {
             font-family: var(--font-decorative);
             font-weight: 400;
-            font-size: 2.6em;
-            color: var(--color-active);
-            border-bottom: 2px dashed #424242;
-            padding-bottom: 20px;
+            font-size: 2.8em; 
+            color: var(--color-active); 
+            border-bottom: 2px dashed rgba(255,255,255,0.1); 
+            padding-bottom: 25px;
             margin-top: 0;
-            display: flex;
-            align-items: center;
+            display: flex; 
+            align-items: center; 
             justify-content: center;
-            text-shadow: 0 0 15px rgba(153, 255, 153, 0.3);
+            text-shadow: 0 0 20px rgba(153, 255, 153, 0.4); 
         }
-
+        
         .tab-content h2 img {
-            height: 48px;
+            height: 52px; 
             vertical-align: middle;
-            margin-right: 15px;
-            transition: transform 0.3s;
-        }
-        .tab-content:hover h2 img {
-            transform: rotate(15deg) scale(1.1);
+            margin-right: 20px; 
         }
 
         .tab-content p {
-            font-size: 1.1em;
-            margin-bottom: 25px;
-            line-height: 1.8;
+            font-size: 1.15em;
+            margin-bottom: 30px;
+            line-height: 1.9;
             text-align: left;
-            padding: 0 15px;
-            color: #ccc;
+            padding: 0 10px;
+            color: #dcdcdc;
         }
-
+        
         /* ===================================== */
-        /* КНОПКИ ДЕЙСТВИЙ И RIPPLE */
+        /* КНОПКИ ДЕЙСТВИЙ (DOWNLOAD) */
         /* ===================================== */
-
-        .ripple {
-            position: absolute;
-            border-radius: 50%;
-            transform: scale(0);
-            animation: ripple 0.6s linear;
-            background-color: rgba(255, 255, 255, 0.4);
-            pointer-events: none;
-        }
-        @keyframes ripple {
-            to { transform: scale(4); opacity: 0; }
-        }
-
+        
         .download-button {
             position: relative;
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 90%;
-            max-width: 400px;
-            margin: 30px auto;
-            background: linear-gradient(90deg, #ff9a9e 0%, #a8e6cf 50%, #99ff99 100%);
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            width: 90%; 
+            max-width: 450px; 
+            margin: 40px auto; 
+            background: linear-gradient(90deg, #ff9a9e 0%, #99ff99 100%);
             background-size: 200% auto;
-            transition: all 0.4s ease;
-            color: #121212;
-            font-family: var(--font-readable);
-            font-weight: 800;
-            font-size: 1.3em;
+            transition: all 0.4s ease; 
+            color: #121212; 
+            font-family: var(--font-readable); 
+            font-weight: 800; 
+            font-size: 1.2em;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 22px 25px;
-            text-decoration: none;
-            border-radius: 16px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+            letter-spacing: 1.5px;
+            padding: 24px 30px; 
+            text-decoration: none; 
+            border-radius: 100px; /* Pill shape */
+            box-shadow: 0 10px 30px rgba(153, 255, 153, 0.3); 
         }
-
+        
         .download-button:hover {
             background-position: right center;
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 15px 35px rgba(168, 230, 207, 0.4);
-            color: black;
+            transform: translateY(-5px); 
+            box-shadow: 0 20px 40px rgba(153, 255, 153, 0.5); 
         }
-        .download-button img { height: 32px; margin-right: 15px; }
-
-        .no-bullets { list-style: none; padding: 0; margin: 0; }
+        .download-button img { height: 28px; margin-right: 15px; } 
 
         .link-button {
             position: relative;
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: left;
-            padding-left: 30px;
-            /* Измененный градиент для эффекта "движущегося света" */
-            background: linear-gradient(135deg, rgba(30, 60, 46, 0.6), rgba(44, 62, 80, 0.6));
-            color: var(--main-text-color);
-            padding-top: 16px; padding-bottom: 16px;
-            text-decoration: none;
-            border-radius: 12px;
-            font-weight: 600;
-            transition: all 0.3s;
-            width: 95%; max-width: 400px;
-            margin: 15px auto;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.05);
-
-            /* Подготовка для эффекта интерактивного градиента */
-            background-size: 200% 100%;
-            background-image: linear-gradient(
-                90deg,
-                rgba(30, 60, 46, 0.6) 0%,
-                rgba(153, 255, 153, 0.1) 48%, /* Светлый блик */
-                rgba(30, 60, 46, 0.6) 50%,
-                rgba(30, 60, 46, 0.6) 100%
-            );
-        }
-        /* Анимация при наведении: "свет" движется по кнопке */
-        .link-button:hover {
-            background-position: -100% 0; /* Сдвигаем градиент */
-            transform: translateX(10px);
-            box-shadow: 5px 5px 20px rgba(46, 125, 50, 0.3);
-            color: white;
-            border-color: var(--color-active);
-            transition: all 0.5s ease;
-        }
-
-        .link-button img {
-            height: 28px;
-            vertical-align: middle;
-            margin-right: 15px;
-        }
-
-        /* Маленький футер */
-        footer {
-            margin-top: 50px;
-            opacity: 0.5;
-            font-size: 0.8em;
-            padding-bottom: 20px;
-        }
-    </style>
-</head>
-<body class="loaded">
-    
-    <canvas id="bg-canvas"></canvas>
-
-    <div class="header-banner">
-        <div class="header-content">
-            <h1>
-                <img src="apple_icon.png" alt="Иконка яблока" class="apple-icon header-img">
-                Яблочный Пресет
-            </h1>
-            <p>by kykaaj | Для SillyTavern (V 1.581)</p>
-        </div>
-    </div>
-    
-    <div class="main-container">
-        <div class="tab-buttons">
-            <button class="tab-button active ripple-btn" onclick="openTab(event, 'Description')">
-                <img src="icon_clip_red.png" alt="Скрепочка">
-                О Пресете
-            </button>
-            <button class="tab-button ripple-btn" onclick="openTab(event, 'Download')">
-                <img src="icon_book_open.png" alt="Книга">
-                Скачивание
-            </button>
-            <button class="tab-button ripple-btn" onclick="openTab(event, 'Guides')">
-                <img src="icon_book_closed_red.png" alt="Закрытая книга">
-                Гайды
-            </button>
-            <button class="tab-button ripple-btn" onclick="openTab(event, 'Contacts')">
-                <img src="icon_bag_green.png" alt="Сумочка">
-                Контакты
-            </button>
-        </div>
-
-        <div class="tab-content-wrapper" id="tilt-wrapper">
-            <div id="Description" class="tab-content active">
-                <h2>
-                    <img src="icon_clip.png" alt="Зелёная скрепочка" class="icon-clip">
-                    Яблочный Пресет
-                </h2>
-                
-                <p style="min-height: 100px; text-align: left; padding: 0 20px;">
-                    Модульный пресет с огромным количеством тоглов, основанный на ядре Селии. Оптимизирован для максимального погружения.
-                    <br><br>
-                    <span style="color: var(--color-active); font-weight: 700;">Поддерживаемые модели:</span><br>
-                    Gemini 2.5/3.0, Claude Opus/Sonnet 4.5, Sonnet 4, Opus 4.1
-                </p>
-            </div>
-
-            <div id="Download" class="tab-content">
-                <h2>
-                    <img src="icon_book_open_red.png" alt="Красная открытая книга">
-                    Файлы и RegEx
-                </h2>
-                <p>
-                    Пресет и необходимые файлы RegEx для корректной работы.
-                </p>
-                
-                <a class="download-button ripple-btn" href="%D0%AF%D0%B1%D0%BB%D0%BE%D1%87%D0%BD%D1%8B%D0%B9%20V1.581.json" download>
-                    <img src="icon_button_green.png" alt="Кнопка">
-                    СКАЧАТЬ V1.581
-                </a>
-                
-                <h3>Файлы Регулярных Выражений</h3>
-                <div class="no-bullets">
-                    <a class="link-button ripple-btn" href="regex-renette_html_depth_5_vanquisher__.json" download>
-                        <img src="leaf_red.png" alt="Кнопка">
-                        <span>Скачать Renette HTML Depth 5</span>
-                    </a>
-                    <a class="link-button ripple-btn" href="regex-renette_hidethink.json" download>
-                        <img src="leaf_green.png" alt="Кнопка">
-                        <span><b style="color:var(--color-active)">Опционально:</b> Renette Hide Think</span>
-                    </a>
-                </div>
-            </div>
-            
-            <div id="Guides" class="tab-content">
-                <h2>
-                    <img src="icon_book_closed.png" alt="Закрытая книга">
-                    Инструкции
-                </h2>
-                <p>
-                    Правильная установка — залог успеха. Обязательно ознакомьтесь с гайдом перед использованием.
-                </p>
-                
-                <div class="no-bullets">
-                    <a class="link-button ripple-btn" href="https://sites.google.com/view/testijhfrr/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F-%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0#h.t3t6sw19ia3y" target="_blank">
-                        <img src="sheets.png" alt="Закрытая книга">
-                        Гайд по установке
-                    </a>
-                </div>
-            </div>
-
-            <div id="Contacts" class="tab-content">
-                <h2>
-                    <img src="icon_bag.png" alt="Сумочка">
-                    Связь с Автором
-                </h2>
-                <p>Следите за обновлениями и задавайте вопросы в нашем сообществе.</p>
-                
-                <div class="no-bullets">
-                    <a class="link-button ripple-btn" href="https://t.me/YablochnyAI" target="_blank">
-                        <img src="icon_tg_green.png" alt="ТГК">
-                        Телеграм Канал
-                    </a>
-                    <a class="link-button ripple-btn" href="https://t.me/YablochnyChat" target="_blank">
-                        <img src="icon_tg.png" alt="ЧАТ">
-                        Чат Поддержки
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        &copy; 2025 Яблочный Пресет Design
-    </footer>
-
-    <script>
-        // === ЛОГИКА ВКЛАДОК ===
-        function openTab(evt, tabName) {
-            var i, tabcontent, tablinks;
-            
-            // Скрываем все вкладки
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-                tabcontent[i].classList.remove('active');
-            }
-            
-            // Убираем активный класс у кнопок
-            tablinks = document.getElementsByClassName("tab-button");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].classList.remove("active");
-            }
-            
-            // Показываем нужную и активируем кнопку
-            var selectedTab = document.getElementById(tabName);
-            selectedTab.style.display = "block";
-            
-            // Небольшая задержка для анимации
-            setTimeout(() => {
-                selectedTab.classList.add('active');
-            }, 10);
-            
-            evt.currentTarget.classList.add("active");
+            display: flex; 
+            align-items: center; 
+            justify-content: left; 
+            padding-left: 30px; 
+            background: rgba(255, 255, 255, 0.03);
+            color: #E0E0E0; 
+            padding-top: 20px; padding-bottom: 20px; 
+            text-decoration: none; 
+            border-radius: 16px; 
+            font-weight: 600; 
+            transition: all 0.3s; 
+            margin-bottom: 15px; 
+            width: 95%; max-width: 450px; 
+            margin: 15px auto; 
+            border: 1px solid rgba(255,255,255,0.05); 
         }
         
-        // Открытие первой вкладки при загрузке
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('Description').style.display = 'block';
-            setTimeout(() => document.getElementById('Description').classList.add('active'), 10);
-
-            // Анимация загрузки страницы
-            document.body.classList.add('loaded');
-        });
-
-        // === 1. АНИМИРОВАННЫЙ ФОН (ЧАСТИЦЫ) ===
-        const canvas = document.getElementById('bg-canvas');
-        const ctx = canvas.getContext('2d');
-        let width, height;
-        let particles = [];
-
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
+        /* Полоска прогресса при наведении */
+        .link-button::before {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0%; height: 3px;
+            background: var(--color-active);
+            transition: width 0.3s ease;
         }
-        window.addEventListener('resize', resize);
-        resize();
+        .link-button:hover::before { width: 100%; }
 
-        class Particle {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 0.5; // Скорость по X
-                this.vy = (Math.random() - 0.5) * 0.5; // Скорость по Y
-                this.size = Math.random() * 3 + 1;
-                // Цвета: либо бледно-зеленый, либо бледно-красный
-                this.color = Math.random() > 0.5 ? 'rgba(153, 255, 153, 0.2)' : 'rgba(255, 154, 158, 0.2)';
-            }
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-                if (this.x < 0) this.x = width;
-                if (this.x > width) this.x = 0;
-                if (this.y < 0) this.y = height;
-                if (this.y > height) this.y = 0;
-            }
-            draw() {
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
+        .link-button:hover { 
+            background: rgba(255, 255, 255, 0.07);
+            transform: translateX(10px); 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4); 
+            color: white;
+            border-color: rgba(153, 255, 153, 0.3);
         }
+        
+        .link-button img { height: 32px; margin-right: 20px; }
 
-        // Создаем 50 частиц
-        for (let i = 0; i < 50; i++) particles.push(new Particle());
+        .no-bullets { list-style: none; padding: 0; margin: 0; }
 
-        function animateBg() {
-            // Мягкое стирание для "хвоста"
-            ctx.fillStyle = 'rgba(18, 18, 18, 0.1)';
-            ctx.fillRect(0, 0, width, height);
-
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-            requestAnimationFrame(animateBg);
-        }
-        animateBg();
-
-        // === 2. ЭФФЕКТ ПАРАЛЛАКСА В ШАПКЕ (ДОПОЛНИТЕЛЬНЫЙ) ===
-        const header = document.querySelector('.header-banner');
-        window.addEventListener('scroll', () => {
-            const scrollPos = window.pageYOffset;
-            // Двигаем фон в 1.3 раза медленнее скролла
-            header.style.backgroundPositionY = 50 - scrollPos / 10 + '%';
-        });
-
-        // === 3. ЭФФЕКТ RIPPLE НА КНОПКАХ (ОСТАВЛЕНО) ===
-        // Убираем селектор .tab-content-wrapper, чтобы ripple был только на кнопках
-        document.querySelectorAll('.ripple-btn, .download-button, .link-button').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                let x = e.clientX - e.target.getBoundingClientRect().left;
-                let y = e.clientY - e.target.getBoundingClientRect().top;
-
-                let ripples = document.createElement('span');
-                ripples.style.left = x + 'px';
-                ripples.style.top = y + 'px';
-                ripples.classList.add('ripple');
-                this.appendChild(ripples);
-
-                setTimeout(() => {
-                    ripples.remove();
-                }, 600);
-            });
-        });
-    </script>
-</body>
-</html>
+        /* Эффект Ripple (волна) */
+        .ripple {
+            position: absolute;
+            border-
