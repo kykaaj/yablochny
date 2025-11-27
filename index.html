@@ -6,10 +6,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
     <title>🖤 Яблочный Пресет - Тёмная тема</title>
     <style>
-        /* БАЗОВЫЕ СТИЛИ И ФОН (ТЕМНАЯ ТЕМА) */
+        /* ===================================== */
+        /* БАЗОВЫЕ СТИЛИ И ЦВЕТОВАЯ СХЕМА */
+        /* ===================================== */
+        
+        /* ЦВЕТА */
+        :root {
+            --color-active: #99ff99; /* НОВЫЙ: Нежно-зеленый для выделения (активная вкладка, заголовки) */
+            --color-text-link: #90CAF9; /* Светло-синий для ссылок */
+            --color-dark-bg: #121212;
+            --color-card-bg: #1E1E1E;
+        }
+
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #121212;
+            background-color: var(--color-dark-bg);
             color: #E0E0E0;
             margin: 0;
             padding: 0;
@@ -22,11 +33,7 @@
             padding: 20px;
         }
 
-        /* ИКОНКИ И ШАПКА */
-        .apple-icon { display: inline-block; vertical-align: middle; filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.4)); }
-        .header-img { height: 60px; margin-right: 15px; }
-
-        /* ШАПКА С КАРТИНКОЙ И РАЗМЫТИЕМ ПО ВСЕЙ ОБЛАСТИ */
+        /* ШАПКА С КАРТИНКОЙ, РАЗМЫТИЕМ И ЗАТЕМНЕНИЕМ */
         .header-banner {
             background-image: url('dark_header_new.jpg'); 
             background-size: cover; 
@@ -43,26 +50,50 @@
             margin-bottom: 40px;
             background-repeat: no-repeat; 
             background-attachment: fixed; 
-            backdrop-filter: blur(5px) brightness(0.7); 
-            -webkit-backdrop-filter: blur(5px) brightness(0.7); 
+            
+            /* ИСПРАВЛЕНИЕ 1: Добавляем псевдоэлемент для размытия и затемнения */
+            position: relative;
+            overflow: hidden; /* Обрезает содержимое, если оно выходит за границы */
+        }
+        
+        /* ПСЕВДОЭЛЕМЕНТ ДЛЯ НОРМАЛЬНОГО РАЗМЫТИЯ И ЗАТЕМНЕНИЯ */
+        .header-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            
+            /* Затемнение: полупрозрачный черный фон */
+            background: rgba(0, 0, 0, 0.35); 
+            
+            /* Размытие */
+            backdrop-filter: blur(5px); 
+            -webkit-backdrop-filter: blur(5px); 
+            
+            /* Важно: Текст должен быть поверх этого затемнения! */
+            z-index: 1; 
+        }
+        
+        /* ТЕКСТ ШАПКИ ПОВЕРХ ЗАТЕМНЕНИЯ */
+        .header-banner h1, .header-banner p {
+            z-index: 2;
+            position: relative;
         }
 
         .header-banner h1 { font-size: 3.8em; text-shadow: 0 0 5px rgba(0,0,0,0.8), 0 0 15px rgba(255, 255, 255, 0.7); padding: 0; }
         .header-banner p { font-size: 1.4em; text-shadow: 0 0 5px rgba(0,0,0,0.9), 0 0 10px rgba(255, 255, 255, 0.2); margin-top: 10px; }
+        .apple-icon { display: inline-block; vertical-align: middle; filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.4)); }
+        .header-img { height: 60px; margin-right: 15px; }
 
-        /* ======================== */
+        /* ===================================== */
         /* НОВАЯ СИСТЕМА ВКЛАДОК */
-        /* ======================== */
+        /* ===================================== */
         
-        /* БЛОК КНОПОК ВКЛАДОК */
-        .tab-buttons {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 25px;
-            gap: 10px;
-        }
+        .tab-buttons { display: flex; justify-content: center; margin-bottom: 25px; gap: 10px; }
         .tab-button {
-            background-color: #1E1E1E;
+            background-color: var(--color-card-bg);
             color: #E0E0E0;
             padding: 12px 25px;
             border: none;
@@ -75,107 +106,79 @@
             display: flex;
             align-items: center;
         }
-        .tab-button:hover {
-            background-color: #333;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
-        }
+        .tab-button:hover { background-color: #333; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5); }
         .tab-button.active {
-            background-color: #90CAF9; /* Активный цвет */
-            color: #121212;
-            box-shadow: 0 4px 10px rgba(144, 202, 249, 0.5);
+            background-color: var(--color-active); /* ИСПРАВЛЕНИЕ 3: Нежно-зеленый цвет */
+            color: var(--color-dark-bg);
+            box-shadow: 0 4px 10px rgba(153, 255, 153, 0.5); /* Тень под цвет */
         }
+        
+        /* ИСПРАВЛЕНИЕ 4: Чуть больший размер иконок в кнопках */
         .tab-button img {
-            height: 20px;
+            height: 24px; 
             margin-right: 8px;
         }
 
-        /* КОНТЕНТ ВЛАДОК */
         .tab-content {
-            background-color: #1E1E1E;
+            background-color: var(--color-card-bg);
             padding: 40px;
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
             text-align: center;
-            min-height: 250px; /* Фиксированная высота для предотвращения прыжков */
-            display: none; /* Скрыты по умолчанию */
+            min-height: 250px; 
+            display: none; 
             animation: fadeIn 0.5s;
         }
-        .tab-content.active {
-            display: block;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* СТИЛИ ВНУТРИ ВКЛАДОК */
         .tab-content h2 {
-            color: #90CAF9;
+            /* ИСПРАВЛЕНИЕ 3: Заголовки теперь нежно-зеленые */
+            color: var(--color-active); 
             border-bottom: 2px dashed #424242; 
             padding-bottom: 15px;
             margin-top: 0;
             text-align: center;
+            display: flex; /* Чтобы иконка и текст были на одной линии */
+            align-items: center;
+            justify-content: center;
         }
+        
+        /* ИСПРАВЛЕНИЕ 4: Иконки в заголовках теперь больше */
+        .tab-content h2 img {
+            height: 32px; /* Увеличенный размер для заголовков */
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+
+        /* ИСПРАВЛЕНИЕ 4: Конкретно для сумочки (Контакты) — устанавливаем нормальный размер */
+        .tab-content h2 img[alt="Сумочка"] {
+            height: 32px; /* Фиксируем нужный размер, чтобы она не была огромной */
+        }
+
+
         .tab-content p {
             text-shadow: 0 0 1px #000;
             margin-bottom: 20px;
             line-height: 1.8;
             text-align: left;
         }
-        .tab-content ul {
-            list-style-type: none; 
-            padding: 0;
-            text-align: center;
-        }
-        .tab-content ul li {
-            margin-bottom: 15px;
-        }
-
-        /* КНОПКА СКАЧАТЬ */
+        /* ... остальное без изменений ... */
         .download-button {
-            display: flex; 
-            align-items: center;
-            justify-content: center; 
-            width: 90%; 
-            max-width: 400px; 
-            margin: 10px auto 25px auto; 
-            background-image: url('download_button_image.png'); 
-            background-size: cover; 
-            filter: brightness(0.85); 
-            transition: filter 0.3s ease, transform 0.2s, box-shadow 0.2s; 
-            color: white; 
-            font-weight: 900; 
-            font-family: 'Roboto', sans-serif;
-            text-shadow: 0 0 4px #000, 0 0 10px rgba(255, 255, 255, 0.8); 
-            padding: 18px 20px; 
-            text-decoration: none;
-            border-radius: 12px; 
-            font-size: 1.3em; 
-            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.5); 
+            display: flex; align-items: center; justify-content: center; width: 90%; max-width: 400px; margin: 10px auto 25px auto; 
+            background-image: url('download_button_image.png'); background-size: cover; filter: brightness(0.85); transition: filter 0.3s ease, transform 0.2s, box-shadow 0.2s; 
+            color: white; font-weight: 900; font-family: 'Roboto', sans-serif;
+            text-shadow: 0 0 4px #000, 0 0 10px rgba(255, 255, 255, 0.8); padding: 18px 20px; text-decoration: none; border-radius: 12px; font-size: 1.3em; box-shadow: 0 4px 0 rgba(0, 0, 0, 0.5); 
         }
         .download-button img { height: 24px; margin-right: 10px; filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.9)); }
         .download-button:hover { filter: brightness(1); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6); }
         .download-button:active { transform: translateY(2px); box-shadow: none; }
-
-        /* КНОПКИ REGEX и КОНТАКТЫ */
         .link-button {
-            display: block;
-            background-color: #424242;
-            color: #E0E0E0;
-            padding: 12px 20px;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
-            transition: background-color 0.3s;
-            margin-bottom: 10px;
-            text-align: center;
-            width: 90%; 
-            max-width: 300px; 
-            margin: 10px auto; 
+            display: flex; align-items: center; justify-content: center; background-color: #424242; color: #E0E0E0; padding: 12px 20px; text-decoration: none; border-radius: 8px; font-weight: bold; transition: background-color 0.3s; margin-bottom: 10px; text-align: center; width: 90%; max-width: 300px; margin: 10px auto; 
         }
         .link-button:hover { background-color: #616161; }
         .link-button img { height: 20px; vertical-align: middle; margin-right: 8px; }
-
     </style>
 </head>
 <body>
@@ -204,11 +207,10 @@
         </div>
 
         <div id="Description" class="tab-content active">
-            <h2>Основной Пресет</h2>
-            <p style="text-align: center;">
-                <img src="icon_clip.png" alt="Скрепочка" style="height: 24px; vertical-align: middle; margin-right: 8px;">
-                **Место для вашего подробного описания.**
-            </p>
+            <h2>
+                <img src="icon_clip.png" alt="Скрепочка"> 
+                Основной Пресет
+            </h2>
             
             <p style="min-height: 100px; text-align: left; padding: 0 20px;">
                 *Начните писать здесь.* Например: Этот пресет создан для максимального погружения и работает на всех последних версиях SillyTavern. Он идеально настроен для...
@@ -218,7 +220,10 @@
         </div>
 
         <div id="Download" class="tab-content">
-            <h2>Файлы</h2>
+            <h2>
+                <img src="icon_book_open.png" alt="Открытая книга">
+                Файлы
+            </h2>
             <p>
                 Ваш главный пресет и необходимые файлы RegEx.
             </p>
@@ -240,7 +245,10 @@
         </div>
 
         <div id="Contacts" class="tab-content">
-            <h2><img src="icon_bag.png" alt="Сумочка" class="icon"> Сообщество и Гайд</h2>
+            <h2>
+                <img src="icon_bag.png" alt="Сумочка"> 
+                Сообщество и Гайд
+            </h2>
             <p>Свяжитесь со мной или найдите полезные материалы:</p>
             
             <ul>
