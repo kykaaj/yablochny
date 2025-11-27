@@ -55,19 +55,35 @@
             border-radius: 15px;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5); 
             margin-bottom: 40px;
+            background-repeat: no-repeat; /* Исправлено повторение */
+            background-size: cover; 
         }
+
+        /* НОВОЕ: Размытое пятно (Frosted Glass Effect) */
+        .header-content {
+            background: rgba(0, 0, 0, 0.4); /* Полупрозрачный темный фон */
+            backdrop-filter: blur(5px); /* Размывает фон, который находится за этим блоком */
+            -webkit-backdrop-filter: blur(5px); /* Для поддержки браузеров */
+            padding: 20px 30px; /* Отступы вокруг текста */
+            border-radius: 15px; /* Скругление пятна */
+            /* Чтобы текст не прыгал, когда курсор уходит */
+            transition: backdrop-filter 0.3s, background 0.3s; 
+        }
+
         .header-banner h1 {
             margin: 0;
             font-size: 3.8em;
-            /* Улучшенная тень для заголовка */
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.9), 0 0 15px rgba(255, 255, 255, 0.4); 
-            background: rgba(0, 0, 0, 0.4); 
-            padding: 10px 20px;
-            border-radius: 10px;
+            /* Тень для текста, чтобы он читался на размытом фоне */
+            text-shadow: 
+                0 0 5px rgba(0,0,0,0.8), 
+                0 0 15px rgba(255, 255, 255, 0.7); 
+            padding: 0; 
+            border-radius: 0; 
         }
         .header-banner p {
             font-size: 1.4em;
-            text-shadow: 0 0 5px rgba(0,0,0,0.9);
+            /* Тень для текста */
+            text-shadow: 0 0 5px rgba(0,0,0,0.9), 0 0 10px rgba(255, 255, 255, 0.2); 
             margin-top: 10px;
         }
 
@@ -92,7 +108,7 @@
             margin-top: 0;
         }
 
-        /* НОВОЕ: Тень для нижнего текста, чтобы не сливался */
+        /* Тень для нижнего текста, чтобы не сливался */
         .card p, .card ul li {
             text-shadow: 0 0 1px #000;
         }
@@ -108,7 +124,7 @@
             max-width: 400px; 
             margin: 10px auto; 
             
-            /* ФОН-КАРТИНКА + ПЛАВНОСТЬ */
+            /* ФОН-КАРТИНКА (download_button_image.png) */
             background-image: url('download_button_image.png'); 
             background-size: cover; 
             background-position: center;
@@ -124,9 +140,9 @@
             
             /* МЯГКАЯ ТЕНЬ И СВЕЧЕНИЕ (ТИХИЙ ШЕЙД) */
             text-shadow: 
-                0 0 4px #000, /* Мягкая тёмная тень для контраста */
-                0 0 10px rgba(255, 255, 255, 0.8), /* Яркое белое свечение */
-                0 0 20px rgba(255, 255, 255, 0.5); /* Более мягкое свечение */
+                0 0 4px #000, 
+                0 0 10px rgba(255, 255, 255, 0.8), 
+                0 0 20px rgba(255, 255, 255, 0.5); 
             
             /* ВИЗУАЛ */
             padding: 18px 20px; 
@@ -136,7 +152,7 @@
             box-shadow: 0 4px 0 rgba(0, 0, 0, 0.5); 
         }
         .download-button:hover {
-            filter: brightness(1); /* Плавный переход к полной яркости (0.85 -> 1) */
+            filter: brightness(1); /* Плавный переход к полной яркости */
             transform: translateY(-2px);
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6); 
         }
@@ -189,11 +205,12 @@
 </head>
 <body>
     <div class="header-banner">
-        <h1>
-            <img src="apple_icon.png" alt="Иконка яблока" class="apple-icon header-img"> 
-            Яблочный Пресет
-        </h1>
-        <p>by kykaaj | Для SillyTavern (V 1.581)</p>
+        <div class="header-content"> <h1>
+                <img src="apple_icon.png" alt="Иконка яблока" class="apple-icon header-img"> 
+                Яблочный Пресет
+            </h1>
+            <p>by kykaaj | Для SillyTavern (V 1.581)</p>
+        </div>
     </div>
     <div class="main-container">
         
