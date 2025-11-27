@@ -10,46 +10,52 @@
         /* БАЗОВЫЕ СТИЛИ И ПЕРЕМЕННЫЕ */
         /* ===================================== */
         :root {
-            --color-active: #99ff99; 
-            --color-accent-red: #ff9a9e;
+            --color-active: #99ff99; /* Ярко-зеленый */
+            --color-accent-red: #ff9a9e; /* Бледно-красный */
             --color-dark-bg: #121212;
-            --color-card-bg: rgba(30, 30, 30, 0.85); /* Чуть плотнее фон, раз убрали 3D */
-            --font-decorative: 'Pacifico', cursive; 
+            --color-card-bg: rgba(30, 30, 30, 0.7); /* Прозрачность для стекла */
+            --font-decorative: 'Pacifico', cursive;
             --font-readable: 'Montserrat', sans-serif;
+            --main-text-color: #E0E0E0;
         }
 
         body {
             font-family: var(--font-readable);
             background-color: var(--color-dark-bg);
-            color: #E0E0E0;
+            color: var(--main-text-color);
             margin: 0;
             padding: 0;
             line-height: 1.6;
             text-align: center;
             font-weight: 400;
             overflow-x: hidden;
-            cursor: default; /* Обычный курсор, магия будет в канвасе */
+            position: relative;
+            opacity: 0; /* Для Fade-In при загрузке */
+            transition: opacity 1s ease-out;
+        }
+        body.loaded {
+            opacity: 1;
         }
 
-        /* КАНВАСЫ ДЛЯ ФОНА И КУРСОРА */
-        #bg-canvas, #cursor-canvas {
+        /* АНИМИРОВАННЫЙ ФОН (КАНВАС) */
+        #bg-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none; /* Чтобы клики проходили сквозь */
+            z-index: -1;
+            pointer-events: none;
         }
-        #bg-canvas { z-index: -1; }
-        #cursor-canvas { z-index: 9999; }
 
         .main-container {
             max-width: 950px;
             margin: 40px auto;
             padding: 20px;
-            display: flex; 
-            flex-direction: column; 
+            display: flex;
+            flex-direction: column;
             align-items: center;
+            perspective: 1000px;
         }
 
         /* АДАПТИВНОСТЬ */
@@ -62,54 +68,62 @@
             .tab-buttons {
                 min-width: 240px;
                 flex-direction: column;
-                position: sticky; 
+                position: sticky;
                 top: 20px;
                 z-index: 10;
             }
             .tab-content-wrapper {
                 flex-grow: 1;
-                width: 100%;
+                /* 3D эффект убран по запросу, оставлена только обертка */
             }
         }
 
         /* ===================================== */
-        /* АНИМАЦИИ */
+        /* НОВЫЕ АНИМАЦИИ */
         /* ===================================== */
         @keyframes bounce {
             0%, 100%, 20%, 50%, 80% { transform: translateY(0); }
-            40% { transform: translateY(-7px); } 
+            40% { transform: translateY(-7px); }
             60% { transform: translateY(-4px); }
         }
 
-        @keyframes fadeInSlide {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.95) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        @keyframes pulseBorder {
-            0% { border-color: rgba(153, 255, 153, 0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-            50% { border-color: rgba(153, 255, 153, 0.4); box-shadow: 0 10px 40px rgba(153, 255, 153, 0.15); }
-            100% { border-color: rgba(153, 255, 153, 0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
         }
 
-        /* ГЛИТЧ ЭФФЕКТ ДЛЯ ЗАГОЛОВКА */
-        @keyframes glitch-anim {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
-            100% { transform: translate(0); }
+        /* Анимация свечения текста */
+        @keyframes glowing-text {
+            0% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.5), 0 0 10px var(--color-active); }
+            50% { text-shadow: 0 0 10px rgba(255, 255, 255, 1), 0 0 20px var(--color-active); }
+            100% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.5), 0 0 10px var(--color-active); }
         }
 
-        /* ШАПКА */
+        /* Анимация для link-button: сдвиг градиента */
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+
+        /* ===================================== */
+        /* ШАПКА С ПАРАЛЛАКСОМ */
+        /* ===================================== */
         .header-banner {
-            background-image: url('dark_header_new.jpg'); 
-            background-size: cover; 
+            background-image: url('dark_header_new.jpg');
+            background-size: cover;
             background-repeat: no-repeat;
             background-position: center center;
+            background-attachment: fixed; /* Эффект параллакса */
             background-color: #121212;
-            height: 350px; 
+            height: 350px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -119,75 +133,77 @@
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
             margin-bottom: 40px;
             position: relative;
-            overflow: hidden; 
-            transition: transform 0.3s ease;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .header-banner:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 20px rgba(153, 255, 153, 0.1);
         }
 
         .header-banner::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            backdrop-filter: blur(3px); 
-            -webkit-backdrop-filter: blur(3px); 
-            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7)); 
-            z-index: 1; 
-        }
-        
-        .header-content { z-index: 2; position: relative; }
-        
-        .header-banner h1 { 
-            font-family: var(--font-decorative);
-            font-weight: 400;
-            font-size: 4em; 
-            text-shadow: 0 5px 15px rgba(0,0,0,0.8); 
-            margin: 0;
-            line-height: 1.2;
-            transition: color 0.3s;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6));
+            z-index: 1;
         }
 
-        /* Ховер эффект для заголовка - Глитч */
-        .header-banner:hover h1 {
-            animation: glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
-            color: var(--color-active);
-            text-shadow: 2px 2px #ff0000, -2px -2px #0000ff;
+        .header-content {
+            z-index: 2;
+            position: relative;
+            animation: float 6s ease-in-out infinite;
         }
-        
-        .header-banner p { 
-            font-size: 1.3em; 
-            text-shadow: 0 2px 5px rgba(0,0,0,0.9); 
-            margin-top: 10px; 
+
+        .header-banner h1 {
+            font-family: var(--font-decorative);
+            font-weight: 400;
+            font-size: 4em;
+            margin: 0;
+            line-height: 1.2;
+            /* Добавление анимации свечения */
+            color: white;
+            animation: glowing-text 3s ease-in-out infinite alternate;
+        }
+        .header-banner p {
+            font-size: 1.3em;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.9);
+            margin-top: 10px;
             font-weight: 600;
             opacity: 0.9;
         }
-        
-        .apple-icon { 
-            display: inline-block; 
-            vertical-align: middle; 
+
+        .apple-icon {
+            display: inline-block;
+            vertical-align: middle;
             filter: drop-shadow(0 0 10px rgba(153, 255, 153, 0.3));
-            animation: bounce 3s infinite; 
+            animation: bounce 3s infinite;
         }
-        .header-img { 
-            height: 70px; 
-            margin-right: 15px; 
+        .header-img {
+            height: 70px;
+            margin-right: 15px;
             margin-bottom: 10px;
         }
 
         /* ===================================== */
         /* СТИЛИ ВКЛАДОК И КНОПОК */
         /* ===================================== */
-        
-        .tab-buttons { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 15px; 
-            width: 100%; 
-            max-width: 350px; 
+
+        .tab-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+            max-width: 350px;
         }
 
         .tab-button {
             background-color: rgba(30, 30, 30, 0.8);
             backdrop-filter: blur(10px);
-            color: #E0E0E0;
+            color: var(--main-text-color);
             padding: 18px 25px;
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 16px;
@@ -195,39 +211,54 @@
             font-family: var(--font-decorative);
             font-size: 1.4em;
             letter-spacing: 1px;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             display: flex;
             align-items: center;
-            justify-content: flex-start; 
+            justify-content: flex-start;
             position: relative;
             overflow: hidden;
         }
 
-        .tab-button:hover { 
-            background-color: #2a2a2a; 
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4); 
-            transform: translateX(5px); 
+        /* Эффект свечения при наведении */
+        .tab-button::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
+            transform: translateX(-100%);
+            transition: 0.5s;
+        }
+        .tab-button:hover::after {
+            transform: translateX(100%);
+        }
+
+        .tab-button:hover {
+            background-color: #2a2a2a;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            transform: translateX(5px) scale(1.02);
             border-color: rgba(255,255,255,0.1);
         }
-        
-        .tab-button:hover img { animation: bounce 0.8s infinite; }
-        
+
+        .tab-button:hover img {
+            animation: bounce 0.8s infinite;
+        }
+
         .tab-button.active {
-            background-color: var(--color-active); 
+            background-color: var(--color-active);
             color: var(--color-dark-bg);
-            box-shadow: 0 0 25px rgba(153, 255, 153, 0.5); 
+            box-shadow: 0 0 20px rgba(153, 255, 153, 0.4);
             font-weight: 800;
             border: none;
         }
-        
+
         .tab-button img {
-            height: 32px; 
+            height: 32px;
             margin-right: 15px;
             filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));
         }
 
-        /* КОНТЕНТ (Убран тильт, добавлена пульсация рамки) */
+        /* КОНТЕНТ (Стеклянная панель) */
         .tab-content {
             background-color: var(--color-card-bg);
             backdrop-filter: blur(15px);
@@ -236,38 +267,43 @@
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             text-align: center;
-            min-height: 250px; 
-            display: none; 
+            min-height: 250px;
+            display: none;
             border: 1px solid rgba(255, 255, 255, 0.05);
-            width: 100%; 
+            width: 100%;
             box-sizing: border-box;
             position: relative;
-        }
-        
-        /* Активное окно плавно появляется и "дышит" рамкой */
-        .tab-content.active { 
-            display: block; 
-            animation: fadeInSlide 0.6s ease-out, pulseBorder 4s infinite ease-in-out;
+            /* Убрано: transition: transform 0.1s ease-out; и transform-style: preserve-3d; */
         }
 
+        .tab-content.active {
+            display: block;
+            animation: fadeInScale 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Заголовки внутри вкладок */
         .tab-content h2 {
             font-family: var(--font-decorative);
             font-weight: 400;
-            font-size: 2.6em; 
-            color: var(--color-active); 
-            border-bottom: 2px dashed #424242; 
+            font-size: 2.6em;
+            color: var(--color-active);
+            border-bottom: 2px dashed #424242;
             padding-bottom: 20px;
             margin-top: 0;
-            display: flex; 
-            align-items: center; 
+            display: flex;
+            align-items: center;
             justify-content: center;
-            text-shadow: 0 0 15px rgba(153, 255, 153, 0.4); 
+            text-shadow: 0 0 15px rgba(153, 255, 153, 0.3);
         }
-        
+
         .tab-content h2 img {
-            height: 48px; 
+            height: 48px;
             vertical-align: middle;
-            margin-right: 15px; 
+            margin-right: 15px;
+            transition: transform 0.3s;
+        }
+        .tab-content:hover h2 img {
+            transform: rotate(15deg) scale(1.1);
         }
 
         .tab-content p {
@@ -278,11 +314,11 @@
             padding: 0 15px;
             color: #ccc;
         }
-        
+
         /* ===================================== */
         /* КНОПКИ ДЕЙСТВИЙ И RIPPLE */
         /* ===================================== */
-        
+
         .ripple {
             position: absolute;
             border-radius: 50%;
@@ -291,71 +327,91 @@
             background-color: rgba(255, 255, 255, 0.4);
             pointer-events: none;
         }
-        @keyframes ripple { to { transform: scale(4); opacity: 0; } }
+        @keyframes ripple {
+            to { transform: scale(4); opacity: 0; }
+        }
 
         .download-button {
             position: relative;
             overflow: hidden;
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            width: 90%; 
-            max-width: 400px; 
-            margin: 30px auto; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 90%;
+            max-width: 400px;
+            margin: 30px auto;
             background: linear-gradient(90deg, #ff9a9e 0%, #a8e6cf 50%, #99ff99 100%);
             background-size: 200% auto;
-            transition: all 0.4s ease; 
-            color: #121212; 
-            font-family: var(--font-readable); 
-            font-weight: 800; 
+            transition: all 0.4s ease;
+            color: #121212;
+            font-family: var(--font-readable);
+            font-weight: 800;
             font-size: 1.3em;
             text-transform: uppercase;
             letter-spacing: 1px;
-            padding: 22px 25px; 
-            text-decoration: none; 
-            border-radius: 16px; 
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4); 
+            padding: 22px 25px;
+            text-decoration: none;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
         }
-        
+
         .download-button:hover {
             background-position: right center;
-            transform: translateY(-3px) scale(1.02); 
-            box-shadow: 0 15px 35px rgba(168, 230, 207, 0.4); 
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(168, 230, 207, 0.4);
             color: black;
         }
-        .download-button img { height: 32px; margin-right: 15px; } 
-        
+        .download-button img { height: 32px; margin-right: 15px; }
+
         .no-bullets { list-style: none; padding: 0; margin: 0; }
 
         .link-button {
             position: relative;
             overflow: hidden;
-            display: flex; 
-            align-items: center; 
-            justify-content: left; 
-            padding-left: 30px; 
+            display: flex;
+            align-items: center;
+            justify-content: left;
+            padding-left: 30px;
+            /* Измененный градиент для эффекта "движущегося света" */
             background: linear-gradient(135deg, rgba(30, 60, 46, 0.6), rgba(44, 62, 80, 0.6));
-            color: #E0E0E0; 
-            padding-top: 16px; padding-bottom: 16px; 
-            text-decoration: none; 
-            border-radius: 12px; 
-            font-weight: 600; 
-            transition: all 0.3s; 
-            margin-bottom: 15px; 
-            width: 95%; max-width: 400px; 
-            margin: 15px auto; 
+            color: var(--main-text-color);
+            padding-top: 16px; padding-bottom: 16px;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s;
+            width: 95%; max-width: 400px;
+            margin: 15px auto;
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.05); 
-        }
-        .link-button:hover { 
-            background: linear-gradient(135deg, #2E7D32, #1e3c2e);
-            transform: translateX(10px); 
-            box-shadow: 5px 5px 20px rgba(46, 125, 50, 0.3); 
-            color: white;
-            border-color: #99ff99;
-        }
-        .link-button img { height: 28px; vertical-align: middle; margin-right: 15px; }
+            border: 1px solid rgba(255,255,255,0.05);
 
+            /* Подготовка для эффекта интерактивного градиента */
+            background-size: 200% 100%;
+            background-image: linear-gradient(
+                90deg,
+                rgba(30, 60, 46, 0.6) 0%,
+                rgba(153, 255, 153, 0.1) 48%, /* Светлый блик */
+                rgba(30, 60, 46, 0.6) 50%,
+                rgba(30, 60, 46, 0.6) 100%
+            );
+        }
+        /* Анимация при наведении: "свет" движется по кнопке */
+        .link-button:hover {
+            background-position: -100% 0; /* Сдвигаем градиент */
+            transform: translateX(10px);
+            box-shadow: 5px 5px 20px rgba(46, 125, 50, 0.3);
+            color: white;
+            border-color: var(--color-active);
+            transition: all 0.5s ease;
+        }
+
+        .link-button img {
+            height: 28px;
+            vertical-align: middle;
+            margin-right: 15px;
+        }
+
+        /* Маленький футер */
         footer {
             margin-top: 50px;
             opacity: 0.5;
@@ -364,15 +420,14 @@
         }
     </style>
 </head>
-<body>
+<body class="loaded">
     
     <canvas id="bg-canvas"></canvas>
-    <canvas id="cursor-canvas"></canvas>
 
     <div class="header-banner">
         <div class="header-content">
             <h1>
-                <img src="apple_icon.png" alt="Иконка яблока" class="apple-icon header-img"> 
+                <img src="apple_icon.png" alt="Иконка яблока" class="apple-icon header-img">
                 Яблочный Пресет
             </h1>
             <p>by kykaaj | Для SillyTavern (V 1.581)</p>
@@ -399,10 +454,10 @@
             </button>
         </div>
 
-        <div class="tab-content-wrapper">
+        <div class="tab-content-wrapper" id="tilt-wrapper">
             <div id="Description" class="tab-content active">
                 <h2>
-                    <img src="icon_clip.png" alt="Зелёная скрепочка" class="icon-clip"> 
+                    <img src="icon_clip.png" alt="Зелёная скрепочка" class="icon-clip">
                     Яблочный Пресет
                 </h2>
                 
@@ -429,11 +484,11 @@
                 </a>
                 
                 <h3>Файлы Регулярных Выражений</h3>
-                <div class="no-bullets"> 
+                <div class="no-bullets">
                     <a class="link-button ripple-btn" href="regex-renette_html_depth_5_vanquisher__.json" download>
                         <img src="leaf_red.png" alt="Кнопка">
                         <span>Скачать Renette HTML Depth 5</span>
-                    </a> 
+                    </a>
                     <a class="link-button ripple-btn" href="regex-renette_hidethink.json" download>
                         <img src="leaf_green.png" alt="Кнопка">
                         <span><b style="color:var(--color-active)">Опционально:</b> Renette Hide Think</span>
@@ -443,16 +498,16 @@
             
             <div id="Guides" class="tab-content">
                 <h2>
-                    <img src="icon_book_closed.png" alt="Закрытая книга"> 
+                    <img src="icon_book_closed.png" alt="Закрытая книга">
                     Инструкции
                 </h2>
                 <p>
                     Правильная установка — залог успеха. Обязательно ознакомьтесь с гайдом перед использованием.
                 </p>
                 
-                <div class="no-bullets"> 
+                <div class="no-bullets">
                     <a class="link-button ripple-btn" href="https://sites.google.com/view/testijhfrr/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F-%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0#h.t3t6sw19ia3y" target="_blank">
-                        <img src="sheets.png" alt="Закрытая книга"> 
+                        <img src="sheets.png" alt="Закрытая книга">
                         Гайд по установке
                     </a>
                 </div>
@@ -460,12 +515,12 @@
 
             <div id="Contacts" class="tab-content">
                 <h2>
-                    <img src="icon_bag.png" alt="Сумочка"> 
+                    <img src="icon_bag.png" alt="Сумочка">
                     Связь с Автором
                 </h2>
                 <p>Следите за обновлениями и задавайте вопросы в нашем сообществе.</p>
                 
-                <div class="no-bullets"> 
+                <div class="no-bullets">
                     <a class="link-button ripple-btn" href="https://t.me/YablochnyAI" target="_blank">
                         <img src="icon_tg_green.png" alt="ТГК">
                         Телеграм Канал
@@ -487,140 +542,110 @@
         // === ЛОГИКА ВКЛАДОК ===
         function openTab(evt, tabName) {
             var i, tabcontent, tablinks;
+            
+            // Скрываем все вкладки
             tabcontent = document.getElementsByClassName("tab-content");
             for (i = 0; i < tabcontent.length; i++) {
                 tabcontent[i].style.display = "none";
                 tabcontent[i].classList.remove('active');
             }
+            
+            // Убираем активный класс у кнопок
             tablinks = document.getElementsByClassName("tab-button");
             for (i = 0; i < tablinks.length; i++) {
                 tablinks[i].classList.remove("active");
             }
+            
+            // Показываем нужную и активируем кнопку
             var selectedTab = document.getElementById(tabName);
             selectedTab.style.display = "block";
-            setTimeout(() => selectedTab.classList.add('active'), 10);
+            
+            // Небольшая задержка для анимации
+            setTimeout(() => {
+                selectedTab.classList.add('active');
+            }, 10);
+            
             evt.currentTarget.classList.add("active");
         }
         
+        // Открытие первой вкладки при загрузке
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('Description').style.display = 'block';
             setTimeout(() => document.getElementById('Description').classList.add('active'), 10);
+
+            // Анимация загрузки страницы
+            document.body.classList.add('loaded');
         });
 
         // === 1. АНИМИРОВАННЫЙ ФОН (ЧАСТИЦЫ) ===
-        const bgCanvas = document.getElementById('bg-canvas');
-        const bgCtx = bgCanvas.getContext('2d');
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
         let width, height;
+        let particles = [];
 
         function resize() {
-            width = bgCanvas.width = window.innerWidth;
-            height = bgCanvas.height = window.innerHeight;
-            // Размер для курсора тоже
-            cursorCanvas.width = window.innerWidth;
-            cursorCanvas.height = window.innerHeight;
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
         }
-        
-        // Массив для фона
-        let bgParticles = [];
-        class BgParticle {
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
             constructor() {
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 0.5;
-                this.vy = (Math.random() - 0.5) * 0.5;
+                this.vx = (Math.random() - 0.5) * 0.5; // Скорость по X
+                this.vy = (Math.random() - 0.5) * 0.5; // Скорость по Y
                 this.size = Math.random() * 3 + 1;
-                this.color = Math.random() > 0.5 ? 'rgba(153, 255, 153, 0.15)' : 'rgba(255, 154, 158, 0.15)';
+                // Цвета: либо бледно-зеленый, либо бледно-красный
+                this.color = Math.random() > 0.5 ? 'rgba(153, 255, 153, 0.2)' : 'rgba(255, 154, 158, 0.2)';
             }
             update() {
                 this.x += this.vx;
                 this.y += this.vy;
                 if (this.x < 0) this.x = width;
-                else if (this.x > width) this.x = 0;
+                if (this.x > width) this.x = 0;
                 if (this.y < 0) this.y = height;
-                else if (this.y > height) this.y = 0;
+                if (this.y > height) this.y = 0;
             }
             draw() {
-                bgCtx.fillStyle = this.color;
-                bgCtx.beginPath();
-                bgCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                bgCtx.fill();
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
             }
         }
-        for (let i = 0; i < 60; i++) bgParticles.push(new BgParticle());
 
-        // === 2. МАГИЧЕСКИЙ ШЛЕЙФ КУРСОРА ===
-        const cursorCanvas = document.getElementById('cursor-canvas');
-        const cursorCtx = cursorCanvas.getContext('2d');
-        let trailParticles = [];
-        let mouseX = 0, mouseY = 0;
+        // Создаем 50 частиц
+        for (let i = 0; i < 50; i++) particles.push(new Particle());
 
-        // Следим за мышью
-        window.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            // Добавляем частицы при движении
-            for(let i=0; i<3; i++) {
-                trailParticles.push(new TrailParticle(mouseX, mouseY));
-            }
+        function animateBg() {
+            // Мягкое стирание для "хвоста"
+            ctx.fillStyle = 'rgba(18, 18, 18, 0.1)';
+            ctx.fillRect(0, 0, width, height);
+
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateBg);
+        }
+        animateBg();
+
+        // === 2. ЭФФЕКТ ПАРАЛЛАКСА В ШАПКЕ (ДОПОЛНИТЕЛЬНЫЙ) ===
+        const header = document.querySelector('.header-banner');
+        window.addEventListener('scroll', () => {
+            const scrollPos = window.pageYOffset;
+            // Двигаем фон в 1.3 раза медленнее скролла
+            header.style.backgroundPositionY = 50 - scrollPos / 10 + '%';
         });
 
-        class TrailParticle {
-            constructor(x, y) {
-                this.x = x + (Math.random() - 0.5) * 5;
-                this.y = y + (Math.random() - 0.5) * 5;
-                this.size = Math.random() * 5 + 2;
-                this.speedX = (Math.random() - 0.5) * 2;
-                this.speedY = (Math.random() - 0.5) * 2;
-                // Зеленые и розовые искры
-                this.color = Math.random() > 0.5 ? '153, 255, 153' : '255, 154, 158'; 
-                this.life = 1; // Жизнь от 1 до 0
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                this.life -= 0.03; // Скорость исчезновения
-                this.size *= 0.95; // Уменьшение
-            }
-            draw() {
-                cursorCtx.fillStyle = `rgba(${this.color}, ${this.life})`;
-                cursorCtx.beginPath();
-                cursorCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                cursorCtx.fill();
-            }
-        }
-
-        // ОБЩИЙ ЦИКЛ АНИМАЦИИ
-        function animate() {
-            // Очистка
-            bgCtx.clearRect(0, 0, width, height);
-            cursorCtx.clearRect(0, 0, width, height);
-
-            // Фон
-            bgParticles.forEach(p => { p.update(); p.draw(); });
-
-            // Шлейф
-            for (let i = 0; i < trailParticles.length; i++) {
-                trailParticles[i].update();
-                trailParticles[i].draw();
-                // Удаляем мертвые частицы
-                if (trailParticles[i].life <= 0) {
-                    trailParticles.splice(i, 1);
-                    i--;
-                }
-            }
-            requestAnimationFrame(animate);
-        }
-        
-        window.addEventListener('resize', resize);
-        resize();
-        animate();
-
-        // === 3. ЭФФЕКТ RIPPLE НА КНОПКАХ ===
+        // === 3. ЭФФЕКТ RIPPLE НА КНОПКАХ (ОСТАВЛЕНО) ===
+        // Убираем селектор .tab-content-wrapper, чтобы ripple был только на кнопках
         document.querySelectorAll('.ripple-btn, .download-button, .link-button').forEach(btn => {
             btn.addEventListener('click', function(e) {
-                let rect = e.target.getBoundingClientRect();
-                let x = e.clientX - rect.left;
-                let y = e.clientY - rect.top;
+                let x = e.clientX - e.target.getBoundingClientRect().left;
+                let y = e.clientY - e.target.getBoundingClientRect().top;
 
                 let ripples = document.createElement('span');
                 ripples.style.left = x + 'px';
@@ -628,7 +653,9 @@
                 ripples.classList.add('ripple');
                 this.appendChild(ripples);
 
-                setTimeout(() => { ripples.remove(); }, 600);
+                setTimeout(() => {
+                    ripples.remove();
+                }, 600);
             });
         });
     </script>
