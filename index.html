@@ -24,10 +24,10 @@
             background-color: var(--color-bg);
             color: #E0E0E0;
             margin: 0; padding: 0;
-            line-height: 1.6; /* Комфортный интерлиньяж */
+            line-height: 1.6;
             text-align: center;
             overflow-x: hidden;
-            font-size: 16px; /* Оптимальный размер для чтения */
+            font-size: 16px; 
         }
 
         /* Тонкий скроллбар */
@@ -50,7 +50,7 @@
             background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
             background-image: url('dark_header_new.jpg'); 
             background-size: cover; background-position: center;
-            height: 380px; /* Средняя высота */
+            height: 380px; 
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
             clip-path: polygon(0 0, 100% 0, 100% 90%, 50% 100%, 0 90%);
@@ -68,9 +68,10 @@
         .header-banner h1 { 
             font-family: var(--font-decorative);
             font-weight: 400;
-            font-size: clamp(2.2rem, 5vw, 3.5rem); /* Увеличили заголовки */
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
             margin: 0; line-height: 1.2; color: #fff;
-            display: flex; align-items: center; justify-content: center; gap: 12px;
+            display: flex; align-items: center; justify-content: center; 
+            gap: 12px; /* Стандартный отступ */
             text-shadow: 0 5px 20px rgba(0,0,0,0.5);
         }
 
@@ -114,13 +115,21 @@
 
         /* Сетка для мобилок */
         @media (max-width: 899px) {
+            /* Уменьшаем отступ иконки от текста в шапке на телефоне */
+            .header-banner h1 {
+                gap: 5px; 
+            }
+            .apple-icon { 
+                height: 45px; /* Чуть меньше для плотности */
+            }
+
             .tab-buttons {
                 display: grid; grid-template-columns: 1fr 1fr;
                 gap: 10px;
             }
             .tab-button { 
                 justify-content: center; 
-                padding: 16px 10px !important; /* Удобный размер для пальца */
+                padding: 16px 10px !important;
                 text-align: center; 
             }
             .tab-button img { margin-right: 8px !important; height: 24px !important; }
@@ -136,7 +145,7 @@
             border: 1px solid var(--color-glass-border);
             border-radius: 14px; cursor: pointer;
             font-family: var(--font-decorative);
-            font-size: 1.25em; /* Чуть крупнее */
+            font-size: 1.25em; 
             transition: all 0.3s;
             display: flex; align-items: center; justify-content: flex-start; 
             position: relative; overflow: hidden;
@@ -174,17 +183,24 @@
             display: none; width: 100%; box-sizing: border-box;
             animation: fadeIn 0.4s ease;
         }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         
-        .tab-content.active { display: block; }
-
         .tab-content h2 {
             font-family: var(--font-decorative); font-weight: 400;
-            font-size: 2.4em; /* Оптимальный размер */
+            font-size: 2.4em; 
             background: linear-gradient(45deg, var(--color-secondary), var(--color-primary));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            margin: 0 0 25px 0;
+            margin: 0 0 15px 0; /* Уменьшен нижний отступ */
             display: flex; align-items: center; justify-content: center;
+        }
+
+        /* Стиль для подзаголовка "Файлы регулярных выражений" */
+        .tab-content h3 {
+            color: #666; 
+            text-transform: uppercase; 
+            font-size: 0.9em; 
+            letter-spacing: 1.5px; 
+            margin-top: 20px; /* Уменьшен отступ после большой кнопки */
+            margin-bottom: 15px; /* Уменьшен отступ перед ссылками */
         }
         
         .tab-content h2 img { height: 42px; margin-right: 14px; -webkit-text-fill-color: initial; }
@@ -192,19 +208,19 @@
         .tab-content p { font-size: 1.05em; margin-bottom: 30px; color: #ccc; font-weight: 300; }
 
         /* ===================================== */
-        /* КНОПКИ ДЕЙСТВИЙ */
+        /* КНОПКИ ДЕЙСТВИЙ (Остальное без изменений) */
         /* ===================================== */
         .download-button {
             position: relative; overflow: hidden;
             display: flex; align-items: center; justify-content: center; 
             width: 100%; max-width: 380px; 
             margin: 30px auto;
-            box-sizing: border-box; /* Важно для центрирования */
+            box-sizing: border-box; 
             
             background: linear-gradient(270deg, #ff9a9e, #a8e6cf, #99ff99, #ff9a9e);
             background-size: 300% 300%; animation: bg-shift 8s ease infinite;
             color: #121212; 
-            font-weight: 800; font-size: 1.2em; /* Читабельный шрифт */
+            font-weight: 800; font-size: 1.2em; 
             text-transform: uppercase; letter-spacing: 1.2px;
             padding: 20px 25px; 
             text-decoration: none; border-radius: 16px; 
@@ -229,23 +245,16 @@
         .no-bullets { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
 
         /* ===================================== */
-        /* МЕЛКИЕ ЭЛЕМЕНТЫ */
-        /* ===================================== */
-        .typing-cursor::after { content: '|'; animation: blink 1s step-end infinite; color: var(--color-primary); margin-left: 3px; }
-        @keyframes blink { 50% { opacity: 0; } }
-        @keyframes bg-shift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        
-        .ripple { position: absolute; border-radius: 50%; transform: scale(0); animation: ripple 0.6s linear; background-color: rgba(255,255,255,0.3); pointer-events: none; }
-        @keyframes ripple { to { transform: scale(4); opacity: 0; } }
-
-        /* ===================================== */
         /* МОБИЛЬНАЯ АДАПТАЦИЯ (Твики) */
         /* ===================================== */
         @media (max-width: 600px) {
-            .header-banner { height: 290px; } /* Чуть выше чем прошлый раз */
+            .header-banner { height: 290px; }
             .header-banner h1 { font-size: 2.2rem; }
             .tab-content { padding: 30px 20px; border-radius: 20px; }
-            .tab-content h2 { font-size: 2em; }
+            .tab-content h2 { 
+                font-size: 2em;
+                margin-bottom: 15px; /* Уменьшен отступ для мобилок */
+            }
             .download-button { width: 100%; font-size: 1.1em; padding: 18px; }
             .link-button { padding: 16px; }
             .apple-icon { height: 55px; }
@@ -332,7 +341,7 @@
                     СКАЧАТЬ V1.581
                 </a>
                 
-                <h3 style="color: #666; text-transform: uppercase; font-size: 0.85em; letter-spacing: 1.5px; margin-top: 35px; margin-bottom: 20px;">Файлы RegEx</h3>
+                <h3>Файлы регулярных выражений</h3>
                 <div class="no-bullets"> 
                     <a class="link-button ripple-btn" href="regex-renette_html_depth_5_vanquisher__.json" download onclick="showToast('RegEx', 'HTML Depth 5 загружается...')">
                         <img src="leaf_red.png" alt="" onerror="this.style.display='none'">
