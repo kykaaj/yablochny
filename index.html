@@ -321,11 +321,12 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-top: 0;
-            margin-bottom: 10px; /* Уменьшен отступ, т.к. ниже будет линия */
+            margin-bottom: 10px;
+            /* Уменьшен отступ, т.к. ниже будет линия */
             display: flex;
             align-items: center; 
             justify-content: center;
-            flex-wrap: wrap;
+            flex-wrap: nowrap; /* ИСПРАВЛЕНО: теперь всегда в ряд */
             filter: drop-shadow(0 0 15px rgba(153, 255, 153, 0.2));
         }
         
