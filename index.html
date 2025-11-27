@@ -62,16 +62,21 @@
         /* ===================================== */
         /* АНИМАЦИИ */
         /* ===================================== */
+        
+        /* Анимация прыжка (вертикальная) */
         @keyframes bounce {
             0%, 100%, 20%, 50%, 80% { transform: translateY(0); }
             40% { transform: translateY(-7px); } 
             60% { transform: translateY(-4px); }
         }
+        
+        /* Анимация тряски (горизонтальная - оставил на всякий случай, но отключил) */
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
             20%, 60% { transform: translateX(-2px); }
             40%, 80% { transform: translateX(2px); }
         }
+        
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -79,7 +84,8 @@
 
         /* ШАПКА */
         .header-banner {
-            background-image: url('dark_header_new.jpg'); /* Проверь имя файла! */
+            /* ВАЖНО: Проверьте название файла. Должно совпадать буква в букву (включая .jpg маленькими) */
+            background-image: url('dark_header_new.jpg'); 
             background-size: cover; 
             background-repeat: no-repeat;
             background-position: center center;
@@ -116,7 +122,7 @@
         .header-banner h1 { 
             font-family: var(--font-decorative);
             font-weight: 400;
-            font-size: 4em; /* Для Pacifico размер чуть больше */
+            font-size: 4em; 
             text-shadow: 0 0 5px rgba(0,0,0,0.8), 0 0 20px rgba(255, 255, 255, 0.4); 
             padding: 0; 
             margin: 0;
@@ -162,7 +168,7 @@
             border-radius: 12px;
             cursor: pointer;
             font-family: var(--font-decorative);
-            font-size: 1.4em; /* Для Pacifico размер чуть больше */
+            font-size: 1.4em;
             letter-spacing: 1px;
             transition: all 0.3s ease;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
@@ -171,9 +177,12 @@
             justify-content: flex-start; 
         }
         .tab-button:hover { background-color: #333; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5); transform: translateX(5px); }
+        
+        /* ИЗМЕНЕНИЕ ЗДЕСЬ: Заменил shake на bounce, чтобы иконка прыгала вертикально */
         .tab-button:hover img { 
-            animation: shake 0.5s ease-in-out; 
+            animation: bounce 1s infinite; 
         }
+        
         .tab-button.active {
             background-color: var(--color-active); 
             color: var(--color-dark-bg);
@@ -203,7 +212,7 @@
         .tab-content h2 {
             font-family: var(--font-decorative);
             font-weight: 400;
-            font-size: 2.4em; /* Для Pacifico размер чуть больше */
+            font-size: 2.4em; 
             color: var(--color-active); 
             border-bottom: 2px dashed #424242; 
             padding-bottom: 20px;
@@ -230,24 +239,18 @@
         }
         
         /* ===================================== */
-        /* НОВЫЕ СТИЛИ КНОПОК (ИЗМЕНЕНО) */
+        /* СТИЛИ КНОПОК */
         /* ===================================== */
         
-        /* ГЛАВНАЯ КНОПКА СКАЧАТЬ */
         .download-button {
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            
-            /* ИЗМЕНЕНО: Уменьшена ширина и гарантировано центрирование */
             width: 90%; 
-            max-width: 380px; /* Было 420px */
-            margin: 25px auto; /* auto по бокам центрирует */
-            
-            /* ИЗМЕНЕНО: Нежный красно-зеленый градиент (слева направо) */
+            max-width: 380px; 
+            margin: 25px auto; 
             background: linear-gradient(90deg, #ff9a9e 0%, #a8e6cf 100%);
             background-size: 200% auto;
-            
             transition: all 0.3s ease; 
             color: white; 
             font-family: var(--font-readable); 
@@ -255,23 +258,20 @@
             font-size: 1.3em;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.5); /* Тень для текста, чтобы читался на светлом */
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5); 
             padding: 20px 25px; 
             text-decoration: none; 
             border-radius: 12px; 
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); 
         }
         
-        /* АНИМАЦИЯ ГЛАВНОЙ КНОПКИ */
         .download-button:hover {
             background-position: right center;
             transform: translateY(-3px) scale(1.02); 
-            /* Тень при наведении тоже цветная */
             box-shadow: 0 10px 25px rgba(168, 230, 207, 0.5); 
         }
         .download-button img { height: 32px; margin-right: 15px; filter: drop-shadow(0 0 2px rgba(0,0,0,0.5)); } 
         
-        /* КОНТАКТЫ И ССЫЛКИ (БЫВШИЕ СЕРЫЕ КНОПКИ) */
         .no-bullets { 
             list-style: none; 
             padding: 0;
@@ -283,10 +283,7 @@
             align-items: center; 
             justify-content: left; 
             padding-left: 30px; 
-            
-            /* ИЗМЕНЕНО: Вместо серого - глубокий темный цветной градиент */
             background: linear-gradient(135deg, #1e3c2e, #2c3e50);
-            
             color: #E0E0E0; 
             padding-top: 14px; padding-bottom: 14px; text-decoration: none; border-radius: 10px; 
             font-weight: 600; 
@@ -295,10 +292,9 @@
             width: 95%; max-width: 380px; 
             margin: 12px auto; 
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.05); /* Тонкая рамка для четкости */
+            border: 1px solid rgba(255,255,255,0.05); 
         }
         .link-button:hover { 
-            /* При наведении становятся ярче */
             background: linear-gradient(135deg, #2E7D32, #1e3c2e);
             transform: translateX(5px); 
             box-shadow: 3px 3px 15px rgba(46, 125, 50, 0.4); 
@@ -374,7 +370,7 @@
                     Скачать Renette HTML Depth 5 Vanquisher
                 </a> 
                 <a class="link-button" href="regex-renette_hidethink.json" download>
-                    <span style="font-weight: 700;">Опционально:</span>Скачать Renette Hide Think
+                    <span style="font-weight: 700;">Опционально:</span> Скачать Renette Hide Think
                 </a>
             </div>
         </div>
