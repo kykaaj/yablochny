@@ -13,7 +13,7 @@
             --color-active: #99ff99; 
             --color-accent-red: #ff9a9e;
             --color-dark-bg: #121212;
-            --color-card-bg: rgba(30, 30, 30, 0.7); /* Прозрачность для стекла */
+            --color-card-bg: rgba(30, 30, 30, 0.85); /* Чуть плотнее фон, раз убрали 3D */
             --font-decorative: 'Pacifico', cursive; 
             --font-readable: 'Montserrat', sans-serif;
         }
@@ -27,20 +27,21 @@
             line-height: 1.6;
             text-align: center;
             font-weight: 400;
-            overflow-x: hidden; /* Скрываем горизонтальный скролл */
-            position: relative;
+            overflow-x: hidden;
+            cursor: default; /* Обычный курсор, магия будет в канвасе */
         }
 
-        /* АНИМИРОВАННЫЙ ФОН (КАНВАС) */
-        #bg-canvas {
+        /* КАНВАСЫ ДЛЯ ФОНА И КУРСОРА */
+        #bg-canvas, #cursor-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
-            pointer-events: none;
+            pointer-events: none; /* Чтобы клики проходили сквозь */
         }
+        #bg-canvas { z-index: -1; }
+        #cursor-canvas { z-index: 9999; }
 
         .main-container {
             max-width: 950px;
@@ -49,7 +50,6 @@
             display: flex; 
             flex-direction: column; 
             align-items: center;
-            perspective: 1000px; /* Для 3D эффекта */
         }
 
         /* АДАПТИВНОСТЬ */
@@ -68,9 +68,7 @@
             }
             .tab-content-wrapper {
                 flex-grow: 1;
-                /* Обертка для 3D эффекта */
-                transform-style: preserve-3d;
-                transition: transform 0.1s ease-out;
+                width: 100%;
             }
         }
 
@@ -83,18 +81,28 @@
             60% { transform: translateY(-4px); }
         }
 
-        @keyframes fadeInScale {
-            from { opacity: 0; transform: scale(0.95) translateY(10px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
+        @keyframes fadeInSlide {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
+        @keyframes pulseBorder {
+            0% { border-color: rgba(153, 255, 153, 0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+            50% { border-color: rgba(153, 255, 153, 0.4); box-shadow: 0 10px 40px rgba(153, 255, 153, 0.15); }
+            100% { border-color: rgba(153, 255, 153, 0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         }
 
-        /* ШАПКА С ПАРАЛЛАКСОМ */
+        /* ГЛИТЧ ЭФФЕКТ ДЛЯ ЗАГОЛОВКА */
+        @keyframes glitch-anim {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        /* ШАПКА */
         .header-banner {
             background-image: url('dark_header_new.jpg'); 
             background-size: cover; 
@@ -112,29 +120,20 @@
             margin-bottom: 40px;
             position: relative;
             overflow: hidden; 
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .header-banner:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 20px rgba(153, 255, 153, 0.1);
+            transition: transform 0.3s ease;
         }
 
         .header-banner::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            backdrop-filter: blur(4px); 
-            -webkit-backdrop-filter: blur(4px); 
-            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6)); 
+            backdrop-filter: blur(3px); 
+            -webkit-backdrop-filter: blur(3px); 
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7)); 
             z-index: 1; 
         }
         
-        .header-content {
-            z-index: 2;
-            position: relative;
-            animation: float 6s ease-in-out infinite;
-        }
+        .header-content { z-index: 2; position: relative; }
         
         .header-banner h1 { 
             font-family: var(--font-decorative);
@@ -143,7 +142,16 @@
             text-shadow: 0 5px 15px rgba(0,0,0,0.8); 
             margin: 0;
             line-height: 1.2;
+            transition: color 0.3s;
         }
+
+        /* Ховер эффект для заголовка - Глитч */
+        .header-banner:hover h1 {
+            animation: glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+            color: var(--color-active);
+            text-shadow: 2px 2px #ff0000, -2px -2px #0000ff;
+        }
+        
         .header-banner p { 
             font-size: 1.3em; 
             text-shadow: 0 2px 5px rgba(0,0,0,0.9); 
@@ -187,7 +195,7 @@
             font-family: var(--font-decorative);
             font-size: 1.4em;
             letter-spacing: 1px;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: all 0.3s ease;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             display: flex;
             align-items: center;
@@ -196,34 +204,19 @@
             overflow: hidden;
         }
 
-        /* Эффект свечения при наведении */
-        .tab-button::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
-            transform: translateX(-100%);
-            transition: 0.5s;
-        }
-        .tab-button:hover::after {
-            transform: translateX(100%);
-        }
-
         .tab-button:hover { 
             background-color: #2a2a2a; 
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4); 
-            transform: translateX(5px) scale(1.02); 
+            transform: translateX(5px); 
             border-color: rgba(255,255,255,0.1);
         }
         
-        .tab-button:hover img { 
-            animation: bounce 0.8s infinite; 
-        }
+        .tab-button:hover img { animation: bounce 0.8s infinite; }
         
         .tab-button.active {
             background-color: var(--color-active); 
             color: var(--color-dark-bg);
-            box-shadow: 0 0 20px rgba(153, 255, 153, 0.4); 
+            box-shadow: 0 0 25px rgba(153, 255, 153, 0.5); 
             font-weight: 800;
             border: none;
         }
@@ -234,7 +227,7 @@
             filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));
         }
 
-        /* КОНТЕНТ (Стеклянная панель) */
+        /* КОНТЕНТ (Убран тильт, добавлена пульсация рамки) */
         .tab-content {
             background-color: var(--color-card-bg);
             backdrop-filter: blur(15px);
@@ -251,12 +244,12 @@
             position: relative;
         }
         
+        /* Активное окно плавно появляется и "дышит" рамкой */
         .tab-content.active { 
             display: block; 
-            animation: fadeInScale 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: fadeInSlide 0.6s ease-out, pulseBorder 4s infinite ease-in-out;
         }
 
-        /* Заголовки внутри вкладок */
         .tab-content h2 {
             font-family: var(--font-decorative);
             font-weight: 400;
@@ -268,17 +261,13 @@
             display: flex; 
             align-items: center; 
             justify-content: center;
-            text-shadow: 0 0 15px rgba(153, 255, 153, 0.3); 
+            text-shadow: 0 0 15px rgba(153, 255, 153, 0.4); 
         }
         
         .tab-content h2 img {
             height: 48px; 
             vertical-align: middle;
             margin-right: 15px; 
-            transition: transform 0.3s;
-        }
-        .tab-content:hover h2 img {
-            transform: rotate(15deg) scale(1.1);
         }
 
         .tab-content p {
@@ -302,9 +291,7 @@
             background-color: rgba(255, 255, 255, 0.4);
             pointer-events: none;
         }
-        @keyframes ripple {
-            to { transform: scale(4); opacity: 0; }
-        }
+        @keyframes ripple { to { transform: scale(4); opacity: 0; } }
 
         .download-button {
             position: relative;
@@ -332,7 +319,7 @@
         
         .download-button:hover {
             background-position: right center;
-            transform: translateY(-5px) scale(1.02); 
+            transform: translateY(-3px) scale(1.02); 
             box-shadow: 0 15px 35px rgba(168, 230, 207, 0.4); 
             color: black;
         }
@@ -367,14 +354,8 @@
             color: white;
             border-color: #99ff99;
         }
-        
-        .link-button img { 
-            height: 28px; 
-            vertical-align: middle; 
-            margin-right: 15px; 
-        }
+        .link-button img { height: 28px; vertical-align: middle; margin-right: 15px; }
 
-        /* Маленький футер */
         footer {
             margin-top: 50px;
             opacity: 0.5;
@@ -386,6 +367,7 @@
 <body>
     
     <canvas id="bg-canvas"></canvas>
+    <canvas id="cursor-canvas"></canvas>
 
     <div class="header-banner">
         <div class="header-content">
@@ -417,7 +399,7 @@
             </button>
         </div>
 
-        <div class="tab-content-wrapper" id="tilt-wrapper">
+        <div class="tab-content-wrapper">
             <div id="Description" class="tab-content active">
                 <h2>
                     <img src="icon_clip.png" alt="Зелёная скрепочка" class="icon-clip"> 
@@ -505,124 +487,140 @@
         // === ЛОГИКА ВКЛАДОК ===
         function openTab(evt, tabName) {
             var i, tabcontent, tablinks;
-            
-            // Скрываем все вкладки
             tabcontent = document.getElementsByClassName("tab-content");
             for (i = 0; i < tabcontent.length; i++) {
                 tabcontent[i].style.display = "none";
                 tabcontent[i].classList.remove('active');
             }
-            
-            // Убираем активный класс у кнопок
             tablinks = document.getElementsByClassName("tab-button");
             for (i = 0; i < tablinks.length; i++) {
                 tablinks[i].classList.remove("active");
             }
-            
-            // Показываем нужную и активируем кнопку
             var selectedTab = document.getElementById(tabName);
             selectedTab.style.display = "block";
-            
-            // Небольшая задержка для анимации
-            setTimeout(() => {
-                selectedTab.classList.add('active');
-            }, 10);
-            
+            setTimeout(() => selectedTab.classList.add('active'), 10);
             evt.currentTarget.classList.add("active");
         }
         
-        // Открытие первой вкладки при загрузке
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('Description').style.display = 'block';
             setTimeout(() => document.getElementById('Description').classList.add('active'), 10);
         });
 
         // === 1. АНИМИРОВАННЫЙ ФОН (ЧАСТИЦЫ) ===
-        const canvas = document.getElementById('bg-canvas');
-        const ctx = canvas.getContext('2d');
+        const bgCanvas = document.getElementById('bg-canvas');
+        const bgCtx = bgCanvas.getContext('2d');
         let width, height;
-        let particles = [];
 
         function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
+            width = bgCanvas.width = window.innerWidth;
+            height = bgCanvas.height = window.innerHeight;
+            // Размер для курсора тоже
+            cursorCanvas.width = window.innerWidth;
+            cursorCanvas.height = window.innerHeight;
         }
-        window.addEventListener('resize', resize);
-        resize();
-
-        class Particle {
+        
+        // Массив для фона
+        let bgParticles = [];
+        class BgParticle {
             constructor() {
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 0.5; // Скорость по X
-                this.vy = (Math.random() - 0.5) * 0.5; // Скорость по Y
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
                 this.size = Math.random() * 3 + 1;
-                // Цвета: либо бледно-зеленый, либо бледно-красный
-                this.color = Math.random() > 0.5 ? 'rgba(153, 255, 153, 0.2)' : 'rgba(255, 154, 158, 0.2)';
+                this.color = Math.random() > 0.5 ? 'rgba(153, 255, 153, 0.15)' : 'rgba(255, 154, 158, 0.15)';
             }
             update() {
                 this.x += this.vx;
                 this.y += this.vy;
                 if (this.x < 0) this.x = width;
-                if (this.x > width) this.x = 0;
+                else if (this.x > width) this.x = 0;
                 if (this.y < 0) this.y = height;
-                if (this.y > height) this.y = 0;
+                else if (this.y > height) this.y = 0;
             }
             draw() {
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
+                bgCtx.fillStyle = this.color;
+                bgCtx.beginPath();
+                bgCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                bgCtx.fill();
+            }
+        }
+        for (let i = 0; i < 60; i++) bgParticles.push(new BgParticle());
+
+        // === 2. МАГИЧЕСКИЙ ШЛЕЙФ КУРСОРА ===
+        const cursorCanvas = document.getElementById('cursor-canvas');
+        const cursorCtx = cursorCanvas.getContext('2d');
+        let trailParticles = [];
+        let mouseX = 0, mouseY = 0;
+
+        // Следим за мышью
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            // Добавляем частицы при движении
+            for(let i=0; i<3; i++) {
+                trailParticles.push(new TrailParticle(mouseX, mouseY));
+            }
+        });
+
+        class TrailParticle {
+            constructor(x, y) {
+                this.x = x + (Math.random() - 0.5) * 5;
+                this.y = y + (Math.random() - 0.5) * 5;
+                this.size = Math.random() * 5 + 2;
+                this.speedX = (Math.random() - 0.5) * 2;
+                this.speedY = (Math.random() - 0.5) * 2;
+                // Зеленые и розовые искры
+                this.color = Math.random() > 0.5 ? '153, 255, 153' : '255, 154, 158'; 
+                this.life = 1; // Жизнь от 1 до 0
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.life -= 0.03; // Скорость исчезновения
+                this.size *= 0.95; // Уменьшение
+            }
+            draw() {
+                cursorCtx.fillStyle = `rgba(${this.color}, ${this.life})`;
+                cursorCtx.beginPath();
+                cursorCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                cursorCtx.fill();
             }
         }
 
-        // Создаем 50 частиц
-        for (let i = 0; i < 50; i++) particles.push(new Particle());
+        // ОБЩИЙ ЦИКЛ АНИМАЦИИ
+        function animate() {
+            // Очистка
+            bgCtx.clearRect(0, 0, width, height);
+            cursorCtx.clearRect(0, 0, width, height);
 
-        function animateBg() {
-            ctx.clearRect(0, 0, width, height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-            requestAnimationFrame(animateBg);
+            // Фон
+            bgParticles.forEach(p => { p.update(); p.draw(); });
+
+            // Шлейф
+            for (let i = 0; i < trailParticles.length; i++) {
+                trailParticles[i].update();
+                trailParticles[i].draw();
+                // Удаляем мертвые частицы
+                if (trailParticles[i].life <= 0) {
+                    trailParticles.splice(i, 1);
+                    i--;
+                }
+            }
+            requestAnimationFrame(animate);
         }
-        animateBg();
-
-        // === 2. ЭФФЕКТ 3D НАКЛОНА (TILT) ===
-        const wrapper = document.getElementById('tilt-wrapper');
-        const container = document.querySelector('.main-container');
-
-        if (window.matchMedia("(min-width: 768px)").matches) {
-            container.addEventListener('mousemove', (e) => {
-                const rect = wrapper.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                // Вычисляем вращение
-                const xPct = x / rect.width - 0.5;
-                const yPct = y / rect.height - 0.5;
-                
-                // Ограничиваем угол наклона (немного, чтобы не кружилась голова)
-                const rotateX = yPct * -5; 
-                const rotateY = xPct * 5;
-
-                wrapper.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            });
-
-            container.addEventListener('mouseleave', () => {
-                wrapper.style.transform = `perspective(1000px) rotateX(0) rotateY(0)`;
-            });
-        }
+        
+        window.addEventListener('resize', resize);
+        resize();
+        animate();
 
         // === 3. ЭФФЕКТ RIPPLE НА КНОПКАХ ===
         document.querySelectorAll('.ripple-btn, .download-button, .link-button').forEach(btn => {
             btn.addEventListener('click', function(e) {
-                // Если это ссылка, даем время проиграться анимации перед переходом (опционально)
-                // Но для скачивания это не критично
-                
-                let x = e.clientX - e.target.getBoundingClientRect().left;
-                let y = e.clientY - e.target.getBoundingClientRect().top;
+                let rect = e.target.getBoundingClientRect();
+                let x = e.clientX - rect.left;
+                let y = e.clientY - rect.top;
 
                 let ripples = document.createElement('span');
                 ripples.style.left = x + 'px';
@@ -630,9 +628,7 @@
                 ripples.classList.add('ripple');
                 this.appendChild(ripples);
 
-                setTimeout(() => {
-                    ripples.remove();
-                }, 600);
+                setTimeout(() => { ripples.remove(); }, 600);
             });
         });
     </script>
