@@ -1,0 +1,18 @@
+{
+    "id": "51cc4def-f809-4a57-a12e-aa53c4873d7d",
+    "scriptName": "Celia Hide Think",
+    "findRegex": "/<think>[\\s\\S]*?</think>/g",
+    "replaceString": "",
+    "trimStrings": [],
+    "placement": [
+        1,
+        2
+    ],
+    "disabled": false,
+    "markdownOnly": true,
+    "promptOnly": true,
+    "runOnEdit": true,
+    "substituteRegex": 0,
+    "minDepth": null,
+    "maxDepth": null
+}
