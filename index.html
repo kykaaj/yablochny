@@ -37,7 +37,10 @@
         .header-banner {
             background-image: url('dark_header_new.jpg'); 
             background-size: cover; 
-            background-position: center; 
+            
+            /* ИСПРАВЛЕНИЕ: Позиционируем фон по верху */
+            background-position: top; 
+            
             background-color: #333; 
             height: 350px; 
             display: flex;
@@ -51,9 +54,8 @@
             background-repeat: no-repeat; 
             background-attachment: fixed; 
             
-            /* ИСПРАВЛЕНИЕ 1: Добавляем псевдоэлемент для размытия и затемнения */
             position: relative;
-            overflow: hidden; /* Обрезает содержимое, если оно выходит за границы */
+            overflow: hidden; 
         }
         
         /* ПСЕВДОЭЛЕМЕНТ ДЛЯ НОРМАЛЬНОГО РАЗМЫТИЯ И ЗАТЕМНЕНИЯ */
@@ -72,7 +74,6 @@
             backdrop-filter: blur(5px); 
             -webkit-backdrop-filter: blur(5px); 
             
-            /* Важно: Текст должен быть поверх этого затемнения! */
             z-index: 1; 
         }
         
@@ -108,12 +109,11 @@
         }
         .tab-button:hover { background-color: #333; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5); }
         .tab-button.active {
-            background-color: var(--color-active); /* ИСПРАВЛЕНИЕ 3: Нежно-зеленый цвет */
+            background-color: var(--color-active); 
             color: var(--color-dark-bg);
-            box-shadow: 0 4px 10px rgba(153, 255, 153, 0.5); /* Тень под цвет */
+            box-shadow: 0 4px 10px rgba(153, 255, 153, 0.5); 
         }
         
-        /* ИСПРАВЛЕНИЕ 4: Чуть больший размер иконок в кнопках */
         .tab-button img {
             height: 24px; 
             margin-right: 8px;
@@ -134,27 +134,24 @@
 
         /* СТИЛИ ВНУТРИ ВКЛАДОК */
         .tab-content h2 {
-            /* ИСПРАВЛЕНИЕ 3: Заголовки теперь нежно-зеленые */
             color: var(--color-active); 
             border-bottom: 2px dashed #424242; 
             padding-bottom: 15px;
             margin-top: 0;
             text-align: center;
-            display: flex; /* Чтобы иконка и текст были на одной линии */
+            display: flex; 
             align-items: center;
             justify-content: center;
         }
         
-        /* ИСПРАВЛЕНИЕ 4: Иконки в заголовках теперь больше */
         .tab-content h2 img {
-            height: 32px; /* Увеличенный размер для заголовков */
+            height: 32px; 
             vertical-align: middle;
             margin-right: 10px;
         }
 
-        /* ИСПРАВЛЕНИЕ 4: Конкретно для сумочки (Контакты) — устанавливаем нормальный размер */
         .tab-content h2 img[alt="Сумочка"] {
-            height: 32px; /* Фиксируем нужный размер, чтобы она не была огромной */
+            height: 32px; 
         }
 
 
@@ -164,7 +161,7 @@
             line-height: 1.8;
             text-align: left;
         }
-        /* ... остальное без изменений ... */
+        
         .download-button {
             display: flex; align-items: center; justify-content: center; width: 90%; max-width: 400px; margin: 10px auto 25px auto; 
             background-image: url('download_button_image.png'); background-size: cover; filter: brightness(0.85); transition: filter 0.3s ease, transform 0.2s, box-shadow 0.2s; 
