@@ -46,18 +46,15 @@
             40%, 80% { transform: translateX(2px); }
         }
 
-        /* ШАПКА С КАРТИНКОЙ, РАЗМЫТИЕМ И ЗАТЕМНЕНИЕМ */
+        /* ШАПКА С КАРТИНКОЙ - НИЖНИЙ РАЗМЫТЫЙ СЛОЙ */
         .header-banner {
-            
+            /* Фоновая картинка (размытый слой) */
             background-image: url('dark_header_new.jpg'); 
-            background-size: cover; /* Возвращаем к cover, но с большей высотой контейнера */
+            background-size: cover; 
             background-repeat: no-repeat; 
-            background-position: top; /* Позиционируем по верху */
-            
+            background-position: center; 
             background-color: #333; 
-            /* ИСПРАВЛЕНИЕ: УВЕЛИЧИВАЕМ ВЫСОТУ */
-            height: 500px; 
-            
+            height: 350px; /* Вернули стандартную высоту */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -70,8 +67,8 @@
             position: relative;
             overflow: hidden; 
         }
-        
-        /* ПСЕВДОЭЛЕМЕНТ ДЛЯ НОРМАЛЬНОГО РАЗМЫТИЯ И ЗАТЕМНЕНИЯ */
+
+        /* 1. ПСЕВДОЭЛЕМЕНТ ДЛЯ СИЛЬНОГО РАЗМЫТИЯ ФОНА */
         .header-banner::before {
             content: '';
             position: absolute;
@@ -80,15 +77,34 @@
             right: 0;
             bottom: 0;
             
-            background: rgba(0, 0, 0, 0.35); 
-            backdrop-filter: blur(5px); 
-            -webkit-backdrop-filter: blur(5px); 
+            /* Накладываем сильное размытие на нижний фоновый слой */
+            backdrop-filter: blur(8px); 
+            -webkit-backdrop-filter: blur(8px); 
+            background: rgba(0, 0, 0, 0.35); /* Дополнительное затемнение */
             z-index: 1; 
         }
+
+        /* 2. ПСЕВДОЭЛЕМЕНТ ДЛЯ ЧИСТОЙ КАРТИНКИ (ОТОБРАЖАЕТСЯ ЦЕЛИКОМ) */
+        .header-banner::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            
+            /* Чистая картинка в режиме contain */
+            background-image: url('dark_header_new.jpg'); 
+            background-size: contain; /* Отображает картинку целиком */
+            background-repeat: no-repeat;
+            background-position: center;
+            
+            z-index: 2; /* Поверх размытого фона, но под текстом */
+        }
         
-        /* ТЕКСТ ШАПКИ ПОВЕРХ ЗАТЕМНЕНИЯ */
+        /* ТЕКСТ ШАПКИ ПОВЕРХ ВСЕХ СЛОЕВ */
         .header-banner h1, .header-banner p {
-            z-index: 2;
+            z-index: 3;
             position: relative;
         }
 
