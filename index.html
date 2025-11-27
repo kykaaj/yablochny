@@ -72,7 +72,6 @@
 
         .main-container {
             max-width: 1100px;
-            /* ИЗМЕНЕНО: Отступ уменьшен, но будет скорректирован для мобильных */
             margin: -50px auto 40px;
             padding: 15px; 
             display: flex; 
@@ -142,7 +141,6 @@
             background-image: url('dark_header_new.jpg'); 
             background-size: cover; 
             background-position: center;
-            /* ВЫСОТА ДЛЯ ПК */
             height: 350px;
             display: flex;
             flex-direction: column;
@@ -492,7 +490,7 @@
         /* МОБИЛЬНЫЕ ПРАВКИ (MAX-WIDTH: 600PX) */
         /* ===================================== */
         @media (max-width: 600px) {
-            /* ПРАВКА 1: Шапка стала значительно короче (было 240px, стало 190px) */
+            /* Шапка короче */
             .header-banner { 
                 height: 190px; 
                 padding-bottom: 10px;
@@ -512,11 +510,11 @@
             
             .tab-content { padding: 25px 15px; }
             
+            /* Отступ между кнопками и контентом */
             .tab-buttons { 
                 display: grid; 
                 grid-template-columns: 1fr 1fr;
                 gap: 8px; 
-                /* ПРАВКА 2: Добавлен отступ снизу для разделения кнопок и контента */
                 margin-bottom: 25px; 
             }
             
@@ -593,15 +591,17 @@
                 </h2>
                 
                 <p style="text-align: left; padding: 0 10px; line-height: 1.9;">
-                    Модульный пресет с огромным количеством тоглов, основанный на ядре Селии.
+                    Модульный пресет с огромным количеством тоглов, основанный на ядре Селии. Оптимизирован для <b style="color:white">максимального погружения</b>.
                     <br><br>
                     <span style="color: var(--color-primary); font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; border-bottom: 2px solid var(--color-secondary);">Поддерживаемые модели:</span><br>
-                    <span style="display: block; margin-top: 10px; font-size: 0.95em;">
-                        <img src="leaf_red.png" alt="File" onerror="this.style.display='none'">
+                    <span style="display: block; margin-top: 10px; font-size: 0.95em; line-height: 1.8;">
+                        <img src="leaf_red.png" style="height: 18px; vertical-align: middle; margin-right: 8px; margin-bottom: 3px;" alt="*">
                         Gemini 2.5/3.0 pro <br> 
-                        <img src="leaf_red.png" alt="File" onerror="this.style.display='none'">
+                        
+                        <img src="leaf_green.png" style="height: 18px; vertical-align: middle; margin-right: 8px; margin-bottom: 3px;" alt="*">
                         Claude Opus/Sonnet 4.5 <br> 
-                        <img src="leaf_red.png" alt="File" onerror="this.style.display='none'">
+                        
+                        <img src="leaf_red.png" style="height: 18px; vertical-align: middle; margin-right: 8px; margin-bottom: 3px;" alt="*">
                         Sonnet 4, Opus 4.1
                     </span>
                 </p>
