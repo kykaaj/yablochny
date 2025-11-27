@@ -57,9 +57,10 @@
             overflow-x: hidden;
             scroll-behavior: smooth;
             -webkit-font-smoothing: antialiased;
+            /* ИСПРАВЛЕНИЕ ФУТЕРА (STICKY FOOTER) */
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
+            min-height: 100vh; /* Растягиваем body на всю высоту окна */
         }
 
         /* АНИМИРОВАННЫЙ ФОН (КАНВАС) */
@@ -80,6 +81,8 @@
         }
 
         .main-container {
+            /* ИЗМЕНЕНИЕ: Увеличил максимальную ширину с 1100px до 1300px, 
+               чтобы на ПК контент выглядел шире */
             max-width: 1300px; 
             margin: -50px auto 40px;
             padding: 15px; 
@@ -89,56 +92,33 @@
             position: relative;
             z-index: 10;
             flex: 1;
+            /* Заставляет контент занимать все свободное место, толкая футер вниз */
             width: 100%;
             box-sizing: border-box;
         }
 
-        /* ===================================== */
-        /* СТИЛИ ПК ВЕРСИИ (ГОРИЗОНТАЛЬНЫЙ РЯД) */
-        /* ===================================== */
         @media (min-width: 900px) {
             .main-container {
-                /* Основной контейнер вертикальный: кнопки сверху, контент снизу */
-                flex-direction: column; 
-                align-items: center;
-                gap: 30px; 
+                flex-direction: row;
+                align-items: flex-start;
+                gap: 40px;
                 padding: 0 40px;
                 margin-top: -80px;
             }
             .tab-buttons {
-                /* ПЕРЕКЛЮЧАЕМ НА ГОРИЗОНТАЛЬНЫЙ РЯД */
-                display: flex; 
-                flex-direction: row; 
-                justify-content: center; /* Центрируем кнопки */
-                flex-wrap: wrap; 
-                gap: 15px; 
-                
-                width: 100%; 
-                max-width: 1000px;
-                
-                min-width: auto;
-                position: static; 
-                top: 0;
-            }
-            /* Стили для кнопок в горизонтальном ряду */
-            .tab-buttons .tab-button {
-                width: 220px; 
-                padding: 18px 25px; 
-                text-align: left;
-                justify-content: flex-start;
-            }
-            /* Стили активной кнопки */
-            .tab-buttons .tab-button.active {
-                padding-left: 25px; /* Отступ слева без вертикальной полосы */
-                transform: scale(1.05); /* Легкое увеличение активной кнопки */
+                /* ИЗМЕНЕНИЕ: Уменьшил ширину колонки кнопок с 260px до 200px */
+                min-width: 200px;
+                max-width: 200px; /* Фиксируем, чтобы не растягивались */
+                position: sticky; 
+                top: 40px;
+                z-index: 10;
             }
             .tab-content-wrapper {
                 flex-grow: 1;
                 width: 100%;
-                max-width: 1000px; /* Широкий контент */
             }
         }
-        
+
         /* ===================================== */
         /* АНИМАЦИИ */
         /* ===================================== */
@@ -199,7 +179,7 @@
             overflow: hidden;
             perspective: 1000px; 
             padding-bottom: 30px;
-            flex-shrink: 0;
+            flex-shrink: 0; /* Шапка не сжимается */
         }
 
         .header-banner::before {
@@ -283,7 +263,7 @@
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             display: flex;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: flex-start; 
             position: relative;
             overflow: hidden;
             text-align: left;
@@ -301,12 +281,9 @@
             color: var(--color-primary);
             border: 1px solid var(--color-primary);
             box-shadow: 0 0 20px rgba(153, 255, 153, 0.1);
-            /* Изменено: Уменьшаем padding-left, так как вертикальной полосы не будет */
-            padding-left: 22px;
-            transform: scale(1.0); 
+            padding-left: 30px;
         }
 
-        /* Полоса слева (для мобильного/старого бокового стиля) */
         .tab-button.active::before {
             content: '';
             position: absolute;
@@ -314,18 +291,6 @@
             width: 5px;
             background: var(--color-primary);
             box-shadow: 2px 0 10px var(--color-primary);
-            display: none; /* Скрываем по умолчанию, пока не включит медиа-запрос */
-        }
-        
-        /* АКТИВАЦИЯ ПОЛОСЫ ТОЛЬКО НА МОБИЛЬНЫХ/ПЛАНШЕТАХ */
-        @media (max-width: 899px) {
-            .tab-button.active::before {
-                display: block; 
-            }
-            .tab-button.active {
-                 /* Возвращаем нужный отступ для мобильных, где полоса есть */
-                padding-left: 30px; 
-            }
         }
         
         .tab-button img {
@@ -372,15 +337,18 @@
         .tab-content h2 {
             font-family: var(--font-decorative);
             font-weight: 400;
+            /* Исправление из прошлого шага: шрифт */
             font-size: clamp(1.5rem, 3vw, 2.4rem);
             background: linear-gradient(45deg, var(--color-secondary), var(--color-primary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-top: 0;
             margin-bottom: 10px;
+            /* Уменьшен отступ, т.к. ниже будет линия */
             display: flex;
             align-items: center; 
             justify-content: center;
+            /* Исправление из прошлого шага: запрет переноса */
             flex-wrap: nowrap;
             filter: drop-shadow(0 0 15px rgba(153, 255, 153, 0.2));
         }
@@ -395,7 +363,7 @@
         /* НОВЫЙ СТИЛЬ: Разделительная линия */
         .dashed-divider {
             border: 0;
-            border-top: 2px dashed rgba(153, 255, 153, 0.3);
+            border-top: 2px dashed rgba(153, 255, 153, 0.3); /* Цвет пресета, полупрозрачный */
             margin: 10px auto 25px auto;
             width: 100%;
             max-width: 100%;
@@ -518,6 +486,7 @@
         }
 
         footer {
+            /* ИСПРАВЛЕНИЕ: Футер теперь прижимается к низу */
             margin-top: auto;
             color: #555;
             font-size: 0.85em;
@@ -615,9 +584,8 @@
                 text-align: center; 
                 justify-content: center;
             }
-            /* На мобильных кнопка активна, padding-left 30px для полосы */
             .tab-button.active { 
-                padding-left: 30px; 
+                padding-left: 15px;
                 padding-top: 15px; 
             }
             .tab-button img { 
@@ -942,7 +910,7 @@
         // === 5. RIPPLE ЭФФЕКТ ===
         document.querySelectorAll('.ripple-btn').forEach(btn => {
             btn.addEventListener('click', function(e) {
-                let rect = e.target.closest('.ripple-btn').getBoundingClientRect();
+                let rect = e.target.getBoundingClientRect();
                 let x = e.clientX - rect.left;
                 let y = e.clientY - rect.top;
           
