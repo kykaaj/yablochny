@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
     <title>🖤 Яблочный Пресет - Тёмная тема</title>
     <style>
         /* БАЗОВЫЕ СТИЛИ И ФОН (ТЕМНАЯ ТЕМА) */
@@ -42,7 +42,6 @@
 
         /* ШАПКА С КАРТИНКОЙ */
         .header-banner {
-            /* Убедитесь, что файл 'dark_header_bg.jpg' загружен в репозиторий! */
             background-image: url('dark_header_bg.jpg'); 
             background-size: cover; 
             background-position: center; 
@@ -92,33 +91,37 @@
             margin-top: 0;
         }
         
-        /* НОВАЯ КНОПКА: ФОН-КАРТИНКА + ТЕКСТ */
+        /* КНОПКА: ФОН-КАРТИНКА + УЛУЧШЕННЫЙ ТЕКСТ ДЛЯ МОБИЛЬНЫХ */
         .download-button {
-            display: inline-flex;
+            display: flex; /* Изменено на flex для лучшего контроля размеров */
             align-items: center;
             justify-content: center; 
             
-            /* СТИЛИЗАЦИЯ ФОНА КАРТИНКОЙ */
-            background-image: url('button_background.png'); /* <<< ВАША КАРТИНКА! */
-            background-size: cover; /* Заполняем всю кнопку картинкой */
+            /* АДАПТИВНОСТЬ КНОПКИ */
+            width: 90%; /* Занимает 90% ширины на мобильных */
+            max-width: 400px; /* Но не шире 400px на десктопе */
+            margin: 10px auto; /* Центрируем */
+            
+            /* ФОН-КАРТИНКА (download_button_image.png) */
+            background-image: url('download_button_image.png'); 
+            background-size: cover; 
             background-position: center;
             
-            /* СТИЛИЗАЦИЯ ТЕКСТА */
-            color: white; /* Цвет текста, который будет поверх картинки */
-            text-shadow: 0 0 5px #000; /* Тень для текста, чтобы он читался на любом фоне */
+            /* СТИЛИЗАЦИЯ ТЕКСТА (УЛУЧШЕННАЯ ЧИТАЕМОСТЬ) */
+            color: white; 
+            text-shadow: 0 0 8px rgba(0, 0, 0, 1); /* УСИЛЕННАЯ ТЕНЬ */
+            font-weight: 900; /* МАКСИМАЛЬНО ЖИРНЫЙ */
             
-            /* РАЗМЕР И ВИЗУАЛ */
-            padding: 15px 35px;
+            /* ВИЗУАЛ */
+            padding: 18px 20px; /* Больше вертикального отступа */
             text-decoration: none;
-            border-radius: 10px; /* Скругление углов */
-            font-weight: bold;
-            font-size: 1.2em;
+            border-radius: 12px; /* Чуть большее скругление */
+            font-size: 1.3em; /* Чуть больший размер шрифта */
             transition: all 0.2s;
-            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.5); /* Тень для объема */
-            margin-top: 10px;
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.5); 
         }
         .download-button:hover {
-            opacity: 0.9; /* Небольшая прозрачность при наведении */
+            opacity: 0.9; 
             transform: translateY(-2px);
         }
         .download-button:active {
