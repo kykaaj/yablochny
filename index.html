@@ -37,7 +37,7 @@
         /* ===================================== */
         @keyframes bounce {
             0%, 100%, 20%, 50%, 80% { transform: translateY(0); }
-            40% { transform: translateY(-7px); } /* Увеличил амплитуду */
+            40% { transform: translateY(-7px); } 
             60% { transform: translateY(-4px); }
         }
         @keyframes shake {
@@ -48,10 +48,14 @@
 
         /* ШАПКА С КАРТИНКОЙ, РАЗМЫТИЕМ И ЗАТЕМНЕНИЕМ */
         .header-banner {
+            
+            /* ИСПРАВЛЕНИЕ: Переходим на режим contain */
             background-image: url('dark_header_new.jpg'); 
-            background-size: cover; 
-            background-position: top; /* Исправлено в прошлый раз */
-            background-color: #333; 
+            background-size: contain; 
+            background-repeat: no-repeat; /* Важно, чтобы картинка не дублировалась */
+            background-position: center; /* Центруем картинку, чтобы полосы были симметричны */
+            
+            background-color: #333; /* Фоновый цвет для полос по бокам */
             height: 350px; 
             display: flex;
             flex-direction: column;
@@ -61,12 +65,12 @@
             border-radius: 15px;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5); 
             margin-bottom: 40px;
-            background-repeat: no-repeat; 
             background-attachment: fixed; 
             position: relative;
             overflow: hidden; 
         }
         
+        /* ПСЕВДОЭЛЕМЕНТ ДЛЯ НОРМАЛЬНОГО РАЗМЫТИЯ И ЗАТЕМНЕНИЯ */
         .header-banner::before {
             content: '';
             position: absolute;
@@ -74,7 +78,10 @@
             left: 0;
             right: 0;
             bottom: 0;
+            
+            /* Важно: Затемнение и размытие накладываем на всю область, а не только на картинку */
             background: rgba(0, 0, 0, 0.35); 
+            
             backdrop-filter: blur(5px); 
             -webkit-backdrop-filter: blur(5px); 
             z-index: 1; 
@@ -94,12 +101,10 @@
             display: inline-block; 
             vertical-align: middle; 
             filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.4));
-            
-            /* ВОЗВРАЩЕНА АНИМАЦИЯ */
             animation: bounce 2s infinite; 
         }
         .header-img { 
-            height: 70px; /* УВЕЛИЧЕНО */
+            height: 70px; 
             margin-right: 15px; 
         }
 
@@ -124,7 +129,7 @@
         }
         .tab-button:hover { background-color: #333; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5); }
         .tab-button:hover img { 
-            animation: shake 0.5s ease-in-out; /* НОВАЯ АНИМАЦИЯ */
+            animation: shake 0.5s ease-in-out; 
         }
         .tab-button.active {
             background-color: var(--color-active); 
@@ -133,7 +138,7 @@
         }
         
         .tab-button img {
-            height: 28px; /* УВЕЛИЧЕНО */
+            height: 28px; 
             margin-right: 8px;
         }
 
@@ -163,11 +168,10 @@
         
         /* ИКОНКИ ВНУТРИ ЗАГОЛОВКОВ H2 */
         .tab-content h2 img {
-            height: 38px; /* УВЕЛИЧЕНО */
+            height: 38px; 
             vertical-align: middle;
-            margin-right: 12px; /* Чуть больше отступ */
+            margin-right: 12px; 
         }
-        /* Иконка-сумочка (bag) больше не огромная, т.к. h2 img контролирует ее размер */
         
         .tab-content p {
             text-shadow: 0 0 1px #000;
@@ -183,25 +187,24 @@
             color: white; font-weight: 900; font-family: 'Roboto', sans-serif;
             text-shadow: 0 0 4px #000, 0 0 10px rgba(255, 255, 255, 0.8); padding: 18px 20px; text-decoration: none; border-radius: 12px; font-size: 1.3em; box-shadow: 0 4px 0 rgba(0, 0, 0, 0.5); 
         }
-        .download-button img { height: 28px; margin-right: 12px; filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.9)); } /* УВЕЛИЧЕНО */
+        .download-button img { height: 28px; margin-right: 12px; filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.9)); } 
         
         /* КНОПКИ REGEX и КОНТАКТЫ */
         .link-button {
             display: flex; 
             align-items: center; 
-            /* ИСПРАВЛЕНИЕ: Убрал центровку текста, чтобы ссылки выглядели как блок */
             justify-content: left; 
-            padding-left: 30px; /* Отступ слева для центрирования блока */
+            padding-left: 30px; 
 
             background-color: #424242; color: #E0E0E0; padding-top: 12px; padding-bottom: 12px; text-decoration: none; border-radius: 8px; font-weight: bold; transition: background-color 0.3s; margin-bottom: 10px; 
-            width: 90%; max-width: 350px; /* Сделал чуть шире */
+            width: 90%; max-width: 350px; 
             margin: 10px auto; 
         }
         .link-button:hover { background-color: #616161; }
         
         /* Иконки в ссылках */
         .link-button img { 
-            height: 24px; /* УВЕЛИЧЕНО */
+            height: 24px; 
             vertical-align: middle; 
             margin-right: 10px; 
         }
