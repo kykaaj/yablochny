@@ -30,6 +30,28 @@
             max-width: 900px;
             margin: 40px auto;
             padding: 20px;
+            /* Flex для размещения вертикальных вкладок и контента рядом на больших экранах */
+            display: flex; 
+            flex-direction: column; /* По умолчанию колонкой (для мобильных) */
+            align-items: center;
+        }
+
+        /* АДАПТИВНОСТЬ: на широких экранах делаем вкладки и контент рядом */
+        @media (min-width: 768px) {
+            .main-container {
+                flex-direction: row;
+                align-items: flex-start;
+                gap: 20px;
+            }
+            .tab-buttons {
+                min-width: 200px; /* Фиксированная ширина для кнопок на больших экранах */
+                flex-direction: column;
+                position: sticky; /* Вкладки будут прилипать при прокрутке */
+                top: 20px;
+            }
+            .tab-content {
+                flex-grow: 1; /* Контент занимает оставшееся пространство */
+            }
         }
         
         /* ===================================== */
@@ -46,15 +68,12 @@
             40%, 80% { transform: translateX(2px); }
         }
 
-        /* ШАПКА С КАРТИНКОЙ */
+        /* ШАПКА */
         .header-banner {
             background-image: url('dark_header_new.jpg'); 
             background-size: cover; 
             background-repeat: no-repeat; 
-            
-            /* ИСПРАВЛЕНИЕ: Сдвиг позиции по вертикали (первый параметр - по горизонтали, второй - по вертикали) */
             background-position: center 10%; 
-            
             background-color: #333; 
             height: 350px; 
             display: flex;
@@ -70,7 +89,7 @@
             overflow: hidden; 
         }
 
-        /* ПСЕВДОЭЛЕМЕНТ ДЛЯ НОРМАЛЬНОГО РАЗМЫТИЯ И ЗАТЕМНЕНИЯ */
+        /* Затемнение и размытие */
         .header-banner::before {
             content: '';
             position: absolute;
@@ -78,24 +97,16 @@
             left: 0;
             right: 0;
             bottom: 0;
-            
-            /* Накладываем размытие и затемнение */
             backdrop-filter: blur(5px); 
             -webkit-backdrop-filter: blur(5px); 
             background: rgba(0, 0, 0, 0.35); 
             z-index: 1; 
         }
         
-        /* ТЕКСТ ШАПКИ ПОВЕРХ ВСЕХ СЛОЕВ */
-        .header-banner h1, .header-banner p {
-            z-index: 2;
-            position: relative;
-        }
-
+        .header-banner h1, .header-banner p { z-index: 2; position: relative; }
         .header-banner h1 { font-size: 3.8em; text-shadow: 0 0 5px rgba(0,0,0,0.8), 0 0 15px rgba(255, 255, 255, 0.7); padding: 0; }
         .header-banner p { font-size: 1.4em; text-shadow: 0 0 5px rgba(0,0,0,0.9), 0 0 10px rgba(255, 255, 255, 0.2); margin-top: 10px; }
         
-        /* ЯБЛОКО В ШАПКЕ */
         .apple-icon { 
             display: inline-block; 
             vertical-align: middle; 
@@ -108,10 +119,19 @@
         }
 
         /* ===================================== */
-        /* НОВАЯ СИСТЕМА ВКЛАДОК */
+        /* СТИЛИ ВКЛАДОК (ВЕРТИКАЛЬНЫЕ) */
         /* ===================================== */
         
-        .tab-buttons { display: flex; justify-content: center; margin-bottom: 25px; gap: 10px; }
+        .tab-buttons { 
+            display: flex; 
+            flex-direction: column; /* ГЛАВНОЕ ИЗМЕНЕНИЕ: вертикальный ряд */
+            justify-content: flex-start; 
+            margin-bottom: 25px; 
+            gap: 10px; 
+            width: 100%; /* На мобильном 100% */
+            max-width: 350px; /* Ограничение ширины */
+        }
+
         .tab-button {
             background-color: var(--color-card-bg);
             color: #E0E0E0;
@@ -125,6 +145,7 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             display: flex;
             align-items: center;
+            justify-content: flex-start; /* Выравнивание текста влево */
         }
         .tab-button:hover { background-color: #333; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5); }
         .tab-button:hover img { 
@@ -150,6 +171,8 @@
             min-height: 250px; 
             display: none; 
             animation: fadeIn 0.5s;
+            width: 100%; /* Занимает всю доступную ширину */
+            box-sizing: border-box;
         }
         .tab-content.active { display: block; }
 
@@ -171,6 +194,17 @@
             vertical-align: middle;
             margin-right: 12px; 
         }
+
+        /* НОВЫЙ КЛАСС: КРАСНАЯ ИКОНКА */
+        .icon-red-clip {
+            height: 38px;
+            vertical-align: middle;
+            margin-right: 12px;
+            /* Если новая иконка icon_clip_red.png уже красная, фильтр не нужен. 
+               Если вы хотите покрасить зеленую скрепку в красный, раскомментируйте это:
+               filter: brightness(0.7) sepia(1) hue-rotate(330deg) saturate(3); 
+            */
+        }
         
         .tab-content p {
             text-shadow: 0 0 1px #000;
@@ -188,7 +222,13 @@
         }
         .download-button img { height: 28px; margin-right: 12px; filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.9)); } 
         
-        /* КНОПКИ REGEX и КОНТАКТЫ */
+        /* КОНТАКТЫ И REGEX */
+        .no-bullets { /* НОВЫЙ КЛАСС ДЛЯ УДАЛЕНИЯ ТОЧЕК */
+            list-style: none; /* УДАЛЕНИЕ ТОЧЕК (маркеров списка) */
+            padding: 0;
+            margin: 0;
+        }
+
         .link-button {
             display: flex; 
             align-items: center; 
@@ -197,7 +237,7 @@
 
             background-color: #424242; color: #E0E0E0; padding-top: 12px; padding-bottom: 12px; text-decoration: none; border-radius: 8px; font-weight: bold; transition: background-color 0.3s; margin-bottom: 10px; 
             width: 90%; max-width: 350px; 
-            margin: 10px auto; 
+            margin: 10px auto; /* Центрирует кнопки */
         }
         .link-button:hover { background-color: #616161; }
         
@@ -236,14 +276,15 @@
 
         <div id="Description" class="tab-content active">
             <h2>
-                <img src="icon_clip.png" alt="Скрепочка"> 
+                <img src="icon_clip.png" alt="Зеленая скрепочка"> 
                 Основной Пресет
             </h2>
             
             <p style="min-height: 100px; text-align: left; padding: 0 20px;">
                 *Начните писать здесь.* Например: Этот пресет создан для максимального погружения и работает на всех последних версиях SillyTavern. Он идеально настроен для...
                 <br><br>
-                Здесь можно расписать основные особенности и преимущества вашего пресета.
+                <img src="icon_clip_red.png" alt="Красная скрепочка" class="icon-red-clip"> 
+                **Важное Примечание:** Добавьте сюда текст, который нужно выделить красной скрепкой.
             </p>
         </div>
 
@@ -262,12 +303,13 @@
             </a>
             
             <h3>Файлы Регулярных Выражений (RegEx)</h3>
-            <a class="link-button" href="regex-celia_html_depth_5_vanquisher__.json" download>
-                1. Скачать Celia HTML Depth 5 Vanquisher
-            </a> 
-            <a class="link-button" href="regex-celia_hidethink.json" download>
-                2. Скачать Celia Hide Think
-            </a>
+            <div class="no-bullets"> <a class="link-button" href="regex-celia_html_depth_5_vanquisher__.json" download>
+                    1. Скачать Celia HTML Depth 5 Vanquisher
+                </a> 
+                <a class="link-button" href="regex-celia_hidethink.json" download>
+                    2. Скачать Celia Hide Think
+                </a>
+            </div>
         </div>
 
         <div id="Contacts" class="tab-content">
@@ -277,26 +319,19 @@
             </h2>
             <p>Свяжитесь со мной или найдите полезные материалы:</p>
             
-            <ul>
-                <li>
-                    <a class="link-button" href="https://sites.google.com/view/testijhfrr/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F-%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0#h.t3t6sw19ia3y" target="_blank">
-                        <img src="icon_book_closed.png" alt="Закрытая книга">
-                        Гайд по установке (Обязательно к прочтению!)
-                    </a>
-                </li>
-                <li>
-                    <a class="link-button" href="https://t.me/YablochnyChat" target="_blank">
-                        <img src="icon_tg.png" alt="Телеграм Чат">
-                        Наш чат в Телеграме (для обсуждений)
-                    </a>
-                </li>
-                 <li>
-                    <a class="link-button" href="https://t.me/kykaaj" target="_blank">
-                        <img src="icon_tg.png" alt="Телеграм Личка">
-                        Мой личный Телеграм (@kykaaj)
-                    </a>
-                </li>
-            </ul>
+            <div class="no-bullets"> <a class="link-button" href="https://sites.google.com/view/testijhfrr/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F-%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0#h.t3t6sw19ia3y" target="_blank">
+                    <img src="icon_book_closed.png" alt="Закрытая книга">
+                    Гайд по установке (Обязательно к прочтению!)
+                </a>
+                <a class="link-button" href="https://t.me/YablochnyChat" target="_blank">
+                    <img src="icon_tg.png" alt="Телеграм Чат">
+                    Наш чат в Телеграме (для обсуждений)
+                </a>
+                <a class="link-button" href="https://t.me/kykaaj" target="_blank">
+                    <img src="icon_tg.png" alt="Телеграм Личка">
+                    Мой личный Телеграм (@kykaaj)
+                </a>
+            </div>
         </div>
     </div>
 
