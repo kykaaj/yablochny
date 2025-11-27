@@ -12,8 +12,7 @@
         
         /* ЦВЕТА */
         :root {
-            --color-active: #99ff99; /* НОВЫЙ: Нежно-зеленый для выделения (активная вкладка, заголовки) */
-            --color-text-link: #90CAF9; /* Светло-синий для ссылок */
+            --color-active: #99ff99; /* Нежно-зеленый для выделения (активная вкладка, заголовки) */
             --color-dark-bg: #121212;
             --color-card-bg: #1E1E1E;
         }
@@ -32,15 +31,26 @@
             margin: 40px auto;
             padding: 20px;
         }
+        
+        /* ===================================== */
+        /* АНИМАЦИИ */
+        /* ===================================== */
+        @keyframes bounce {
+            0%, 100%, 20%, 50%, 80% { transform: translateY(0); }
+            40% { transform: translateY(-7px); } /* Увеличил амплитуду */
+            60% { transform: translateY(-4px); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-2px); }
+            40%, 80% { transform: translateX(2px); }
+        }
 
         /* ШАПКА С КАРТИНКОЙ, РАЗМЫТИЕМ И ЗАТЕМНЕНИЕМ */
         .header-banner {
             background-image: url('dark_header_new.jpg'); 
             background-size: cover; 
-            
-            /* ИСПРАВЛЕНИЕ: Позиционируем фон по верху */
-            background-position: top; 
-            
+            background-position: top; /* Исправлено в прошлый раз */
             background-color: #333; 
             height: 350px; 
             display: flex;
@@ -53,12 +63,10 @@
             margin-bottom: 40px;
             background-repeat: no-repeat; 
             background-attachment: fixed; 
-            
             position: relative;
             overflow: hidden; 
         }
         
-        /* ПСЕВДОЭЛЕМЕНТ ДЛЯ НОРМАЛЬНОГО РАЗМЫТИЯ И ЗАТЕМНЕНИЯ */
         .header-banner::before {
             content: '';
             position: absolute;
@@ -66,14 +74,9 @@
             left: 0;
             right: 0;
             bottom: 0;
-            
-            /* Затемнение: полупрозрачный черный фон */
             background: rgba(0, 0, 0, 0.35); 
-            
-            /* Размытие */
             backdrop-filter: blur(5px); 
             -webkit-backdrop-filter: blur(5px); 
-            
             z-index: 1; 
         }
         
@@ -85,8 +88,20 @@
 
         .header-banner h1 { font-size: 3.8em; text-shadow: 0 0 5px rgba(0,0,0,0.8), 0 0 15px rgba(255, 255, 255, 0.7); padding: 0; }
         .header-banner p { font-size: 1.4em; text-shadow: 0 0 5px rgba(0,0,0,0.9), 0 0 10px rgba(255, 255, 255, 0.2); margin-top: 10px; }
-        .apple-icon { display: inline-block; vertical-align: middle; filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.4)); }
-        .header-img { height: 60px; margin-right: 15px; }
+        
+        /* ЯБЛОКО В ШАПКЕ */
+        .apple-icon { 
+            display: inline-block; 
+            vertical-align: middle; 
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.4));
+            
+            /* ВОЗВРАЩЕНА АНИМАЦИЯ */
+            animation: bounce 2s infinite; 
+        }
+        .header-img { 
+            height: 70px; /* УВЕЛИЧЕНО */
+            margin-right: 15px; 
+        }
 
         /* ===================================== */
         /* НОВАЯ СИСТЕМА ВКЛАДОК */
@@ -108,6 +123,9 @@
             align-items: center;
         }
         .tab-button:hover { background-color: #333; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5); }
+        .tab-button:hover img { 
+            animation: shake 0.5s ease-in-out; /* НОВАЯ АНИМАЦИЯ */
+        }
         .tab-button.active {
             background-color: var(--color-active); 
             color: var(--color-dark-bg);
@@ -115,7 +133,7 @@
         }
         
         .tab-button img {
-            height: 24px; 
+            height: 28px; /* УВЕЛИЧЕНО */
             margin-right: 8px;
         }
 
@@ -130,9 +148,8 @@
             animation: fadeIn 0.5s;
         }
         .tab-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* СТИЛИ ВНУТРИ ВКЛАДОК */
+        /* СТИЛИ ВНУТРИ ВКЛАДОК: ЗАГОЛОВКИ */
         .tab-content h2 {
             color: var(--color-active); 
             border-bottom: 2px dashed #424242; 
@@ -144,17 +161,14 @@
             justify-content: center;
         }
         
+        /* ИКОНКИ ВНУТРИ ЗАГОЛОВКОВ H2 */
         .tab-content h2 img {
-            height: 32px; 
+            height: 38px; /* УВЕЛИЧЕНО */
             vertical-align: middle;
-            margin-right: 10px;
+            margin-right: 12px; /* Чуть больше отступ */
         }
-
-        .tab-content h2 img[alt="Сумочка"] {
-            height: 32px; 
-        }
-
-
+        /* Иконка-сумочка (bag) больше не огромная, т.к. h2 img контролирует ее размер */
+        
         .tab-content p {
             text-shadow: 0 0 1px #000;
             margin-bottom: 20px;
@@ -162,26 +176,41 @@
             text-align: left;
         }
         
+        /* КНОПКА СКАЧАТЬ */
         .download-button {
             display: flex; align-items: center; justify-content: center; width: 90%; max-width: 400px; margin: 10px auto 25px auto; 
             background-image: url('download_button_image.png'); background-size: cover; filter: brightness(0.85); transition: filter 0.3s ease, transform 0.2s, box-shadow 0.2s; 
             color: white; font-weight: 900; font-family: 'Roboto', sans-serif;
             text-shadow: 0 0 4px #000, 0 0 10px rgba(255, 255, 255, 0.8); padding: 18px 20px; text-decoration: none; border-radius: 12px; font-size: 1.3em; box-shadow: 0 4px 0 rgba(0, 0, 0, 0.5); 
         }
-        .download-button img { height: 24px; margin-right: 10px; filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.9)); }
-        .download-button:hover { filter: brightness(1); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6); }
-        .download-button:active { transform: translateY(2px); box-shadow: none; }
+        .download-button img { height: 28px; margin-right: 12px; filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.9)); } /* УВЕЛИЧЕНО */
+        
+        /* КНОПКИ REGEX и КОНТАКТЫ */
         .link-button {
-            display: flex; align-items: center; justify-content: center; background-color: #424242; color: #E0E0E0; padding: 12px 20px; text-decoration: none; border-radius: 8px; font-weight: bold; transition: background-color 0.3s; margin-bottom: 10px; text-align: center; width: 90%; max-width: 300px; margin: 10px auto; 
+            display: flex; 
+            align-items: center; 
+            /* ИСПРАВЛЕНИЕ: Убрал центровку текста, чтобы ссылки выглядели как блок */
+            justify-content: left; 
+            padding-left: 30px; /* Отступ слева для центрирования блока */
+
+            background-color: #424242; color: #E0E0E0; padding-top: 12px; padding-bottom: 12px; text-decoration: none; border-radius: 8px; font-weight: bold; transition: background-color 0.3s; margin-bottom: 10px; 
+            width: 90%; max-width: 350px; /* Сделал чуть шире */
+            margin: 10px auto; 
         }
         .link-button:hover { background-color: #616161; }
-        .link-button img { height: 20px; vertical-align: middle; margin-right: 8px; }
+        
+        /* Иконки в ссылках */
+        .link-button img { 
+            height: 24px; /* УВЕЛИЧЕНО */
+            vertical-align: middle; 
+            margin-right: 10px; 
+        }
     </style>
 </head>
 <body>
     <div class="header-banner">
         <h1>
-            <img src="apple_icon.png" alt="Иконка яблока" class="header-img"> 
+            <img src="apple_icon.png" alt="Иконка яблока" class="apple-icon header-img"> 
             Яблочный Пресет
         </h1>
         <p>by kykaaj | Для SillyTavern (V 1.581)</p>
@@ -232,11 +261,9 @@
             
             <h3>Файлы Регулярных Выражений (RegEx)</h3>
             <a class="link-button" href="regex-celia_html_depth_5_vanquisher__.json" download>
-                <img src="icon_book_open.png" alt="Открытая книга">
                 1. Скачать Celia HTML Depth 5 Vanquisher
             </a> 
             <a class="link-button" href="regex-celia_hidethink.json" download>
-                <img src="icon_book_open.png" alt="Открытая книга">
                 2. Скачать Celia Hide Think
             </a>
         </div>
@@ -272,30 +299,22 @@
     </div>
 
     <script>
-        // Функция, которая открывает нужную вкладку
         function openTab(evt, tabName) {
             var i, tabcontent, tablinks;
-
-            // 1. Скрываем весь контент вкладок
             tabcontent = document.getElementsByClassName("tab-content");
             for (i = 0; i < tabcontent.length; i++) {
                 tabcontent[i].style.display = "none";
                 tabcontent[i].classList.remove('active');
             }
-
-            // 2. Делаем неактивными все кнопки
             tablinks = document.getElementsByClassName("tab-button");
             for (i = 0; i < tablinks.length; i++) {
                 tablinks[i].classList.remove("active");
             }
-
-            // 3. Показываем нужный контент и делаем активной кнопку
             document.getElementById(tabName).style.display = "block";
             document.getElementById(tabName).classList.add('active');
             evt.currentTarget.classList.add("active");
         }
         
-        // Открываем первую вкладку по умолчанию при загрузке страницы
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('Description').style.display = 'block';
             document.querySelector('.tab-button').classList.add('active');
