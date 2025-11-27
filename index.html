@@ -72,10 +72,10 @@
             background-image: url('dark_header_new.jpg'); 
             background-size: cover; 
             background-repeat: no-repeat; 
-            /* ИСПРАВЛЕНИЕ БАННЕРА: Увеличиваем высоту и сдвигаем позицию вниз */
-            background-position: center 40%; 
+            /* МАКСИМАЛЬНОЕ ИСПРАВЛЕНИЕ БАННЕРА: высота 500px, фокус на верху */
+            background-position: center top; 
             background-color: #333; 
-            height: 400px; /* Увеличена высота */
+            height: 500px; /* Увеличена высота */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -187,7 +187,7 @@
             align-items: center;
             justify-content: center;
             font-weight: 900; 
-            /* Добавление графичного эффекта */
+            /* Графичный эффект тени */
             text-shadow: 0 0 4px rgba(153, 255, 153, 0.7), 0 0 10px rgba(0, 0, 0, 0.5); 
         }
         
@@ -216,16 +216,16 @@
         .download-button {
             display: flex; align-items: center; justify-content: center; width: 90%; max-width: 400px; margin: 10px auto 25px auto; 
             background-image: url('download_button_image.png'); background-size: cover; filter: brightness(0.85); 
-            transition: filter 0.3s ease, transform 0.2s, box-shadow 0.2s; /* Переходы для hover */
+            transition: filter 0.3s ease, transform 0.2s, box-shadow 0.2s; 
             color: white; font-weight: 900; font-family: 'Roboto', sans-serif;
             text-shadow: 0 0 4px #000, 0 0 10px rgba(255, 255, 255, 0.8); padding: 18px 20px; text-decoration: none; border-radius: 12px; box-shadow: 0 4px 0 rgba(0, 0, 0, 0.5); 
             font-size: 1.3em;
         }
         /* АНИМАЦИЯ: Основная кнопка скачивания */
         .download-button:hover {
-            filter: brightness(1); /* Ярче */
-            transform: translateY(-3px); /* Поднимается */
-            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.7); /* Более глубокая тень */
+            filter: brightness(1); 
+            transform: translateY(-3px); 
+            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.7); 
         }
         .download-button img { height: 28px; margin-right: 12px; filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.9)); } 
         
@@ -242,7 +242,7 @@
             justify-content: left; 
             padding-left: 30px; 
             background-color: #424242; color: #E0E0E0; padding-top: 12px; padding-bottom: 12px; text-decoration: none; border-radius: 8px; font-weight: bold; 
-            transition: background-color 0.3s, transform 0.1s, box-shadow 0.3s; /* Переходы для hover */
+            transition: background-color 0.3s, transform 0.1s, box-shadow 0.3s; 
             margin-bottom: 10px; 
             width: 90%; max-width: 350px; 
             margin: 10px auto; 
@@ -250,8 +250,8 @@
         /* АНИМАЦИЯ: Ссылки и кнопки RegEx */
         .link-button:hover { 
             background-color: #616161; 
-            transform: translateX(3px); /* Сдвиг вправо */
-            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5); /* Тень для объема */
+            transform: translateX(3px); 
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5); 
         }
         
         /* Иконки в ссылках */
@@ -300,7 +300,6 @@
             <p style="min-height: 100px; text-align: left; padding: 0 20px;">
                 *Начните писать здесь.* Например: Этот пресет создан для максимального погружения и работает на всех последних версиях SillyTavern. Он идеально настроен для...
                 <br><br>
-                <img src="icon_clip_red.png" alt="Красная скрепочка" class="icon-red-clip"> 
                 <span style="font-weight: 700;">Важное Примечание:</span> Добавьте сюда текст, который нужно выделить красной скрепкой.
             </p>
         </div>
