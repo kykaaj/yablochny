@@ -16,6 +16,11 @@
             --color-card-bg: rgba(30, 30, 30, 0.6);
             --font-decorative: 'Pacifico', cursive; 
             --font-readable: 'Montserrat', sans-serif;
+            
+            /* Новые переменные для градиента фона ссылок */
+            --link-color-start: rgba(30, 60, 46, 0.5); /* Темный зеленый */
+            --link-color-mid: rgba(44, 62, 80, 0.5); /* Темный синий */
+            --link-color-end: rgba(30, 60, 46, 0.5); /* Снова зеленый */
         }
 
         /* КАСТОМНЫЙ СКРОЛЛБАР */
@@ -37,7 +42,6 @@
             font-weight: 400;
             overflow-x: hidden;
             position: relative;
-            /* Вернули стандартный курсор */
         }
 
         /* АНИМИРОВАННЫЙ ФОН (КАНВАС) */
@@ -98,7 +102,6 @@
             to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        /* Новая анимация для иконок в заголовках (медленное парение) */
         @keyframes float-slight {
             0% { transform: translateY(0px) rotate(0deg); }
             50% { transform: translateY(-6px) rotate(2deg); }
@@ -112,13 +115,32 @@
             color: var(--color-active);
         }
         @keyframes blink { 50% { opacity: 0; } }
+        
+        /* НОВАЯ АНИМАЦИЯ: Свечение в шапке */
+        @keyframes halo-move {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* НОВАЯ АНИМАЦИЯ: Живой фон ссылок */
+        @keyframes link-pulse {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
 
         /* ШАПКА */
         .header-banner {
-            background-image: url('dark_header_new.jpg'); 
-            background-size: cover; 
-            background-repeat: no-repeat;
-            background-position: center center;
+            background-image: 
+                /* НОВОЕ: Плавно движущееся свечение */
+                radial-gradient(circle at 10% 80%, rgba(153, 255, 153, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 90% 20%, rgba(255, 154, 158, 0.2) 0%, transparent 40%),
+                /* Старый фон как основной (фолбэк) */
+                url('dark_header_new.jpg');
+            background-size: 300% 300%, cover; /* Увеличиваем размер градиента для анимации */
+            background-repeat: no-repeat, no-repeat;
+            background-position: 0% 50%, center center;
             background-color: #121212;
             height: 350px; 
             display: flex;
@@ -131,8 +153,9 @@
             margin-bottom: 40px;
             position: relative;
             overflow: hidden;
-            /* Важно для 3D эффекта наклона */
-            perspective: 1000px; 
+            perspective: 1000px;
+            /* Применяем анимацию свечения */
+            animation: halo-move 20s ease-in-out infinite alternate;
         }
 
         .header-banner::before {
@@ -149,7 +172,6 @@
         .header-content {
             z-index: 2;
             position: relative;
-            /* Плавность для 3D наклона */
             transition: transform 0.1s ease-out;
             transform-style: preserve-3d;
         }
@@ -166,7 +188,7 @@
             align-items: center;
             justify-content: center;
             gap: 15px;
-            transform: translateZ(20px); /* Выдвигаем текст вперед в 3D */
+            transform: translateZ(20px);
         }
         .header-banner p { 
             font-size: 1.3em; 
@@ -179,7 +201,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             min-height: 1.5em;
-            transform: translateZ(10px); /* Выдвигаем текст вперед в 3D */
+            transform: translateZ(10px);
         }
         
         .apple-icon { 
@@ -230,7 +252,8 @@
             height: 100%;
             background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
             transform: skewX(-25deg);
-            pointer-events: none;
+            /* ИСПРАВЛЕНИЕ: Убрали pointer-events: none, чтобы клики проходили сквозь эффект на кнопку */
+            pointer-events: none; 
             transition: none;
         }
 
@@ -305,7 +328,6 @@
             filter: drop-shadow(0 0 10px rgba(153, 255, 153, 0.2));
         }
         
-        /* Применяем новую анимацию парения к иконкам в заголовках */
         .tab-content h2 img {
             height: 48px; 
             vertical-align: middle;
@@ -315,15 +337,6 @@
             animation: float-slight 5s ease-in-out infinite;
         }
 
-        .tab-content p {
-            font-size: 1.1em;
-            margin-bottom: 25px;
-            line-height: 1.8;
-            text-align: left;
-            padding: 0 15px;
-            color: #d1d1d1;
-        }
-        
         /* ===================================== */
         /* КНОПКИ ДЕЙСТВИЙ */
         /* ===================================== */
@@ -381,7 +394,11 @@
             align-items: center; 
             justify-content: left; 
             padding-left: 30px; 
-            background: linear-gradient(135deg, rgba(30, 60, 46, 0.5), rgba(44, 62, 80, 0.5));
+            /* НОВЫЙ ГРАДИЕНТ ДЛЯ АНИМАЦИИ */
+            background: linear-gradient(135deg, var(--link-color-start) 0%, var(--link-color-mid) 50%, var(--link-color-end) 100%);
+            background-size: 200% auto; /* Увеличиваем размер для анимации */
+            animation: link-pulse 10s ease-in-out infinite alternate; /* Применяем анимацию */
+            
             color: #E0E0E0; 
             padding-top: 18px; padding-bottom: 18px; 
             text-decoration: none; 
@@ -395,7 +412,8 @@
             border: 1px solid rgba(255,255,255,0.05); 
         }
         .link-button:hover { 
-            background: linear-gradient(135deg, #2E7D32, #1e3c2e);
+            /* При ховере градиент остается, но мы его смещаем и меняем трансформацию */
+            background-position: right center; 
             transform: translateX(10px); 
             box-shadow: 5px 5px 20px rgba(46, 125, 50, 0.3); 
             color: white;
@@ -675,15 +693,14 @@
             spotlight.style.setProperty('--y', e.clientY + 'px');
         });
 
-        // === 3. НОВАЯ ФИШКА: ИСКРЫ ПРИ НАЖАТИИ (Particle Burst) ===
+        // === 3. ЭФФЕКТ: ИСКРЫ ПРИ НАЖАТИИ (Particle Burst) - УЛУЧШЕННЫЙ ===
         function createSparks(e) {
             const container = document.getElementById('sparks-container');
-            const rect = e.target.getBoundingClientRect();
             const x = e.clientX;
             const y = e.clientY;
             const colors = ['#99ff99', '#ff9a9e', '#ffffff'];
 
-            for (let i = 0; i < 30; i++) {
+            for (let i = 0; i < 40; i++) { // Увеличено количество
                 const spark = document.createElement('div');
                 spark.classList.add('spark');
                 spark.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
@@ -691,7 +708,7 @@
                 spark.style.top = y + 'px';
                 
                 const angle = Math.random() * Math.PI * 2;
-                const velocity = Math.random() * 60 + 20;
+                const velocity = Math.random() * 80 + 30; // Увеличена скорость
                 const tx = Math.cos(angle) * velocity;
                 const ty = Math.sin(angle) * velocity;
 
@@ -699,7 +716,7 @@
                     { transform: 'translate(0, 0) scale(1)', opacity: 1 },
                     { transform: `translate(${tx}px, ${ty}px) scale(0)`, opacity: 0 }
                 ], {
-                    duration: Math.random() * 600 + 400,
+                    duration: Math.random() * 500 + 300, // Уменьшено время для большей резкости
                     easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
                     fill: 'forwards'
                 });
@@ -709,29 +726,30 @@
             }
         }
 
-        // === 4. НОВАЯ ФИШКА: 3D НАКЛОН ШАПКИ (Только ПК) ===
+        // === 4. ЭФФЕКТ: 3D НАКЛОН ШАПКИ (Только ПК) ===
         const headerBanner = document.getElementById('headerBanner');
         const headerContent = document.getElementById('headerContent');
 
-        headerBanner.addEventListener('mousemove', (e) => {
-            const rect = headerBanner.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            
-            // Ограничиваем угол наклона
-            const rotateX = ((y - centerY) / centerY) * -10; 
-            const rotateY = ((x - centerX) / centerX) * 10;
+        // Проверяем, что это не мобильное устройство, чтобы не мешать
+        if (window.innerWidth >= 768) { 
+            headerBanner.addEventListener('mousemove', (e) => {
+                const rect = headerBanner.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = ((y - centerY) / centerY) * -10; 
+                const rotateY = ((x - centerX) / centerX) * 10;
 
-            headerContent.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-        });
-        
-        // Сброс наклона при уходе мыши
-        headerBanner.addEventListener('mouseleave', () => {
-             headerContent.style.transform = `rotateX(0deg) rotateY(0deg)`;
-        });
+                headerContent.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+            
+            headerBanner.addEventListener('mouseleave', () => {
+                 headerContent.style.transform = `rotateX(0deg) rotateY(0deg)`;
+            });
+        }
 
 
         // === 5. RIPPLE ЭФФЕКТ ===
