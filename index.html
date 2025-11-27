@@ -8,8 +8,8 @@
         /* БАЗОВЫЕ СТИЛИ И ФОН */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #e3f2fd; /* Светло-голубой фон */
-            background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%); /* Мягкий градиент */
+            background-color: #e3f2fd; 
+            background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%); 
             margin: 0;
             padding: 0;
             line-height: 1.6;
@@ -34,14 +34,21 @@
                 transform: translateY(-3px);
             }
         }
+        
+        /* СТИЛИ ДЛЯ ВАШЕЙ НОВОЙ КАРТИНКИ-ИКОНКИ */
         .apple-icon {
             display: inline-block;
-            animation: bounce 2s infinite; /* Применяем анимацию к иконке */
+            animation: bounce 2s infinite; 
+            vertical-align: middle; 
+        }
+        .header-img {
+            height: 60px; /* Размер иконки */
+            margin-right: 15px; 
         }
 
         /* ШАПКА С ЭФФЕКТАМИ */
         .header-banner {
-            background-color: #66BB6A; /* Яркий зеленый */
+            background-color: #66BB6A; 
             color: white;
             padding: 50px 20px;
             border-radius: 15px;
@@ -80,8 +87,8 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
         }
         .card h2 {
-            color: #1B5E20; /* Темно-зеленый заголовок */
-            border-bottom: 2px dashed #DCEDC8; /* Пунктирная разделительная линия */
+            color: #1B5E20; 
+            border-bottom: 2px dashed #DCEDC8; 
             padding-bottom: 15px;
             margin-top: 0;
         }
@@ -89,7 +96,7 @@
         /* КНОПКА ОСНОВНОГО СКАЧИВАНИЯ (С эффектом нажатия) */
         .download-button {
             display: inline-block;
-            background-color: #FFB300; /* Яркий, золотисто-желтый */
+            background-color: #FFB300; 
             color: #333;
             padding: 18px 40px;
             text-decoration: none;
@@ -97,20 +104,20 @@
             font-weight: bold;
             font-size: 1.2em;
             transition: all 0.2s;
-            box-shadow: 0 4px 0 #FFA000; /* Объемная тень */
+            box-shadow: 0 4px 0 #FFA000; 
         }
         .download-button:hover {
             background-color: #FFC107;
         }
         .download-button:active {
-            transform: translateY(4px); /* Эффект нажатия */
+            transform: translateY(4px); 
             box-shadow: none;
         }
 
         /* СТИЛИ ДЛЯ КНОПОК REGEX */
         .regex-link {
             display: block;
-            background-color: #4CAF50; /* Зеленый */
+            background-color: #4CAF50; 
             color: white;
             padding: 12px 20px;
             text-decoration: none;
@@ -121,7 +128,7 @@
             text-align: center;
         }
         .regex-link:hover {
-            background-color: #388E3C; /* Темнее при наведении */
+            background-color: #388E3C; 
         }
         
         /* СТИЛИ ДЛЯ СПИСКА */
@@ -136,7 +143,7 @@
             font-size: 1.1em;
         }
         ul li::before {
-            content: "▶️"; /* Иконка для списка */
+            content: "▶️"; 
             position: absolute;
             left: 0;
             color: #FFB300;
@@ -145,7 +152,10 @@
 </head>
 <body>
     <div class="header-banner">
-        <h1><span class="apple-icon">🍏</span> Яблочный Пресет</h1>
+        <h1>
+            <img src="apple_icon.png" alt="Иконка яблока" class="apple-icon header-img"> 
+            Яблочный Пресет
+        </h1>
         <p>by kykaaj | Для SillyTavern (V 1.581)</p>
     </div>
     <div class="main-container">
@@ -177,7 +187,7 @@
         <div class="card">
             <h2>📚 Полезный Гайд и Сообщество</h2>
             <ul>
-                <li><a href="https://sites.google.com/view/testijhfrr/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F-%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0#h.t3t6sw19ia3y" target="_blank">📺 Видео-гайд или текстовая инструкция по установке (Нажмите для перехода)</a></li>
+                <li><a href="https://sites.google.com/view/testijhfrr/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F-%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0#h.t3t6sw19ia3y" target="_blank">📺 Видео-гайд или текстовая инструкция</a></li>
                 <li><a href="https://t.me/YablochnyAI" target="_blank">💬 Обсуждение в Телеграме</a></li>
             </ul>
         </div>
