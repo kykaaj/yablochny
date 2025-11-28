@@ -55,10 +55,9 @@
             overflow-x: hidden;
             scroll-behavior: smooth;
             -webkit-font-smoothing: antialiased;
-            /* ИСПРАВЛЕНИЕ ФУТЕРА (STICKY FOOTER) */
             display: flex;
             flex-direction: column;
-            min-height: 100vh; /* Растягиваем body на всю высоту окна */
+            min-height: 100vh;
         }
 
         /* АНИМИРОВАННЫЙ ФОН (КАНВАС) */
@@ -94,7 +93,6 @@
 
 /* --- Переключатели сверху в ряд на широкой (десктоп) версии --- */
 @media (min-width: 900px) {
-    /* Ставим основной контейнер в колонку — кнопки будут над контентом */
     .main-container {
         flex-direction: column;
         align-items: center;
@@ -103,47 +101,43 @@
         margin-top: -80px;
     }
 
-    /* Кнопки: теперь горизонтально, растянуты равномерно */
     .tab-buttons {
         display: flex !important;
         flex-direction: row !important;
         justify-content: center;
         align-items: center;
-        gap: 15px; /* Расстояние между кнопками */
+        gap: 15px;
         width: 100%;
-        max-width: 850px; /* Ширина блока кнопок равна ширине контента */
+        max-width: 850px;
         padding: 0;
         position: static !important;
         min-width: 0 !important;
     }
 
-    /* Подгоняем сами кнопки: ОДИНАКОВЫЙ РАЗМЕР */
     .tab-button {
         width: auto;
-        flex: 1; /* Растягиваем кнопки равномерно */
-        min-width: 0; /* Разрешаем сжиматься если надо */
+        flex: 1;
+        min-width: 0;
         max-width: none;
         justify-content: center;
         text-align: center;
-        padding: 14px 10px; /* Чуть меньше паддинг по бокам, чтобы влез текст */
+        padding: 14px 10px;
         font-size: 1.05rem;
         border-radius: 14px;
-        white-space: nowrap; /* Текст в одну строку */
+        white-space: nowrap;
     }
 
-    /* Немного корректируем активное состояние */
     .tab-button.active {
-        padding-left: 10px; /* Убираем лишний сдвиг, чтобы не ломать ширину */
+        padding-left: 10px;
     }
 
     .tab-button img {
         margin-right: 8px;
     }
 
-    /* Ограничиваем ширину контента под кнопками - ДЕЛАЕМ УЖЕ */
     .tab-content-wrapper {
         width: 100%;
-        max-width: 850px; /* Сделали уже (было 1200) */
+        max-width: 850px;
     }
 }
 
@@ -291,7 +285,7 @@
 
         .tab-button:hover, .tab-button:active { 
             background-color: rgba(50, 50, 50, 0.85);
-            transform: translateY(-2px); /* Изменено с translateX для ПК верстки */
+            transform: translateY(-2px);
             color: #fff;
             border-color: rgba(255,255,255,0.25);
         }
@@ -301,7 +295,6 @@
             color: var(--color-primary);
             border: 1px solid var(--color-primary);
             box-shadow: 0 0 20px rgba(153, 255, 153, 0.1);
-            /* padding-left: 30px; - Убрано, чтобы не ломать центровку на ПК */
         }
 
         .tab-button.active::before {
@@ -360,10 +353,9 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-top: 0;
-            /* ФИКС ОБРЕЗАНИЯ ШРИФТА */
-            margin-bottom: 5px; /* Уменьшаем внешний отступ */
-            padding-bottom: 15px; /* Добавляем внутренний отступ для нижних выносных элементов букв */
-            line-height: 1.4; /* Чуть увеличиваем межстрочный интервал */
+            margin-bottom: 5px;
+            padding-bottom: 15px; 
+            line-height: 1.4;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -382,7 +374,7 @@
         .dashed-divider {
             border: 0;
             border-top: 2px dashed rgba(153, 255, 153, 0.3);
-            margin: 0px auto 25px auto; /* Margin-top 0, т.к. у заголовка есть padding-bottom */
+            margin: 0px auto 25px auto;
             width: 100%;
             max-width: 100%;
             opacity: 0.7;
@@ -396,67 +388,94 @@
             line-height: 1.8;
         }
 
-        /* --- STYLES FOR CHANGELOG --- */
-        .changelog-container {
+        /* --- STYLES FOR BIG SCROLLABLE CHANGELOG --- */
+        .changelog-box {
             margin-top: 40px;
             text-align: left;
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.3);
             border-radius: 16px;
-            padding: 20px;
             border: 1px solid rgba(255, 255, 255, 0.05);
+            /* Ограничение высоты и скролл */
+            max-height: 400px; 
+            overflow-y: auto;
+            position: relative;
         }
-
-        .changelog-header {
+        
+        /* Заголовок чейнжлога (закрепленный) */
+        .changelog-header-main {
+            position: sticky;
+            top: 0;
+            background: rgba(15, 15, 15, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             font-size: 1.1em;
             color: var(--color-primary);
-            margin-bottom: 15px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
             display: flex;
             align-items: center;
-        }
-        
-        .changelog-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
+            z-index: 5;
+            border-radius: 16px 16px 0 0;
         }
 
-        .changelog-item {
-            padding-bottom: 15px;
-            margin-bottom: 15px;
+        .changelog-content-inner {
+            padding: 20px;
+        }
+
+        .changelog-entry {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
-
-        .changelog-item:last-child {
+        
+        .changelog-entry:last-child {
             border-bottom: none;
             margin-bottom: 0;
             padding-bottom: 0;
         }
 
-        .changelog-ver {
-            font-weight: 800;
-            color: #fff;
-            margin-right: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2px 8px;
+        .version-tag {
+            display: inline-block;
+            background: rgba(153, 255, 153, 0.1);
+            color: var(--color-primary);
+            padding: 4px 10px;
             border-radius: 6px;
-            font-size: 0.85em;
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            border: 1px solid rgba(153, 255, 153, 0.2);
         }
 
-        .changelog-date {
+        .version-date {
             color: #888;
-            font-size: 0.85em;
-            font-style: italic;
+            font-size: 0.9em;
+            margin-left: 10px;
         }
 
-        .changelog-desc {
-            display: block;
-            margin-top: 5px;
+        .changes-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0 0 5px;
+        }
+
+        .changes-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
             color: #ccc;
             font-size: 0.95em;
             line-height: 1.5;
+        }
+
+        .changes-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--color-secondary);
+            font-weight: bold;
         }
         
         /* ===================================== */
@@ -538,6 +557,8 @@
             width: 100%; max-width: 420px; 
             margin: 0 auto; 
             box-sizing: border-box;
+            /* ИСПРАВЛЕНИЕ: принудительное выравнивание по левому краю */
+            justify-content: flex-start;
         }
         
         .link-button:hover { 
@@ -548,7 +569,15 @@
             color: #fff;
         }
         
-        .link-button img { height: 24px; margin-right: 15px; transition: transform 0.3s;}
+        /* ИСПРАВЛЕНИЕ: Жесткая ширина для иконки, чтобы текст всегда был на одном уровне */
+        .link-button img { 
+            height: 24px; 
+            width: 24px; /* Фиксируем ширину */
+            object-fit: contain;
+            margin-right: 15px; 
+            transition: transform 0.3s;
+            flex-shrink: 0; /* Запрещаем сжимать иконку */
+        }
         .link-button:hover img { transform: scale(1.2) rotate(10deg); }
 
         /* Искры */
@@ -727,23 +756,46 @@
                     </span>
                 </p>
 
-                <div class="changelog-container">
-                    <div class="changelog-header">
+                <div class="changelog-box">
+                    <div class="changelog-header-main">
                         <img src="leaf_green.png" style="height: 20px; vertical-align: middle; margin-right: 10px;" alt="">
                         История обновлений
                     </div>
-                    <ul class="changelog-list">
-                        <li class="changelog-item">
-                            <span class="changelog-ver">v1.581</span>
-                            <span class="changelog-date">28.05.2024</span>
-                            <span class="changelog-desc">Исправлена логика работы с контекстом, улучшена совместимость с Claude Opus.</span>
-                        </li>
-                        <li class="changelog-item">
-                            <span class="changelog-ver">v1.580</span>
-                            <span class="changelog-date">20.05.2024</span>
-                            <span class="changelog-desc">Добавлена поддержка Gemini 1.5 Pro, обновлены файлы RegEx.</span>
-                        </li>
-                    </ul>
+                    <div class="changelog-content-inner">
+                        
+                        <div class="changelog-entry">
+                            <div>
+                                <span class="version-tag">v1.581</span>
+                                <span class="version-date">28.05.2024</span>
+                            </div>
+                            <ul class="changes-list">
+                                <li>Исправлена логика работы с контекстом для Gemini.</li>
+                                <li>Улучшена совместимость с Claude Opus.</li>
+                                <li>Добавлен новый тогл для скрытия мыслей персонажа.</li>
+                                <li>Оптимизированы промпты для ролеплея.</li>
+                                <li>Исправлен баг с дублированием ответов.</li>
+                                <li>Обновлены файлы RegEx (Depth 5).</li>
+                                <li>Мелкие правки в форматировании текста.</li>
+                                <li>Добавлена поддержка экспериментальных моделей.</li>
+                                <li>Улучшена скорость ответа на слабых устройствах.</li>
+                                <li>Корректировка системных инструкций.</li>
+                            </ul>
+                        </div>
+
+                        <div class="changelog-entry">
+                            <div>
+                                <span class="version-tag">v1.580</span>
+                                <span class="version-date">20.05.2024</span>
+                            </div>
+                            <ul class="changes-list">
+                                <li>Глобальное обновление ядра (Celia Core).</li>
+                                <li>Добавлена поддержка Gemini 1.5 Pro.</li>
+                                <li>Новый дизайн пресета.</li>
+                                <li>Исправление критических ошибок.</li>
+                            </ul>
+                        </div>
+
+                    </div>
                 </div>
                 </div>
 
@@ -768,7 +820,7 @@
                 <div class="no-bullets"> 
                     <a class="link-button ripple-btn" href="regex-renette_html_depth_5_vanquisher__.json" download onclick="createSparks(event); showToast('RegEx скачивается', 'Depth 5 загружается...')">
                         <img src="leaf_red.png" alt="File" onerror="this.style.display='none'">
-                        <span> Renette HTML Depth</span>
+                        <span>Renette HTML Depth</span>
                     </a> 
                     <a class="link-button ripple-btn" href="regex-renette_hidethink.json" download onclick="createSparks(event); showToast('RegEx скачивается', 'Hide Think загружается...')">
                         <img src="leaf_green.png" alt="File" onerror="this.style.display='none'">
