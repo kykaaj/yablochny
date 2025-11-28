@@ -345,6 +345,7 @@
             transform: translateY(0);
         }
 
+        /* ИЗМЕНЕННЫЕ СТИЛИ ДЛЯ ЗАГОЛОВКА H2 */
         .tab-content h2 {
             font-family: var(--font-decorative);
             font-weight: 400;
@@ -356,16 +357,23 @@
             margin-bottom: 5px;
             padding-bottom: 15px; 
             line-height: 1.4;
+            /* ВАЖНО: Делаем контейнер относительным */
+            position: relative;
             display: flex;
             align-items: center;
+            /* ВАЖНО: Текст центрируется сам по себе */
             justify-content: center;
             flex-wrap: nowrap;
             filter: drop-shadow(0 0 15px rgba(153, 255, 153, 0.2));
         }
         
+        /* ИЗМЕНЕННЫЕ СТИЛИ ДЛЯ ИКОНКИ В H2 */
         .tab-content h2 img {
             height: clamp(32px, 5vw, 48px);
-            margin-right: 12px; 
+            /* ВАЖНО: Абсолютное позиционирование иконки слева */
+            position: absolute;
+            left: 0;
+            margin-right: 0; /* Убираем отступ */
             -webkit-text-fill-color: initial; 
             animation: float-slight 5s ease-in-out infinite;
         }
@@ -395,13 +403,11 @@
             background: rgba(0, 0, 0, 0.3);
             border-radius: 16px;
             border: 1px solid rgba(255, 255, 255, 0.05);
-            /* Ограничение высоты и скролл */
             max-height: 400px; 
             overflow-y: auto;
             position: relative;
         }
         
-        /* Заголовок чейнжлога (закрепленный) */
         .changelog-header-main {
             position: sticky;
             top: 0;
@@ -557,7 +563,6 @@
             width: 100%; max-width: 420px; 
             margin: 0 auto; 
             box-sizing: border-box;
-            /* ИСПРАВЛЕНИЕ: принудительное выравнивание по левому краю */
             justify-content: flex-start;
         }
         
@@ -569,14 +574,13 @@
             color: #fff;
         }
         
-        /* ИСПРАВЛЕНИЕ: Жесткая ширина для иконки, чтобы текст всегда был на одном уровне */
         .link-button img { 
             height: 24px; 
-            width: 24px; /* Фиксируем ширину */
+            width: 24px; 
             object-fit: contain;
             margin-right: 15px; 
             transition: transform 0.3s;
-            flex-shrink: 0; /* Запрещаем сжимать иконку */
+            flex-shrink: 0;
         }
         .link-button:hover img { transform: scale(1.2) rotate(10deg); }
 
@@ -797,7 +801,8 @@
 
                     </div>
                 </div>
-                </div>
+
+            </div>
 
             <div id="Download" class="tab-content">
                 <h2>
