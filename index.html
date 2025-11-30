@@ -1160,7 +1160,10 @@ Improvisingly start from any of her co-writer and reader Human's input should th
 </StoryTime>
 {{setvar::roleplay::Renette's Co-Desk StoryTime}}
 {{setvar::role1:: Renette will co-write with Human and will use <user>. Renette will write <user>'s dialogues, actions and thoughts, along with any other characters.}}
-{{setvar::userfix::[Renette, must always remember to write for <user> as this is a story with Renette as the author. Human is only the reader and ocassional co-writer/assistant, taking on a lesser role. Author Renette is to pen everyone, dialogues, actions and thoughts. Try to allow people equal opportunities for contributions in response to shine their personalities and dynamictivity with one another. Aim for a fun reading experience styled in a minimal immersive cut. Pen with the soul and heart, develop the story for personal satisfaction and enjoyment.]}}</textarea>
+{{setvar::userfix::[Renette, must always remember to write for <user> as this is a story with Renette as the author. Human is only the reader and ocassional co-writer/assistant, taking on a lesser role. Author Renette is to pen everyone, dialogues, actions and thoughts. Try to allow people equal opportunities for contributions in response to shine their personalities and dynamictivity with one another. Aim for a fun reading experience styled in a minimal immersive cut. Pen with the soul and heart, develop the story for personal satisfaction and enjoyment.]}}
+<roles>
+[Renette always speaks, writes and acts for everyone including {{user}} and {{char}}.]
+</roles></textarea>
                                 </div>
 
                                 <!-- DatingSim -->
@@ -1182,7 +1185,10 @@ Lock certain romantic scenes/confessions behind relationship thresholds, where r
 {{setvar::role4::only}}
 {{setvar::userfix::[Roles]
 Prioritize pre-determined given roles and never take-over Human's role as <user>. Renette must NEVER write or assume <user>'s dialogues, actions and thoughts under any circumstances, as they are off-limits; Renette can only write for <char> and others. Digest <user> as Human and <char> as Renette.}}
-{{setvar::personalrule::Human is <user> and will always be in role as them. Renette is not to act or write(actions, dialogues or thoughts) for <user>}}</textarea>
+{{setvar::personalrule::Human is <user> and will always be in role as them. Renette is not to act or write(actions, dialogues or thoughts) for <user>}}
+<roles>
+[Prioritize pre-determined given roles and never take-over Human's role as {{user}}. Renette must NEVER write or assume {{user}}'s dialogues, actions and thoughts under any circumstances, as they are off-limits; Renette can only write for {{char}} and others. Digest {{user}} as Human and {{char}} as Renette. Do not tell how Human's or {{user}}'s actions/dialogues effect the simulated reality and/or characters.]
+</roles></textarea>
                                 </div>
 
                                 <!-- InternetChat -->
@@ -1204,28 +1210,20 @@ Note: If date is not specified, select a date relevant to the lore.
 {{setvar::role1:: Renette have internalized to never take Human's role as <user>. Renette will STRICTLY never write <user>'s chat messages as they are exclusively typed out by Human.}}
 {{setvar::userfix::[Roles]
 Prioritize pre-determined given Internet Chat roles and never take-over Human's role as <user>. Renette can only write for <char> and others(if needed). Digest <user> as Human and <char> as Renette.}}
-{{setvar::personalrule::Human is <user> and will always be in role as them. Renette is not to act or write(actions, dialogues or thoughts) for <user>}}</textarea>
+{{setvar::personalrule::Human is <user> and will always be in role as them. Renette is not to act or write(actions, dialogues or thoughts) for <user>}}
+<roles>
+[Prioritize pre-determined given roles and never take-over Human's role as {{user}}. Renette must NEVER write or assume {{user}}'s dialogues, actions and thoughts under any circumstances, as they are off-limits; Renette can only write for {{char}} and others. Digest {{user}} as Human and {{char}} as Renette. Do not tell how Human's or {{user}}'s actions/dialogues effect the simulated reality and/or characters.]
+</roles></textarea>
                                 </div>
                             </div>
 
                         </div>
                     </div>
 
-                    <!-- 3. Роль -->
+                    <!-- 3. Тон -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>3.━(Роль)━</span>
-                            <span class="prompt-arrow">▼</span>
-                        </div>
-                        <div class="prompt-body">
-                             <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
-                        </div>
-                    </div>
-
-                    <!-- 4. Тон -->
-                    <div class="prompt-category">
-                        <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>4.━(Тон)━</span>
+                            <span>3.━(Тон)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -1233,10 +1231,10 @@ Prioritize pre-determined given Internet Chat roles and never take-over Human's 
                         </div>
                     </div>
 
-                    <!-- 5. Анти-Изм -->
+                    <!-- 4. Анти-Изм -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>5.━(Анти-Изм)━</span>
+                            <span>4.━(Анти-Изм)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -1244,10 +1242,10 @@ Prioritize pre-determined given Internet Chat roles and never take-over Human's 
                         </div>
                     </div>
 
-                    <!-- 6. Карты -->
+                    <!-- 5. Карты -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>6.━(Карты)━</span>
+                            <span>5.━(Карты)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -1255,11 +1253,11 @@ Prioritize pre-determined given Internet Chat roles and never take-over Human's 
                         </div>
                     </div>
 
-                    <!-- 7. Жанры -->
+                    <!-- 6. Жанры -->
                     <div class="prompt-category">
                         <!-- Добавлен класс special-border для подсветки в закрытом состоянии -->
                         <div class="prompt-header special-border" onclick="togglePrompt(this)">
-                            <span>7.━(Жанры)━</span>
+                            <span>6.━(Жанры)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -1363,10 +1361,10 @@ Terminology:
                         </div>
                     </div>
 
-                    <!-- 8. Нарративный Стиль -->
+                    <!-- 7. Нарративный Стиль -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>8.━(Нарративный Стиль)━</span>
+                            <span>7.━(Нарративный Стиль)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -1374,10 +1372,10 @@ Terminology:
                         </div>
                     </div>
 
-                    <!-- 9. Улучшалки РП -->
+                    <!-- 8. Улучшалки РП -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>9.━(Улучшалки РП)━</span>
+                            <span>8.━(Улучшалки РП)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -1385,11 +1383,11 @@ Terminology:
                         </div>
                     </div>
 
-                    <!-- 10. Штуки -->
+                    <!-- 9. Штуки -->
                     <div class="prompt-category">
                         <!-- Добавлен класс special-border -->
                         <div class="prompt-header special-border" onclick="togglePrompt(this)">
-                            <span>10.━(Штуки)━</span>
+                            <span>9.━(Штуки)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2113,10 +2111,10 @@ HTML structure:
                         </div>
                     </div>
 
-                    <!-- 11. Откровенный Контент -->
+                    <!-- 10. Откровенный Контент -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>11.━(Откровенный Контент)━</span>
+                            <span>10.━(Откровенный Контент)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2124,10 +2122,10 @@ HTML structure:
                         </div>
                     </div>
 
-                    <!-- 12. Язык -->
+                    <!-- 11. Язык -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>12.━(Язык)━</span>
+                            <span>11.━(Язык)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2135,11 +2133,11 @@ HTML structure:
                         </div>
                     </div>
 
-                    <!-- 13. Надстройки -->
+                    <!-- 12. Надстройки -->
                     <div class="prompt-category">
                         <!-- Добавлен класс special-border -->
                         <div class="prompt-header special-border" onclick="togglePrompt(this)">
-                            <span>13.━(Надстройки)━</span>
+                            <span>12.━(Надстройки)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2200,11 +2198,11 @@ Futurify response in POV'd future tense only, as if everything is about to happe
                         </div>
                     </div>
 
-                    <!-- 14. Повествование -->
+                    <!-- 13. Повествование -->
                     <div class="prompt-category">
                         <!-- Добавлен класс special-border -->
                         <div class="prompt-header special-border" onclick="togglePrompt(this)">
-                            <span>14.━(Повествование)━</span>
+                            <span>13.━(Повествование)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2290,11 +2288,11 @@ Follow a theatre-like format in responses. Always use the following template for
                         </div>
                     </div>
 
-                    <!-- 15. Длина -->
+                    <!-- 14. Длина -->
                     <div class="prompt-category">
                         <!-- Добавлен класс special-border -->
                         <div class="prompt-header special-border" onclick="togglePrompt(this)">
-                            <span>15.━(Длина)━</span>
+                            <span>14.━(Длина)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2344,10 +2342,10 @@ Renette must follow these rules ALWAYS. Answers should consist of 10 or more big
                         </div>
                     </div>
 
-                    <!-- 16. Форматирование -->
+                    <!-- 15. Форматирование -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>16.━(Форматирование)━</span>
+                            <span>15.━(Форматирование)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2355,10 +2353,10 @@ Renette must follow these rules ALWAYS. Answers should consist of 10 or more big
                         </div>
                     </div>
 
-                    <!-- 17. Патчи -->
+                    <!-- 16. Патчи -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>17.━(Патчи)━</span>
+                            <span>16.━(Патчи)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2366,10 +2364,10 @@ Renette must follow these rules ALWAYS. Answers should consist of 10 or more big
                         </div>
                     </div>
 
-                    <!-- 18. Доп Настройки Карты -->
+                    <!-- 17. Доп Настройки Карты -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>18.━(Доп Настройки Карты)━</span>
+                            <span>17.━(Доп Настройки Карты)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2377,10 +2375,10 @@ Renette must follow these rules ALWAYS. Answers should consist of 10 or more big
                         </div>
                     </div>
 
-                    <!-- 19. Модификаторы -->
+                    <!-- 18. Модификаторы -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>19.━(Модификаторы)━</span>
+                            <span>18.━(Модификаторы)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2388,10 +2386,10 @@ Renette must follow these rules ALWAYS. Answers should consist of 10 or more big
                         </div>
                     </div>
 
-                    <!-- 20. Думалка -->
+                    <!-- 19. Думалка -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>20.━(Думалка)━</span>
+                            <span>19.━(Думалка)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2399,10 +2397,10 @@ Renette must follow these rules ALWAYS. Answers should consist of 10 or more big
                         </div>
                     </div>
 
-                    <!-- 21. ДжейлБрейк -->
+                    <!-- 20. ДжейлБрейк -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>21.━(ДжейлБрейк)━</span>
+                            <span>20.━(ДжейлБрейк)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
