@@ -1175,7 +1175,7 @@
                     <div class="prompt-category">
                         <!-- Добавлен класс special-border для подсветки в закрытом состоянии -->
                         <div class="prompt-header special-border" onclick="togglePrompt(this)">
-                            <span>7.━(Жанры)━ <span class="has-content-indicator"></span></span>
+                            <span>7.━(Жанры)━ <span class="has-content-indicator">✨</span></span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -1306,7 +1306,7 @@ Terminology:
                     <div class="prompt-category">
                         <!-- Добавлен класс special-border -->
                         <div class="prompt-header special-border" onclick="togglePrompt(this)">
-                            <span>10.━(Штуки)━ <span class="has-content-indicator"></span></span>
+                            <span>10.━(Штуки)━ <span class="has-content-indicator">✨</span></span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -1476,11 +1476,10 @@ Always write dynamically changing <memo> after response. Fill (placeholders) wit
 
 Track multiple relationships per character if needed (A→B, A→C, B→A, etc). Each character has special feelings for f, identify them and change these feelings in the info block if they have changed.</textarea>
                                 </div>
-                                <div class="options-list">
                                 <div class="option-item">
                                     <span class="option-name">📝 Основной</span>
                                     <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source">[Infoblock] 
+                                    <textarea class="prompt-source">[Infoblock]
 Always write dynamically changing <memo><small> notes after response, Fill (placeholders) in English without parenthesis and Keep points concise, generalize. In the VERY VERY end of EVERY MESSAGE. Strictly use template formatting:
 <memo><small>
 <style>
@@ -1504,9 +1503,9 @@ Always write dynamically changing <memo><small> notes after response, Fill (plac
     <strong style='color:#dda0dd; display:block; margin-bottom:4px;'>💖 Characters!</strong>
     <ul style='list-style:none; padding:0; margin:0 0 10px 0;'>
       <li style='margin-bottom:0.3em;'>
-        <span style='color:#c9a7d7;'>♀️/♂️/🛆</span> <span style='font-weight:bold;'> Name</span> ❖ 
-        <span style='color:#f7cac9;'>Status:</span> (emotions, health, stamina) ❖ 
-        <span style='color:#ffe0b2;'>Outfit:</span> (current clothes and their condition!) 🔞 
+        <span style='color:#c9a7d7;'>♀️/♂️/🛆</span> <span style='font-weight:bold;'> Name</span> ❖
+        <span style='color:#f7cac9;'>Status:</span> (emotions, health, stamina) ❖
+        <span style='color:#ffe0b2;'>Outfit:</span> (current clothes and their condition!) 🔞
         <span style='color:#ff6961;'>Naked?:</span> (any exposed intimate parts?)
       </li>
     </ul>
@@ -2038,7 +2037,7 @@ HTML structure:
                     <div class="prompt-category">
                         <!-- Добавлен класс special-border -->
                         <div class="prompt-header special-border" onclick="togglePrompt(this)">
-                            <span>13.━(Надстройки)━ <span class="has-content-indicator"></span></span>
+                            <span>13.━(Надстройки)━ <span class="has-content-indicator">✨</span></span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2100,7 +2099,7 @@ Futurify response in POV'd future tense only, as if everything is about to happe
                     <div class="prompt-category">
                         <!-- Добавлен класс special-border -->
                         <div class="prompt-header special-border" onclick="togglePrompt(this)">
-                            <span>14.━(Повествование)━ <span class="has-content-indicator"></span></span>
+                            <span>14.━(Повествование)━ <span class="has-content-indicator">✨</span></span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2174,7 +2173,7 @@ Follow a theatre-like format in responses. Always use the following template for
                     <div class="prompt-category">
                         <!-- Добавлен класс special-border -->
                         <div class="prompt-header special-border" onclick="togglePrompt(this)">
-                            <span>15.━(Длина)━ <span class="has-content-indicator"></span></span>
+                            <span>15.━(Длина)━ <span class="has-content-indicator">✨</span></span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2216,6 +2215,7 @@ Length: [Renette must follow these rules ALWAYS. Answers should consist of 10 or
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Стандартное (*действия*, "диалоги")</div>
                             <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
                         </div>
                     </div>
@@ -2227,6 +2227,7 @@ Length: [Renette must follow these rules ALWAYS. Answers should consist of 10 or
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
                             <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
                         </div>
                     </div>
@@ -2238,6 +2239,7 @@ Length: [Renette must follow these rules ALWAYS. Answers should consist of 10 or
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
                             <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
                         </div>
                     </div>
@@ -2249,6 +2251,7 @@ Length: [Renette must follow these rules ALWAYS. Answers should consist of 10 or
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
                             <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
                         </div>
                     </div>
@@ -2260,6 +2263,7 @@ Length: [Renette must follow these rules ALWAYS. Answers should consist of 10 or
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Скрыта</div>
                             <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
                         </div>
                     </div>
@@ -2271,6 +2275,7 @@ Length: [Renette must follow these rules ALWAYS. Answers should consist of 10 or
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Яблочный JB</div>
                             <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
                         </div>
                     </div>
