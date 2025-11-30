@@ -532,16 +532,31 @@
             color: #eee;
         }
 
+        /* Стиль для ВАЖНЫХ разделов (с контентом) в закрытом состоянии */
+        .prompt-header.special-border {
+            border: 1px solid rgba(153, 255, 153, 0.5); /* Зеленоватая рамка */
+            background: rgba(153, 255, 153, 0.05); /* Едва заметный фон */
+        }
+
         .prompt-header:hover {
             background-color: rgba(50, 50, 50, 0.8);
             border-color: rgba(153, 255, 153, 0.3);
             transform: translateX(5px);
         }
 
+        /* === АКТИВНЫЙ (ОТКРЫТЫЙ) ЗАГОЛОВОК - ГРАДИЕНТ === */
         .prompt-header.active {
-            background: linear-gradient(90deg, rgba(153, 255, 153, 0.15), transparent);
-            border-color: var(--color-primary);
-            color: var(--color-primary);
+            /* Градиент как у кнопки скачивания */
+            background: linear-gradient(270deg, #ff9a9e, #a8e6cf, #99ff99, #ff9a9e);
+            background-size: 300% 300%;
+            animation: bg-shift 6s ease infinite;
+
+            /* Темный текст для контраста */
+            color: #050505;
+            text-shadow: none;
+            border-color: rgba(255,255,255,0.4);
+            font-weight: 800;
+            box-shadow: 0 0 15px rgba(153, 255, 153, 0.4);
         }
 
         .prompt-arrow {
@@ -550,10 +565,16 @@
             opacity: 0.6;
         }
 
+        /* Стрелка темнеет на активном фоне */
         .prompt-header.active .prompt-arrow {
             transform: rotate(180deg);
             opacity: 1;
-            color: var(--color-primary);
+            color: #050505;
+        }
+
+        /* Иконка ✨ тоже темнеет, чтобы быть видной */
+        .prompt-header.active .has-content-indicator {
+            filter: brightness(0.2);
         }
 
         .has-content-indicator {
@@ -1079,7 +1100,7 @@
 
                 <div class="prompts-intro">
                     <strong>📝 Памятка:</strong><br>
-                    Здесь собраны модули пресета. Вы можете развернуть категорию, посмотреть, что стоит по умолчанию ("Заглушка" или конкретный промпт), и выбрать альтернативный вариант. Просто нажмите <strong>"Копировать"</strong>, затем вернитесь в таверну, удалите всё из "Шаблона" или заменяемого тогла и сохраните.
+                    Здесь собраны модули пресета. Вы можете развернуть категорию, посмотреть, что стоит по умолчанию ("Заглушка" или конкретный промпт), и выбрать альтернативный вариант. Просто нажмите <strong>"Копировать"</strong> и вставьте в настройки Силли.
                 </div>
 
                 <div class="prompts-container">
@@ -1087,10 +1108,11 @@
                     <!-- 1. OOC -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>1.━━( OOC )━━</span>
+                            <span>1.━(OOC)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту в пресете:</span>Стандартный OOC драйвер</div>
                             <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
                         </div>
                     </div>
@@ -1098,10 +1120,11 @@
                     <!-- 2. Тип РП -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>2.━━( Тип РП )━━</span>
+                            <span>2.━(Тип РП)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка (Отключено)</div>
                             <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
                         </div>
                     </div>
@@ -1109,10 +1132,11 @@
                     <!-- 3. Роль -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>3.━━( Роль )━━</span>
+                            <span>3.━(Роль)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
+                             <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
                              <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
                         </div>
                     </div>
@@ -1120,10 +1144,11 @@
                     <!-- 4. Тон -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>4.━━( Тон )━━</span>
+                            <span>4.━(Тон)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
                             <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
                         </div>
                     </div>
@@ -1131,10 +1156,11 @@
                     <!-- 5. Анти-Изм -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>5.━━( Анти-Изм )━━</span>
+                            <span>5.━(Анти-Изм)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
                             <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
                         </div>
                     </div>
@@ -1142,29 +1168,29 @@
                     <!-- 6. Карты -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>6.━━( Карты )━━</span>
+                            <span>6.━(Карты)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
                             <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
                         </div>
                     </div>
 
                     <!-- 7. Жанры -->
                     <div class="prompt-category">
-                        <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>7.━━( Жанры )━━ <span class="has-content-indicator">✨</span></span>
+                        <!-- Добавлен класс special-border для подсветки в закрытом состоянии -->
+                        <div class="prompt-header special-border" onclick="togglePrompt(this)">
+                            <span>7.━(Жанры)━ <span class="has-content-indicator">✨</span></span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
                             <div class="default-block">
                                 <span class="default-label">По дефолту в пресете:</span>
                                 Заглушка (Пусто)
-                                
                             </div>
 
                             <div class="options-list">
-                                <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">🔗AU (Шаблон)</h4>
                                 <!-- Вариант: Омегаверс -->
                                 <div class="option-item">
                                     <div class="option-info">
@@ -1247,13 +1273,11 @@ Terminology:
                                 <!-- Вариант: Фу АУ -->
                                 <div class="option-item">
                                     <div class="option-info">
-                                        <span class="option-name">🎀 Фута АУ</span>
-                                                                            </div>
+                                        <span class="option-name">🎀 Фу АУ</span>
+                                        <span class="option-desc">Я САМА НАПИШУ ПРОМПТ КОПИРУЕМЫЙ</span>
+                                    </div>
                                     <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source">[Futanari Genre: You must roleplay exclusively in the futanari universe, strictly following these rules:
-- Some females in the world are futanari;
-- Futanari are people with a female body structure and additional organs, which can be penises or enlarged clitorises, with or without female genitalia;
-- Futanari penises are fully functional and can impregnate other females and other futanari that have both female and male genitalia.</textarea>
+                                    <textarea class="prompt-source">PLACEHOLDER_FOR_FU_AU</textarea>
                                 </div>
                             </div>
                         </div>
@@ -1262,10 +1286,11 @@ Terminology:
                     <!-- 8. Нарративный Стиль -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>8.━━( Нарративный Стиль )━━</span>
+                            <span>8.━(Нарративный Стиль)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
                             <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
                         </div>
                     </div>
@@ -1273,25 +1298,27 @@ Terminology:
                     <!-- 9. Улучшалки РП -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>9.━━( Улучшалки РП )━━</span>
+                            <span>9.━(Улучшалки РП)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Активно</div>
                             <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
                         </div>
                     </div>
 
                     <!-- 10. Штуки -->
                     <div class="prompt-category">
-                        <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>10.━━( Штуки )━━ <span class="has-content-indicator">✨</span></span>
+                        <!-- Добавлен класс special-border -->
+                        <div class="prompt-header special-border" onclick="togglePrompt(this)">
+                            <span>10.━(Штуки)━ <span class="has-content-indicator">✨</span></span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
 
                             <!-- Настройки -->
                             <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">✧➤🛠️ Режим Настройки</h4>
-                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка (Пусто)</div>
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
                             <div class="options-list">
                                 <div class="option-item">
                                     <span class="option-name">🎭 Claude Режим Настройки</span>
@@ -1322,7 +1349,7 @@ Terminology:
                             <div class="default-block"><span class="default-label">По дефолту:</span>🕹️CYOA - No R-Macro</div>
                             <div class="options-list">
                                 <div class="option-item">
-                                    <span class="option-name">🎲 CYOA - R-Macro</span>
+                                    <span class="option-name">🎲 CYOA - R-Macro⚠️</span>
                                     <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
                                     <textarea class="prompt-source"><choice>
 #CYOA modifier: Renette takes on the double-role of the Game Master (GM) and sends a CYOA choice at the very end of her responses.
@@ -1516,8 +1543,7 @@ Each character experiences specific emotions toward f — identify them and upda
                                 <div class="option-item">
                                     <span class="option-name">💭 +МатрОтн + Мысли</span>
                                     <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source">[Infoblock]
-Always write dynamically changing <memo><small> notes after response, Fill (placeholders) in English without parenthesis and Keep points concise, generalize. In the VERY end of EVERY MESSAGE. Strictly use template formatting:
+                                    <textarea class="prompt-source">Infoblock: [Always write dynamically changing <memo><small> notes after response, Fill (placeholders) in English without parenthesis and Keep points concise, generalize. In the VERY end of EVERY MESSAGE. Strictly use template formatting:
 <memo><small>
 <style>
 @keyframes renetteFadeIn {
@@ -1587,7 +1613,7 @@ Each character experiences specific feelings toward f — determine them and upd
 
                             <!-- Скрытый Блок -->
                             <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">📍 Скрытый Блок (Шаблон)</h4>
-                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка (Пусто)</div>
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
                             <div class="options-list">
                                 <div class="option-item">
                                     <span class="option-name">👤 Скрытые Новые Профили</span>
@@ -1660,7 +1686,7 @@ Track multiple love interests simultaneously. Update only when meaningful change
 
                             <!-- Fancy UI -->
                             <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">🥂 Fancy UI</h4>
-                            <div class="default-block"><span class="default-label">По дефолту:</span>🥂 Полное Fancy UI</div>
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Полное🥂 Fancy UI</div>
                             <div class="options-list">
                                 <div class="option-item">
                                     <span class="option-name">🥂 Полное Fancy UI</span>
@@ -1949,10 +1975,11 @@ HTML structure:
                     <!-- 11. Откровенный Контент -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>11.━━( Откровенный Контент )━━</span>
+                            <span>11.━(Откровенный Контент)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Разрешено</div>
                             <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
                         </div>
                     </div>
@@ -1960,18 +1987,20 @@ HTML structure:
                     <!-- 12. Язык -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>12.━━( Язык )━━</span>
+                            <span>12.━(Язык)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Русский</div>
                             <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
                         </div>
                     </div>
 
                     <!-- 13. Надстройки -->
                     <div class="prompt-category">
-                        <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>13.━━( Надстройки )━━ <span class="has-content-indicator">✨</span></span>
+                        <!-- Добавлен класс special-border -->
+                        <div class="prompt-header special-border" onclick="togglePrompt(this)">
+                            <span>13.━(Надстройки)━ <span class="has-content-indicator">✨</span></span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2031,8 +2060,9 @@ Futurify response in POV'd future tense only, as if everything is about to happe
 
                     <!-- 14. Повествование -->
                     <div class="prompt-category">
-                        <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>14.━━( Повествование )━━ <span class="has-content-indicator">✨</span></span>
+                        <!-- Добавлен класс special-border -->
+                        <div class="prompt-header special-border" onclick="togglePrompt(this)">
+                            <span>14.━(Повествование)━ <span class="has-content-indicator">✨</span></span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2104,8 +2134,9 @@ Follow a theatre-like format in responses. Always use the following template for
 
                     <!-- 15. Длина -->
                     <div class="prompt-category">
-                        <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>15.━━( Длина )━━ <span class="has-content-indicator">✨</span></span>
+                        <!-- Добавлен класс special-border -->
+                        <div class="prompt-header special-border" onclick="togglePrompt(this)">
+                            <span>15.━(Длина)━ <span class="has-content-indicator">✨</span></span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2143,10 +2174,11 @@ Length: [Renette must follow these rules ALWAYS. Answers should consist of 10 or
                     <!-- 16. Форматирование -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>16.━━( Форматирование )━━</span>
+                            <span>16.━(Форматирование)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Стандартное (*действия*, "диалоги")</div>
                             <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
                         </div>
                     </div>
@@ -2154,10 +2186,11 @@ Length: [Renette must follow these rules ALWAYS. Answers should consist of 10 or
                     <!-- 17. Патчи -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>17.━━( Патчи )━━</span>
+                            <span>17.━(Патчи)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
                             <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
                         </div>
                     </div>
@@ -2165,10 +2198,11 @@ Length: [Renette must follow these rules ALWAYS. Answers should consist of 10 or
                     <!-- 18. Доп Настройки Карты -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>18.━━( Доп Настройки Карты )━━</span>
+                            <span>18.━(Доп Настройки Карты)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
                             <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
                         </div>
                     </div>
@@ -2176,10 +2210,11 @@ Length: [Renette must follow these rules ALWAYS. Answers should consist of 10 or
                     <!-- 19. Модификаторы -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>19.━━( Модификаторы )━━</span>
+                            <span>19.━(Модификаторы)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
                             <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
                         </div>
                     </div>
@@ -2187,10 +2222,11 @@ Length: [Renette must follow these rules ALWAYS. Answers should consist of 10 or
                     <!-- 20. Думалка -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>20.━━( Думалка )━━</span>
+                            <span>20.━(Думалка)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Скрыта</div>
                             <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
                         </div>
                     </div>
@@ -2198,10 +2234,11 @@ Length: [Renette must follow these rules ALWAYS. Answers should consist of 10 or
                     <!-- 21. ДжейлБрейк -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>21.━━( ДжейлБрейк )━━</span>
+                            <span>21.━(ДжейлБрейк)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Яблочный JB</div>
                             <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
                         </div>
                     </div>
@@ -2458,6 +2495,8 @@ Length: [Renette must follow these rules ALWAYS. Answers should consist of 10 or
 
         function copyText(btnElement) {
             // Ищем скрытый textarea рядом с кнопкой
+            // Структура HTML: .option-item > .copy-btn + .prompt-source
+            // Или .option-item > .option-info + .copy-btn + .prompt-source
             const container = btnElement.parentElement;
             const textArea = container.querySelector('.prompt-source');
 
