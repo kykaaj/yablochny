@@ -19,7 +19,7 @@
             --color-bg: #050505; /* Глубокий черный */
             --color-glass: rgba(20, 20, 20, 0.75);
             --color-glass-border: rgba(255, 255, 255, 0.08);
-            --font-decorative: 'Pacifico', cursive; 
+            --font-decorative: 'Pacifico', cursive;
             --font-readable: 'Montserrat', sans-serif;
             --shadow-glow: 0 0 20px rgba(153, 255, 153, 0.15);
         }
@@ -37,11 +37,11 @@
         /* КАСТОМНЫЙ СКРОЛЛБАР */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--color-bg); }
-        ::-webkit-scrollbar-thumb { 
+        ::-webkit-scrollbar-thumb {
             background: linear-gradient(180deg, var(--color-secondary), var(--color-primary));
-            border-radius: 4px; 
+            border-radius: 4px;
         }
-        
+
         ::selection { background: var(--color-primary); color: #000; text-shadow: none; }
 
         body {
@@ -80,9 +80,9 @@
         .main-container {
             max-width: 1300px;
             margin: -50px auto 40px;
-            padding: 15px; 
-            display: flex; 
-            flex-direction: column; 
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
             align-items: center;
             position: relative;
             z-index: 10;
@@ -91,55 +91,55 @@
             box-sizing: border-box;
         }
 
-/* --- Переключатели сверху в ряд на широкой (десктоп) версии --- */
-@media (min-width: 900px) {
-    .main-container {
-        flex-direction: column;
-        align-items: center;
-        gap: 28px;
-        padding: 0 40px;
-        margin-top: -80px;
-    }
+        /* --- Переключатели сверху в ряд на широкой (десктоп) версии --- */
+        @media (min-width: 900px) {
+            .main-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 28px;
+                padding: 0 40px;
+                margin-top: -80px;
+            }
 
-    .tab-buttons {
-        display: flex !important;
-        flex-direction: row !important;
-        justify-content: center;
-        align-items: center;
-        gap: 15px;
-        width: 100%;
-        max-width: 850px;
-        padding: 0;
-        position: static !important;
-        min-width: 0 !important;
-    }
+            .tab-buttons {
+                display: flex !important;
+                flex-direction: row !important;
+                justify-content: center;
+                align-items: center;
+                gap: 15px;
+                width: 100%;
+                max-width: 950px; /* Чуть шире, чтобы влезла 5-я кнопка */
+                padding: 0;
+                position: static !important;
+                min-width: 0 !important;
+            }
 
-    .tab-button {
-        width: auto;
-        flex: 1;
-        min-width: 0;
-        max-width: none;
-        justify-content: center;
-        text-align: center;
-        padding: 14px 10px;
-        font-size: 1.05rem;
-        border-radius: 14px;
-        white-space: nowrap;
-    }
+            .tab-button {
+                width: auto;
+                flex: 1;
+                min-width: 0;
+                max-width: none;
+                justify-content: center;
+                text-align: center;
+                padding: 14px 10px;
+                font-size: 1.05rem;
+                border-radius: 14px;
+                white-space: nowrap;
+            }
 
-    .tab-button.active {
-        padding-left: 10px;
-    }
+            .tab-button.active {
+                padding-left: 10px;
+            }
 
-    .tab-button img {
-        margin-right: 8px;
-    }
+            .tab-button img {
+                margin-right: 8px;
+            }
 
-    .tab-content-wrapper {
-        width: 100%;
-        max-width: 850px;
-    }
-}
+            .tab-content-wrapper {
+                width: 100%;
+                max-width: 850px;
+            }
+        }
 
 
         /* ===================================== */
@@ -179,8 +179,8 @@
         /* ===================================== */
         .header-banner {
             background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
-            background-image: url('dark_header_new.jpg'); 
-            background-size: cover; 
+            background-image: url('dark_header_new.jpg');
+            background-size: cover;
             background-position: center;
             height: 350px;
             display: flex;
@@ -191,7 +191,7 @@
             clip-path: polygon(0 0, 100% 0, 100% 90%, 50% 100%, 0 90%);
             position: relative;
             overflow: hidden;
-            perspective: 1000px; 
+            perspective: 1000px;
             padding-bottom: 30px;
             flex-shrink: 0;
         }
@@ -200,10 +200,10 @@
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.85)); 
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.85));
             z-index: 1;
         }
-        
+
         .header-content {
             z-index: 2;
             position: relative;
@@ -214,26 +214,26 @@
             max-width: 800px;
             box-sizing: border-box;
         }
-        
-        .header-banner h1 { 
+
+        .header-banner h1 {
             font-family: var(--font-decorative);
             font-weight: 400;
-            font-size: clamp(2.2rem, 6vw, 4.5rem); 
+            font-size: clamp(2.2rem, 6vw, 4.5rem);
             margin: 0;
             line-height: 1.1;
             color: #fff;
             display: flex;
             align-items: center;
-            justify-content: center; /* Центрируем всю группу */
+            justify-content: center;
             gap: 15px;
             flex-wrap: wrap;
             text-shadow: 0 10px 30px rgba(0,0,0,0.5);
             transform: translateZ(30px);
         }
 
-        .header-banner p { 
+        .header-banner p {
             font-size: clamp(0.85rem, 2.5vw, 1.3rem);
-            margin-top: 15px; 
+            margin-top: 15px;
             font-weight: 600;
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -244,28 +244,21 @@
             transform: translateZ(20px);
             padding: 0 10px;
         }
-        
-        /* ГЛАВНЫЙ ЗАГОЛОВОК H1: ИКОНКА (ПК) */
-        .apple-icon { 
+
+        .apple-icon {
             height: clamp(45px, 10vw, 80px);
             filter: drop-shadow(0 0 20px rgba(153, 255, 153, 0.4));
-            animation: float-slight 4s ease-in-out infinite; 
+            animation: float-slight 4s ease-in-out infinite;
             flex-shrink: 0;
-            
-            /* Сбрасываем gap для мобильных устройств */
-            margin-right: 0; 
+            margin-right: 0;
             margin-left: 0;
         }
-        
-        /* ТРЮК ДЛЯ ПК: СМЕЩАЕМ ИКОНКУ ВЛЕВО */
+
         @media (min-width: 768px) {
-            .header-banner h1 {
-                gap: 0; /* Удаляем gap */
-            }
+            .header-banner h1 { gap: 0; }
             .apple-icon {
-                /* У иконки clamp(45px, 10vw, 80px), возьмем максимум 80px + 15px отступа = 95px */
-                margin-right: 15px; /* Отступ от текста */
-                margin-left: -95px; /* Сдвиг влево, чтобы не влиять на центровку */
+                margin-right: 15px;
+                margin-left: -95px;
             }
         }
 
@@ -273,11 +266,11 @@
         /* ===================================== */
         /* СТИЛИ ВКЛАДОК */
         /* ===================================== */
-        .tab-buttons { 
+        .tab-buttons {
             display: flex;
-            flex-direction: column; 
-            gap: 10px; 
-            width: 100%; 
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
         }
 
         .tab-button {
@@ -295,19 +288,19 @@
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             display: flex;
             align-items: center;
-            justify-content: flex-start; 
+            justify-content: flex-start;
             position: relative;
             overflow: hidden;
             text-align: left;
         }
 
-        .tab-button:hover, .tab-button:active { 
+        .tab-button:hover, .tab-button:active {
             background-color: rgba(50, 50, 50, 0.85);
             transform: translateY(-2px);
             color: #fff;
             border-color: rgba(255,255,255,0.25);
         }
-        
+
         .tab-button.active {
             background: linear-gradient(90deg, rgba(153, 255, 153, 0.12), transparent);
             color: var(--color-primary);
@@ -323,7 +316,7 @@
             background: var(--color-primary);
             box-shadow: 2px 0 10px var(--color-primary);
         }
-        
+
         .tab-button img {
             height: 24px;
             margin-right: 12px;
@@ -344,26 +337,25 @@
             border: 1px solid var(--color-glass-border);
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
             text-align: center;
-            min-height: 300px; 
-            display: none; 
-            width: 100%; 
+            min-height: 300px;
+            display: none;
+            width: 100%;
             box-sizing: border-box;
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 0.4s ease, transform 0.4s ease;
         }
-        
+
         @media (min-width: 768px) {
             .tab-content { padding: 50px; }
         }
 
-        .tab-content.active { 
+        .tab-content.active {
             display: block;
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* ИЗМЕНЕННЫЕ СТИЛИ ДЛЯ ЗАГОЛОВКА H2 (ВКЛАДКИ) */
         .tab-content h2 {
             font-family: var(--font-decorative);
             font-weight: 400;
@@ -373,25 +365,22 @@
             -webkit-text-fill-color: transparent;
             margin-top: 0;
             margin-bottom: 5px;
-            padding-bottom: 15px; 
+            padding-bottom: 15px;
             line-height: 1.4;
             position: relative;
             display: flex;
             align-items: center;
-            justify-content: center; /* Центрируем весь блок [Иконка][Текст] */
+            justify-content: center;
             flex-wrap: nowrap;
             filter: drop-shadow(0 0 15px rgba(153, 255, 153, 0.2));
         }
-        
-        /* ИЗМЕНЕННЫЕ СТИЛИ ДЛЯ ИКОНКИ В H2 */
+
         .tab-content h2 img {
             height: clamp(32px, 5vw, 48px);
             position: static;
-            /* У иконки clamp(32px, 5vw, 48px). Возьмем максимум 48px + 12px отступа = 60px */
-            margin-right: 12px; /* Отступ от текста */
-            margin-left: -60px; /* Сдвиг влево на (ширина иконки + отступ) */
-            
-            -webkit-text-fill-color: initial; 
+            margin-right: 12px;
+            margin-left: -60px;
+            -webkit-text-fill-color: initial;
             animation: float-slight 5s ease-in-out infinite;
         }
 
@@ -420,11 +409,11 @@
             background: rgba(0, 0, 0, 0.3);
             border-radius: 16px;
             border: 1px solid rgba(255, 255, 255, 0.05);
-            max-height: 400px; 
+            max-height: 400px;
             overflow-y: auto;
             position: relative;
         }
-        
+
         .changelog-header-main {
             position: sticky;
             top: 0;
@@ -452,7 +441,7 @@
             padding-bottom: 20px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
-        
+
         .changelog-entry:last-child {
             border-bottom: none;
             margin-bottom: 0;
@@ -500,7 +489,161 @@
             color: var(--color-secondary);
             font-weight: bold;
         }
-        
+
+        /* ===================================== */
+        /* СТИЛИ ДЛЯ РАЗДЕЛА ПРОМПТОВ (НОВОЕ) */
+        /* ===================================== */
+        .prompts-intro {
+            background: rgba(153, 255, 153, 0.05);
+            border-left: 3px solid var(--color-primary);
+            padding: 15px;
+            text-align: left;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-size: 0.95em;
+            color: #dcdcdc;
+        }
+
+        .prompt-category {
+            margin-bottom: 12px;
+            text-align: left;
+        }
+
+        .prompt-header {
+            background-color: rgba(30, 30, 30, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 14px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            font-family: var(--font-readable);
+            font-weight: 600;
+            font-size: 1rem;
+            color: #eee;
+        }
+
+        .prompt-header:hover {
+            background-color: rgba(50, 50, 50, 0.8);
+            border-color: rgba(153, 255, 153, 0.3);
+            transform: translateX(5px);
+        }
+
+        .prompt-header.active {
+            background: linear-gradient(90deg, rgba(153, 255, 153, 0.15), transparent);
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        .prompt-arrow {
+            transition: transform 0.3s ease;
+            font-size: 0.8em;
+            opacity: 0.6;
+        }
+
+        .prompt-header.active .prompt-arrow {
+            transform: rotate(180deg);
+            opacity: 1;
+            color: var(--color-primary);
+        }
+
+        .prompt-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0, 1, 0, 1);
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 0 0 12px 12px;
+            margin-top: -5px;
+            opacity: 0;
+        }
+
+        .prompt-header.active + .prompt-body {
+            max-height: 1000px;
+            transition: max-height 0.5s ease-in-out;
+            opacity: 1;
+            padding: 20px 15px;
+            margin-top: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Блок "По дефолту" */
+        .default-block {
+            background: rgba(255, 154, 158, 0.1);
+            border-left: 3px solid var(--color-secondary);
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+        .default-label {
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.75em;
+            color: var(--color-secondary);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        /* Список вариантов */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.2s;
+        }
+
+        .option-item:hover {
+            background: rgba(255, 255, 255, 0.07);
+        }
+
+        .option-info {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .option-name {
+            font-weight: 700;
+            color: #fff;
+            font-size: 0.95em;
+        }
+
+        .option-desc {
+            font-size: 0.8em;
+            color: #aaa;
+        }
+
+        .copy-btn {
+            background: transparent;
+            border: 1px solid var(--color-primary);
+            color: var(--color-primary);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8em;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .copy-btn:hover {
+            background: var(--color-primary);
+            color: #000;
+            box-shadow: 0 0 10px rgba(153, 255, 153, 0.4);
+        }
+
         /* ===================================== */
         /* КНОПКИ ДЕЙСТВИЙ */
         /* ===================================== */
@@ -517,30 +660,30 @@
         .download-button {
             position: relative;
             overflow: hidden;
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            width: 100%; 
-            max-width: 420px; 
-            margin: 30px auto; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 420px;
+            margin: 30px auto;
             box-sizing: border-box;
             background: linear-gradient(270deg, #ff9a9e, #a8e6cf, #99ff99, #ff9a9e);
             background-size: 300% 300%;
             animation: bg-shift 6s ease infinite;
-            color: #050505; 
-            font-family: var(--font-readable); 
+            color: #050505;
+            font-family: var(--font-readable);
             font-weight: 800;
             font-size: clamp(1rem, 3vw, 1.3em);
             text-transform: uppercase;
             letter-spacing: 1px;
-            padding: 20px 20px; 
-            text-decoration: none; 
+            padding: 20px 20px;
+            text-decoration: none;
             border-radius: 18px;
             box-shadow: 0 10px 40px rgba(153, 255, 153, 0.3);
             transition: transform 0.2s, box-shadow 0.2s;
             border: 2px solid rgba(255,255,255,0.2);
         }
-        
+
         .download-button::after {
             content: '';
             position: absolute;
@@ -549,53 +692,53 @@
             background: linear-gradient(to right, transparent, rgba(255,255,255,0.8), transparent);
             transform: skewX(-25deg);
         }
-        
+
         .download-button:hover::after {
             animation: shine-sweep 0.7s ease-in-out;
         }
 
         .download-button:hover {
             transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 20px 50px rgba(153, 255, 153, 0.6); 
+            box-shadow: 0 20px 50px rgba(153, 255, 153, 0.6);
         }
-        
-        .download-button img { height: 28px; margin-right: 12px; } 
+
+        .download-button img { height: 28px; margin-right: 12px; }
 
         .no-bullets { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
 
         .link-button {
             position: relative;
             overflow: hidden;
-            display: flex; 
-            align-items: center; 
-            padding: 18px 20px; 
+            display: flex;
+            align-items: center;
+            padding: 18px 20px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #E0E0E0; 
-            text-decoration: none; 
-            border-radius: 16px; 
-            font-weight: 600; 
+            color: #E0E0E0;
+            text-decoration: none;
+            border-radius: 16px;
+            font-weight: 600;
             font-size: 0.95em;
             transition: all 0.3s;
-            width: 100%; max-width: 420px; 
-            margin: 0 auto; 
+            width: 100%; max-width: 420px;
+            margin: 0 auto;
             box-sizing: border-box;
             justify-content: flex-start;
         }
-        
-        .link-button:hover { 
+
+        .link-button:hover {
             background: linear-gradient(135deg, rgba(46, 125, 50, 0.25), rgba(30, 60, 46, 0.4));
             border-color: var(--color-primary);
-            transform: translateX(5px); 
+            transform: translateX(5px);
             box-shadow: 0 5px 20px rgba(0,0,0,0.3);
             color: #fff;
         }
-        
-        .link-button img { 
-            height: 24px; 
-            width: 24px; 
+
+        .link-button img {
+            height: 24px;
+            width: 24px;
             object-fit: contain;
-            margin-right: 15px; 
+            margin-right: 15px;
             transition: transform 0.3s;
             flex-shrink: 0;
         }
@@ -662,71 +805,76 @@
         .toast.show { transform: translateY(0); opacity: 1; }
         .toast img { width: 22px; height: 22px; margin-right: 12px; }
         .toast-title { font-weight: 800; color: var(--color-primary); margin-bottom: 2px; font-size: 1.05em; }
-        
+
         /* ===================================== */
         /* МОБИЛЬНЫЕ ПРАВКИ (MAX-WIDTH: 600PX) */
         /* ===================================== */
         @media (max-width: 600px) {
-            .header-banner { 
+            .header-banner {
                 height: 190px;
                 padding-bottom: 10px;
             }
-            
+
             .main-container {
                 margin-top: -20px;
                 padding: 10px 15px 40px 15px;
             }
-            
-            .header-banner h1 { 
+
+            .header-banner h1 {
                 flex-direction: column;
-                gap: 5px; 
+                gap: 5px;
             }
-            .apple-icon { 
+            .apple-icon {
                 margin-bottom: 5px;
-                margin-left: 0; /* Сброс для мобильных */
-            }
-            
-            .tab-content { padding: 25px 15px; }
-            
-            .tab-content h2 img {
-                margin-left: 0; /* Сброс для мобильных */
-                margin-right: 12px; /* Вернуть стандартный отступ */
+                margin-left: 0;
             }
 
-            .tab-buttons { 
+            .tab-content { padding: 25px 15px; }
+
+            .tab-content h2 img {
+                margin-left: 0;
+                margin-right: 12px;
+            }
+
+            .tab-buttons {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
-                gap: 8px; 
-                margin-bottom: 25px; 
+                gap: 8px;
+                margin-bottom: 25px;
             }
-            
-            .tab-button { 
+
+            /* Последняя кнопка (5-я) растягивается на всю ширину на мобилках */
+            .tab-button:last-child {
+                grid-column: span 2;
+            }
+
+            .tab-button {
                 font-size: 1rem;
-                padding: 12px 15px; 
-                flex-direction: column; 
-                align-items: center; 
-                text-align: center; 
+                padding: 12px 15px;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
                 justify-content: center;
             }
-            .tab-button.active { 
+            .tab-button.active {
                 padding-left: 15px;
-                padding-top: 15px; 
+                padding-top: 15px;
             }
-            .tab-button img { 
+            .tab-button img {
                 margin-right: 0;
-                margin-bottom: 5px; 
-                height: 22px; 
+                margin-bottom: 5px;
+                height: 22px;
             }
-            
-            .download-button, .link-button { 
+
+            .download-button, .link-button {
                 width: 100%;
-                font-size: 0.9rem; 
+                font-size: 0.9rem;
             }
         }
     </style>
 </head>
 <body>
-    
+
     <div class="noise-overlay"></div>
     <div id="spotlight"></div>
     <canvas id="bg-canvas"></canvas>
@@ -736,7 +884,7 @@
     <div class="header-banner" id="headerBanner">
         <div class="header-content" id="headerContent">
             <h1>
-                <img src="apple_icon.png" alt="Apple" class="apple-icon" onerror="this.style.display='none'"> 
+                <img src="apple_icon.png" alt="Apple" class="apple-icon" onerror="this.style.display='none'">
                 <span id="typewriter-h1"></span><span class="typing-cursor" id="cursor-h1"></span>
             </h1>
             <p>
@@ -744,9 +892,9 @@
             </p>
         </div>
     </div>
-    
+
     <div class="main-container">
-    
+
         <div class="tab-buttons">
             <button class="tab-button active ripple-btn" onclick="openTab(event, 'Description')">
                 <img src="icon_clip_red.png" alt="Info" onerror="this.src='https://cdn-icons-png.flaticon.com/512/10692/10692823.png'">
@@ -764,12 +912,17 @@
                 <img src="icon_bag_green.png" alt="Contacts" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3059/3059446.png'">
                 Контакты
             </button>
+            <!-- НОВАЯ КНОПКА -->
+            <button class="tab-button ripple-btn" onclick="openTab(event, 'Prompts')">
+                <img src="sheets.png" alt="Prompts" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2921/2921222.png'">
+                Промпты
+            </button>
         </div>
 
         <div class="tab-content-wrapper">
             <div id="Description" class="tab-content active">
                 <h2>
-                    <img src="icon_clip.png" alt="Clip" class="icon-clip" onerror="this.style.display='none'"> 
+                    <img src="icon_clip.png" alt="Clip" class="icon-clip" onerror="this.style.display='none'">
                     О Пресете
                 </h2>
                 <hr class="dashed-divider">
@@ -779,9 +932,9 @@
                     <span style="color: var(--color-primary); font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; border-bottom: 2px solid var(--color-secondary);">Поддерживаемые модели:</span><br>
                     <span style="display: block; margin-top: 10px; font-size: 0.95em; line-height: 1.8;">
                         <img src="leaf_red.png" style="height: 18px; vertical-align: middle; margin-right: 8px; margin-bottom: 3px;" alt="*">
-                        Gemini 2.5/3.0 pro <br> 
+                        Gemini 2.5/3.0 pro <br>
                         <img src="leaf_green.png" style="height: 18px; vertical-align: middle; margin-right: 8px; margin-bottom: 3px;" alt="*">
-                        Claude Opus/Sonnet 4.5, Sonnet 4, Opus 4.1 <br> 
+                        Claude Opus/Sonnet 4.5, Sonnet 4, Opus 4.1 <br>
                     </span>
                 </p>
 
@@ -791,7 +944,7 @@
                         История обновлений
                     </div>
                     <div class="changelog-content-inner">
-                        
+
                         <div class="changelog-entry">
                             <div>
                                 <span class="version-tag">v1.59</span>
@@ -804,7 +957,7 @@
                                 <li>Впредь будет более плотная интеграция сайта. Будет добавлен раздел "промпты" чтобы можно было вставить или менять их в пресете.</li>
                             </ul>
                         </div>
-                        
+
                         <div class="changelog-entry">
                             <div>
                                 <span class="version-tag">v1.581</span>
@@ -844,26 +997,26 @@
                 <p>
                     Файл пресета.
                 </p>
-                
-                <a class="download-button ripple-btn" href="%D0%AF%D0%B1%D0%BB%D0%BE%D1%87%D0%BD%D1%8B%D0%B9%20V1.59.json" 
+
+                <a class="download-button ripple-btn" href="%D0%AF%D0%B1%D0%BB%D0%BE%D1%87%D0%BD%D1%8B%D0%B9%20V1.59.json"
                 download onclick="createSparks(event); showToast('Загрузка началась', 'Файл V1.59 скачивается...')">
                     <img src="icon_button_green.png" alt="DL" onerror="this.style.display='none'">
                     СКАЧАТЬ V1.59
                 </a>
             </div>
-            
+
             <div id="Guides" class="tab-content">
                 <h2>
-                    <img src="icon_book_closed.png" alt="Guides" onerror="this.style.display='none'"> 
+                    <img src="icon_book_closed.png" alt="Guides" onerror="this.style.display='none'">
                     Инструкции
                 </h2>
                 <hr class="dashed-divider">
                 <p>
                     Правильная установка — залог успеха. Обязательно ознакомьтесь с гайдом перед использованием.
                 </p>
-                <div class="no-bullets"> 
+                <div class="no-bullets">
                     <a class="link-button ripple-btn" href="https://sites.google.com/view/testijhfrr/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F-%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0#h.t3t6sw19ia3y" target="_blank">
-                        <img src="sheets.png" alt="Guide" onerror="this.style.display='none'"> 
+                        <img src="sheets.png" alt="Guide" onerror="this.style.display='none'">
                         Гайд по установке
                     </a>
                 </div>
@@ -871,12 +1024,12 @@
 
             <div id="Contacts" class="tab-content">
                 <h2>
-                    <img src="icon_bag.png" alt="Contact" onerror="this.style.display='none'"> 
+                    <img src="icon_bag.png" alt="Contact" onerror="this.style.display='none'">
                     Обратная Связь
                 </h2>
                 <hr class="dashed-divider">
                 <p>Следите за обновлениями и задавайте вопросы в нашем сообществе.</p>
-                <div class="no-bullets"> 
+                <div class="no-bullets">
                     <a class="link-button ripple-btn" href="https://t.me/YablochnyAI" target="_blank">
                         <img src="icon_tg_green.png" alt="TG" onerror="this.style.display='none'">
                         Телеграм Канал
@@ -887,6 +1040,286 @@
                     </a>
                 </div>
             </div>
+
+            <!-- НОВЫЙ РАЗДЕЛ ПРОМПТОВ -->
+            <div id="Prompts" class="tab-content">
+                <h2>
+                    <img src="sheets.png" alt="Prompts" style="filter: drop-shadow(0 0 5px var(--color-primary));" onerror="this.style.display='none'">
+                    Промпты
+                </h2>
+                <hr class="dashed-divider">
+
+                <div class="prompts-intro">
+                    <strong>📝 Памятка:</strong><br>
+                    Здесь собраны модули пресета. Вы можете развернуть категорию, посмотреть, что стоит по умолчанию ("Заглушка" или конкретный промпт), и выбрать альтернативный вариант. Просто нажмите <strong>"Копировать"</strong> и вставьте в настройки Силли.
+                </div>
+
+                <div class="prompts-container">
+
+                    <!-- 1. OOC -->
+                    <div class="prompt-category">
+                        <div class="prompt-header" onclick="togglePrompt(this)">
+                            <span>1.━(OOC)━</span>
+                            <span class="prompt-arrow">▼</span>
+                        </div>
+                        <div class="prompt-body">
+                            <div class="default-block">
+                                <span class="default-label">По дефолту в пресете:</span>
+                                Стандартный OOC драйвер
+                            </div>
+                            <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
+                        </div>
+                    </div>
+
+                    <!-- 2. Тип РП -->
+                    <div class="prompt-category">
+                        <div class="prompt-header" onclick="togglePrompt(this)">
+                            <span>2.━(Тип РП)━</span>
+                            <span class="prompt-arrow">▼</span>
+                        </div>
+                        <div class="prompt-body">
+                            <div class="default-block">
+                                <span class="default-label">По дефолту в пресете:</span>
+                                Заглушка (Отключено)
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Роль -->
+                    <div class="prompt-category">
+                        <div class="prompt-header" onclick="togglePrompt(this)">
+                            <span>3.━(Роль)━</span>
+                            <span class="prompt-arrow">▼</span>
+                        </div>
+                        <div class="prompt-body">
+                             <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
+                        </div>
+                    </div>
+
+                    <!-- 4. Тон -->
+                    <div class="prompt-category">
+                        <div class="prompt-header" onclick="togglePrompt(this)">
+                            <span>4.━(Тон)━</span>
+                            <span class="prompt-arrow">▼</span>
+                        </div>
+                        <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
+                        </div>
+                    </div>
+
+                    <!-- 5. Анти-Изм -->
+                    <div class="prompt-category">
+                        <div class="prompt-header" onclick="togglePrompt(this)">
+                            <span>5.━(Анти-Изм)━</span>
+                            <span class="prompt-arrow">▼</span>
+                        </div>
+                        <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
+                        </div>
+                    </div>
+
+                    <!-- 6. Карты -->
+                    <div class="prompt-category">
+                        <div class="prompt-header" onclick="togglePrompt(this)">
+                            <span>6.━(Карты)━</span>
+                            <span class="prompt-arrow">▼</span>
+                        </div>
+                        <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
+                        </div>
+                    </div>
+
+                    <!-- 7. Жанры -->
+                    <div class="prompt-category">
+                        <div class="prompt-header" onclick="togglePrompt(this)">
+                            <span>7.━(Жанры)━</span>
+                            <span class="prompt-arrow">▼</span>
+                        </div>
+                        <div class="prompt-body">
+                            <div class="default-block">
+                                <span class="default-label">По дефолту в пресете:</span>
+                                Заглушка (Пусто)
+                            </div>
+
+                            <div class="options-list">
+                                <!-- Вариант 1 -->
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">🔗 Soulmate AU</span>
+                                        <span class="option-desc">Мир, где у каждого есть родственная душа.</span>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this, 'Текст промпта для Соулмейт АУ...')">Копировать</button>
+                                </div>
+
+                                <!-- Вариант 2 -->
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">🔗 Omegaverse AU</span>
+                                        <span class="option-desc">Динамика альфа/омега/бета.</span>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this, 'Текст промпта для Омегаверса...')">Копировать</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 8. Нарративный Стиль -->
+                    <div class="prompt-category">
+                        <div class="prompt-header" onclick="togglePrompt(this)">
+                            <span>8.━(Нарративный Стиль)━</span>
+                            <span class="prompt-arrow">▼</span>
+                        </div>
+                        <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
+                        </div>
+                    </div>
+
+                    <!-- 9. Улучшалки РП -->
+                    <div class="prompt-category">
+                        <div class="prompt-header" onclick="togglePrompt(this)">
+                            <span>9.━(Улучшалки РП)━</span>
+                            <span class="prompt-arrow">▼</span>
+                        </div>
+                        <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Активно</div>
+                        </div>
+                    </div>
+
+                    <!-- 10. Штуки -->
+                    <div class="prompt-category">
+                        <div class="prompt-header" onclick="togglePrompt(this)">
+                            <span>10.━(Штуки)━</span>
+                            <span class="prompt-arrow">▼</span>
+                        </div>
+                        <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
+                        </div>
+                    </div>
+
+                    <!-- 11. Откровенный Контент -->
+                    <div class="prompt-category">
+                        <div class="prompt-header" onclick="togglePrompt(this)">
+                            <span>11.━(Откровенный Контент)━</span>
+                            <span class="prompt-arrow">▼</span>
+                        </div>
+                        <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Разрешено</div>
+                        </div>
+                    </div>
+
+                    <!-- 12. Язык -->
+                    <div class="prompt-category">
+                        <div class="prompt-header" onclick="togglePrompt(this)">
+                            <span>12.━(Язык)━</span>
+                            <span class="prompt-arrow">▼</span>
+                        </div>
+                        <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Русский</div>
+                        </div>
+                    </div>
+
+                    <!-- 13. Надстройки -->
+                    <div class="prompt-category">
+                        <div class="prompt-header" onclick="togglePrompt(this)">
+                            <span>13.━(Надстройки)━</span>
+                            <span class="prompt-arrow">▼</span>
+                        </div>
+                        <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
+                        </div>
+                    </div>
+
+                    <!-- 14. Повествование -->
+                    <div class="prompt-category">
+                        <div class="prompt-header" onclick="togglePrompt(this)">
+                            <span>14.━(Повествование)━</span>
+                            <span class="prompt-arrow">▼</span>
+                        </div>
+                        <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>3-е лицо, Slowburn</div>
+                        </div>
+                    </div>
+
+                    <!-- 15. Длина -->
+                    <div class="prompt-category">
+                        <div class="prompt-header" onclick="togglePrompt(this)">
+                            <span>15.━(Длина)━</span>
+                            <span class="prompt-arrow">▼</span>
+                        </div>
+                        <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Динамическая</div>
+                        </div>
+                    </div>
+
+                    <!-- 16. Форматирование -->
+                    <div class="prompt-category">
+                        <div class="prompt-header" onclick="togglePrompt(this)">
+                            <span>16.━(Форматирование)━</span>
+                            <span class="prompt-arrow">▼</span>
+                        </div>
+                        <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Стандартное (*действия*, "диалоги")</div>
+                        </div>
+                    </div>
+
+                    <!-- 17. Патчи -->
+                    <div class="prompt-category">
+                        <div class="prompt-header" onclick="togglePrompt(this)">
+                            <span>17.━(Патчи)━</span>
+                            <span class="prompt-arrow">▼</span>
+                        </div>
+                        <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
+                        </div>
+                    </div>
+
+                    <!-- 18. Доп Настройки Карты -->
+                    <div class="prompt-category">
+                        <div class="prompt-header" onclick="togglePrompt(this)">
+                            <span>18.━(Доп Настройки Карты)━</span>
+                            <span class="prompt-arrow">▼</span>
+                        </div>
+                        <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
+                        </div>
+                    </div>
+
+                    <!-- 19. Модификаторы -->
+                    <div class="prompt-category">
+                        <div class="prompt-header" onclick="togglePrompt(this)">
+                            <span>19.━(Модификаторы)━</span>
+                            <span class="prompt-arrow">▼</span>
+                        </div>
+                        <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
+                        </div>
+                    </div>
+
+                    <!-- 20. Думалка -->
+                    <div class="prompt-category">
+                        <div class="prompt-header" onclick="togglePrompt(this)">
+                            <span>20.━(Думалка)━</span>
+                            <span class="prompt-arrow">▼</span>
+                        </div>
+                        <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Скрыта</div>
+                        </div>
+                    </div>
+
+                    <!-- 21. ДжейлБрейк -->
+                    <div class="prompt-category">
+                        <div class="prompt-header" onclick="togglePrompt(this)">
+                            <span>21.━(ДжейлБрейк)━</span>
+                            <span class="prompt-arrow">▼</span>
+                        </div>
+                        <div class="prompt-body">
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Яблочный JB</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -905,17 +1338,16 @@
             }
             var selectedTab = document.getElementById(tabName);
             selectedTab.style.display = "block";
-            // Небольшая задержка для запуска анимации CSS
             setTimeout(() => { selectedTab.classList.add('active'); }, 10);
             evt.currentTarget.classList.add("active");
         }
-        
+
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('Description').style.display = 'block';
             setTimeout(() => document.getElementById('Description').classList.add('active'), 10);
             startTypewriter();
         });
-        
+
         // === 1. АНИМИРОВАННЫЙ ФОН (ЧАСТИЦЫ) ===
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
@@ -931,7 +1363,7 @@
             constructor() {
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 0.4; 
+                this.vx = (Math.random() - 0.5) * 0.4;
                 this.vy = (Math.random() - 0.5) * 0.4;
                 this.size = Math.random() * 2.5;
                 this.baseAlpha = Math.random() * 0.4 + 0.1;
@@ -944,7 +1376,7 @@
             update() {
                 this.x += this.vx;
                 this.y += this.vy;
-                
+
                 // Пульсация
                 this.pulseAngle += this.pulseSpeed;
                 this.alpha = this.baseAlpha + Math.sin(this.pulseAngle) * 0.1;
@@ -961,7 +1393,7 @@
                 ctx.fill();
             }
         }
-        
+
         for (let i = 0; i < 80; i++) particles.push(new Particle());
         function animateBg() {
             ctx.clearRect(0, 0, width, height);
@@ -978,10 +1410,17 @@
         // === 3. ИСКРЫ ПРИ НАЖАТИИ ===
         function createSparks(e) {
             const container = document.getElementById('sparks-container');
-            const rect = e.target.getBoundingClientRect();
-            // Если клик по кнопке, берем центр кнопки, если нет - координаты мыши
-            const x = e.clientX;
-            const y = e.clientY;
+            // Если передан объект события с координатами
+            let x, y;
+            if (e.clientX !== undefined) {
+                 x = e.clientX;
+                 y = e.clientY;
+            } else {
+                // Если переданы координаты вручную (для кнопки копирования)
+                x = e.x || window.innerWidth/2;
+                y = e.y || window.innerHeight/2;
+            }
+
             const colors = ['#99ff99', '#ff9a9e', '#ffffff'];
             for (let i = 0; i < 25; i++) {
                 const spark = document.createElement('div');
@@ -1011,18 +1450,16 @@
         const headerContent = document.getElementById('headerContent');
 
         headerBanner.addEventListener('mousemove', (e) => {
-            // На мобильных отключаем наклон, чтобы не глючило при скролле
             if (window.innerWidth < 768) return;
 
             const rect = headerBanner.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-            
+
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
-            
-            // Более мягкий наклон
-            const rotateX = ((y - centerY) / centerY) * -8; 
+
+            const rotateX = ((y - centerY) / centerY) * -8;
             const rotateY = ((x - centerX) / centerX) * 8;
 
             headerContent.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
@@ -1036,7 +1473,7 @@
                 let rect = e.target.getBoundingClientRect();
                 let x = e.clientX - rect.left;
                 let y = e.clientY - rect.top;
-                
+
                 let ripples = document.createElement('span');
                 ripples.style.left = x + 'px';
                 ripples.style.top = y + 'px';
@@ -1079,12 +1516,10 @@
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
             toast.className = 'toast';
-            // Используем встроенную SVG иконку для надежности, если картинки нет
             const iconHTML = `<img src="icon_clip.png" onerror="this.style.display='none'">`;
             toast.innerHTML = `${iconHTML}<div class="toast-content"><div class="toast-title">${title}</div><div>${message}</div></div>`;
             container.appendChild(toast);
-            
-            // Запуск анимации
+
             requestAnimationFrame(() => {
                 toast.classList.add('show');
             });
@@ -1092,6 +1527,33 @@
                 toast.classList.remove('show');
                 setTimeout(() => toast.remove(), 600);
             }, 3000);
+        }
+
+        // === 8. ЛОГИКА ДЛЯ РАЗДЕЛА ПРОМПТОВ ===
+        function togglePrompt(header) {
+            header.classList.toggle('active');
+        }
+
+        function copyText(btnElement, textToCopy) {
+            // Создаем искры
+            const rect = btnElement.getBoundingClientRect();
+            createSparks({
+                clientX: rect.left + rect.width/2,
+                clientY: rect.top + rect.height/2
+            });
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                showToast('Скопировано!', 'Промпт в буфере обмена.');
+                const originalText = btnElement.innerText;
+                btnElement.innerText = 'Готово!';
+                btnElement.style.borderColor = '#fff';
+                setTimeout(() => {
+                    btnElement.innerText = originalText;
+                    btnElement.style.borderColor = '';
+                }, 1500);
+            }).catch(err => {
+                showToast('Ошибка', 'Не удалось скопировать.');
+            });
         }
     </script>
 </body>
