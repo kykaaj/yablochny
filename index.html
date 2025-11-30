@@ -594,7 +594,7 @@
         }
 
         .prompt-header.active + .prompt-body {
-            max-height: 2000px; /* Увеличено для длинных промптов */
+            max-height: 5000px; /* Увеличено для длинных промптов */
             transition: max-height 0.6s ease-in-out;
             opacity: 1;
             padding: 20px 15px;
@@ -1821,7 +1821,7 @@ Comments template:
 
 > Other comments...]</textarea>
                                 </div>
-                                <div class="option-item">
+                                                                <div class="option-item">
                                     <span class="option-name">💬 Комменты V3</span>
                                     <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
                                     <textarea class="prompt-source">[The Living Comments]
@@ -1861,6 +1861,7 @@ Comments template:
     </div>
 </div></textarea>
                                 </div>
+
                             </div>
 
                             <hr class="dashed-divider" style="margin: 15px 0;">
