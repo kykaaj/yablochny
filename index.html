@@ -2211,27 +2211,60 @@ Length: [Renette must follow these rules ALWAYS. Answers should consist of 10 or
     </div>
 
     <script>
-        // === ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК ===
+        // === ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК С ПАМЯТЬЮ ===
         function openTab(evt, tabName) {
             var i, tabcontent, tablinks;
+
+            // 1. Скрываем все вкладки
             tabcontent = document.getElementsByClassName("tab-content");
             for (i = 0; i < tabcontent.length; i++) {
                 tabcontent[i].style.display = "none";
                 tabcontent[i].classList.remove('active');
             }
+
+            // 2. Убираем подсветку со всех кнопок
             tablinks = document.getElementsByClassName("tab-button");
             for (i = 0; i < tablinks.length; i++) {
                 tablinks[i].classList.remove("active");
             }
+
+            // 3. Показываем нужную вкладку
             var selectedTab = document.getElementById(tabName);
-            selectedTab.style.display = "block";
-            setTimeout(() => { selectedTab.classList.add('active'); }, 10);
-            evt.currentTarget.classList.add("active");
+            if (selectedTab) {
+                selectedTab.style.display = "block";
+                setTimeout(() => { selectedTab.classList.add('active'); }, 10);
+            }
+
+            // 4. Подсвечиваем нажатую кнопку (если функция вызвана кликом)
+            if (evt && evt.currentTarget) {
+                evt.currentTarget.classList.add("active");
+            } else {
+                // Если функция вызвана автоматически при загрузке, ищем кнопку вручную
+                for (i = 0; i < tablinks.length; i++) {
+                    if (tablinks[i].getAttribute('onclick').includes("'" + tabName + "'")) {
+                        tablinks[i].classList.add("active");
+                    }
+                }
+            }
+
+            // 5. ✨ ЗАПОМИНАЕМ ВЫБОР ✨
+            localStorage.setItem('yablochnyActiveTab', tabName);
         }
 
+        // === ПРИ ЗАГРУЗКЕ СТРАНИЦЫ ===
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('Description').style.display = 'block';
-            setTimeout(() => document.getElementById('Description').classList.add('active'), 10);
+            // Проверяем, есть ли что-то в памяти
+            var savedTab = localStorage.getItem('yablochnyActiveTab');
+
+            // Если в памяти пусто (первый заход), открываем Description
+            if (!savedTab) {
+                savedTab = 'Description';
+            }
+
+            // Открываем сохраненную вкладку (или дефолтную)
+            // Передаем null вместо event, так как клика не было
+            openTab(null, savedTab);
+
             startTypewriter();
         });
 
@@ -2423,8 +2456,6 @@ Length: [Renette must follow these rules ALWAYS. Answers should consist of 10 or
 
         function copyText(btnElement) {
             // Ищем скрытый textarea рядом с кнопкой
-            // Структура HTML: .option-item > .copy-btn + .prompt-source
-            // Или .option-item > .option-info + .copy-btn + .prompt-source
             const container = btnElement.parentElement;
             const textArea = container.querySelector('.prompt-source');
 
