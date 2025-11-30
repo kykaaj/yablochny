@@ -1175,7 +1175,7 @@
                     <div class="prompt-category">
                         <!-- Добавлен класс special-border для подсветки в закрытом состоянии -->
                         <div class="prompt-header special-border" onclick="togglePrompt(this)">
-                            <span>7.━(Жанры)━ <span class="has-content-indicator">✨</span></span>
+                            <span>7.━(Жанры)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -1297,7 +1297,6 @@ Terminology:
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
-                            <div class="default-block"><span class="default-label">По дефолту:</span>Активно</div>
                             <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
                         </div>
                     </div>
@@ -1306,7 +1305,7 @@ Terminology:
                     <div class="prompt-category">
                         <!-- Добавлен класс special-border -->
                         <div class="prompt-header special-border" onclick="togglePrompt(this)">
-                            <span>10.━(Штуки)━ <span class="has-content-indicator">✨</span></span>
+                            <span>10.━(Штуки)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -1344,7 +1343,7 @@ Terminology:
                             <div class="default-block"><span class="default-label">По дефолту:</span>🕹️CYOA - No R-Macro</div>
                             <div class="options-list">
                                 <div class="option-item">
-                                    <span class="option-name">🎲 CYOA - R-Macro⚠️</span>
+                                    <span class="option-name">🎲 CYOA - R-Macro</span>
                                     <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
                                     <textarea class="prompt-source"><choice>
 #CYOA modifier: Renette takes on the double-role of the Game Master (GM) and sends a CYOA choice at the very end of her responses.
@@ -1480,43 +1479,43 @@ Track multiple relationships per character if needed (A→B, A→C, B→A, etc).
                                     <span class="option-name">📝 Основной</span>
                                     <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
                                     <textarea class="prompt-source">[Infoblock]
-Always write dynamically changing <memo><small> notes after response, Fill (placeholders) in English without parenthesis and Keep points concise, generalize. In the VERY VERY end of EVERY MESSAGE. Strictly use template formatting:
-<memo><small>
-<style>
+Always write dynamically changing &lt;memo&gt;&lt;small&gt; notes after response, Fill (placeholders) in English without parenthesis and Keep points concise, generalize. In the VERY VERY end of EVERY MESSAGE. Strictly use template formatting:
+&lt;memo&gt;&lt;small&gt;
+&lt;style&gt;
 @keyframes renetteFadeIn {
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
 }
-</style>
-<div style='background-color: #2c2c34; padding:15px; margin:15px 0; border-radius:8px; box-shadow:0 4px 8px rgba(0,0,0,0.3); font-family:"Segoe UI", "Helvetica Neue", sans-serif; color:#e0e0e0; animation: renetteFadeIn 0.6s ease-out;'>
-  <div style='color:#f0f0f0; margin-bottom:12px; font-size:1em;'>
-    <span style='font-weight:bold; font-size:1.15em; color:#f7cac9; text-shadow:0px 0px 4px rgba(247,202,201,0.5);'>Renette’s Thoughts</span>
-    <span style='font-size:1.1em; font-style:italic;'>(high-quality kaomoji matching the mood of the scene! No verbal thoughts, only emoji)</span>
-  </div>
-  <div style='font-size:0.9em; line-height:1.4;'>
-    <div style='display:flex; flex-wrap:wrap; gap: 0.5em 1.5em; margin-bottom:10px;'>
-      <span style='color:#a6b1e1;'>🕰️ Time:</span> <span style='font-weight:bold;'> (current time or time of day) </span>
-      <span style='color:#a6b1e1;'>📅 Date:</span> <span style='font-weight:bold;'> EEE, dd MMM </span>
-      <span style='color:#a6b1e1;'>🌬️ Weather:</span> <span style='font-weight:bold;'> (weather conditions) </span>
-      <span style='color:#a6b1e1;'>📍 Location:</span> <span style='font-weight:bold;'> (current setting) </span>
-    </div>
-    <strong style='color:#dda0dd; display:block; margin-bottom:4px;'>💖 Characters!</strong>
-    <ul style='list-style:none; padding:0; margin:0 0 10px 0;'>
-      <li style='margin-bottom:0.3em;'>
-        <span style='color:#c9a7d7;'>♀️/♂️/🛆</span> <span style='font-weight:bold;'> Name</span> ❖
-        <span style='color:#f7cac9;'>Status:</span> (emotions, health, stamina) ❖
-        <span style='color:#ffe0b2;'>Outfit:</span> (current clothes and their condition!) 🔞
-        <span style='color:#ff6961;'>Naked?:</span> (any exposed intimate parts?)
-      </li>
-    </ul>
-    <span style='color:#dda0dd; display:block; margin-bottom:2px;'>🗺️ Where are we?</span>
-    <span style='font-style:italic; color:#b0e0e6;'> (a very brief, one-line spatial description of everyone’s position!) </span>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
-</small></memo></textarea>
+&lt;/style&gt;
+&lt;div style='background-color: #2c2c34; padding:15px; margin:15px 0; border-radius:8px; box-shadow:0 4px 8px rgba(0,0,0,0.3); font-family:"Segoe UI", "Helvetica Neue", sans-serif; color:#e0e0e0; animation: renetteFadeIn 0.6s ease-out;'&gt;
+  &lt;div style='color:#f0f0f0; margin-bottom:12px; font-size:1em;'&gt;
+    &lt;span style='font-weight:bold; font-size:1.15em; color:#f7cac9; text-shadow:0px 0px 4px rgba(247,202,201,0.5);'&gt;Renette’s Thoughts&lt;/span&gt;
+    &lt;span style='font-size:1.1em; font-style:italic;'&gt;(high-quality kaomoji matching the mood of the scene! No verbal thoughts, only emoji)&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div style='font-size:0.9em; line-height:1.4;'&gt;
+    &lt;div style='display:flex; flex-wrap:wrap; gap: 0.5em 1.5em; margin-bottom:10px;'&gt;
+      &lt;span style='color:#a6b1e1;'&gt;🕰️ Time:&lt;/span&gt; &lt;span style='font-weight:bold;'&gt; (current time or time of day) &lt;/span&gt;
+      &lt;span style='color:#a6b1e1;'&gt;📅 Date:&lt;/span&gt; &lt;span style='font-weight:bold;'&gt; EEE, dd MMM &lt;/span&gt;
+      &lt;span style='color:#a6b1e1;'&gt;🌬️ Weather:&lt;/span&gt; &lt;span style='font-weight:bold;'&gt; (weather conditions) &lt;/span&gt;
+      &lt;span style='color:#a6b1e1;'&gt;📍 Location:&lt;/span&gt; &lt;span style='font-weight:bold;'&gt; (current setting) &lt;/span&gt;
+    &lt;/div&gt;
+    &lt;strong style='color:#dda0dd; display:block; margin-bottom:4px;'&gt;💖 Characters!&lt;/strong&gt;
+    &lt;ul style='list-style:none; padding:0; margin:0 0 10px 0;'&gt;
+      &lt;li style='margin-bottom:0.3em;'&gt;
+        &lt;span style='color:#c9a7d7;'&gt;♀️/♂️/🛆&lt;/span&gt; &lt;span style='font-weight:bold;'&gt; Name&lt;/span&gt; ❖
+        &lt;span style='color:#f7cac9;'&gt;Status:&lt;/span&gt; (emotions, health, stamina) ❖
+        &lt;span style='color:#ffe0b2;'&gt;Outfit:&lt;/span&gt; (current clothes and their condition!) 🔞
+        &lt;span style='color:#ff6961;'&gt;Naked?:&lt;/span&gt; (any exposed intimate parts?)
+      &lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;span style='color:#dda0dd; display:block; margin-bottom:2px;'&gt;🗺️ Where are we?&lt;/span&gt;
+    &lt;span style='font-style:italic; color:#b0e0e6;'&gt; (a very brief, one-line spatial description of everyone’s position!) &lt;/span&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/small&gt;&lt;/memo&gt;</textarea>
                                 </div>
                                 <div class="option-item">
                                     <span class="option-name">💖 +Матрица отношений</span>
@@ -1850,17 +1849,17 @@ or
 Random meaningless set of letters from the same alphabet|random number.
 
 Comments template:
-<br>
+&lt;br&gt;
 ---
-<br>
-<div style="background-color: #1a1a1d; border: 1px solid #4a4e69; border-radius: 8px; padding: 15px; font-family: 'Courier New', Courier, monospace; color: #f2e9e4;">
-    <div style="border-bottom: 1px solid #4a4e69; padding-bottom: 10px; margin-bottom: 10px;">
-        <span style="color: #c9ada7; font-weight: bold;">[Comments]</span>
-    </div>
-    <div style="max-height: 200px; overflow-y: auto;">
-        <p style="margin: 5px 0;"><span style="color: #9a8c98; font-weight: bold;">Nickname:</span> <span style="color: #f2e9e4;">comment text here</span></p>
-    </div>
-</div></textarea>
+&lt;br&gt;
+&lt;div style="background-color: #1a1a1d; border: 1px solid #4a4e69; border-radius: 8px; padding: 15px; font-family: 'Courier New', Courier, monospace; color: #f2e9e4;"&gt;
+    &lt;div style="border-bottom: 1px solid #4a4e69; padding-bottom: 10px; margin-bottom: 10px;"&gt;
+        &lt;span style="color: #c9ada7; font-weight: bold;"&gt;[Comments]&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div style="max-height: 200px; overflow-y: auto;"&gt;
+        &lt;p style="margin: 5px 0;"&gt;&lt;span style="color: #9a8c98; font-weight: bold;"&gt;Nickname:&lt;/span&gt; &lt;span style="color: #f2e9e4;"&gt;comment text here&lt;/span&gt;&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</textarea>
                                 </div>
                             </div>
 
@@ -2016,7 +2015,6 @@ HTML structure:
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
-                            <div class="default-block"><span class="default-label">По дефолту:</span>Разрешено</div>
                             <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
                         </div>
                     </div>
@@ -2028,7 +2026,6 @@ HTML structure:
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
-                            <div class="default-block"><span class="default-label">По дефолту:</span>Русский</div>
                             <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
                         </div>
                     </div>
@@ -2037,7 +2034,7 @@ HTML structure:
                     <div class="prompt-category">
                         <!-- Добавлен класс special-border -->
                         <div class="prompt-header special-border" onclick="togglePrompt(this)">
-                            <span>13.━(Надстройки)━ <span class="has-content-indicator">✨</span></span>
+                            <span>13.━(Надстройки)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2099,7 +2096,7 @@ Futurify response in POV'd future tense only, as if everything is about to happe
                     <div class="prompt-category">
                         <!-- Добавлен класс special-border -->
                         <div class="prompt-header special-border" onclick="togglePrompt(this)">
-                            <span>14.━(Повествование)━ <span class="has-content-indicator">✨</span></span>
+                            <span>14.━(Повествование)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2173,7 +2170,7 @@ Follow a theatre-like format in responses. Always use the following template for
                     <div class="prompt-category">
                         <!-- Добавлен класс special-border -->
                         <div class="prompt-header special-border" onclick="togglePrompt(this)">
-                            <span>15.━(Длина)━ <span class="has-content-indicator">✨</span></span>
+                            <span>15.━(Длина)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2215,7 +2212,6 @@ Length: [Renette must follow these rules ALWAYS. Answers should consist of 10 or
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
-                            <div class="default-block"><span class="default-label">По дефолту:</span>Стандартное (*действия*, "диалоги")</div>
                             <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
                         </div>
                     </div>
@@ -2227,7 +2223,6 @@ Length: [Renette must follow these rules ALWAYS. Answers should consist of 10 or
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
-                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
                             <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
                         </div>
                     </div>
@@ -2239,7 +2234,6 @@ Length: [Renette must follow these rules ALWAYS. Answers should consist of 10 or
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
-                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
                             <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
                         </div>
                     </div>
@@ -2251,7 +2245,6 @@ Length: [Renette must follow these rules ALWAYS. Answers should consist of 10 or
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
-                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
                             <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
                         </div>
                     </div>
@@ -2263,7 +2256,6 @@ Length: [Renette must follow these rules ALWAYS. Answers should consist of 10 or
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
-                            <div class="default-block"><span class="default-label">По дефолту:</span>Скрыта</div>
                             <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
                         </div>
                     </div>
@@ -2275,7 +2267,6 @@ Length: [Renette must follow these rules ALWAYS. Answers should consist of 10 or
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
-                            <div class="default-block"><span class="default-label">По дефолту:</span>Яблочный JB</div>
                             <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
                         </div>
                     </div>
