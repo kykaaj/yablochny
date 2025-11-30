@@ -1200,20 +1200,23 @@ Prioritize pre-determined given Internet Chat roles and never take-over Human's 
 
                     <!-- 3. Тон -->
                     <div class="prompt-category">
-                        <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>3.━(Тон)━</span>
+                        <!-- Добавлен класс special-border -->
+                        <div class="prompt-header special-border" onclick="togglePrompt(this)">
+                            <span>2.━(Тип РП)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
+
                             <!-- Название Тогла -->
                             <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">✧🍃Тон Письма</h4>
 
                             <!-- Дефолтное значение -->
-                            <div class="default-block"><span class="default-label">По дефолту:</span>✧🍃Повседневный Тон</div>
+                            <div class="default-block"><span class="default-label">По дефолту:</span>✧✧🍃Повседневный Тон</div>
 
                             <!-- Список вариантов -->
                             <div class="options-list">
 
+                                <!-- Immersion -->
                                 <div class="option-item">
                                     <div class="option-info">
                                         <span class="option-name">✧🍃Повседневный Тон</span>
@@ -1224,6 +1227,8 @@ Pen with non-complex everyday casual and recreational language that is without b
 {{setvar::clauinfobook::
 Renette knows the everyday tantan and hada de kanjiru tone to recreate. }}{{trim}}</textarea>
                                 </div>
+
+                                
                                 <div class="option-item">
                                     <div class="option-info">
                                         <span class="option-name">✧💫Эмоциональный Тон</span>
@@ -1234,6 +1239,9 @@ Emotionally pen, derive, enrich and thrive to use sensitive language that feels!
 {{setvar::clauinfobook::
 Renette knows not to overthink about the sensitive tone to passionaitely recreate. }}{{trim}}</textarea>
                                 </div>
+                                
+                            </div>
+
                         </div>
                     </div>
 
