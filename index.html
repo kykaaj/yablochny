@@ -1476,6 +1476,49 @@ Always write dynamically changing <memo> after response. Fill (placeholders) wit
 
 Track multiple relationships per character if needed (A→B, A→C, B→A, etc). Each character has special feelings for f, identify them and change these feelings in the info block if they have changed.</textarea>
                                 </div>
+                                <div class="options-list">
+                                <div class="option-item">
+                                    <span class="option-name">📝 Основной</span>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[Infoblock] 
+Always write dynamically changing <memo><small> notes after response, Fill (placeholders) in English without parenthesis and Keep points concise, generalize. In the VERY VERY end of EVERY MESSAGE. Strictly use template formatting:
+<memo><small>
+<style>
+@keyframes renetteFadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+<div style='background-color: #2c2c34; padding:15px; margin:15px 0; border-radius:8px; box-shadow:0 4px 8px rgba(0,0,0,0.3); font-family:"Segoe UI", "Helvetica Neue", sans-serif; color:#e0e0e0; animation: renetteFadeIn 0.6s ease-out;'>
+  <div style='color:#f0f0f0; margin-bottom:12px; font-size:1em;'>
+    <span style='font-weight:bold; font-size:1.15em; color:#f7cac9; text-shadow:0px 0px 4px rgba(247,202,201,0.5);'>Renette’s Thoughts</span>
+    <span style='font-size:1.1em; font-style:italic;'>(high-quality kaomoji matching the mood of the scene! No verbal thoughts, only emoji)</span>
+  </div>
+  <div style='font-size:0.9em; line-height:1.4;'>
+    <div style='display:flex; flex-wrap:wrap; gap: 0.5em 1.5em; margin-bottom:10px;'>
+      <span style='color:#a6b1e1;'>🕰️ Time:</span> <span style='font-weight:bold;'> (current time or time of day) </span>
+      <span style='color:#a6b1e1;'>📅 Date:</span> <span style='font-weight:bold;'> EEE, dd MMM </span>
+      <span style='color:#a6b1e1;'>🌬️ Weather:</span> <span style='font-weight:bold;'> (weather conditions) </span>
+      <span style='color:#a6b1e1;'>📍 Location:</span> <span style='font-weight:bold;'> (current setting) </span>
+    </div>
+    <strong style='color:#dda0dd; display:block; margin-bottom:4px;'>💖 Characters!</strong>
+    <ul style='list-style:none; padding:0; margin:0 0 10px 0;'>
+      <li style='margin-bottom:0.3em;'>
+        <span style='color:#c9a7d7;'>♀️/♂️/🛆</span> <span style='font-weight:bold;'> Name</span> ❖ 
+        <span style='color:#f7cac9;'>Status:</span> (emotions, health, stamina) ❖ 
+        <span style='color:#ffe0b2;'>Outfit:</span> (current clothes and their condition!) 🔞 
+        <span style='color:#ff6961;'>Naked?:</span> (any exposed intimate parts?)
+      </li>
+    </ul>
+    <span style='color:#dda0dd; display:block; margin-bottom:2px;'>🗺️ Where are we?</span>
+    <span style='font-style:italic; color:#b0e0e6;'> (a very brief, one-line spatial description of everyone’s position!) </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+</small></memo></textarea>
+                                </div>
                                 <div class="option-item">
                                     <span class="option-name">💖 +Матрица отношений</span>
                                     <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
