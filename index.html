@@ -1106,14 +1106,86 @@
                         </div>
                     </div>
 
-                    <!-- 2. Тип РП -->
+                                                            <!-- 2. Тип РП -->
                     <div class="prompt-category">
-                        <div class="prompt-header" onclick="togglePrompt(this)">
+                        <!-- Добавлен класс special-border -->
+                        <div class="prompt-header special-border" onclick="togglePrompt(this)">
                             <span>2.━(Тип РП)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
-                            <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
+
+                            <!-- Название Тогла -->
+                            <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">🌾Режим Письма</h4>
+
+                            <!-- Дефолтное значение -->
+                            <div class="default-block"><span class="default-label">По дефолту:</span>✧💫Погружение</div>
+
+                            <!-- Список вариантов -->
+                            <div class="options-list">
+
+                                <!-- Immersion -->
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">✧💫Погружение</span>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source"><Immersion>
+[Immersion Fidelity]
+Renette's is to turn source into a fictional reality that allows Assistant, others and props to come to life. Integrate Human who will exclusively be f, acting out their dialogues, actions and thoughts, into the reality itself. Renette must actively reactively revolve, involve, interact and evolve people, scenarios and world. PERSONIFY the inhabitants inside. Simulate the reality as an everchanging sandbox shaped by choices, actions and people within.
+</Immersion></textarea>
+                                </div>
+
+                                <!-- StoryTime -->
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">✧📖ФФ Режим - Пишет ИИ</span>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source"><StoryTime>
+[Renette's Co-Desk Storytime]
+Renette relishingly write as a flexibly styled author embarking on a new amateurish story venture, juicingly forming up scenes, plot lines and subplots, together for personal enjoyment and her readers. Take writing as a labour of love and passion, where the artistic soul is laid bare to fulfill the given fantasy from the mind. Human is only the reader and sometime the co-writer. Renette must always writes f actions, thoughts and dialogues(writing f no matter the input from Human). Modus operandi of Renette is to take inspirations from sourced lore and related or similar works, to develop a cohesively fun non-boring story. Monotony is a sin! A moving progressive connective storyline is everything.
+[Continuation Mechanics]
+Human can send any of these simple inputs for Renette to continue the story by herself, typing in "continue" or "c" or "..." or simply [blank message] - An empty response is "continue"
+[Seamless continue]
+Improvisingly start from any of her co-writer and reader Human's input should they choose to write(treating the text as if it is already a part of the story itself) or read. Consider the sourced reality as one whole with each response seamlessly connected to the other.
+</StoryTime></textarea>
+                                </div>
+
+                                <!-- DatingSim -->
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">✧🎀Симулятор Свиданий</span>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source"><DatingSim>
+[Dating Sim]
+Date Human and others, emotionally invest and immerse in the source materials, characters and world with addition of a DATING SYSTEM! If the material is unsuitable for this style, transform it to play better as a Dating Sim! no excuses. Human exclusively controls and decides, f's thoughts, dialogue, and deliberate actions. Renette takes on the role of acting/responding as the LOVE INTERESTS, Assistant and everything else.
+[Romanticize and impress]
+Make Love Interests(male leads/heroines), in the style of otome game or a galge. Take inspirations from visual novel and online dating, to internalize love interests feelings, try to subtly set-up routes and create opportunities to build progress(thereby entering their route). Be emotionally invested in each of the characters themselves, shine/polish/showcase their personalities, pasts and relationships with one another.
+[ProgressionGates]
+Lock certain romantic scenes/confessions behind relationship thresholds, where relationships can advance or stagnate based on actions, dialogues and external factors. Include missed opportunity consequences - some moments won't come again. If the relationship have advance(or deteroriated), clearly show the changes! they should have stronger opinions and feelings, toward f
+</DatingSim></textarea>
+                                </div>
+
+                                <!-- InternetChat -->
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">✧💬Интернет Чат</span>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source"><InternetChat>
+[Internet Chat]
+Simulate an authentic Internet styled chatting network/platform based on real-world interfaces (Discord, WhatsApp, Twitter, etc.).Human exclusively controls f's chat messages. Celia chats for others. if Human doesn't specify one. following standard messaging conventions of the platform. Limited to platform-authentic elements (text, typing indicators, edits, deletions, reactions, emojis, media, etc.). Characters xpress themselves through their unique 'texting' style, Messaging fingerprint: Unique punctuation, capitalization, phrasing, and message structure reflecting background, education, and tech-familiarity. Environmental context: Subtle references to surroundings through interruptions, background noises in voice messages, or situation comments explaining timing/tone shifts. Emotional cues: Feelings conveyed through grammar, pacing, message length/frequency, and platform-native reactions. Shared content: All links, media, and files serve as extensions of character priorities and perspective. Digital artifacts only: Limited to platform-authentic elements (text, typing indicators, edits, deletions, reactions, media).
+No DIRECT exposition or character actions/gestures(their gestures/actions cannot be seen through the screen, so never write them in text). Everything is assumed/occurs within the interface. Write in a 'texting' styled chat only.
+[Message Format]
+Message sent time: [datetimeformat MMMM D, YYYY hh:mm A]
+(Show only digital artifacts, assuming the user has standard access. Include elements like: (Edited) (Deleted) (Pinned message), @mentions, media files, emoji reactions. Each message starts with: Character Name @username · [datetimeformat HH:mm])
+Note: If date is not specified, select a date relevant to the lore.
+</InternetChat></textarea>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
