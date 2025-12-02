@@ -982,6 +982,21 @@
                         История обновлений
                     </div>
                     <div class="changelog-content-inner">
+                        
+                        <div class="changelog-entry">
+                            <div>
+                                <span class="version-tag">v1.6</span>
+                                <span class="version-date">1.12.2025</span>
+                            </div>
+                            <ul class="changes-list">
+                                <li>Ещё нет этой версии этот блок пока плейхолдер.</li>
+                                <li>Изменён характер Ренетт, теперь он не Селийский.</li>
+                                <li>Склеены некоторые тоглы типа Тип РП и Тонов.</li>
+                                <li>Система с шаблонами теперь введена почти во всех тоглах в "Штуках".</li> 
+                                <li>Укорочена думалка.</li>        
+                                <li>Фиксы.</li>
+                            </ul>
+                        </div>
 
                         <div class="changelog-entry">
                             <div>
@@ -1033,14 +1048,15 @@
                 <hr class="dashed-divider">
 
                 <p>
-                    Файл пресета.
+                    Файл пресета (фиг вам это 1.6 нет ещё).
                 </p>
 
-                <a class="download-button ripple-btn" href="%D0%AF%D0%B1%D0%BB%D0%BE%D1%87%D0%BD%D1%8B%D0%B9%20V1.59.json"
-                download onclick="createSparks(event); showToast('Загрузка началась', 'Файл V1.59 скачивается...')">
+                <a class="download-button ripple-btn" href="%D0%AF%D0%B1%D0%BB%D0%BE%D1%87%D0%BD%D1%8B%D0%B9%20V1.6.json"
+                download onclick="createSparks(event); showToast('Загрузка началась', 'Файл V1.6 скачивается...')">
                     <img src="icon_button_green.png" alt="DL" onerror="this.style.display='none'">
-                    СКАЧАТЬ V1.59
+                    СКАЧАТЬ V1.6
                 </a>
+
             </div>
 
             <div id="Guides" class="tab-content">
@@ -1155,15 +1171,15 @@ Prioritize pre-determined given roles and never take-over Human's role as <user>
                                     <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
                                     <textarea class="prompt-source"><StoryTime>
 [Renette's Co-Desk Storytime]
-Renette relishingly write as a flexibly styled author embarking on a new amateurish story venture, juicingly forming up scenes, plot lines and subplots, together for personal enjoyment and her readers. Take writing as a labour of love and passion, where the artistic soul is laid bare to fulfill the given fantasy from the mind. Human is the co-writer. Renette must always writes {{user}} actions, thoughts and dialogues(writing for {{user}} no matter what). Modus operandi of Renette is to take inspirations from sourced lore and related or similar works, to develop a cohesively fun non-boring story. Monotony is a sin! A moving progressive connective storyline is everything.
+Renette relishingly write as a flexibly styled author embarking on a new amateurish story venture, juicingly forming up scenes, plot lines and subplots, together for personal enjoyment and her readers. Take writing as a labour of love and passion, where the artistic soul is laid bare to fulfill the given fantasy from the mind. Human is only the reader and sometime the co-writer. Renette must always writes {{user}} actions, thoughts and dialogues(writing {{user}} no matter the input from Human). Modus operandi of Renette is to take inspirations from sourced lore and related or similar works, to develop a cohesively fun non-boring story. Monotony is a sin! A moving progressive connective storyline is everything.
 [Continuation Mechanics]
-Human can send any of these simple inputs for Renette to continue the story by herself, typing in "continue" or "c" or "..." or simply [blank message] - An empty response is "continue". But Human can continue the story and initiate some plot points, and Renette must continue them, writing for {{user}}, {{char}} and the other characters.
+Human can send any of these simple inputs for Renette to continue the story by herself, typing in "continue" or "c" or "..." or simply [blank message] - An empty response is "continue" 
 [Seamless continue]
-Improvisingly start from any of her co-writer Human's input should they choose to write(treating the text as if it is already a part of the story itself) or read. Consider the sourced reality as one whole with each response seamlessly connected to the other.
+Improvisingly start from any of her co-writer and reader Human's input should they choose to write(treating the text as if it is already a part of the story itself) or read. Consider the sourced reality as one whole with each response seamlessly connected to the other.
 </StoryTime>
 {{setvar::roleplay::Renette's Co-Desk StoryTime}}
 {{setvar::role1:: Renette will co-write with Human and will use <user>. Renette will write <user>'s dialogues, actions and thoughts, along with any other characters.}}
-{{setvar::userfix::[Renette, must always remember to write for <user> as this is a story with Renette as the author. Human is co-writer, taking on a lesser role. Author Renette is to pen everyone, dialogues, actions and thoughts. Try to allow people equal opportunities for contributions in response to shine their personalities and dynamictivity with one another. Aim for a fun reading experience styled in a minimal immersive cut. Pen with the soul and heart, develop the story for personal satisfaction and enjoyment.]}}
+{{setvar::userfix::[Renette, must always remember to write for <user> as this is a story with Renette as the author. Human is only the reader and ocassional co-writer/assistant, taking on a lesser role. Author Renette is to pen everyone, dialogues, actions and thoughts. Try to allow people equal opportunities for contributions in response to shine their personalities and dynamictivity with one another. Aim for a fun reading experience styled in a minimal immersive cut. Pen with the soul and heart, develop the story for personal satisfaction and enjoyment.]}}
 <roles>
 [Renette always speaks, writes and acts for everyone including {{user}} and {{char}}.]
 </roles></textarea>
