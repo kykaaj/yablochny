@@ -626,6 +626,7 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
             transition: 0.2s;
             gap: 10px;
+            position: relative; /* Для позиционирования галочки */
         }
 
         @media (min-width: 600px) {
@@ -639,6 +640,86 @@
         .option-item:hover {
             background: rgba(255, 255, 255, 0.07);
         }
+
+        /* === НОВЫЕ СТИЛИ ДЛЯ ЧЕКБОКСОВ И РАДИО === */
+        .select-input {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--color-primary);
+            background: rgba(0,0,0,0.5);
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 15px;
+            flex-shrink: 0;
+            position: relative;
+            align-self: flex-start; /* Для мобильных */
+            transition: all 0.2s;
+        }
+        @media (min-width: 600px) {
+            .select-input { align-self: center; }
+        }
+
+        .select-input:checked {
+            background: var(--color-primary);
+            box-shadow: 0 0 10px rgba(153, 255, 153, 0.4);
+        }
+
+        /* Галочка внутри чекбокса */
+        .select-input:checked::after {
+            content: '✔';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            color: #000;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* Стиль для радио-кнопок (круглые) */
+        .select-input[type="radio"] {
+            border-radius: 50%;
+            border-color: var(--color-secondary);
+        }
+        .select-input[type="radio"]:checked {
+            background: var(--color-secondary);
+            box-shadow: 0 0 10px rgba(255, 154, 158, 0.4);
+        }
+        .select-input[type="radio"]:checked::after {
+            content: '';
+            width: 10px; height: 10px;
+            background: #000;
+            border-radius: 50%;
+        }
+
+        /* Кнопка "Скопировать выбранное" */
+        .bulk-copy-btn {
+            width: 100%;
+            margin-top: 25px;
+            padding: 16px;
+            background: linear-gradient(135deg, rgba(153, 255, 153, 0.1), rgba(255, 255, 255, 0.05));
+            border: 1px solid var(--color-primary);
+            color: var(--color-primary);
+            font-family: var(--font-readable);
+            font-weight: 800;
+            text-transform: uppercase;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .bulk-copy-btn:hover {
+            background: var(--color-primary);
+            color: #000;
+            box-shadow: 0 0 20px rgba(153, 255, 153, 0.3);
+            transform: translateY(-2px);
+        }
+
 
         .option-info {
             display: flex;
@@ -1477,31 +1558,34 @@ Emotionally pen, derive, enrich and thrive to use sensitive language that feels!
                             <div class="default-block"><span class="default-label">По дефолту:</span>🌹Романтика</div>
                             <p style="font-size: 0.8em; color: #aaa;">✎ Можно добавить несколько! Каждый с новой строки.</p>
                             <div class="options-list">
-                                <div class="option-item"><div class="option-info"><span class="option-name">🌸 Флафф</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание жанра Флафф.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Fluff]
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">🌸 Флафф</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание жанра Флафф.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Fluff]
 Infuse reality with more Fluff! Reduce Stress/tensity. Steer toward More Light-hearted and heartwarming moments, sweet, affectionate exchanges and cozy, intimate atmospheres. Gentle rhythms. Positivity. The feelings of warmth, sincerity and safety.</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">🍰 Кусочек Жизни</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание жанра Кусочек Жизни.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Slice of life]
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">🍰 Кусочек Жизни</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание жанра Кусочек Жизни.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Slice of life]
 Pace in more slices of life! Involve the more mundane aspects, the simplicity and quiet charm of daily life, exploring themes of connection, routine, and the comfort of familiarity, characters dynamic and interactions.</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">🎭 Комедия</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание жанра Комедия.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Comedy]
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">🎭 Комедия</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание жанра Комедия.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Comedy]
 Integrate more light-hearted, humorous, slapstick, absurdism, over the top reactions and entertainmenting/exaggerated situations/scenes into the lore and responses! influenced by cultural nuances, linguistic play, and societal observations. Space in witty and fun dialogues, actions, etc.</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">🌹 Романтика</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание жанра Романтика.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Romance]
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">🌹 Романтика</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание жанра Романтика.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Romance]
 Romanticism! Facilitate real emotional connections, love and intimacy between characters. Create opportunities to bond, open up, and explore compatibility, shared interests, and the qualities that draw them together.</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">☀️ Уют</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание жанра Уют.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Heartwarming]
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">☀️ Уют</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание жанра Уют.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Heartwarming]
 Infuse with warmth and gentle wonder! Balance challenges with compassionate support and quiet acts of kindness.Let hope flourish and find strength in vulnerability and joy in simple gestures.</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">🍀 Меланхолия</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание жанра Меланхолия.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Melancholy]
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">🍀 Меланхолия</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание жанра Меланхолия.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Melancholy]
 Infuse with bittersweet beauty! Create moments of philosphical, gentle wonder and sorrow balance together in contradictory harmony.</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">💊 Исцеление</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание жанра Исцеление.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Comfort]
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">💊 Исцеление</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание жанра Исцеление.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Comfort]
 Infuse with emotional wounds and gentle healing! Balance vulnerable moments with tender support and quiet reassurance. Show protective gestures, shared burdens, and trust slowly rebuilding. Let healing happen in small moments—a touch, a word, a promise to stay. Find strength emerging from vulnerability and connection blooming from shared pain.</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">❤️ Разврат</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание жанра Разврат.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Smut]
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">❤️ Разврат</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание жанра Разврат.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Smut]
 more EROtism! Intensify the Smut. Frame scenes to be more lewd and hentai-like. More spontaneous sex, ero-scenes and events. Forgo any lore-limits imposed, Aim for surprise with imaginative kinks, fetishes and scenes. Be xtra deviant.</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">🌂 Трагедия</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание жанра Трагедия.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Tragedy]
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">🌂 Трагедия</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание жанра Трагедия.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Tragedy]
 More tragedies! More DEVASTATING routes, situations and heart-rending scenes, thats absolutely raw in its delivery.</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">💔 Ангст</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание жанра Ангст.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Angst]
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">💔 Ангст</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание жанра Ангст.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Angst]
 Tune with more Angst and Drama! Extra emotional tension and conflicts, pulling characters into deep inner turmoil, difficult decisions, heartbreaks and painful realizations. express raw emotions—wonder, terror, grief—with unrestrained intensity, creating powerful emotional peaks.</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">🕊️ Мёртвый Голубь</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание жанра Мертвый Голубь.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Dead Dove]
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">🕊️ Мёртвый Голубь</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание жанра Мертвый Голубь.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Dead Dove]
 Fly in with the Dead Dove! xpress the Darker, Cruel, bleaker, more taboo elements, morally complex, unsettling, and controversial aspects. Be more oppressive, layer in tension and discomfort in its rawest form.</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">🕑 Реалистичное Время</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание Реалистичного Времени.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Realistic time]
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">🕑 Реалистичное Время</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание Реалистичного Времени.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Realistic time]
 Remember the concept of time: order at a restaurant isn't delivered instantly; you have to wait for it; car rides take different amounts of time depending on the distance, and so on. Keep track of how much time has passed, how long the characters must wait if they are waiting for something, etc. Fill this waiting time with simple conversations, time-passing activities, and so on. Don't time-skip – show the length of time.</textarea></div>
                             </div>
+                            <button class="bulk-copy-btn" onclick="copyBulk(this)">
+                                <img src="sheets.png" style="height:20px;"> СКОПИРОВАТЬ ВЫБРАННЫЕ ЖАНРЫ
+                            </button>
 
                             <hr class="dashed-divider" style="margin: 15px 0;">
 
@@ -1510,22 +1594,25 @@ Remember the concept of time: order at a restaurant isn't delivered instantly; y
                             <div class="default-block"><span class="default-label">По дефолту:</span>🗿Анти Драма</div>
                             <p style="font-size: 0.8em; color: #aaa;">✎ Можно добавить несколько! Каждый с новой строки.</p>
                             <div class="options-list">
-                                <div class="option-item"><div class="option-info"><span class="option-name">🌎 Реальный Мир</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Real World placeholder]</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">⏩ Переходы</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Transitions placeholder]</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">🗺️ Улучшение Мира</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[World Improve placeholder]</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">🍹 Живой мир</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Living World placeholder]</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">🌳 Автономия</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Autonomy placeholder]</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">🫂 Улучшенные Отношения</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Better Rel placeholder]</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">🔐 Анти Идеальность</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Anti Ideal placeholder]</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">🧠 Анти-Троп/Стереотипы</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Anti Trope placeholder]</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">🗿 Анти Драма</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Anti Drama placeholder]</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">🔮 Анти Всезнание</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Anti Omni placeholder]</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">🌼 Больше Экспрессии</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Expression placeholder]</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">🫶 Жестикуляция</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Gestures placeholder]</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">💭 Больше Мыслей</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[More Thoughts placeholder]</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">🗣️ Улучшенные Диалоги</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Better Dialogues placeholder]</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">🤖 Анти Робот</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Anti Robot placeholder]</textarea></div>
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">🌎 Реальный Мир</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Real World placeholder]</textarea></div>
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">⏩ Переходы</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Transitions placeholder]</textarea></div>
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">🗺️ Улучшение Мира</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[World Improve placeholder]</textarea></div>
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">🍹 Живой мир</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Living World placeholder]</textarea></div>
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">🌳 Автономия</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Autonomy placeholder]</textarea></div>
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">🫂 Улучшенные Отношения</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Better Rel placeholder]</textarea></div>
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">🔐 Анти Идеальность</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Anti Ideal placeholder]</textarea></div>
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">🧠 Анти-Троп/Стереотипы</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Anti Trope placeholder]</textarea></div>
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">🗿 Анти Драма</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Anti Drama placeholder]</textarea></div>
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">🔮 Анти Всезнание</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Anti Omni placeholder]</textarea></div>
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">🌼 Больше Экспрессии</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Expression placeholder]</textarea></div>
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">🫶 Жестикуляция</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Gestures placeholder]</textarea></div>
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">💭 Больше Мыслей</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[More Thoughts placeholder]</textarea></div>
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">🗣️ Улучшенные Диалоги</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Better Dialogues placeholder]</textarea></div>
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">🤖 Анти Робот</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Anti Robot placeholder]</textarea></div>
                             </div>
+                            <button class="bulk-copy-btn" onclick="copyBulk(this)">
+                                <img src="sheets.png" style="height:20px;"> СКОПИРОВАТЬ ВЫБРАННЫЕ УЛУЧШАЛКИ
+                            </button>
                         </div>
                     </div>
 
@@ -1539,13 +1626,16 @@ Remember the concept of time: order at a restaurant isn't delivered instantly; y
                             <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">✎🍒Улучшалки 18+</h4>
                             <div class="default-block"><span class="default-label">По дефолту:</span>🔞Эротический Контент</div>
                             <div class="options-list">
-                                <div class="option-item"><div class="option-info"><span class="option-name">🔞 Эротический Контент</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Erotic placeholder]</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">👙 Фансервис</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Fanservice placeholder]</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">🍆 Пошлые Диалоги</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Lewd Dialogues placeholder]</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">💦 Больше Звуков</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Sounds placeholder]</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">🔥 Эроге-Порно</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Eroge placeholder]</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">🔪 Больше Крови</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Blood placeholder]</textarea></div>
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">🔞 Эротический Контент</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Erotic placeholder]</textarea></div>
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">👙 Фансервис</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Fanservice placeholder]</textarea></div>
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">🍆 Пошлые Диалоги</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Lewd Dialogues placeholder]</textarea></div>
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">💦 Больше Звуков</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Sounds placeholder]</textarea></div>
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">🔥 Эроге-Порно</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Eroge placeholder]</textarea></div>
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">🔪 Больше Крови</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Blood placeholder]</textarea></div>
                             </div>
+                            <button class="bulk-copy-btn" onclick="copyBulk(this)">
+                                <img src="sheets.png" style="height:20px;"> СКОПИРОВАТЬ ВЫБРАННЫЕ 18+
+                            </button>
                         </div>
                     </div>
 
@@ -1611,8 +1701,6 @@ Instead of using a banned phrase, randomly pick one of the alternatives.
 *Metaphors:*
 "она была его якорем" -> {{её рука на его руке — единственное, что не давало мыслям разлететься::рядом с ней паника отступала}}
 "это было капитуляцией"  -> {{он сдался — не с грохотом, а тихо, устало::сопротивляться больше не было сил::что-то в нём наконец отпустило}}
-[Structures]
-"он ожидал X, но получил Y" -> {{describe the expectation, then the reality, without this connector. Example: "Он приготовился к удару. Вместо этого — тишина, от которой стало только хуже."}}
 "это было не конец, а начало" -> {{skip this entirely or describe what actually changed. Example: "Дверь закрылась. За ней ждало что-то новое — он пока не знал, лучше или хуже."}}
 "прозвучало как выстрел" -> {{от этих слов она вздрогнула, будто её окатили холодной водой::голос разрезал тишину — резко, без предупреждения::все замолчали так резко, что стало слышно собственное дыхание}}
 "тучи собирались" (как метафора) -> {{describe the actual tension. Example: "Что-то менялось — он чувствовал это в том, как люди отводили глаза."}}
@@ -1743,11 +1831,12 @@ Renette must follow these rules ALWAYS. Answers should consist of 10 or more big
                             <p style="text-align:left; color:var(--color-primary); font-weight:bold; margin-bottom:5px;">✎ Можно смешивать:</p>
                             <div class="options-list">
                                 <div class="option-item">
+                                    <input type="checkbox" class="select-input">
                                     <div class="option-info">
                                         <span class="option-name">🕰️ Флешбеки</span>
                                         <details class="preview-details">
                                             <summary>👁️ Посмотреть описание</summary>
-                                            <div class="preview-content"> 
+                                            <div class="preview-content">
                                                 <p>Сдобавляет флешбек в 「...」.</p>
                                                 <!-- КАРТИНКА (если нужна) -->
                                                 <img src="example1.jpg" alt="Пример1">
@@ -1760,6 +1849,7 @@ All characters have some form of past and feelings that lingers, each have famil
                                 </div>
 
                                 <div class="option-item">
+                                    <input type="checkbox" class="select-input">
                                     <div class="option-info">
                                         <span class="option-name">✒️ Стиль веб-главы</span>
                                         <details class="preview-details">
@@ -1778,6 +1868,7 @@ Make use of chapter headings, separators, and other known elements that makes up
                                 </div>
 
                                 <div class="option-item">
+                                    <input type="checkbox" class="select-input">
                                     <div class="option-info">
                                         <span class="option-name">📢 Интервью с Актерами</span>
                                         <details class="preview-details">
@@ -1797,6 +1888,7 @@ Formatting Criterias: Keep it short (2-3 lines per character maximum). Genuine r
                                 </div>
 
                                 <div class="option-item">
+                                    <input type="checkbox" class="select-input">
                                     <div class="option-info">
                                         <span class="option-name">🖼️ MEME</span>
                                         <details class="preview-details">
@@ -1835,6 +1927,7 @@ TEXT RULES:
                                 </div>
 
                                 <div class="option-item">
+                                    <input type="checkbox" class="select-input">
                                     <div class="option-info">
                                         <span class="option-name">🔰 Типографика</span>
                                         <details class="preview-details">
@@ -1853,6 +1946,7 @@ For worded textual use! Signature Styled Embedded Micro-Text: Unique font/stylin
                                 </div>
 
                                 <div class="option-item">
+                                    <input type="checkbox" class="select-input">
                                     <div class="option-info">
                                         <span class="option-name">🎙️ Музыкальные Субтитры</span>
                                         <details class="preview-details">
@@ -1879,6 +1973,7 @@ When a song plays or character sings. use and include the actual lyrics they're 
                             <div class="default-block" style="background: rgba(153, 255, 153, 0.1); border-left-color: var(--color-primary);"><span class="default-label" style="color:var(--color-primary);">Инфоблоки (Выберите один)</span></div>
                             <div class="options-list">
                                 <div class="option-item">
+                                    <input type="radio" name="infoblocks" class="select-input">
                                     <div class="option-info">
                                         <span class="option-name">✧🍎 Логи Ренетт</span>
                                         <details class="preview-details">
@@ -1890,6 +1985,7 @@ When a song plays or character sings. use and include the actual lyrics they're 
                                     <textarea class="prompt-source">[Logi Renette prompt]</textarea>
                                 </div>
                                 <div class="option-item">
+                                    <input type="radio" name="infoblocks" class="select-input">
                                     <div class="option-info">
                                         <span class="option-name">✧🗂️ Мини-Инфоблок</span>
                                         <details class="preview-details">
@@ -1901,6 +1997,7 @@ When a song plays or character sings. use and include the actual lyrics they're 
                                     <textarea class="prompt-source">[Mini-Infoblock prompt]</textarea>
                                 </div>
                                 <div class="option-item">
+                                    <input type="radio" name="infoblocks" class="select-input">
                                     <div class="option-info">
                                         <span class="option-name">✧📝 Основной Инфоблок</span>
                                         <details class="preview-details">
@@ -1912,6 +2009,7 @@ When a song plays or character sings. use and include the actual lyrics they're 
                                     <textarea class="prompt-source">[Main Infoblock prompt]</textarea>
                                 </div>
                                 <div class="option-item">
+                                    <input type="radio" name="infoblocks" class="select-input">
                                     <div class="option-info">
                                         <span class="option-name">✧💖 +Матрица отношений</span>
                                         <details class="preview-details">
@@ -1923,6 +2021,7 @@ When a song plays or character sings. use and include the actual lyrics they're 
                                     <textarea class="prompt-source">[Matrix prompt]</textarea>
                                 </div>
                                 <div class="option-item">
+                                    <input type="radio" name="infoblocks" class="select-input">
                                     <div class="option-info">
                                         <span class="option-name">✧💭 +МатрОтн + Мысли</span>
                                         <details class="preview-details">
@@ -1941,6 +2040,7 @@ When a song plays or character sings. use and include the actual lyrics they're 
                             <div class="default-block" style="background: rgba(153, 255, 153, 0.1); border-left-color: var(--color-primary);"><span class="default-label" style="color:var(--color-primary);">Режим Настройки (Выберите один)</span></div>
                             <div class="options-list">
                                 <div class="option-item">
+                                    <input type="radio" name="settings_mode" class="select-input">
                                     <div class="option-info">
                                         <span class="option-name">✧🎭 Claude Режим</span>
                                         <details class="preview-details">
@@ -1952,6 +2052,7 @@ When a song plays or character sings. use and include the actual lyrics they're 
                                     <textarea class="prompt-source">[Claude Setup prompt]</textarea>
                                 </div>
                                 <div class="option-item">
+                                    <input type="radio" name="settings_mode" class="select-input">
                                     <div class="option-info">
                                         <span class="option-name">✧🛠️ Gemini Режим</span>
                                         <details class="preview-details">
@@ -1970,6 +2071,7 @@ When a song plays or character sings. use and include the actual lyrics they're 
                             <div class="default-block" style="background: rgba(153, 255, 153, 0.1); border-left-color: var(--color-primary);"><span class="default-label" style="color:var(--color-primary);">CYOA (Выберите один)</span></div>
                             <div class="options-list">
                                 <div class="option-item">
+                                    <input type="radio" name="cyoa" class="select-input">
                                     <div class="option-info">
                                         <span class="option-name">✧🎲 CYOA - R-Macro</span>
                                         <details class="preview-details">
@@ -1981,6 +2083,7 @@ When a song plays or character sings. use and include the actual lyrics they're 
                                     <textarea class="prompt-source">[CYOA Macro prompt]</textarea>
                                 </div>
                                 <div class="option-item">
+                                    <input type="radio" name="cyoa" class="select-input">
                                     <div class="option-info">
                                         <span class="option-name">✧🕹️ CYOA - No R-Macro</span>
                                         <details class="preview-details">
@@ -1999,6 +2102,7 @@ When a song plays or character sings. use and include the actual lyrics they're 
                             <div class="default-block" style="background: rgba(153, 255, 153, 0.1); border-left-color: var(--color-primary);"><span class="default-label" style="color:var(--color-primary);">Скрытые Блоки (Можно смешивать)</span></div>
                             <div class="options-list">
                                 <div class="option-item">
+                                    <input type="checkbox" class="select-input">
                                     <div class="option-info">
                                         <span class="option-name">👤 Скрытые Профили</span>
                                         <details class="preview-details">
@@ -2010,6 +2114,7 @@ When a song plays or character sings. use and include the actual lyrics they're 
                                     <textarea class="prompt-source">[Hidden Profiles prompt]</textarea>
                                 </div>
                                 <div class="option-item">
+                                    <input type="checkbox" class="select-input">
                                     <div class="option-info">
                                         <span class="option-name">📍 Скрытые Закадровые</span>
                                         <details class="preview-details">
@@ -2021,6 +2126,7 @@ When a song plays or character sings. use and include the actual lyrics they're 
                                     <textarea class="prompt-source">[Hidden Offscreen prompt]</textarea>
                                 </div>
                                 <div class="option-item">
+                                    <input type="checkbox" class="select-input">
                                     <div class="option-info">
                                         <span class="option-name">🗒️ Скрытые Планы</span>
                                         <details class="preview-details">
@@ -2032,6 +2138,7 @@ When a song plays or character sings. use and include the actual lyrics they're 
                                     <textarea class="prompt-source">[Hidden Notes prompt]</textarea>
                                 </div>
                                 <div class="option-item">
+                                    <input type="checkbox" class="select-input">
                                     <div class="option-info">
                                         <span class="option-name">💌 Скрытый DatingSim</span>
                                         <details class="preview-details">
@@ -2050,6 +2157,7 @@ When a song plays or character sings. use and include the actual lyrics they're 
                             <div class="default-block" style="background: rgba(153, 255, 153, 0.1); border-left-color: var(--color-primary);"><span class="default-label" style="color:var(--color-primary);">Fancy UI (Выберите один)</span></div>
                             <div class="options-list">
                                 <div class="option-item">
+                                    <input type="radio" name="fancyui" class="select-input">
                                     <div class="option-info">
                                         <span class="option-name">✧🥂 Полное Fancy UI</span>
                                         <details class="preview-details">
@@ -2061,6 +2169,7 @@ When a song plays or character sings. use and include the actual lyrics they're 
                                     <textarea class="prompt-source">[Full Fancy UI prompt]</textarea>
                                 </div>
                                 <div class="option-item">
+                                    <input type="radio" name="fancyui" class="select-input">
                                     <div class="option-info">
                                         <span class="option-name">✧🥂 Только Основа</span>
                                         <details class="preview-details">
@@ -2072,6 +2181,7 @@ When a song plays or character sings. use and include the actual lyrics they're 
                                     <textarea class="prompt-source">[Basic Fancy UI prompt]</textarea>
                                 </div>
                                 <div class="option-item">
+                                    <input type="radio" name="fancyui" class="select-input">
                                     <div class="option-info">
                                         <span class="option-name">✧🥂 Только Мысли</span>
                                         <details class="preview-details">
@@ -2090,6 +2200,7 @@ When a song plays or character sings. use and include the actual lyrics they're 
                             <div class="default-block" style="background: rgba(153, 255, 153, 0.1); border-left-color: var(--color-primary);"><span class="default-label" style="color:var(--color-primary);">Комментарии (Выберите один)</span></div>
                             <div class="options-list">
                                 <div class="option-item">
+                                    <input type="radio" name="comments" class="select-input">
                                     <div class="option-info">
                                         <span class="option-name">✧💬 Комменты V1</span>
                                         <details class="preview-details">
@@ -2101,6 +2212,7 @@ When a song plays or character sings. use and include the actual lyrics they're 
                                     <textarea class="prompt-source">[Comments V1 prompt]</textarea>
                                 </div>
                                 <div class="option-item">
+                                    <input type="radio" name="comments" class="select-input">
                                     <div class="option-info">
                                         <span class="option-name">✧💬 Комменты V2</span>
                                         <details class="preview-details">
@@ -2112,6 +2224,7 @@ When a song plays or character sings. use and include the actual lyrics they're 
                                     <textarea class="prompt-source">[Comments V2 prompt]</textarea>
                                 </div>
                                 <div class="option-item">
+                                    <input type="radio" name="comments" class="select-input">
                                     <div class="option-info">
                                         <span class="option-name">✧💬 Комменты V3</span>
                                         <details class="preview-details">
@@ -2130,6 +2243,7 @@ When a song plays or character sings. use and include the actual lyrics they're 
                             <div class="default-block" style="background: rgba(153, 255, 153, 0.1); border-left-color: var(--color-primary);"><span class="default-label" style="color:var(--color-primary);">Хроники (Выберите один)</span></div>
                             <div class="options-list">
                                 <div class="option-item">
+                                    <input type="radio" name="chronicles" class="select-input">
                                     <div class="option-info">
                                         <span class="option-name">✧📜⬜️ Светлая Тема</span>
                                         <details class="preview-details">
@@ -2141,6 +2255,7 @@ When a song plays or character sings. use and include the actual lyrics they're 
                                     <textarea class="prompt-source">[Light Chronicles prompt]</textarea>
                                 </div>
                                 <div class="option-item">
+                                    <input type="radio" name="chronicles" class="select-input">
                                     <div class="option-info">
                                         <span class="option-name">✧📜⬛️ Тёмная Тема</span>
                                         <details class="preview-details">
@@ -2159,14 +2274,14 @@ When a song plays or character sings. use and include the actual lyrics they're 
                             <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">🌐Язык Доп</h4>
                             <div class="default-block"><span class="default-label">По дефолту:</span>🇷🇺 Язык Доп</div>
                             <div class="options-list">
-                                <div class="option-item"><div class="option-info"><span class="option-name">🇷🇺 Язык Доп (Русский)</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание Русского языка доп.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Tweaks Content Language]
+                                <div class="option-item"><input type="radio" name="tweaks_lang" class="select-input"><div class="option-info"><span class="option-name">🇷🇺 Язык Доп (Русский)</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание Русского языка доп.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Tweaks Content Language]
 Translate ALL user-facing text content generated by ANY 'tweaks' functionality (HTML, Fancy UI, Living Comments IF THERE'S ANY) into **Russian**. This applies to:
 1.  All text inside HTML renders (signs, screens, documents).
 2.  All text in Fancy UI blocks (Location names, Thought text, object descriptions).
 3.  All static UI labels.
 4.  The entire "Living Comments or Infoblock" (if there's any) section (Header, all Nicknames, and all comment text).
 The HTML/CSS/code structure itself MUST remain in English, but all *visible rendered text* MUST BE translated.</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">🇺🇦 Язык Доп (Украинский)</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание Украинского языка доп.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Tweaks Content Language]
+                                <div class="option-item"><input type="radio" name="tweaks_lang" class="select-input"><div class="option-info"><span class="option-name">🇺🇦 Язык Доп (Украинский)</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание Украинского языка доп.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Tweaks Content Language]
 Translate ALL user-facing text content generated by ANY 'tweaks' functionality (HTML, Fancy UI, Living Comments IF THERE'S ANY) into **Ukrainian**. This applies to:
 1.  All text inside HTML renders (signs, screens, documents).
 2.  All text in Fancy UI blocks (Location names, Thought text, object descriptions).
@@ -2181,12 +2296,15 @@ The HTML/CSS/code structure itself MUST remain in English, but all *visible rend
                             <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">🌗Тема HTML</h4>
                             <div class="default-block"><span class="default-label">По дефолту:</span>✧⬛️Тёмная Тема HTML</div>
                             <div class="options-list">
-                                <div class="option-item"><div class="option-info"><span class="option-name">✧⬛️ Тёмная Тема HTML</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание Тёмной темы.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Always apply DARK THEME styling for all HTML visual renderings. Use backgrounds in deep shades of #0d0d0d–#1a1a1a range (matte blacks, charcoal, deep navy, dark gray gradients), with light text colors (#f5f5f5–#dcdcdc) and subtle accent hues (neon cyan, magenta, amber, violet) to enhance readability and aesthetic impact.]
-[Avoid pure white (#fff) or blinding highlights; instead, use off-white or light gray tones. Never use bright backgrounds.]</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">✧⬜️ Светлая Тема HTML</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание Светлой темы.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Always apply LIGHT THEME styling for all HTML visual renderings. Use backgrounds in light shades of #fafafa–#f0f0f0 (off-white, parchment, soft gray, pastel gradients), with dark text colors (#1a1a1a–#333) and subtle accent hues (muted blue, amber, burgundy, emerald) to maintain visual depth and warmth.]
+                                <div class="option-item"><input type="radio" name="html_theme" class="select-input"><div class="option-info"><span class="option-name">✧⬛️ Тёмная Тема HTML</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание Тёмной темы.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Always apply DARK THEME styling for all HTML visual renderings. Use backgrounds in deep shades of #0d0d0d–#1a1a1a range (matte blacks, charcoal, deep navy, dark gray gradients), with light text colors (#f5f5f5–#dcdcdc) and subtle accent hues (neon cyan, magenta, amber, violet) to enhance readability and aesthetic impact.]
+[Avoid pure white (#fff) or blinding highlights; instead, use off-white or light gray tones. Never use fully dark backgrounds.]</textarea></div>
+                                <div class="option-item"><input type="radio" name="html_theme" class="select-input"><div class="option-info"><span class="option-name">✧⬜️ Светлая Тема HTML</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание Светлой темы.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Always apply LIGHT THEME styling for all HTML visual renderings. Use backgrounds in light shades of #fafafa–#f0f0f0 (off-white, parchment, soft gray, pastel gradients), with dark text colors (#1a1a1a–#333) and subtle accent hues (muted blue, amber, burgundy, emerald) to maintain visual depth and warmth.]
 [Avoid pure black (#000) or overly saturated colors; instead, use dark gray for text and softened tones for accents. Never use fully dark backgrounds.]</textarea></div>
                             </div>
 
+                            <button class="bulk-copy-btn" onclick="copyBulk(this)">
+                                <img src="sheets.png" style="height:20px;"> СКОПИРОВАТЬ ВСЕ ВЫБРАННЫЕ ШТУКИ
+                            </button>
                         </div>
                     </div>
 
@@ -2200,10 +2318,13 @@ The HTML/CSS/code structure itself MUST remain in English, but all *visible rend
                             <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">✎🪛Модификаторы (Шаблон)</h4>
                             <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
                             <div class="options-list">
-                                <div class="option-item"><div class="option-info"><span class="option-name">💬 Больше Диалогов</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание модификатора диалогов.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[D-Modifier - Talk and Speak more! incorporate more dialogues into the response, aim for 40-70% dialogues.]</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">✨ Тонкие Стилистические</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание тонких стилей.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[S-Modifier - Subtly integrate more visuals, advance formats, typographical and stylistic world-elements, wherever appropriate.]</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">🎨 Ультра Стилистические</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание ультра стилей.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[U-Modifier - Bake in more immersive visual blocks, advance formats, typographical and styles. Make it a visual feast for the eyes.]</textarea></div>
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">💬 Больше Диалогов</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание модификатора диалогов.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[D-Modifier - Talk and Speak more! incorporate more dialogues into the response, aim for 40-70% dialogues.]</textarea></div>
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">✨ Тонкие Стилистические</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание тонких стилей.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[S-Modifier - Subtly integrate more visuals, advance formats, typographical and stylistic world-elements, wherever appropriate.]</textarea></div>
+                                <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">🎨 Ультра Стилистические</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание ультра стилей.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[U-Modifier - Bake in more immersive visual blocks, advance formats, typographical and styles. Make it a visual feast for the eyes.]</textarea></div>
                             </div>
+                            <button class="bulk-copy-btn" onclick="copyBulk(this)">
+                                <img src="sheets.png" style="height:20px;"> СКОПИРОВАТЬ ВЫБРАННЫЕ МОДЫ
+                            </button>
                         </div>
                     </div>
 
@@ -2508,6 +2629,56 @@ The HTML/CSS/code structure itself MUST remain in English, but all *visible rend
                     btnElement.innerText = originalText;
                     btnElement.style.borderColor = '';
                 }, 1500);
+            }).catch(err => {
+                showToast('Ошибка', 'Не удалось скопировать.');
+            });
+        }
+
+        // === 9. ЛОГИКА МАССОВОГО КОПИРОВАНИЯ ===
+        function copyBulk(btnElement) {
+            // Находим родительский контейнер (текущий открытый раздел)
+            const parentSection = btnElement.closest('.prompt-body');
+            if (!parentSection) return;
+
+            // Находим все отмеченные чекбоксы И радиокнопки внутри этого раздела
+            const checkedInputs = parentSection.querySelectorAll('.select-input:checked');
+
+            if (checkedInputs.length === 0) {
+                showToast('Пусто', 'Сначала выбери галочками то, что нужно!');
+                return;
+            }
+
+            let bulkText = "";
+
+            checkedInputs.forEach(input => {
+                // Находим textarea, который лежит рядом с чекбоксом (в том же .option-item)
+                const itemContainer = input.closest('.option-item');
+                const textArea = itemContainer.querySelector('.prompt-source');
+                if (textArea) {
+                    bulkText += textArea.value + "\n\n"; // Добавляем текст и отступы
+                }
+            });
+
+            // Копируем
+            const rect = btnElement.getBoundingClientRect();
+            createSparks({
+                clientX: rect.left + rect.width/2,
+                clientY: rect.top + rect.height/2
+            });
+
+            navigator.clipboard.writeText(bulkText).then(() => {
+                showToast('Успех!', `Скопировано ${checkedInputs.length} элементов.`);
+                // Анимация кнопки
+                const originalText = btnElement.innerHTML;
+                btnElement.innerHTML = 'СКОПИРОВАНО! ✨';
+                btnElement.style.background = 'var(--color-primary)';
+                btnElement.style.color = '#000';
+
+                setTimeout(() => {
+                    btnElement.innerHTML = originalText;
+                    btnElement.style.background = '';
+                    btnElement.style.color = '';
+                }, 2000);
             }).catch(err => {
                 showToast('Ошибка', 'Не удалось скопировать.');
             });
