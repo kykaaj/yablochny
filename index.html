@@ -1706,7 +1706,7 @@ Instead of using a banned phrase, randomly pick one of the alternatives.
 "тучи собирались" (как метафора) -> {{describe the actual tension. Example: "Что-то менялось — он чувствовал это в том, как люди отводили глаза."}}
 "медленно, очень медленно" (dramatic repetition) -> {{use one precise verb or image. Example: "тянулся" / "полз" / "сочился" / "движение было почти незаметным"}}
 [Atmosphere (USE SPARINGLY)]
-"воздух был густым/неподвижным/тяжёлым" or  "тишина была густой" -> {{describe what characters FEEL, not the air. Example: "Дышать стало труднее" / "Каждый вдох давался с усилием" / "Молчание давило на виски"}}
+"воздух был густым/неподвижным/тяжёлым" or  "тишина была густой" -> {{describe the actual tension. Example: "Дышать стало труднее" / "Каждый вдох давался с усилием" / "Молчание давило на виски"}}
 [Absolute bans (no replacement, just avoid)]
 - якорь (unless literal ship anchor)
 - озон
@@ -2412,6 +2412,25 @@ The HTML/CSS/code structure itself MUST remain in English, but all *visible rend
             openTab(null, savedTab);
 
             startTypewriter();
+
+            // === ВОТ ТУТ ФИКС ПЕРЕКЛЮЧАТЕЛЕЙ (RADIO) ===
+            // Эта магия делает так, что если нажать на уже включенный кружок, он выключится!
+            const allRadios = document.querySelectorAll('input[type="radio"]');
+            allRadios.forEach(radio => {
+                // Запоминаем состояние ДО клика
+                radio.addEventListener('mousedown', function() {
+                    this.dataset.wasChecked = this.checked;
+                });
+                // Обрабатываем сам клик
+                radio.addEventListener('click', function(e) {
+                    // Если он БЫЛ включен, то мы его выключаем
+                    if (this.dataset.wasChecked === "true") {
+                        this.checked = false;
+                        this.dataset.wasChecked = "false"; // Сбрасываем память
+                    }
+                });
+            });
+            // === КОНЕЦ ФИКСА ===
         });
 
         // === 1. АНИМИРОВАННЫЙ ФОН (ЧАСТИЦЫ) ===
