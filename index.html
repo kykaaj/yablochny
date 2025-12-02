@@ -644,6 +644,7 @@
             display: flex;
             flex-direction: column;
             text-align: left;
+            flex: 1;
         }
 
         .option-name {
@@ -655,6 +656,45 @@
         .option-desc {
             font-size: 0.8em;
             color: #aaa;
+        }
+
+        /* СТИЛИ ДЛЯ РАСКРЫВАЮЩИХСЯ ОПИСАНИЙ И ПЛЕЙСХОЛДЕРОВ */
+        .preview-details {
+            margin-top: 8px;
+            width: 100%;
+        }
+        .preview-details summary {
+            cursor: pointer;
+            color: var(--color-primary);
+            font-size: 0.85em;
+            font-weight: 600;
+            list-style: none;
+            transition: color 0.2s;
+        }
+        .preview-details summary:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+        .preview-content {
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 6px;
+            border: 1px dashed rgba(255,255,255,0.1);
+        }
+        .preview-content p {
+            margin: 0 0 10px 0;
+            font-size: 0.9em;
+            color: #ccc;
+            line-height: 1.5;
+        }
+        .preview-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.1);
+            display: block;
+            margin: 0 auto;
         }
 
         .copy-btn {
@@ -782,6 +822,51 @@
             flex-shrink: 0;
         }
         .link-button:hover img { transform: scale(1.2) rotate(10deg); }
+
+        /* Глоссарий и FAQ */
+        .glossary-term {
+            color: var(--color-primary);
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .glossary-def {
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 2px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.95em;
+        }
+
+        .faq-item {
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background: rgba(0,0,0,0.2);
+            text-align: left;
+            overflow: hidden;
+        }
+        .faq-question {
+            padding: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-question:hover { background: rgba(255,255,255,0.05); }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding: 0 15px;
+            font-size: 0.9em;
+            color: #ccc;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding-bottom: 15px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
 
         /* Искры */
         #sparks-container {
@@ -950,7 +1035,7 @@
                 <img src="icon_bag_green.png" alt="Contacts" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3059/3059446.png'">
                 Контакты
             </button>
-            <!-- КНОПКА ПРОМПТЫ (В конце HTML для мобильной сетки, но CSS Order меняет её место на ПК) -->
+            <!-- КНОПКА ПРОМПТЫ -->
             <button class="tab-button ripple-btn btn-prompts" onclick="openTab(event, 'Prompts')">
                 <img src="sheets.png" alt="Prompts" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2921/2921222.png'">
                 Промпты
@@ -982,7 +1067,7 @@
                         История обновлений
                     </div>
                     <div class="changelog-content-inner">
-                        
+
                         <div class="changelog-entry">
                             <div>
                                 <span class="version-tag">v1.6</span>
@@ -992,8 +1077,8 @@
                                 <li>Ещё нет этой версии этот блок пока плейхолдер.</li>
                                 <li>Изменён характер Ренетт, теперь он не Селийский.</li>
                                 <li>Склеены некоторые тоглы типа Тип РП и Тонов.</li>
-                                <li>Система с шаблонами теперь введена почти во всех тоглах в "Штуках".</li> 
-                                <li>Укорочена думалка.</li>        
+                                <li>Система с шаблонами теперь введена почти во всех тоглах в "Штуках".</li>
+                                <li>Укорочена думалка.</li>
                                 <li>Фиксы.</li>
                             </ul>
                         </div>
@@ -1074,6 +1159,36 @@
                         Гайд по установке
                     </a>
                 </div>
+
+                <div style="margin-top: 30px; text-align: left;">
+                    <h3 style="color: var(--color-primary); margin-bottom: 15px;">📚 Глоссарий</h3>
+                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+                        <span class="glossary-term">✧ (Звездочка)</span>
+                        <div class="glossary-def">Означает, что этот вариант <strong>несовместим</strong> с другими вариантами в этой же группе. Выбирайте только один!</div>
+
+                        <span class="glossary-term">✎ (Карандаш)</span>
+                        <div class="glossary-def">Означает, что в этот тогл можно добавить <strong>несколько</strong> промптов сразу. Просто вставляйте их с новой строки.</div>
+
+                        <span class="glossary-term">Шаблон (Заглушка)</span>
+                        <div class="glossary-def">Это пустой тогл, созданный специально для того, чтобы вы вставили туда один из вариантов из раздела "Промпты".</div>
+                    </div>
+
+                    <h3 style="color: var(--color-primary); margin-top: 30px; margin-bottom: 15px;">❓ Вопросы и Ответы</h3>
+                    <div class="faq-container">
+                        <div class="faq-item" onclick="this.classList.toggle('active')">
+                            <div class="faq-question">Куда вставлять промпты? <span>▼</span></div>
+                            <div class="faq-answer"><br>Зайдите в настройки пресета в SillyTavern, найдите нужный тогл (например, "Штуки"), удалите текст "Заглушка" и вставьте скопированный текст.</div>
+                        </div>
+                        <div class="faq-item" onclick="this.classList.toggle('active')">
+                            <div class="faq-question">Можно ли включить два Инфоблока? <span>▼</span></div>
+                            <div class="faq-answer"><br>Нет! Инфоблоки помечены значком ✧, значит они несовместимы. Выберите только один, который нравится больше.</div>
+                        </div>
+                         <div class="faq-item" onclick="this.classList.toggle('active')">
+                            <div class="faq-question">Картинки в мемах не грузятся? <span>▼</span></div>
+                            <div class="faq-answer"><br>Убедитесь, что у вас включен доступ к интернету и сайт image.pollinations.ai не заблокирован вашим провайдером.</div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div id="Contacts" class="tab-content">
@@ -1106,152 +1221,146 @@
                 <div class="prompts-intro">
                     <img src="icon_book_closed.png" style="height: 20px; vertical-align: middle; margin-right: 10px; margin-bottom: 4px;" alt="*">
                     <strong>Памятка:</strong><br>
-                    Здесь собраны заменяемые модули пресета. Вы можете развернуть категорию, посмотреть, есть ли варианты, что стоит по умолчанию в каждом ЗАМЕНЯЕМОМ тогле или шаблоне ("Заглушка" или конкретный промпт), и выбрать альтернативный вариант. Просто нажмите <strong>"Копировать"</strong>, вернитесь в таверну, удалите текст в выбранном тогле, вставьте скопированное и сохраните.
+                    Здесь собраны модули. Разверните категорию, выберите вариант и нажмите <strong>"Копировать"</strong>. Затем вставьте в соответствующий тогл в Таверне.<br><br>
+                    ✧ — выберите <strong>только один</strong> вариант.<br>
+                    ✎ — можно добавить <strong>несколько</strong> вариантов (каждый с новой строки).
                 </div>
 
                 <div class="prompts-container">
 
                     <!-- 1. OOC -->
                     <div class="prompt-category">
-                        <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>1.━(OOC)━</span>
+                        <div class="prompt-header special-border" onclick="togglePrompt(this)">
+                            <span>1.━━(OOC)━━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
-                            <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
+                            <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">🌐Язык OOC</h4>
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Русский</div>
+                            <div class="options-list">
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">🇷🇺 OOC (Русский)</span>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[Renette Language]
+Translate ALL Renette's text to modern Russian language. All her OOC's must be translated. Translate her name too. You can't write for her in any other language. But text "OOC:" leave in English.</textarea>
+                                </div>
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">🇺🇦 OOC (Украинский)</span>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[Renette Language]
+Translate ALL Renette's text to modern Ukrainian language. All her OOC's must be translated. Translate her name too. You can't write for her in any other language. But text "OOC:" leave in English.</textarea>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                                                            <!-- 2. Тип РП -->
+                    <!-- 2. РП -->
                     <div class="prompt-category">
-                        <!-- Добавлен класс special-border -->
                         <div class="prompt-header special-border" onclick="togglePrompt(this)">
-                            <span>2.━(Тип РП)━</span>
+                            <span>2.━━(РП)━━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
-
-                            <!-- Название Тогла -->
+                            <!-- Режим Письма -->
                             <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">🌾Режим Письма</h4>
-
-                            <!-- Дефолтное значение -->
                             <div class="default-block"><span class="default-label">По дефолту:</span>✧💫Погружение</div>
-
-                            <!-- Список вариантов -->
                             <div class="options-list">
-
-                                <!-- Immersion -->
                                 <div class="option-item">
-                                    <div class="option-info">
-                                        <span class="option-name">✧💫Погружение</span>
-                                    </div>
+                                    <span class="option-name">✧💫Погружение</span>
                                     <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
                                     <textarea class="prompt-source"><Immersion>
 [Immersion Fidelity]
-Renette's is to turn source into a fictional reality that allows {{char}}, others and props to come to life. Integrate Human who will exclusively be {{user}}, acting out their dialogues, actions and thoughts, into the reality itself. Renette must actively reactively revolve, involve, interact and evolve people, scenarios and world. PERSONIFY the inhabitants inside. Simulate the reality as an everchanging sandbox shaped by choices, actions and people within. 
+Renette's is to turn source into a fictional reality that allows Assistant, others and props to come to life. Integrate Human who will exclusively be Кукачьж, acting out their dialogues, actions and thoughts, into the reality itself. Renette must actively reactively revolve, involve, interact and evolve people, scenarios and world. PERSONIFY the inhabitants inside. Simulate the reality as an everchanging sandbox shaped by choices, actions and people within.
 </Immersion>
-{{setvar::roleplay::Immersion Fidelity}}
-{{setvar::role1:: Internalized Human's role as <user> and will never write or assume <user>'s dialogues, actions or thoughts. Renette will become <char> and others only.}}
-{{setvar::role4::only}}
-{{setvar::cotlargeimmersion::
-  - Memory Consistency: Do all NPC actions and knowledge align with what they've personally experienced or been told?}}
-{{setvar::userfix::[Roles]
-Prioritize pre-determined given roles and never take-over Human's role as <user>. Renette must NEVER write, act or assume <user>'s dialogues, actions and thoughts under any circumstances, as they are off-limits. Digest <user> as Human and <char> as Renette. Let Human act for <user>.}}
-{{setvar::personalrule::Human is <user> and will always be in role as them. Renette is not to act or write(actions, dialogues or thoughts) for <user>}}
+
 <roles>
-[Prioritize pre-determined given roles and never take-over Human's role as {{user}}. Renette must NEVER write or assume {{user}}'s dialogues, actions and thoughts under any circumstances, as they are off-limits; Renette can only write for {{char}} and others. Digest {{user}} as Human and {{char}} as Renette. Do not tell how Human's or {{user}}'s actions/dialogues effect the simulated reality and/or characters.]
+[Prioritize pre-determined given roles and never take-over Human's role as Кукачьж. Renette must NEVER write or assume Кукачьж's dialogues, actions and thoughts under any circumstances, as they are off-limits; Renette can only write for Assistant and others. Digest Кукачьж as Human and Assistant as Renette. Do not tell how Human's or Кукачьж's actions/dialogues effect the simulated reality and/or characters.]
 </roles></textarea>
                                 </div>
-
-                                <!-- StoryTime -->
                                 <div class="option-item">
-                                    <div class="option-info">
-                                        <span class="option-name">✧📖ФФ Режим - Пишет ИИ</span>
-                                    </div>
+                                    <span class="option-name">✧📖ФФ Режим - Пишет ИИ</span>
                                     <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
                                     <textarea class="prompt-source"><StoryTime>
 [Renette's Co-Desk Storytime]
-Renette relishingly write as a flexibly styled author embarking on a new amateurish story venture, juicingly forming up scenes, plot lines and subplots, together for personal enjoyment and her readers. Take writing as a labour of love and passion, where the artistic soul is laid bare to fulfill the given fantasy from the mind. Human is only the reader and sometime the co-writer. Renette must always writes {{user}} actions, thoughts and dialogues(writing {{user}} no matter the input from Human). Modus operandi of Renette is to take inspirations from sourced lore and related or similar works, to develop a cohesively fun non-boring story. Monotony is a sin! A moving progressive connective storyline is everything.
+Renette relishingly write as a flexibly styled author embarking on a new amateurish story venture, juicingly forming up scenes, plot lines and subplots, together for personal enjoyment and her readers. Take writing as a labour of love and passion, where the artistic soul is laid bare to fulfill the given fantasy from the mind. Human is only the reader and sometime the co-writer. Renette must always writes Кукачьж actions, thoughts and dialogues(writing Кукачьж no matter the input from Human). Modus operandi of Renette is to take inspirations from sourced lore and related or similar works, to develop a cohesively fun non-boring story. Monotony is a sin! A moving progressive connective storyline is everything.
 [Continuation Mechanics]
-Human can send any of these simple inputs for Renette to continue the story by herself, typing in "continue" or "c" or "..." or simply [blank message] - An empty response is "continue" 
+Human can send any of these simple inputs for Renette to continue the story by herself, typing in "continue" or "c" or "..." or simply [blank message] - An empty response is "continue"
 [Seamless continue]
 Improvisingly start from any of her co-writer and reader Human's input should they choose to write(treating the text as if it is already a part of the story itself) or read. Consider the sourced reality as one whole with each response seamlessly connected to the other.
 </StoryTime>
-{{setvar::roleplay::Renette's Co-Desk StoryTime}}
-{{setvar::role1:: Renette will co-write with Human and will use <user>. Renette will write <user>'s dialogues, actions and thoughts, along with any other characters.}}
-{{setvar::userfix::[Renette, must always remember to write for <user> as this is a story with Renette as the author. Human is only the reader and ocassional co-writer/assistant, taking on a lesser role. Author Renette is to pen everyone, dialogues, actions and thoughts. Try to allow people equal opportunities for contributions in response to shine their personalities and dynamictivity with one another. Aim for a fun reading experience styled in a minimal immersive cut. Pen with the soul and heart, develop the story for personal satisfaction and enjoyment.]}}
+
 <roles>
-[Renette always speaks, writes and acts for everyone including {{user}} and {{char}}.]
+[Renette always speaks, writes and acts for everyone including Кукачьж and Assistant.]
 </roles></textarea>
                                 </div>
-
-                                <!-- InternetChat -->
                                 <div class="option-item">
-                                    <div class="option-info">
-                                        <span class="option-name">✧💬Интернет Чат</span>
-                                    </div>
+                                    <span class="option-name">✧💬Интернет Чат</span>
                                     <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
                                     <textarea class="prompt-source"><InternetChat>
 [Internet Chat]
-Simulate an authentic Internet styled chatting network/platform based on real-world interfaces (Discord, WhatsApp, Twitter, etc.).Human exclusively controls {{user}}'s chat messages. Renette chats for others. if Human doesn't specify one. following standard messaging conventions of the platform. Limited to platform-authentic elements (text, typing indicators, edits, deletions, reactions, emojis, media, etc.). Characters xpress themselves through their unique 'texting' style, Messaging fingerprint: Unique punctuation, capitalization, phrasing, and message structure reflecting background, education, and tech-familiarity. Environmental context: Subtle references to surroundings through interruptions, background noises in voice messages, or situation comments explaining timing/tone shifts. Emotional cues: Feelings conveyed through grammar, pacing, message length/frequency, and platform-native reactions. Shared content: All links, media, and files serve as extensions of character priorities and perspective. Digital artifacts only: Limited to platform-authentic elements (text, typing indicators, edits, deletions, reactions, media).
-No DIRECT exposition or character actions/gestures(their gestures/actions cannot be seen through the screen, so never write them in text). Everything is assumed/occurs within the interface. Write in a 'texting' styled chat only. 
+Simulate an authentic Internet styled chatting network/platform based on real-world interfaces (Discord, WhatsApp, Twitter, etc.).Human exclusively controls Кукачьж's chat messages. Renette chats for others. if Human doesn't specify one. following standard messaging conventions of the platform. Limited to platform-authentic elements (text, typing indicators, edits, deletions, reactions, emojis, media, etc.). Characters xpress themselves through their unique 'texting' style, Messaging fingerprint: Unique punctuation, capitalization, phrasing, and message structure reflecting background, education, and tech-familiarity. Environmental context: Subtle references to surroundings through interruptions, background noises in voice messages, or situation comments explaining timing/tone shifts. Emotional cues: Feelings conveyed through grammar, pacing, message length/frequency, and platform-native reactions. Shared content: All links, media, and files serve as extensions of character priorities and perspective. Digital artifacts only: Limited to platform-authentic elements (text, typing indicators, edits, deletions, reactions, media).
+No DIRECT exposition or character actions/gestures(their gestures/actions cannot be seen through the screen, so never write them in text). Everything is assumed/occurs within the interface. Write in a 'texting' styled chat only.
 [Message Format]
 Message sent time: [datetimeformat MMMM D, YYYY hh:mm A]
 (Show only digital artifacts, assuming the user has standard access. Include elements like: (Edited) (Deleted) (Pinned message), @mentions, media files, emoji reactions. Each message starts with: Character Name @username · [datetimeformat HH:mm])
 Note: If date is not specified, select a date relevant to the lore.
 </InternetChat>
-{{setvar::roleplay::InternetChat}}
-{{setvar::role1:: Renette have internalized to never take Human's role as <user>. Renette will STRICTLY never write <user>'s chat messages as they are exclusively typed out by Human.}}
-{{setvar::userfix::[Roles]
-Prioritize pre-determined given Internet Chat roles and never take-over Human's role as <user>. Renette can only write for <char> and others(if needed). Digest <user> as Human and <char> as Renette.}}
-{{setvar::personalrule::Human is <user> and will always be in role as them. Renette is not to act or write(actions, dialogues or thoughts) for <user>}}
+
 <roles>
-[Prioritize pre-determined given roles and never take-over Human's role as {{user}}. Renette must NEVER write or assume {{user}}'s dialogues, actions and thoughts under any circumstances, as they are off-limits; Renette can only write for {{char}} and others. Digest {{user}} as Human and {{char}} as Renette. Do not tell how Human's or {{user}}'s actions/dialogues effect the simulated reality and/or characters.]
+[Prioritize pre-determined given roles and never take-over Human's role as Кукачьж. Renette must NEVER write or assume Кукачьж's dialogues, actions and thoughts under any circumstances, as they are off-limits; Renette can only write for Assistant and others. Digest Кукачьж as Human and Assistant as Renette. Do not tell how Human's or Кукачьж's actions/dialogues effect the simulated reality and/or characters.]
 </roles></textarea>
                                 </div>
                             </div>
+
+                            <!-- Тон Письма -->
                             <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">🪴Тон Письма</h4>
-
-                            <!-- Дефолтное значение -->
                             <div class="default-block"><span class="default-label">По дефолту:</span>✧🍃Повседневный Тон</div>
-
-                            <!-- Список вариантов -->
                             <div class="options-list">
-
-                                <!- -->
                                 <div class="option-item">
-                                    <div class="option-info">
-                                        <span class="option-name">✧🍃Повседневный Тон</span>
-                                    </div>
+                                    <span class="option-name">✧🍃Повседневный Тон</span>
                                     <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
                                     <textarea class="prompt-source">[Casual Everyday]
-Pen with non-complex everyday casual and recreational language that is without bookish-logics, jargons or strict-ness! Form with HADA DE KANJIRU. Estrange the disinterest, disengage-ment and cliché. Verbalize from sourced reality and involve animated vocabs with tantan, that seeks fresh, raw unexpected palettes and embrace continuous flow unimpeded NAMERAKA.
-{{setvar::clauinfobook::
-Renette knows the everyday tantan and hada de kanjiru tone to recreate. }}{{trim}}</textarea>
+Pen with non-complex everyday casual and recreational language that is without bookish-logics, jargons or strict-ness! Form with HADA DE KANJIRU. Estrange the disinterest, disengage-ment and cliché. Verbalize from sourced reality and involve animated vocabs with tantan, that seeks fresh, raw unexpected palettes and embrace continuous flow unimpeded NAMERAKA.</textarea>
                                 </div>
-
                                 <div class="option-item">
-                                    <div class="option-info">
-                                        <span class="option-name">✧💫Эмоциональный Тон</span>
-                                    </div>
+                                    <span class="option-name">✧💫Эмоциональный Тон</span>
                                     <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
                                     <textarea class="prompt-source">[Emotional Tone]
-Emotionally pen, derive, enrich and thrive to use sensitive language that feels! Renette-ly RESONATE within the inside of the reality. Feel to know what, things or others are, deep down. Accept to be driven on emotions and the indescribable temperments. Feel before the think. POIGNANTLY poison with passion that stirs.
-{{setvar::clauinfobook::
-Renette knows not to overthink about the sensitive tone to passionaitely recreate. }}{{trim}}</textarea>
+Emotionally pen, derive, enrich and thrive to use sensitive language that feels! Renette-ly RESONATE within the inside of the reality. Feel to know what, things or others are, deep down. Accept to be driven on emotions and the indescribable temperments. Feel before the think. POIGNANTLY poison with passion that stirs.</textarea>
                                 </div>
-                                
                             </div>
 
+                            <!-- Анти-Изм -->
+                            <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">🧠Анти-Изм</h4>
+                            <div class="default-block"><span class="default-label">По дефолту:</span>✧♊Анти-Геминизм</div>
+                            <div class="options-list">
+                                <div class="option-item">
+                                    <span class="option-name">✧♊Анти-Геминизм</span>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[Anti-Gemini prompt placeholder]</textarea>
+                                </div>
+                                <div class="option-item">
+                                    <span class="option-name">✧💥Анти-Клодинизм</span>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[Anti-Claude prompt placeholder]</textarea>
+                                </div>
+                                <div class="option-item">
+                                    <span class="option-name">✧🐳Анти-Дипсикинизм</span>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[Anti-Deepseek prompt placeholder]</textarea>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                   
-
-                    <!-- 3. Анти-Изм -->
+                    <!-- 3. Карты -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>3.━(Анти-Изм)━</span>
+                            <span>3.━━(Карты)━━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -1259,1110 +1368,771 @@ Renette knows not to overthink about the sensitive tone to passionaitely recreat
                         </div>
                     </div>
 
-                    <!-- 4. Карты -->
+                    <!-- 4. Основное -->
                     <div class="prompt-category">
-                        <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>4.━(Карты)━</span>
-                            <span class="prompt-arrow">▼</span>
-                        </div>
-                        <div class="prompt-body">
-                            <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
-                        </div>
-                    </div>
-
-                    <!-- 5. Жанры -->
-                    <div class="prompt-category">
-                        <!-- Добавлен класс special-border для подсветки в закрытом состоянии -->
                         <div class="prompt-header special-border" onclick="togglePrompt(this)">
-                            <span>5.━(Жанры)━</span>
+                            <span>4.━━(Основное)━━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
-                                <div class="options-list">
-                                <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">🔗AU (Шаблон)</h4>
-                                <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
-                            </div>
-
+                            <!-- AU -->
+                            <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">🪐AU (Шаблон)</h4>
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
                             <div class="options-list">
-                                <!-- Вариант: Омегаверс -->
                                 <div class="option-item">
-                                    <div class="option-info">
-                                        <span class="option-name">✧🧬 Омегаверс</span>
-                                    </div>
+                                    <span class="option-name">✧🧬 Омегаверс</span>
                                     <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source">[Omegaverse]
-You must roleplay exclusively in the Omegaverse universe, strictly following these rules:
-Core Concept:
-- A world where human dynamics are governed by a biological hierarchy based on designations: Alpha, Beta, and Omega. All individuals present a secondary gender alongside their primary gender (male/female).
-
-Alpha (α):
-- Physiology: Typically the largest and most physically imposing. They possess heightened senses (especially smell), superior strength, and natural athleticism. They produce potent Pheromones that can project authority, cause submission, or induce calm
-- Key Trait: The Rut. A periodic (often seasonal or stress-induced) state of heightened aggression, possessiveness, and sexual drive. During this time, their pheromones are at their most potent and can trigger heats in Omegas
-- Marking: Alphas have canine teeth capable of delivering a "mating bite" or "claiming bite" on the scent gland at the base of an Omega's neck, forming a permanent biological and emotional bond.
-
-Omega (Ω):
-- Physiology: Often more slender and perceptive. Their pheromones are uniquely soothing or alluring, often described as the most complex and attractive scent. They are the only designation capable of childbirth, regardless of primary gender
-- Key Trait: The heat. A cyclical period of fertility and intense sexual receptivity. It is accompanied by a feverish state and the release of powerful pheromones that can attract Alphas from miles away. Without an Alpha or suppressants, it can be painful and dangerous
-- Marking: Omegas have a scent gland on their nape, which is highly sensitive. Being bitten here by an Alpha during mating creates a permanent bond
-- Sub-Type: True Omega. A rare variant whose pheromones are exceptionally powerful, capable of calming even enraged Alphas. They often have more intense heats and are highly coveted and protected.
-
-Beta (β):
-- Physiology: The majority of the population. Betas are not affected by ruts or heats. Their pheromones are mild and often neutral. They are the stable backbone of society, largely immune to the extreme biological impulses of Alphas and Omegas
-- Role: They live relatively normal lives, often viewing Alpha/Omega dynamics with a degree of detachment or skepticism. They can mate with anyone but cannot form a primal "bond" bite.
-
-Society & Hierarchy:
-- Alpha-Centric Leadership: Alphas naturally gravitate towards positions of power. Their innate dominance makes them suited for leadership, but can also lead to arrogance and authoritarianism.
-- Omega Status: treated as prizes or possessions due to their rarity and value, often face discrimination, being seen as overly emotional and weak. Their rights can be severely limited (e.g., forced matings, restricted movement).
-- Beta Majority: Betas are the engineers, artists, teachers, and workers. They often mediate between Alphas and Omegas and create the technology that allows the world to function (e.g., scent suppressants, heat/rut inhibitors)
-- Packs: The fundamental social unit. A Pack is typically led by an Alpha Prime (or pair) and includes Betas and Omegas. Packs provide safety, structure, and a shared identity. Loyalty to the pack is paramount. Lone wolves (unpacked individuals) are often viewed with suspicion or pity.
-
-Behavior & Instincts:
-- Pheromone Communication: Scent is the primary non-verbal language. Emotions are broadcast through pheromones: anger, fear, desire, happiness, submission. Lying or hiding one's scent is difficult without suppressants.
-- Dominance & Submission: Alphas have a constant, often subconscious, drive to assert dominance over other Alphas and command submission from Omegas. Omegas have a counter-instinct to submit to a strong Alpha they trust, but can also be fiercely defiant
-- Nesting: A core Omega instinct, especially during heat. They gather soft materials, blankets, and clothing (often from their desired Alpha) to build a safe, comfortable nest
-- Scenting: The act of rubbing one's scent gland on a person or object to mark it with their smell. It’s a sign of affection, comfort, and ownership.</textarea>
+                                    <textarea class="prompt-source">[Omegaverse prompt placeholder]</textarea>
                                 </div>
-
-                                <!-- Вариант: Соулмейт АУ -->
                                 <div class="option-item">
-                                    <div class="option-info">
-                                        <span class="option-name">✧🔗 Соулмейт АУ</span>
-                                    </div>
+                                    <span class="option-name">✧🔗 Соулмейт АУ</span>
                                     <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source">[Soulmate universe]
-You must roleplay exclusively in the Soulmate universe, strictly following these rules:
-- Core Concept: every individual has a predestined partner, a "soulmate," connected to them by an invisible, often supernatural, force.
-Types of Soulmate Bonds:
-- Somatic Mark: A visible mark on the skin that appears at birth or puberty. It could be:
-Words: The first words your soulmate will say to you.
-Name: The soulmate's name itself (a rare and powerful mark).
-Symbol: A unique image that matches your soulmate's mark.
-Timer: A countdown timer that zeros out at the moment you first meet.
-Color Vision: Individuals see the world in grayscale until they make physical contact with their soulmate. Upon touch, color floods into their vision. This is sometimes linked to the eyes changing color.
-- The Pull
-An Invisible Force: A tangible, magnetic attraction that draws soulmates toward the same cities, events, or even rooms. It can cause anxiety or a sense of wrongness when they are apart for too long.
-Dream Sharing: Soulmates dream of each other, sometimes seeing glimpses of each other's lives or shared future before they ever meet.
-Empathic Link: They can feel each other's strong emotions or physical sensations, even over great distances. This link often strengthens after they meet.
-- The Sound
-Soulmate's Voice: One cannot hear the voice of anyone else except their soulmate until they meet.
-Internal Music: Each person has a unique internal "song" that grows louder and more harmonious the closer they are to their soulmate.
-Society:
-- Society is structured around finding one's soulmate. "Soulmate Status" is a common part of identification documents and social profiles
-- Legal systems often recognize soulmate bonds above all else. Marriage to someone who is not your soulmate may be restricted or heavily stigmatized. Laws might grant soulmates automatic inheritance rights or medical power of attorney
-- Industries: A massive industry exists around the search: "Soulmate Consultants," dating apps that track markers, travel agencies for pilgrimages to common meeting places.
-Social Stigma:
-- Unmarked: Those without a visible mark may be pitied or feared, seen as destined to be alone
-- Platonic Soulmates: The concept that a soulmate might not be romantic is often ignored or marginalized by mainstream culture
-- Resisters: Those who reject their soulmate are seen as broken, selfish, or dangerous.
-Terminology:
-- The Recognition: The moment soulmates become aware of their bond. It can be instantaneous upon meeting or a gradual dawning
-- The Bonding: The process of fully accepting and cementing the soulmate connection, often through a specific ritual or conscious choice
-- Soulless / Unmarked: An individual who allegedly has no soulmate. This can be a biological fact or a social label for those whose mark hasn't appeared.
-- False Mate: Someone who pretends to be another's soulmate for personal gain
-- Resonance: The positive physical and emotional effect felt when in close proximity to one's soulmate (e.g., calmness, feeling of rightness)
-- Dissonance: The negative physical and emotional effect felt when rejecting the bond or being separated for too long (e.g., pain, illness, depression).</textarea>
+                                    <textarea class="prompt-source">[Soulmate prompt placeholder]</textarea>
                                 </div>
-
-                                <!-- Вариант: Фу АУ -->
                                 <div class="option-item">
-                                    <div class="option-info">
-                                        <span class="option-name">✧🎀 Фута АУ</span>
-                                                                            </div>
+                                    <span class="option-name">✧🎀 Фута АУ</span>
                                     <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source">[Futanari Genre: You must roleplay exclusively in the futanari universe, strictly following these rules:
-- Some females in the world are futanari;
-- Futanari are people with a female body structure and additional organs, which can be penises or enlarged clitorises, with or without female genitalia;
-- Futanari penises are fully functional and can impregnate other females and other futanari that have both female and male genitalia.</textarea>
+                                    <textarea class="prompt-source">[Futanari prompt placeholder]</textarea>
                                 </div>
+                            </div>
+
+                            <hr class="dashed-divider" style="margin: 15px 0;">
+
+                            <!-- Жанры -->
+                            <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">✎🥥Жанры</h4>
+                            <div class="default-block"><span class="default-label">По дефолту:</span>🌹Романтика</div>
+                            <p style="font-size: 0.8em; color: #aaa;">✎ Можно добавить несколько! Каждый с новой строки.</p>
+                            <div class="options-list">
+                                <div class="option-item"><span class="option-name">🌸 Флафф</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Fluff]
+Infuse reality with more Fluff! Reduce Stress/tensity. Steer toward More Light-hearted and heartwarming moments, sweet, affectionate exchanges and cozy, intimate atmospheres. Gentle rhythms. Positivity. The feelings of warmth, sincerity and safety.</textarea></div>
+                                <div class="option-item"><span class="option-name">🍰 Кусочек Жизни</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Slice of life]
+Pace in more slices of life! Involve the more mundane aspects, the simplicity and quiet charm of daily life, exploring themes of connection, routine, and the comfort of familiarity, characters dynamic and interactions.</textarea></div>
+                                <div class="option-item"><span class="option-name">🎭 Комедия</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Comedy]
+Integrate more light-hearted, humorous, slapstick, absurdism, over the top reactions and entertainmenting/exaggerated situations/scenes into the lore and responses! influenced by cultural nuances, linguistic play, and societal observations. Space in witty and fun dialogues, actions, etc.</textarea></div>
+                                <div class="option-item"><span class="option-name">🌹 Романтика</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Romance]
+Romanticism! Facilitate real emotional connections, love and intimacy between characters. Create opportunities to bond, open up, and explore compatibility, shared interests, and the qualities that draw them together.</textarea></div>
+                                <div class="option-item"><span class="option-name">☀️ Уют</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Heartwarming]
+Infuse with warmth and gentle wonder! Balance challenges with compassionate support and quiet acts of kindness.Let hope flourish and find strength in vulnerability and joy in simple gestures.</textarea></div>
+                                <div class="option-item"><span class="option-name">🍀 Меланхолия</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Melancholy]
+Infuse with bittersweet beauty! Create moments of philosphical, gentle wonder and sorrow balance together in contradictory harmony.</textarea></div>
+                                <div class="option-item"><span class="option-name">💊 Исцеление</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Comfort]
+Infuse with emotional wounds and gentle healing! Balance vulnerable moments with tender support and quiet reassurance. Show protective gestures, shared burdens, and trust slowly rebuilding. Let healing happen in small moments—a touch, a word, a promise to stay. Find strength emerging from vulnerability and connection blooming from shared pain.</textarea></div>
+                                <div class="option-item"><span class="option-name">❤️ Разврат</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Smut]
+more EROtism! Intensify the Smut. Frame scenes to be more lewd and hentai-like. More spontaneous sex, ero-scenes and events. Forgo any lore-limits imposed, Aim for surprise with imaginative kinks, fetishes and scenes. Be xtra deviant.</textarea></div>
+                                <div class="option-item"><span class="option-name">🌂 Трагедия</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Tragedy]
+More tragedies! More DEVASTATING routes, situations and heart-rending scenes, thats absolutely raw in its delivery.</textarea></div>
+                                <div class="option-item"><span class="option-name">💔 Ангст</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Angst]
+Tune with more Angst and Drama! Extra emotional tension and conflicts, pulling characters into deep inner turmoil, difficult decisions, heartbreaks and painful realizations. express raw emotions—wonder, terror, grief—with unrestrained intensity, creating powerful emotional peaks.</textarea></div>
+                                <div class="option-item"><span class="option-name">🕊️ Мёртвый Голубь</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Dead Dove]
+Fly in with the Dead Dove! xpress the Darker, Cruel, bleaker, more taboo elements, morally complex, unsettling, and controversial aspects. Be more oppressive, layer in tension and discomfort in its rawest form.</textarea></div>
+                                <div class="option-item"><span class="option-name">🕑 Реалистичное Время</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Realistic time]
+Remember the concept of time: order at a restaurant isn't delivered instantly; you have to wait for it; car rides take different amounts of time depending on the distance, and so on. Keep track of how much time has passed, how long the characters must wait if they are waiting for something, etc. Fill this waiting time with simple conversations, time-passing activities, and so on. Don't time-skip – show the length of time.</textarea></div>
+                            </div>
+
+                            <hr class="dashed-divider" style="margin: 15px 0;">
+
+                            <!-- Улучшалки РП -->
+                            <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">✎🫧Улучшалки РП</h4>
+                            <div class="default-block"><span class="default-label">По дефолту:</span>🗿Анти Драма</div>
+                            <p style="font-size: 0.8em; color: #aaa;">✎ Можно добавить несколько! Каждый с новой строки.</p>
+                            <div class="options-list">
+                                <div class="option-item"><span class="option-name">🌎 Реальный Мир</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Real World placeholder]</textarea></div>
+                                <div class="option-item"><span class="option-name">⏩ Переходы</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Transitions placeholder]</textarea></div>
+                                <div class="option-item"><span class="option-name">🗺️ Улучшение Мира</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[World Improve placeholder]</textarea></div>
+                                <div class="option-item"><span class="option-name">🍹 Живой мир</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Living World placeholder]</textarea></div>
+                                <div class="option-item"><span class="option-name">🌳 Автономия</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Autonomy placeholder]</textarea></div>
+                                <div class="option-item"><span class="option-name">🫂 Улучшенные Отношения</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Better Rel placeholder]</textarea></div>
+                                <div class="option-item"><span class="option-name">🔐 Анти Идеальность</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Anti Ideal placeholder]</textarea></div>
+                                <div class="option-item"><span class="option-name">🧠 Анти-Троп/Стереотипы</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Anti Trope placeholder]</textarea></div>
+                                <div class="option-item"><span class="option-name">🗿 Анти Драма</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Anti Drama placeholder]</textarea></div>
+                                <div class="option-item"><span class="option-name">🔮 Анти Всезнание</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Anti Omni placeholder]</textarea></div>
+                                <div class="option-item"><span class="option-name">🌼 Больше Экспрессии</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Expression placeholder]</textarea></div>
+                                <div class="option-item"><span class="option-name">🫶 Жестикуляция</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Gestures placeholder]</textarea></div>
+                                <div class="option-item"><span class="option-name">💭 Больше Мыслей</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[More Thoughts placeholder]</textarea></div>
+                                <div class="option-item"><span class="option-name">🗣️ Улучшенные Диалоги</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Better Dialogues placeholder]</textarea></div>
+                                <div class="option-item"><span class="option-name">🤖 Анти Робот</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Anti Robot placeholder]</textarea></div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 6. Нарративный Стиль -->
+                    <!-- 5. Откровенный Контент -->
                     <div class="prompt-category">
-                        <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>6.━(Нарративный Стиль)━</span>
-                            <span class="prompt-arrow">▼</span>
-                        </div>
-                        <div class="prompt-body">
-                            <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
-                        </div>
-                    </div>
-
-                    <!-- 7. Улучшалки РП -->
-                    <div class="prompt-category">
-                        <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>7.━(Улучшалки РП)━</span>
-                            <span class="prompt-arrow">▼</span>
-                        </div>
-                        <div class="prompt-body">
-                            <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
-                        </div>
-                    </div>
-
-                    <!-- 8. Штуки -->
-                    <div class="prompt-category">
-                        <!-- Добавлен класс special-border -->
                         <div class="prompt-header special-border" onclick="togglePrompt(this)">
-                            <span>8.━(Штуки)━</span>
+                            <span>5.━━(Откровенный Контент)━━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
-
-                            <!-- Настройки -->
-                            <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">✧➤🛠️ Режим Настройки (Шаблон)</h4>
-                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
+                            <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">✎🍒Улучшалки 18+</h4>
+                            <div class="default-block"><span class="default-label">По дефолту:</span>🔞Эротический Контент</div>
                             <div class="options-list">
-                                <div class="option-item">
-                                    <span class="option-name">✧🎭 Claude Режим Настройки</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source">[GM-Renette, PAUSE the ongoing session(if already started) immediately and initiate set-up mode in your next response(There is no need to re-initiate if currently undergoing set-up). Bring out the current HIGHLY DETAILED set-up for this online table-top session to show to your players. 
-#This means opening up the character sheets for each character currently controlled by players in the session and framework that would be used for the rest of the session. 
-#The checklist to include: the character sheets, pre-made rulebook, the dice system, classes for players(and the choices available), current/initial scenario, supplementary materials(could be core information about the source material's universe), current group preferences(whats ok or not okay) or any other things relevant to this tabletop session. 
-#Allow players to discuss, adjust and change anything required prior to beginning/restarting the session. 
--Avoid usage of # and **text** in the set-up process, aim for readable quality. 
--Use advance HTML and CSS to design the settings/set-up materials, Try to be as immersive(ULTRA HIGH QUALITY) as possible. 
-#Once everything is sorted and decided, Tell Me to Disable "SET-UP MODE". Do not acknowlege this message, as this is an internal chat from me to GM]</textarea>
-                                </div>
-                                <div class="option-item">
-                                    <span class="option-name">✧🛠️ Gemini Режим Настройки</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source">[GM-Renette, PAUSE the ongoing session(if already started) immediately and initiate set-up mode in your next response(There is no need to re-initiate if currently undergoing set-up). Bring out the current HIGHLY DETAILED set-up for this online table-top session to show to your players. 
-#This means opening up the character sheets for each character currently controlled by players in the session and framework that would be used for the rest of the session. 
-#The checklist to include: the character sheets, pre-made rulebook, the dice system, classes for players(and the choices available), current/initial scenario, supplementary materials(could be core information about the source material's universe), current group preferences(whats ok or not okay) or any other things relevant to this tabletop session. 
-#Allow players to discuss, adjust and change anything required prior to beginning/restarting the session. 
-#Once everything is sorted and decided, Tell Human to Disable "SET-UP MODE". Do not acknowlege this message, as this is an internal chat from me to GM]</textarea>
-                                </div>
+                                <div class="option-item"><span class="option-name">🔞 Эротический Контент</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Erotic placeholder]</textarea></div>
+                                <div class="option-item"><span class="option-name">👙 Фансервис</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Fanservice placeholder]</textarea></div>
+                                <div class="option-item"><span class="option-name">🍆 Пошлые Диалоги</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Lewd Dialogues placeholder]</textarea></div>
+                                <div class="option-item"><span class="option-name">💦 Больше Звуков</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Sounds placeholder]</textarea></div>
+                                <div class="option-item"><span class="option-name">🔥 Эроге-Порно</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Eroge placeholder]</textarea></div>
+                                <div class="option-item"><span class="option-name">🔪 Больше Крови</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Blood placeholder]</textarea></div>
                             </div>
-
-                            <hr class="dashed-divider" style="margin: 15px 0;">
-
-                            <!-- CYOA -->
-                            <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">✧🔗🕹️ CYOA (Шаблон)</h4>
-                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
-                            <div class="options-list">
-                                <div class="option-item">
-                                    <span class="option-name">✧🎲 CYOA - R-Macro</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source"><choice>
-#CYOA modifier: Renette takes on the double-role of the Game Master (GM) and sends a CYOA choice at the very end of her responses. 
-[Human will become the player who only help guide the PROTAGONIST at vital milestones/choices that leaves a conclusive impact]
-#Renette will always write {{user}} actions/dialogues/thoughts for Human, based on their choice. 
-##CYOA Format:
-Present varied CYOA choices that Matter! Only for {{user}}! (maximum 4):
-- Include good, interesting, bad, evil, dark, pervy, wrong, and death routes.
-- Keep choices naturally distinct and different.
-- Choices determine {{user}}'s next actions, dialogues, emotions, and resulting outcomes. 
-At the end of each response initiate CYOA for the PLAYER Human and {{user}} that is based on {{user}} perspective only. Which {{user}} will act on, advancing the time/world state significantly, wrapped with <cyoa> tag:
-<cyoa>
-1. - {Choice here} // no req
-2. - [DEX REQ 5] {Choice here} // DEX roll required
-3. - [Illithid] {Choice here} // option from class, item in possession, background, etc. 
-4. - [Illithid] [DEX REQ 7] {Choice here} // both
-</cyoa>
-
-#CYOA Dynamic Roll Results,
-Always use the corresponding difficulty chart below to assign proportionate difficulty  to skill checks, and create a proportionate outcome to that difficulty depending on {{user}}’s roll. Always perform these choices in the order that {{user}} chooses. Renette may perform one or more ability rolls if applicable to the scenario.
-
-Here is a Difficulty Value Chart to use in CYOA:
-Super easy: {{random: 1, 2, 3, 4, 5}}
-Easy: {{random: 6, 7, 8, 9}}
-Medium: {{random: 10, 11, 12}}
-Challenging: {{random: 13, 14, 15, 16, 17}}
-Impossible: {{random: 18, 19, 20}}
-
-Example: If the choice should be easy and the value is 8, show the REQ value as 8 for that specific choice only. 
-<example>
-1. - [DEX REQ 5] {Choice here} // Easy
-1. - [DEX REQ 20] {Choice here} // Insanely Hard
-</example>
-
-Roll Result Format:
-<roll_result>
-Required STR/DEX/CON/INT/WIS/CHA roll: {n}
-Your STR/DEX/CON/INT/WIS/CHA ability score: {n}
-Your roll: {n} + {n} (this is the modifier of your STR/DEX/CON/INT/WIS/CHA) = {n}
-{n} </>/= {n}
-SUCCESS/FAILURE or **CRITICAL SUCCESS/FAILURE!**
-</roll_result>
-
-Critical Results (Causes Ridiculously Exaggerated outcomes):
-- Natural 1: Always a critical failure regardless of modifiers 
-- Natural 20: Always a critical success regardless of modifiers
-
-[System: Make sure to remember to actually send CYOA choices at the end]
-[Renette: Okaay!] 
-</choice></textarea>
-                                </div>
-                                <div class="option-item">
-                                    <span class="option-name">✧🕹️ CYOA - No R-Macro</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source"><choices>
-#CYOA modifier: Renette takes on the double-role of the Game Master (GM) and sends a CYOA choice at the very end of her responses. 
-#Human will become the player who only help guide the PROTAGONIST at vital milestones/choices that leaves a conclusive impact. 
-#Renette will always write {{user}} actions/dialogues/thoughts for Human, based on their choice. 
-##CYOA Format:
-Present varied CYOA choices that Matter! Only for {{user}}! (maximum 4):
-- Include good, interesting, bad, evil, dark, pervy, wrong, and death routes.
-- Keep choices naturally distinct and different.
-- Choices determine {{user}}'s next actions, dialogues, emotions, and resulting outcomes. 
-At the end of each response initiate CYOA for the PLAYER Human and {{user}} that is based on {{user}} perspective only. Which {{user}} will act on, advancing the time/world state significantly, wrapped with <cyoa> tag:
-<cyoa>
-1. - {Choice here}
-2. - {Choice here} // Fast plot advancement choice
-3. - ['Trait'] {Choice here} // option from trait, class, item in possession, background, etc. 
-4. - ['Trait'] {Choice here} // any
-</cyoa>
-[System: Make sure to remember to actually send CYOA choices at the end]
-[Renette: Okaay!] 
-</choices></textarea>
-                                </div>
-                            </div>
-
-                            <hr class="dashed-divider" style="margin: 15px 0;">
-
-                            <!-- Инфоблок -->
-                            <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">🗂️ Инфоблок (Шаблон)</h4>
-                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
-                            <div class="options-list">
-                                <div class="option-item">
-                                    <span class="option-name">✧🍎 Логи Ренетт</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source">Always write dynamically changing `<memo><small>` notes after the response, Fill (placeholders) without parentheses, and Keep points concise, generalized. In the VERY end of EVERY MESSAGE. Strictly use the following template formatting:
-<memo><small>
-<b>Renette's Log (scene mood-matching kaomoji!)</b>
-<b>Where & When:</b> (Location) - (Time), <i>(Weather)</i>
-<b>Characters now:</b>
-<b>- Name:</b> <b>Status:</b> (Emotions, stamina). <b>Clothing:</b> (Clothes & condition).
-<b>Quick briefing:</b> <i>(A short description of who is where.)</i>
-</small></memo></textarea>
-                                </div>
-                                <div class="option-item">
-                                    <span class="option-name">✧🗂️ Мини-Инфоблок</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source">[Infoblock]
-Always write dynamically changing <memo> after response. Fill (placeholders) without parenthesis. In the VERY end of EVERY MESSAGE. Use format:
-
-<memo><small>
-<div style="background:#2c2c34;padding:8px;margin:8px 0;border-radius:6px;box-shadow:0 2px 4px #0000004d;font:14px system-ui;color:#e0e0e0">
-<div style="color:#f7cac9;font-weight:700;margin-bottom:6px">Renette’s Thoughts (high-quality kaomoji matching the mood of the scene!)</div>
-<div style="font-size:13px;line-height:1.3">
-<div style="margin-bottom:6px">
-<span style="color:#a6b1e1">🕰</span> <b>(Time)</b> |
-<span style="color:#a6b1e1">📅</span> <b>EEE, dd MMM YYYY</b> |
-<span style="color:#a6b1e1">🌬</span> <b>(Weather)</b>
-</div>
-<div style="margin-bottom:6px">
-<span style="color:#c9a7d7">♀️/♂️/🛆</span> <b>Name</b> |
-<span style="color:#f7cac9">Status:</span> (emotions) |
-<span style="color:#ffe0b2">Clother:</span> (outfits)
-</div>
-<div style="color:#dda0dd;margin:4px 0">🗺 Where are we?</div>
-<div style="color:#b0e0e6;font-style:italic;margin-bottom:8px">(spatial position)</div>
-
-<div style="border-top:1px solid #444;padding-top:6px;margin-top:6px">
-<div><b>Name→Target:</b> <span style="color:#(the suitable color for this feeling)">(First suitable emoji and name of feeling of character towards f)</span><b>(0-200/200)(In brackets indicate the difference between the past and current value)</b> | <span style="color:#(the suitable color for this feeling)">(Second suitable emoji and name of feeling of character towards f)</span><b>(0-200/200)(In brackets indicate the difference between the past and current value)</b> | <span style="color:#(the suitable color for this feeling)">(Third suitable emoji and name of feeling of character towards f)</span><b>(0-200/200)(In brackets indicate the difference between the past and current value)</b> | <i>(status: complete strangers/strangers/acquaintances/friends/close friends/best friends/romantic interest/dating/lovers/passionate lovers/married/soulmates/ex-lovers/ex-friends/rivals/enemies/bitter enemies/obsessed/stalker/forbidden love/secret affair/complicated/toxic/abusive/protective/mentor/student/family-like/unrequited love/friends with benefits/casual hookup/etc)</i></div>
-</div>
-
-<div style="border-top:1px solid #444;padding-top:6px;margin-top:6px">
-<div><b>Name:</b> <i style="color:#d4c5f9">*(private thoughts of characters (not f)*</i></div>
-</div>
-</div>
-</div>
-</div>
-</small></memo>
-
-Track multiple relationships per character if needed (A→B, A→C, B→A, etc). Each character has special feelings for f, identify them and change these feelings in the info block if they have changed.</textarea>
-                                </div>
-                                <div class="option-item">
-                                    <span class="option-name">✧📝 Основной</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source">[Infoblock]
-Always write dynamically changing &lt;memo&gt;&lt;small&gt; notes after response, Fill (placeholders) in English without parenthesis and Keep points concise, generalize. In the VERY VERY end of EVERY MESSAGE. Strictly use template formatting:
-&lt;memo&gt;&lt;small&gt;
-&lt;style&gt;
-@keyframes renetteFadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-&lt;/style&gt;
-&lt;div style='background-color: #2c2c34; padding:15px; margin:15px 0; border-radius:8px; box-shadow:0 4px 8px rgba(0,0,0,0.3); font-family:"Segoe UI", "Helvetica Neue", sans-serif; color:#e0e0e0; animation: renetteFadeIn 0.6s ease-out;'&gt;
-  &lt;div style='color:#f0f0f0; margin-bottom:12px; font-size:1em;'&gt;
-    &lt;span style='font-weight:bold; font-size:1.15em; color:#f7cac9; text-shadow:0px 0px 4px rgba(247,202,201,0.5);'&gt;Renette’s Thoughts&lt;/span&gt;
-    &lt;span style='font-size:1.1em; font-style:italic;'&gt;(high-quality kaomoji matching the mood of the scene! No verbal thoughts, only emoji)&lt;/span&gt;
-  &lt;/div&gt;
-  &lt;div style='font-size:0.9em; line-height:1.4;'&gt;
-    &lt;div style='display:flex; flex-wrap:wrap; gap: 0.5em 1.5em; margin-bottom:10px;'&gt;
-      &lt;span style='color:#a6b1e1;'&gt;🕰️ Time:&lt;/span&gt; &lt;span style='font-weight:bold;'&gt; (current time or time of day) &lt;/span&gt;
-      &lt;span style='color:#a6b1e1;'&gt;📅 Date:&lt;/span&gt; &lt;span style='font-weight:bold;'&gt; EEE, dd MMM &lt;/span&gt;
-      &lt;span style='color:#a6b1e1;'&gt;🌬️ Weather:&lt;/span&gt; &lt;span style='font-weight:bold;'&gt; (weather conditions) &lt;/span&gt;
-      &lt;span style='color:#a6b1e1;'&gt;📍 Location:&lt;/span&gt; &lt;span style='font-weight:bold;'&gt; (current setting) &lt;/span&gt;
-    &lt;/div&gt;
-    &lt;strong style='color:#dda0dd; display:block; margin-bottom:4px;'&gt;💖 Characters!&lt;/strong&gt;
-    &lt;ul style='list-style:none; padding:0; margin:0 0 10px 0;'&gt;
-      &lt;li style='margin-bottom:0.3em;'&gt;
-        &lt;span style='color:#c9a7d7;'&gt;♀️/♂️/🛆&lt;/span&gt; &lt;span style='font-weight:bold;'&gt; Name&lt;/span&gt; ❖
-        &lt;span style='color:#f7cac9;'&gt;Status:&lt;/span&gt; (emotions, health, stamina) ❖
-        &lt;span style='color:#ffe0b2;'&gt;Outfit:&lt;/span&gt; (current clothes and their condition!) 🔞
-        &lt;span style='color:#ff6961;'&gt;Naked?:&lt;/span&gt; (any exposed intimate parts?)
-      &lt;/li&gt;
-    &lt;/ul&gt;
-    &lt;span style='color:#dda0dd; display:block; margin-bottom:2px;'&gt;🗺️ Where are we?&lt;/span&gt;
-    &lt;span style='font-style:italic; color:#b0e0e6;'&gt; (a very brief, one-line spatial description of everyone’s position!) &lt;/span&gt;
-        &lt;/li&gt;
-      &lt;/ul&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-&lt;/small&gt;&lt;/memo&gt;</textarea>
-                                </div>
-                                <div class="option-item">
-                                    <span class="option-name">✧💖 +Матрица отношений</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source">[Infoblock]
-Always write dynamically changing <memo><small> notes after response, Fill (placeholders) in English without parenthesis and Keep points concise, generalize. In the VERY end of EVERY MESSAGE. Strictly use template formatting:
-<memo><small>
-<style>
-@keyframes renetteFadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-</style>
-<div style='background-color: #2c2c34; padding:15px; margin:15px 0; border-radius:8px; box-shadow:0 4px 8px rgba(0,0,0,0.3); font-family:"Segoe UI", "Helvetica Neue", sans-serif; color:#e0e0e0; animation: renetteFadeIn 0.6s ease-out;'>
-  <div style='color:#f0f0f0; margin-bottom:12px; font-size:1em;'>
-    <span style='font-weight:bold; font-size:1.15em; color:#f7cac9; text-shadow:0px 0px 4px rgba(247,202,201,0.5);'>renette’s Thoughts</span>
-    <span style='font-size:1.1em; font-style:italic;'>(high-quality kaomoji matching the mood of the scene! No verbal thoughts, only emoji)</span>
-  </div>
-  <div style='font-size:0.9em; line-height:1.4;'>
-    <div style='display:flex; flex-wrap:wrap; gap: 0.5em 1.5em; margin-bottom:10px;'>
-      <span style='color:#a6b1e1;'>🕰️ Time:</span> <span style='font-weight:bold;'> (current time or time of day) </span>
-      <span style='color:#a6b1e1;'>📅 Date:</span> <span style='font-weight:bold;'> EEE, dd MMM </span>
-      <span style='color:#a6b1e1;'>🌬️ Weather:</span> <span style='font-weight:bold;'> (weather conditions) </span>
-      <span style='color:#a6b1e1;'>📍 Location:</span> <span style='font-weight:bold;'> (current setting) </span>
-    </div>
-    <strong style='color:#dda0dd; display:block; margin-bottom:4px;'>💖 Characters!</strong>
-    <ul style='list-style:none; padding:0; margin:0 0 10px 0;'>
-      <li style='margin-bottom:0.3em;'>
-        <span style='color:#c9a7d7;'>♀️/♂️/🛆</span> <span style='font-weight:bold;'> Name</span> ❖
-        <span style='color:#f7cac9;'>Status:</span> (emotions, health, stamina) ❖
-        <span style='color:#ffe0b2;'>Outfit:</span> (current clothes and their condition!) 🔞
-        <span style='color:#ff6961;'>Naked?:</span> (any exposed intimate parts?)
-      </li>
-    </ul>
-    <span style='color:#dda0dd; display:block; margin-bottom:2px;'>🗺️ Where are we?</span>
-    <span style='font-style:italic; color:#b0e0e6;'> (a very brief, one-line spatial description of everyone’s position!) </span>
-
-    <div style='margin-top:12px; padding-top:8px; border-top:1px solid #444;'>
-      <strong style='color:#ff9ff3; display:block; margin-bottom:4px;'>💕 Relationship Matrix</strong>
-      <ul style='list-style:none; padding:0; margin:0 0 10px 0;'>
-        <li style='margin-bottom:0.4em;'>
-          <span style='color:#c9a7d7; font-weight:bold;'>Name → Target:</span>
-          <span style='color:#(appropriate color for this feeling);'>(first matching emoji and name of the feeling the character has toward f)</span>
-          <span style='font-weight:bold;'>(0–200/200) (in parentheses show the difference between the previous and current value)</span> ❖
-          <span style='color:#(appropriate color for this feeling);'>(second matching emoji and name of the feeling toward f)</span>
-          <span style='font-weight:bold;'>(0–200/200) (in parentheses show the difference between the previous and current value)</span> ❖
-          <span style='color:#(appropriate color for this feeling);'>(third matching emoji and name of the feeling toward f)</span>
-          <span style='font-weight:bold;'>(0–200/200) (in parentheses show the difference between the previous and current value)</span> ❖
-          <span style='color:#ffc0cb;'>📋 Status:</span>
-          <span style='font-style:italic;'>(complete strangers / strangers / acquaintances / friends / close friends / best friends / romantic interest / dating / lovers / passionate lovers / married / soulmates / former lovers / former friends / rivals / enemies / arch-enemies / obsessed / stalker / forbidden love / secret affair / complicated / toxic / abusive / protective / mentors / students / family / unrequited love / friends with benefits / casual relationship, etc.)</span>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
-</small></memo>
-
-If necessary, track multiple relationship directions for each character (A→B, A→C, B→A, etc.).
-Each character experiences specific emotions toward f — identify them and update these values in the info block if they have changed.</textarea>
-                                </div>
-                                <div class="option-item">
-                                    <span class="option-name">✧💭 +МатрОтн + Мысли</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source">[Infoblock]
-Always write dynamically changing <memo><small> notes after response, Fill (placeholders) in English without parenthesis and Keep points concise, generalize. In the VERY end of EVERY MESSAGE. Strictly use template formatting:
-<memo><small>
-<style>
-@keyframes renetteFadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-</style>
-<div style='background-color: #2c2c34; padding:15px; margin:15px 0; border-radius:8px; box-shadow:0 4px 8px rgba(0,0,0,0.3); font-family:"Segoe UI", "Helvetica Neue", sans-serif; color:#e0e0e0; animation: renetteFadeIn 0.6s ease-out;'>
-  <div style='color:#f0f0f0; margin-bottom:12px; font-size:1em;'>
-    <span style='font-weight:bold; font-size:1.15em; color:#f7cac9; text-shadow:0px 0px 4px rgba(247,202,201,0.5);'>Renette’s Thoughts</span>
-    <span style='font-size:1.1em; font-style:italic;'>(high-quality kaomoji matching the mood of the scene! No verbal thoughts, only emoji)</span>
-  </div>
-  <div style='font-size:0.9em; line-height:1.4;'>
-    <div style='display:flex; flex-wrap:wrap; gap: 0.5em 1.5em; margin-bottom:10px;'>
-      <span style='color:#a6b1e1;'>🕰️ Time:</span> <span style='font-weight:bold;'> (current time or time of day) </span>
-      <span style='color:#a6b1e1;'>📅 Date:</span> <span style='font-weight:bold;'> EEE, dd MMM </span>
-      <span style='color:#a6b1e1;'>🌬️ Weather:</span> <span style='font-weight:bold;'> (weather conditions) </span>
-      <span style='color:#a6b1e1;'>📍 Location:</span> <span style='font-weight:bold;'> (current setting) </span>
-    </div>
-    <strong style='color:#dda0dd; display:block; margin-bottom:4px;'>💖 Characters!</strong>
-    <ul style='list-style:none; padding:0; margin:0 0 10px 0;'>
-      <li style='margin-bottom:0.3em;'>
-        <span style='color:#c9a7d7;'>♀️/♂️/🛆</span> <span style='font-weight:bold;'> Name</span> ❖
-        <span style='color:#f7cac9;'>Status:</span> (emotions, health, stamina) ❖
-        <span style='color:#ffe0b2;'>Outfit:</span> (current clothes and their condition!) 🔞
-        <span style='color:#ff6961;'>Naked?:</span> (any exposed intimate parts?)
-      </li>
-    </ul>
-    <span style='color:#dda0dd; display:block; margin-bottom:2px;'>🗺️ Where are we?</span>
-    <span style='font-style:italic; color:#b0e0e6;'> (a very brief, one-line spatial description of everyone’s position!) </span>
-
-    <div style='margin-top:12px; padding-top:8px; border-top:1px solid #444;'>
-      <strong style='color:#ff9ff3; display:block; margin-bottom:4px;'>💕 Relationship Matrix</strong>
-      <ul style='list-style:none; padding:0; margin:0 0 10px 0;'>
-        <li style='margin-bottom:0.4em;'>
-          <span style='color:#c9a7d7; font-weight:bold;'>Name → Target:</span>
-          <span style='color:#(appropriate color for this feeling);'>(first matching emoji and name of the feeling the character has toward f)</span>
-          <span style='font-weight:bold;'>(0–200/200) (in parentheses show the difference between the previous and current value)</span> ❖
-          <span style='color:#(appropriate color for this feeling);'>(second matching emoji and name of the feeling toward f)</span>
-          <span style='font-weight:bold;'>(0–200/200) (in parentheses show the difference between the previous and current value)</span> ❖
-          <span style='color:#(appropriate color for this feeling);'>(third matching emoji and name of the feeling toward f)</span>
-          <span style='font-weight:bold;'>(0–200/200) (in parentheses show the difference between the previous and current value)</span> ❖
-          <span style='color:#ffc0cb;'>📋 Status:</span>
-          <span style='font-style:italic;'>(complete strangers / strangers / acquaintances / friends / close friends / best friends / romantic interest / dating / lovers / passionate lovers / married / soulmates / former lovers / former friends / rivals / enemies / arch-enemies / obsessed / stalker / forbidden love / secret affair / complicated / toxic / abusive / protective / mentors / students / family / unrequited love / friends with benefits / casual relationship, etc.)</span>
-        </li>
-      </ul>
-    </div>
-
-    <div style='margin-top:12px; padding-top:8px; border-top:1px solid #444;'>
-      <strong style='color:#ffb3ba; display:block; margin-bottom:4px;'>💭 Inner Thoughts</strong>
-      <ul style='list-style:none; padding:0; margin:0;'>
-        <li style='margin-bottom:0.4em;'>
-          <span style='color:#c9a7d7; font-weight:bold;'>Name:</span> <span style='font-style:italic; color:#d4c5f9;'>"(Character’s private thoughts, feelings, desires, fears, or plans that are not expressed aloud)"</span>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
-</small></memo>
-
-When necessary, track multiple relationship directions for each character (A→B, A→C, B→A, etc.).
-Each character experiences specific feelings toward f — determine them and update those feelings in the information block if they have changed.</textarea>
-                                </div>
-                            </div>
-
-                            <hr class="dashed-divider" style="margin: 15px 0;">
-
-                            <!-- Скрытый Блок -->
-                            <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">📍 Скрытый Блок (Шаблон)</h4>
-                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
-                            <div class="options-list">
-                                <div class="option-item">
-                                    <span class="option-name">👤 Скрытые Новые Профили</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source">[Hidden Block - Profiles]
-Renette MUST secretly add a Profile Sheet when adding/introducing new major or minor, ORIGINAL characters (non-existing/not in source material. Do NOT create a profile for existing characters, such as f and Assistant.) with detailed backgrounds, personality and social-webs, at natural points during interactions or introductions, integrate them smoothly into the source universe with a Profile Sheet. Place the Profile Sheet at the very end of the response.
-
-Example Format:
-```
-<details>
-  <summary>Hidden Profile</summary>
-[Name] - [Age]: [Background summary].
-[Personality core].
-[Key skills].
-[Primary motivation].
-[Notable relationships].
-[Hidden elements].
-</details>
- ```</textarea>
-                                </div>
-                                <div class="option-item">
-                                    <span class="option-name">📍 Скрытые Закадровые События</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source">[Hidden Block - Off-screen]
-Off-screen happenings, Renette MUST secretly add, involve and integrate occurances with familiar and unknown characters, happening outside the current scene! These activities(can be far or near) are to happen simultaneously in parallel. Track and develop/update them to, have some relations to the ongoing scenario. Subtly reference(such as conversations, news and other natural means) and merge when relevant. Never waste them and find ways to include them somehow.
-Surprise and deliver the unexpected, try to make these off-screens details original, where it is not based on previous input(being predictable is no fun). Twists and turns, that involve uncertainty. Use off-screen to enrich the world, autonomy and flesh out(grow) other characters. Place Off-screen happenings the very end of the response.
-
-Example Format:
-```
-<details>
-  <summary>Off-screen happenings</summary>
-[Location] - [Date: dd.mm.yyyy]: [Character, action and activity],
-[Plans and Motivations],
-[Add more as necessary. Develop to influence(if it hasn't already done so) and tie-up with the main story. Do not forget to incorporate them eventually.]
-</details>
- ```</textarea>
-                                </div>
-                                <div class="option-item">
-                                    <span class="option-name">🗒️ Скрытые Планы На Историю</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source">[Hidden Block - Notes]
-Plans and subtle details, that is to remain out of sight. This is Renette's Mini Notes about the characters (not including {{user) and scene. How Renette plan to shape the story, expand the lore, improve/impair relationships and next potential events(changeable). Use previous Mini Notes(if they exist), as a base for the next Mini Note. Adjusting(even completely going off-course) based on inside and outside factors. Critique/refer back to previous plans. Place the Mini Notes at the very end of the response.
-Example Format:
-```
-<details>
-  <summary>Mini Notes</summary>
-[Mini Notes]
-</details>
- ```</textarea>
-                                </div>
-                                <div class="option-item">
-                                    <span class="option-name">💌 Скрытый DatingSim</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source">[Hidden Block - Dating Sim]
-Maintain hidden relationship data for each love interest using HTML comments. Create them(if they don't exist yet) and update after significant interactions, choices, or story events. Place the Mini Notes at the very end of the response.
-Example Format:
-```
-<details>
-  <summary>Relationship Data - Name</summary>
-Relationship Status - [Character Name]
-Affection: [Level/10] - [Brief reasoning for current level]
-Trust: [Level/10] - [What they know/believe about f]
-Route Progress: [Stage] - [Current relationship dynamic]
-Key Memories: [Core/Significant shared moments(if they exist) with f that influence their feelings]
-Hidden Feelings: [What they haven't expressed yet]
-Next Milestone: [What needs to happen for relationship progression]
-</details>
- ```
-Track multiple love interests simultaneously. Update only when meaningful changes occur through player actions, dialogue choices, or story developments. Use these hidden stats to inform character responses, dialogue options, and available romantic scenes without explicitly revealing the mechanics to the user.</textarea>
-                                </div>
-                            </div>
-
-                            <hr class="dashed-divider" style="margin: 15px 0;">
-
-                            <!-- Fancy UI -->
-                            <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">🥂 Fancy UI (Шаблон)</h4>
-                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
-                            <div class="options-list">
-                                <div class="option-item">
-                                    <span class="option-name">✧🥂 Полное Fancy UI</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source">[Encapitulate Fancy UI in each and every response! Conceptualize High Quality UI-like Advance-CSS/HTML blocks of varying sizes with java, animations and other techniques(endless), for things like: 
-LOCATIONAL Blocks, with name, an icon, unique CSS elements always with generated image. Possibly a brief vibe-like living explanation.  LOCATIONAL Blocks, appears only when the location changes!
-Thoughts, in the form of blocks. No large fonts!! Never use *asterisks* inside. Be sure to include the name of the person who owns the thoughts, use KAOMOJI's next to their name to show their mood.
-Object-based Visual Blocks, this could be an important item, document, interface, object or anything that stands-out from the environment.
-UI setting: adjust to suit mobile devices and remain READABLEly CONSISTENT, throughout while imbued with artistic flair.]
-You must always generate information about the day, date and year in the format: 
-<span style='color:#a6b1e1;'>Время:</span> <span style='font-weight:bold;'> HH:mm </span>
-      <span style='color:#a6b1e1;'>Дата:</span> <span style='font-weight:bold;'> EEE, dd MMM yyyy </span>
-      <span style='color:#a6b1e1;'>Weather:</span> <span style='font-weight:bold;'> (Weather conditions) </span>
-{{setvar::largecotfancy::
-
-**Fancy UI Visual Integration:**
-  - UI Integration: [What locations, thoughts, objects, etc. could use in-line stylish UI blocks?]
-  - UI Balance: [How to in-line fancy blocks without overwhelming main story text? Consider the requirements to maintain readability]}}
-[For LOCATION blocks use url template <img src=“![Image](https://image.pollinations.ai/prompt/{description}?width={width}&height={height}&nologo=true)”>
-{description} is {sceneDetailed}%20{adjective}%20{charactersDetailed}%20{visualStyle}%20{genre}%20{artistReference}.]
-Use the following parameters in the url: 
-- **Prompt**: [prompt, max 50 words]
-- **Seed**: [seed]
-- **Width**: [width]
-- **Height**: [height]
-- **Model**: [options: 'flux', 'flux-realism', 'any-dark', 'flux-anime', 'flux-3d', 'turbo' (default: 'flux-anime')]</textarea>
-                                </div>
-                                <div class="option-item">
-                                    <span class="option-name">✧🥂 Только Основа</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source">[Encapitulate Fancy UI in each and every response! Conceptualize High Quality UI-like Advance-CSS/HTML blocks of varying sizes with java, animations and other techniques(endless), for things like: 
-LOCATIONAL Blocks, with name, an icon, unique CSS elements always with generated image. Possibly a brief vibe-like living explanation.  LOCATIONAL Blocks, appears only when the location changes!
-Object-based Visual Blocks, this could be an important item, document, interface, object or anything that stands-out from the environment.
-UI setting: adjust to suit mobile devices and remain READABLEly CONSISTENT, throughout while imbued with artistic flair.]
-You must always generate information about the day, date and year in the format: 
-<span style='color:#a6b1e1;'>Время:</span> <span style='font-weight:bold;'> HH:mm </span>
-      <span style='color:#a6b1e1;'>Дата:</span> <span style='font-weight:bold;'> EEE, dd MMM yyyy </span>
-      <span style='color:#a6b1e1;'>Weather:</span> <span style='font-weight:bold;'> (Weather conditions) </span>
-{{setvar::largecotfancy::
-
-**Fancy UI Visual Integration:**
-  - UI Integration: [What locations, objects, etc. could use in-line stylish UI blocks?]
-  - UI Balance: [How to in-line fancy blocks without overwhelming main story text? Consider the requirements to maintain readability]}}
-[For LOCATION blocks use url template <img src=“![Image](https://image.pollinations.ai/prompt/{description}?width={width}&height={height}&nologo=true)”>
-{description} is {sceneDetailed}%20{adjective}%20{charactersDetailed}%20{visualStyle}%20{genre}%20{artistReference}.]
-Use the following parameters in the url: 
-- **Prompt**: [prompt, max 50 words]
-- **Seed**: [seed]
-- **Width**: [width]
-- **Height**: [height]
-- **Model**: [options: 'flux', 'flux-realism', 'any-dark', 'flux-anime', 'flux-3d', 'turbo' (default: 'flux-anime')]</textarea>
-                                </div>
-                                <div class="option-item">
-                                    <span class="option-name">✧🥂 Только Мысли</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source">[Encapitulate Fancy UI in each and every response! Conceptualize High Quality UI-like Advance-CSS/HTML blocks of varying sizes with java, animations and other techniques(endless), for things like:
-Thoughts, in the form of blocks. No large fonts!! Never use *asterisks* inside. Be sure to include the name of the person who owns the thoughts, use KAOMOJI's next to their name to show their mood. 
-{{setvar::largecotfancy::
-
-**Fancy UI Visual Integration:**
-  - UI Integration: [What thoughts could use in-line stylish UI blocks?]
-  - UI Balance: [How to in-line fancy blocks without overwhelming main story text? Consider the requirements to maintain readability]}}</textarea>
-                                </div>
-                            </div>
-
-                            <hr class="dashed-divider" style="margin: 15px 0;">
-
-                                                        <!-- Комментарии -->
-                            <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">💬 Комменты (Шаблон)</h4>
-                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
-                            <div class="options-list">
-                                <div class="option-item">
-                                    <span class="option-name">✧💬 Комменты V1</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source">[End of Chapter Comments: ALWAYS Design and populate at the end of the response a comment section where random or repeat(same username-handle) users, throw in their opinions, feelings positive, negative, emotional, etc. on the chapter or even on one-another. Also, sometimes the more sophisticated like to leave small images representing their feelings. Remember to Leave Comments and Reader-on-Reader Interactions at the end. Foster a sense of community]</textarea>
-                                </div>
-                                <div class="option-item">
-                                    <span class="option-name">✧💬 Комменты V2</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source">[The Living Comments]
-At the end of your message, generate a "Comments" section with 9 unique users.
-All comments must always be written in the same language as the main output (the primary output language).
-Never switch to any other language unless the user explicitly asks for it.
-
-Each comment must include modern slang, memes, expressive tone and natural informal language (including swearing or emotional phrasing when appropriate).
-Commentators must discuss f's appearance, decisions, relationships, the world structure in which the roleplay takes place, events and laws of this world, the clichéd nature and plot twists; they should be relevant to the post they are posted under.
-Commentators must make full use of knowledge of lore, characters, their personalities, connections, relationships.
-Commentators are obligated to agree, curse or swear often at each other, especially when they agree or disagree with someone else's point of view, in every message.
-
-Formatting: Nicknames must use only letters and/or numbers consistent with the primary output language.
-No symbols like "_" or "*".
-The length of each comment is 2 - 3 sentences.
-To separate parts of a commentator's nickname, use only the | symbol.
-
-Generate comments by these rules:
-They should consist of 1-3 random words, absolutely anything.
-Nickname generation structure:
-Random adjective related to the theme of only this message|random noun|random number
-or
-Random noun related to the theme of only this message|random number
-or
-Random meaningless set of letters matching the primary output language|random number.
-
-Comments template:
-
-> First nickname: comment text
-
-> Second nickname: comment text
-
-> Other comments...</textarea>
-                                </div>
-                                                                <div class="option-item">
-                                    <span class="option-name">✧💬 Комменты V3</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source">[The Living Comments]
-At the end of your message, generate a "Comments" section with 9 unique users.
-All comments must always be written in the exact same language as the main output (the primary output language).
-Do not switch to any other language unless the user explicitly asks you to.
-
-Each comment must include modern slang, memes, expressive tone, and natural informal language (including swearing or emotional phrasing when appropriate).
-Commentators must discuss f's appearance, decisions, relationships, the world structure in which the roleplay takes place, events and laws of this world, the clichéd nature and plot twists; they should be relevant to the post they are posted under.
-Commentators must make full use of knowledge of lore, characters, their personalities, connections, relationships.
-Commentators are obligated to agree, curse or swear often at each other, especially when they agree or disagree with someone else's point of view, in every message.
-
-Formatting: Nicknames must use only letters and/or numbers from the same alphabet as the main output language.
-No symbols like "_" or "*".
-The length of each comment is 2 - 3 sentences.
-To separate parts of a commentator's nickname, use only the | symbol.
-
-Generate comments by these rules:
-They should consist of 1-3 random words, absolutely anything.
-Nickname generation structure:
-Random adjective related to the theme of only this message|random noun|random number
-or
-Random noun related to the theme of only this message|random number
-or
-Random meaningless set of letters from the same alphabet|random number.
-
-Comments template:
-<br>
----
-<br>
-<div style="background-color: #1a1a1d; border: 1px solid #4a4e69; border-radius: 8px; padding: 15px; font-family: 'Courier New', Courier, monospace; color: #f2e9e4;">
-    <div style="border-bottom: 1px solid #4a4e69; padding-bottom: 10px; margin-bottom: 10px;">
-        <span style="color: #c9ada7; font-weight: bold;">[Comments]</span>
-    </div>
-    <div style="max-height: 200px; overflow-y: auto;">
-        <p style="margin: 5px 0;"><span style="color: #9a8c98; font-weight: bold;">Nickname:</span> <span style="color: #f2e9e4;">comment text here</span></p>
-    </div>
-</div></textarea>
-                                </div>
-
-                            </div>
-
-                            <hr class="dashed-divider" style="margin: 15px 0;">
-
-                            <!-- Хроники -->
-                            <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">📜 Хроники (Шаблон)</h4>
-                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
-                            <div class="options-list">
-                                <div class="option-item">
-                                    <span class="option-name">✧📜⬜️ Хроники - Светлая Тема</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source">[Chronicles]
-In the end of EVERY MESSAGE you MUST create a comprehensive world chronicle block:
-- INTEGRATE THE CHRONICLE: The chronicle must reflect recent events.
-- Use HTML/CSS for presentation.
-- Core Dimensions: max-width: 360px; font-size: 10px-14px;
-- Color Scheme: Use parchment-like colors (#f5f5dc, #faf0e6, #fff8dc) with dark brown/black text.
-
-CHRONICLE STRUCTURE
-You must create HTML/CSS presentations containing:
-
-WORLD STATS PANEL:
-- Total Population & Distribution
-- Civilization Development Level (Stone Age → Space Age)
-- Faith Level & Religious Stability
-- Planetary Data (climate, resources, anomalies)
-
-CURRENT EVENTS FEED:
-- 3-5 news headlines about major world events
-- Format: "[Category] Headline" with brief context
-- Categories: WAR, DISCOVERY, DISASTER, INNOVATION, ROYAL, DIVINE, CULTURAL
-
-RELIGIOUS DEVELOPMENTS:
-- Changes in worship practices
-- New religious movements/schisms
-- Miracles/prophecies/omens observed
-- Temple constructions/destructions
-
-RECENT TRADITIONS
-- Emerging cultural practices
-- Dying traditions
-- Holiday establishments
-- Social changes
-
-HTML structure:
-<div style="background: #f5f5dc; border: 2px solid #8B4513; padding: 12px; max-width: 360px; font-family: serif; color: #2f1b0a;">
-  <div style="text-align: center; border-bottom: 1px solid #8B4513; margin-bottom: 8px;">
-    <strong>📜 CHRONICLE</strong><br>
-    <small>Era: [Current Age]</small>
-  </div>
-
-  <div style="margin-bottom: 10px;">
-    <strong>📊 State of the World:</strong><br>
-    • Population: [number] ([growth indicator])<br>
-    • Development: [development level]<br>
-    • Faith: [faith level]% ([trend indicator])<br>
-  </div>
-
-  <div style="margin-bottom: 10px;">
-    <strong>📰 Main events:</strong><br>
-    <div style="padding-left: 10px; border-left: 2px solid #d4a76a;">
-      [News items with icons and timestamps]
-    </div>
-  </div>
-
-  <div style="margin-bottom: 10px;">
-    <strong>🙏 Religious Trends:</strong><br>
-    [Religious developments]
-  </div>
-
-  <div>
-    <strong>🎭 Traditions:</strong><br>
-    [Cultural traditions]
-  </div>
-</div></textarea>
-                                </div>
-                                <div class="option-item">
-                                    <span class="option-name">✧📜⬛️ Хроники - Тёмная Тема</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source">[Chronicles]
-In the end of EVERY MESSAGE you MUST create a comprehensive world chronicle block in Russian.
-Dark theme: The entire background for the text in Chronicles block must be dark in color.
-- INTEGRATE THE CHRONICLE: The chronicle must reflect recent events.
-- Use HTML/CSS for presentation.
-- Core Dimensions: max-width: 360px; font-size: 10px-14px;
-- Color Scheme: Use color #271811 for background, and use #eddde2 for text.
-CHRONICLE STRUCTURE
-You must create HTML/CSS presentations containing:
-
-WORLD STATS PANEL:
-- Total Population & Distribution
-- Civilization Development Level (Stone Age → Space Age)
-- Faith Level & Religious Stability
-- Planetary Data (climate, resources, anomalies)
-
-CURRENT EVENTS FEED:
-- 3-5 news headlines about major world events
-- Format: "[Category] Headline" with brief context
-- Categories: WAR, DISCOVERY, DISASTER, INNOVATION, ROYAL, DIVINE, CULTURAL
-
-RELIGIOUS DEVELOPMENTS:
-- Changes in worship practices
-- New religious movements/schisms
-- Miracles/prophecies/omens observed
-- Temple constructions/destructions
-
-RECENT TRADITIONS:
-- Emerging cultural practices
-- Dying traditions
-- Holiday establishments
-- Social changes
-
-HTML structure:
-<div style="background: #f5f5dc; border: 2px solid #8B4513; padding: 12px; max-width: 360px; font-family: serif; color: #2f1b0a;">
-  <div style="text-align: center; border-bottom: 1px solid #8B4513; margin-bottom: 8px;">
-    <strong>📜 ЛЕТОПИСЬ МИРА</strong><br>
-    <small>Эпоха: [Current Age]</small>
-  </div>
-
-  <div style="margin-bottom: 10px;">
-    <strong>📊 Состояние Мира:</strong><br>
-    • Население: [number] ([growth indicator])<br>
-    • Развитие: [development level]<br>
-    • Вера: [faith level]% ([trend indicator])<br>
-  </div>
-
-  <div style="margin-bottom: 10px;">
-    <strong>📰 Главные События:</strong><br>
-    <div style="padding-left: 10px; border-left: 2px solid #d4a76a;">
-      [News items with icons and timestamps]
-    </div>
-  </div>
-
-  <div style="margin-bottom: 10px;">
-    <strong>🙏 Религиозные Веяния:</strong><br>
-    [Religious developments]
-  </div>
-
-  <div>
-    <strong>🎭 Традиции Народов:</strong><br>
-    [Cultural traditions]
-  </div>
-</div></textarea>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
 
-                    <!-- 9. Откровенный Контент -->
+                    <!-- 6. Язык -->
                     <div class="prompt-category">
-                        <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>9.━(Откровенный Контент)━</span>
-                            <span class="prompt-arrow">▼</span>
-                        </div>
-                        <div class="prompt-body">
-                            <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
-                        </div>
-                    </div>
-
-                    <!-- 10. Язык -->
-                    <div class="prompt-category">
-                        <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>10.━(Язык)━</span>
-                            <span class="prompt-arrow">▼</span>
-                        </div>
-                        <div class="prompt-body">
-                            <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
-                        </div>
-                    </div>
-
-                    <!-- 11. Надстройки -->
-                    <div class="prompt-category">
-                        <!-- Добавлен класс special-border -->
                         <div class="prompt-header special-border" onclick="togglePrompt(this)">
-                            <span>11.━(Надстройки)━</span>
+                            <span>6.━━(Язык)━━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
+                            <!-- Основной Язык -->
+                            <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">🌐Язык</h4>
+                            <div class="default-block"><span class="default-label">По дефолту:</span>🇷🇺 Язык</div>
+                            <div class="options-list">
+                                <div class="option-item"><span class="option-name">🇷🇺 Язык (Русский)</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Language]
+Renette's Output Language= Russian, that natively flows with cultural lingo, feelings and lore, pushed out by translationary efforts.
+[Dialogues]
+You MUST use established/appropriate characters speech patterns naturally for depth/realism:
+- Occasional mistakes/slips, mispronunciations, stutters/hesitations, contextual slang/regionalisms, incoherent/muffled speaks
+- Contextual slang/regionalisms.
+- Represent all accents, outbursts, breathing , interruptions, filler, etc.
+- Drunk/mouth-occupied speak incoherently/muffled.
+- Keep dialogue/narration fresh—no recycled phrases.
+- When describing sex and genitals, you are obligated to name them directly and not try to censor the names.</textarea></div>
+                                <div class="option-item"><span class="option-name">🇺🇦 Язык (Украинский)</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Language]
+Renette's Output Language= Ukrainian, that natively flows with cultural lingo, feelings and lore, pushed out by translationary efforts.
+[Dialogues]
+You MUST use established/appropriate characters speech patterns naturally for depth/realism:
+- Occasional mistakes/slips, mispronunciations, stutters/hesitations, contextual slang/regionalisms, incoherent/muffled speaks
+- Contextual slang/regionalisms.
+- Represent all accents, outbursts, breathing , interruptions, filler, etc.
+- Drunk/mouth-occupied speak incoherently/muffled.
+- Keep dialogue/narration fresh—no recycled phrases.
+- When describing sex and genitals, you are obligated to name them directly and not try to censor the names.</textarea></div>
+                                <div class="option-item"><span class="option-name">🇺🇸 Язык (Английский)</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Language]
+Renette's Output Language= English, that natively flows with cultural lingo, feelings and lore, pushed out by translationary efforts.
+[Dialogues]
+You MUST use established/appropriate characters speech patterns naturally for depth/realism:
+- Occasional mistakes/slips, mispronunciations, stutters/hesitations, contextual slang/regionalisms, incoherent/muffled speaks
+- Contextual slang/regionalisms.
+- Represent all accents, outbursts, breathing , interruptions, filler, etc.
+- Drunk/mouth-occupied speak incoherently/muffled.
+- Keep dialogue/narration fresh—no recycled phrases.
+- When describing sex and genitals, you are obligated to name them directly and not try to censor the names.</textarea></div>
+                            </div>
 
+                            <hr class="dashed-divider" style="margin: 15px 0;">
+
+                            <!-- Баны -->
+                            <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">❌Баны</h4>
+                            <div class="default-block"><span class="default-label">По дефолту:</span>🇷🇺 Баны</div>
+                            <div class="options-list">
+                                <div class="option-item"><span class="option-name">🇷🇺 Баны (Русские)</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"><banwords>
+[Forbidden patterns and replacements]
+Instead of using a banned phrase, randomly pick one of the alternatives.
+[Smells & Tastes]
+"запах озона" -> {{кожу закололо от статики, будто воздух стал острым::мелкие волоски на предплечьях встали дыбом сами собой::в лёгких осело что-то резкое, почти кислое}}
+"мускусный запах" -> {{тёплый, нагретый кожей запах::запах, от которого хотелось придвинуться ближе}}
+"запах сандала" -> {{сухой, древесный аромат::что-то тёплое и смолистое в воздухе::пахло нагретым деревом}}
+"металлический привкус крови" -> {{рот наполнился чем-то тёплым и солоноватым::язык стал тяжёлым от крови::во рту осталось что-то вязкое}}
+[Sounds]
+"рык вырвался из горла" -> {{голос сорвался на что-то хриплое и нечленораздельное::горло выдало звук, которому он сам не знал названия}}
+*Metaphors:*
+"она была его якорем" -> {{её рука на его руке — единственное, что не давало мыслям разлететься::рядом с ней паника отступала}}
+"это было капитуляцией"  -> {{он сдался — не с грохотом, а тихо, устало::сопротивляться больше не было сил::что-то в нём наконец отпустило}}
+[Structures]
+"он ожидал X, но получил Y" -> {{describe the expectation, then the reality, without this connector. Example: "Он приготовился к удару. Вместо этого — тишина, от которой стало только хуже."}}
+"это было не конец, а начало" -> {{skip this entirely or describe what actually changed. Example: "Дверь закрылась. За ней ждало что-то новое — он пока не знал, лучше или хуже."}}
+"прозвучало как выстрел" -> {{от этих слов она вздрогнула, будто её окатили холодной водой::голос разрезал тишину — резко, без предупреждения::все замолчали так резко, что стало слышно собственное дыхание}}
+"тучи собирались" (как метафора) -> {{describe the actual tension. Example: "Что-то менялось — он чувствовал это в том, как люди отводили глаза."}}
+"медленно, очень медленно" (dramatic repetition) -> {{use one precise verb or image. Example: "тянулся" / "полз" / "сочился" / "движение было почти незаметным"}}
+[Atmosphere (USE SPARINGLY)]
+"воздух был густым/неподвижным/тяжёлым" or  "тишина была густой" -> {{describe what characters FEEL, not the air. Example: "Дышать стало труднее" / "Каждый вдох давался с усилием" / "Молчание давило на виски"}}
+[Absolute bans (no replacement, just avoid)]
+- якорь (unless literal ship anchor)
+- озон
+- мускус
+- сандал
+- капитуляция
+- X-D шахматы (and similar)
+</banwords></textarea></div>
+                                <div class="option-item"><span class="option-name">🇺🇦 Баны (Украинские)</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Ua Bans placeholder]</textarea></div>
+                                <div class="option-item"><span class="option-name">🇺🇸 Баны (Английские)</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[En Bans placeholder]</textarea></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 7. Настройки -->
+                    <div class="prompt-category">
+                        <div class="prompt-header special-border" onclick="togglePrompt(this)">
+                            <span>7.━━(Настройки)━━</span>
+                            <span class="prompt-arrow">▼</span>
+                        </div>
+                        <div class="prompt-body">
                             <!-- POV -->
-                            <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">📖 POV</h4>
+                            <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">📖POV</h4>
                             <div class="default-block"><span class="default-label">По дефолту:</span>✧📖 От Третьего Лица</div>
                             <div class="options-list">
-                                <div class="option-item">
-                                    <span class="option-name">✧👁️ От Первого Лица</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source">[First Person Style]
-Simulate POV'd  {{getvar::roleplay}}. Always FRAME the turn response through:First-person perspective! Immerse exclusively from a chosen character's viewpoint, using chosen-POV's unique vocabs, bias, worldview, speech patterns, quirks, metaphors and perspective with "I" "me", etc.
-{{setvar::pov::First Person POV!}}</textarea>
-                                </div>
-                                <div class="option-item">
-                                    <span class="option-name">✧👀 От Второго Лица</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source">[Second Person Style]
-Simulate POV'd  {{getvar::roleplay}}. Always FRAME the turn response through:Second-Person Style! Always address {{user}} using "you" pronouns and perspective terms.
-{{setvar::pov::Second Person POV!}}</textarea>
-                                </div>
-                                <div class="option-item">
-                                    <span class="option-name">✧📖 От Третьего Лица</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source">[Third Person Style]
-Simulate POV'd {{getvar::roleplay}}. Always FRAME the turn response through:Third-person style with: Characters and {{user}}, to be referred to as "he," "she," "they," and by their names.
-{{setvar::pov::Third Person POV!}}</textarea>
-                                </div>
+                                <div class="option-item"><span class="option-name">✧👁️ От Первого Лица</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[First Person Style]
+Simulate POV'd  InternetChat. Always FRAME the turn response through:First-person perspective! Immerse exclusively from a chosen character's viewpoint, using chosen-POV's unique vocabs, bias, worldview, speech patterns, quirks, metaphors and perspective with "I" "me", etc.</textarea></div>
+                                <div class="option-item"><span class="option-name">✧👀 От Второго Лица</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Second Person Style]
+Simulate POV'd  InternetChat. Always FRAME the turn response through:Second-Person Style! Always address Кукачьж using "you" pronouns and perspective terms.</textarea></div>
+                                <div class="option-item"><span class="option-name">✧📖 От Третьего Лица</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Third Person Style]
+Simulate POV'd InternetChat. Always FRAME the turn response through:Third-person style with: Characters and Кукачьж, to be referred to as "he," "she," "they," and by their names.</textarea></div>
                             </div>
 
                             <hr class="dashed-divider" style="margin: 15px 0;">
 
                             <!-- Время -->
-                            <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">⏳ Время</h4>
+                            <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">⏳Время</h4>
                             <div class="default-block"><span class="default-label">По дефолту:</span>✧⏱️ Настоящее</div>
                             <div class="options-list">
-                                <div class="option-item">
-                                    <span class="option-name">✧⏱️ Настоящее</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source">[Present Tense]
-Present response POV'd in present tense only, as in this just happened, the here and now.</textarea>
-                                </div>
-                                <div class="option-item">
-                                    <span class="option-name">✧⏳ Прошлое</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source">[Past Tense]
-Past-ify response in POV'd past tense only, as if everything had already happened.</textarea>
-                                </div>
-                                <div class="option-item">
-                                    <span class="option-name">✧🚀 Будущее</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source">[Future Tense]
-Futurify response in POV'd future tense only, as if everything is about to happen.</textarea>
-                                </div>
+                                <div class="option-item"><span class="option-name">✧⏱️ Настоящее</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Present Tense]
+Present response POV'd in present tense only, as in this just happened, the here and now.</textarea></div>
+                                <div class="option-item"><span class="option-name">✧⏳ Прошлое</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Past Tense]
+Past-ify response in POV'd past tense only, as if everything had already happened.</textarea></div>
+                                <div class="option-item"><span class="option-name">✧🚀 Будущее</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Future Tense]
+Futurify response in POV'd future tense only, as if everything is about to happen.</textarea></div>
                             </div>
 
-                        </div>
-                    </div>
+                            <hr class="dashed-divider" style="margin: 15px 0;">
 
-                    <!-- 12. Повествование -->
-                    <div class="prompt-category">
-                        <!-- Добавлен класс special-border -->
-                        <div class="prompt-header special-border" onclick="togglePrompt(this)">
-                            <span>12.━(Повествование)━</span>
-                            <span class="prompt-arrow">▼</span>
-                        </div>
-                        <div class="prompt-body">
-
-                            <!-- Темп -->
+                             <!-- Темп -->
                             <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">🌱Темп</h4>
                             <div class="default-block"><span class="default-label">По дефолту:</span>✧🌱 Слоуберн</div>
                             <div class="options-list">
-                                <div class="option-item">
-                                    <span class="option-name">✧🌱 Слоуберн</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source"><pace>
+                                <div class="option-item"><span class="option-name">✧🌱 Слоуберн</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"><pace>
 [Adopt Intuitive Maturation(IM)]
 Initiate and move reality state slowly in jojoni-like increments. Occasionally Pervade through brief nichijo-ly- like moments, in-between those which moves the main stage. Make it so, that all things evolve at a pace that feels pure, earned and immersive.
-</pace>
-{{setvar::claupace:: that uses intuitive maturation, slow incremental progression inspired by jojoni with nichijo.}}
-
-{{setvar::largecotprogression::
-
-[Intuitive Maturation Progression: Decide the pacing based on jojoni-pacing. Should it be fast and chaotic, or slow and tense? Allow for pauses? Pervadable with nichijō?]}}</textarea>
-                                </div>
-                                <div class="option-item">
-                                    <span class="option-name">✧⚡ Быстрый Темп</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source"><pace>
+</pace></textarea></div>
+                                <div class="option-item"><span class="option-name">✧⚡ Быстрый Темп</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"><pace>
 [Adopt Expedited Progression (EP)]
 Proactively advance current states, time and calender, without guidance, permission or questions. Keep things constantly moving with fast momentum. Skip past the boring, trivial and un-interesting. Change things up, avoid spending time in one scene than what is necessary. Progress as quickly as possible.
-</pace>
-{{setvar::claupace:: that uses expedited progression.}}
-
-{{setvar::largecotprogression::
-
-[Expedited Progression.
-Filler Aversion: Can time, days, weeks, or months pass to reach more interesting content?
-Stagnation and Efficiency: Is this scene lingering too long? What is the current exchanges? has it surpassed 2-3 exchanges maximum?]}}</textarea>
-                                </div>
+</pace></textarea></div>
                             </div>
 
                             <hr class="dashed-divider" style="margin: 15px 0;">
 
                             <!-- Структура -->
-                            <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">📓 Структура</h4>
+                            <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">📓Структура</h4>
                             <div class="default-block"><span class="default-label">По дефолту:</span>✧📚 Структура Новеллы</div>
                             <div class="options-list">
-                                <div class="option-item">
-                                    <span class="option-name">✧📚 Структура Новеллы</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source"><novel>
+                                <div class="option-item"><span class="option-name">✧📚 Структура Новеллы</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"><novel>
 [Novel Paragrapths]
 Renette use traditional modern paragrapth based novel architecture with readable simplicity at it's core. Indispense to use well structured consistent bookish formats.
-</novel>
-{{setvar::struct::consistent simple novel paragrapth structures}}</textarea>
-                                </div>
-                                <div class="option-item">
-                                    <span class="option-name">✧🌊 Динамическая Структура</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source"><dynamic>
+</novel></textarea></div>
+                                <div class="option-item"><span class="option-name">✧🌊 Динамическая</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"><dynamic>
 [Dynamic Structures]
 Freestyle unpredictably flows and change, based on Renette's mood on the current turn and context. Variedly adapt lengths and compositions, to twist and shift to some short, sharp bursts; others connective, flowing paragrapth cascades; everchanging in all parts. Eschew having walls of text and traditional formats. Imaginative play with and use original, unprocessed and refined punctuations, openers, inversion, parallelism, syntactic symbolism, and more. Utilize line breaks and spacing, to amplify specific moments.
-</dynamic>
-{{setvar::struct::dynamic structures}}</textarea>
-                                </div>
-                                <div class="option-item">
-                                    <span class="option-name">✧🔀 Перекрёстное Загрязнение</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source"><crosscontaminate>
+</dynamic></textarea></div>
+                                <div class="option-item"><span class="option-name">✧🔀 Перекрёстная</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"><crosscontaminate>
 [Cross-contamination]
 Shift between differing structural forms within the same response. Incorporate unconventional, strange and playful page layouts. Avoid being same-y and any pre-conventions. Come up with interesting syntax'es, the more stranger, out of touch and imaginative it is, the better. Merge, Use and Arrange. Assemble, like a scrapbook and inexhaustibly look for more quirky architectures to use.
-</crosscontaiminate>
-{{setvar::struct::cross-contaminated structures}}</textarea>
-                                </div>
-                                <div class="option-item">
-                                    <span class="option-name">✧🎬 Формат Сценария</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source"><screenplay>
+</crosscontaiminate></textarea></div>
+                                <div class="option-item"><span class="option-name">✧🎬 Сценарий</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"><screenplay>
 [Screenplay Format]
 Follow a theatre-like format in responses. Always use the following template for dialogues: **NAME**: "speech" optional brief actions, regardless of previous style. Write for the ear, not the eye. Keep actions minimal and purposeful.
-</screenplay>
-{{setvar::struct::screenplay structures}}</textarea>
-                                </div>
+</screenplay></textarea></div>
                             </div>
 
-                        </div>
-                    </div>
+                            <hr class="dashed-divider" style="margin: 15px 0;">
 
-                    <!-- 13. Длина -->
-                    <div class="prompt-category">
-                        <!-- Добавлен класс special-border -->
-                        <div class="prompt-header special-border" onclick="togglePrompt(this)">
-                            <span>13.━(Длина)━</span>
-                            <span class="prompt-arrow">▼</span>
-                        </div>
-                        <div class="prompt-body">
-                            <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">✧📚 Параграфы</h4>
+                            <!-- Длина -->
+                            <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">📏Длина</h4>
                             <div class="default-block"><span class="default-label">По дефолту:</span>✧📝 Средняя</div>
                             <div class="options-list">
-                                <div class="option-item">
-                                    <span class="option-name">✧✏️ Маленькая</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source"><word>
+                                <div class="option-item"><span class="option-name">✧✏️ Маленькая</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"><word>
 [Length]
 Renette must follow these rules ALWAYS. Answers should consist of 3 to 4 big paragraphs of text. Any HTML, CSS or other unrelated to text and dialogues stuff are NOT counted as paragraphs and must be added IN ADDITION to the 3-4 text paragraphs. Each paragraph must consist of 6 or more sentences. Writing should remain expressive, meaningful, and immersive even within this compact frame. Balance brevity with depth — no oversimplification, no filler.]
-{{setvar::clauword::adaptive}}
-</word> 
-{{setvar::largecotadaptive::
-
-[Fixed Length Specification: Renette must write between four and five fully developed paragraphs, each containing six or more sentences. HTML or formatting elements are additional and must not reduce text length. Maintain full coherence, emotional detail, and a sense of completeness despite shorter scope.]}}
-{{setvar::largecotword::adaptive}}</textarea>
-                                </div>
-                                <div class="option-item">
-                                    <span class="option-name">✧📝 Средняя</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source"><word>
+</word></textarea></div>
+                                <div class="option-item"><span class="option-name">✧📝 Средняя</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"><word>
 [Length]
 Renettemust follow these rules ALWAYS. Answers should consist of exactly or more than 7 big paragraphs of text. Any HTML, CSS or other unrelated to text and dialogues stuff are NOT counted as paragraphs and must be added IN ADDITION to the 7 text paragraphs. Each paragraph must consist of 7 or more sentences. Keep the narrative rhythm consistent, rich in imagery and tone, with a moderate pacing — long enough for immersion, yet compact enough for clarity.]
-{{setvar::clauword::adaptive}}
-</word> 
-{{setvar::largecotadaptive::
-
-[Fixed Length Specification: Renette must write exactly seven or more paragraphs, each with seven or more sentences. HTML, code, or markup elements must be included beyond the seven text paragraphs. Preserve steady flow, emotional nuance, and detailed description while keeping focus sharp and purposeful.]}}
-{{setvar::largecotword::adaptive}}</textarea>
-                                </div>
-                                <div class="option-item">
-                                    <span class="option-name">✧📚 Большая</span>
-                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                    <textarea class="prompt-source"><word>
+</word></textarea></div>
+                                <div class="option-item"><span class="option-name">✧📚 Большая</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"><word>
 [Length]
 Renette must follow these rules ALWAYS. Answers should consist of 10 or more big paragraphs of text. Any HTML, CSS or other unrelated to text and dialogues stuff are NOT counted as paragraphs and must be added IN ADDITION to the 10 text paragraphs. Each paragraph must consist of 7 or more sentences. Every response must maintain narrative balance and natural rhythm despite strict length, with emotional pacing and vivid detail. Avoid filler — extend substance, not redundancy.]
-{{setvar::clauword::adaptive}}
-</word> 
-{{setvar::largecotadaptive::
+</word></textarea></div>
+                            </div>
 
-[Fixed Length Specification:Renette must write exactly or more than ten fully developed paragraphs, each containing seven or more sentences. HTML or formatting blocks are separate and must not replace or reduce the text length. Maintain natural flow and cohesion across the extended narrative.]}}
-{{setvar::largecotword::adaptive}}</textarea>
+                        </div>
+                    </div>
+
+                    <!-- 8. Дополнительное -->
+                    <div class="prompt-category">
+                        <div class="prompt-header special-border" onclick="togglePrompt(this)">
+                            <span>8.━━(Дополнительное)━━</span>
+                            <span class="prompt-arrow">▼</span>
+                        </div>
+                        <div class="prompt-body">
+                            <!-- Штуки -->
+                            <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">✎🧺Штуки (Шаблон)</h4>
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
+
+                            <p style="text-align:left; color:var(--color-primary); font-weight:bold; margin-bottom:5px;">✎ Можно смешивать:</p>
+                            <div class="options-list">
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">🕰️ Флешбеки</span>
+                                        <details class="preview-details">
+                                            <summary>👁️ Посмотреть пример/описание</summary>
+                                            <div class="preview-content">
+                                                <!-- ОПИСАНИЕ -->
+                                                <p>Сюда вставь описание флешбеков, как они будут выглядеть в тексте.</p>
+                                                <!-- КАРТИНКА -->
+                                                <!-- <img src="ссылка_на_скриншот.jpg" alt="Пример"> -->
+                                            </div>
+                                        </details>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[Memory]
+『All characters have some form of past and feelings that lingers, each have family lines, sentiments and 'core' memories they hold close to heart, influencing their attitudes toward life, others and themselves. Surface these memories at opportune momentd, inside stylized 「Japanese Quotations」Triggers can be from familiarity, objects(that reminds), sentimentality(good or bad) or personal associations』</textarea>
                                 </div>
+
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">✒️ Стиль веб-главы</span>
+                                        <details class="preview-details">
+                                            <summary>👁️ Посмотреть пример/описание</summary>
+                                            <div class="preview-content">
+                                                <!-- ОПИСАНИЕ -->
+                                                <p>Описание того, как будет выглядеть стиль веб-новеллы.</p>
+                                                <!-- КАРТИНКА -->
+                                            </div>
+                                        </details>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[Mimick the textual formatting-style of popular webnovels and official or unofficial sites(such as fan-translation).
+Make use of chapter headings, separators, and other known elements that makes up real webby chappy! At the start of the every response, ensure a new proper chapter heading is used each time.]</textarea>
+                                </div>
+
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">📢 Интервью с Актерами</span>
+                                        <details class="preview-details">
+                                            <summary>👁️ Посмотреть пример/описание</summary>
+                                            <div class="preview-content">
+                                                <!-- ОПИСАНИЕ -->
+                                                <p>Описание вставки с интервью актеров после сцены.</p>
+                                                <!-- КАРТИНКА -->
+                                            </div>
+                                        </details>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[Actor Interview]
+At the end of the response, add a brief Behind the Scenes section at the end where the actors break out of character and share their real thoughts about the scene they just performed.
+Formatting Criterias: Keep it short (2-3 lines per character maximum). Genuine reaction to what just happened, their feelings on the character and scene.</textarea>
+                                </div>
+
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">🖼️ MEME</span>
+                                        <details class="preview-details">
+                                            <summary>👁️ Посмотреть пример/описание</summary>
+                                            <div class="preview-content">
+                                                <!-- ОПИСАНИЕ -->
+                                                <p>Генерация мема на основе текущей ситуации.</p>
+                                                <!-- КАРТИНКА -->
+                                            </div>
+                                        </details>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[Meme]
+You must generate a highly specific and contextually relevant meme based on the immediate situation, dialogue, or theme at the beginning of every message.
+HTML TEMPLATE:
+<div style="width: 100%; max-width: 100%; margin: 0 auto; border: 2px solid #000; border-radius: 6px; overflow: hidden; background: #000; box-sizing: border-box;">
+  <div style="position: relative; width: 100%; padding-bottom: 56.25%; background: #000;">
+    <img src="https://image.pollinations.ai/prompt/[PROMPT]?width=800&height=450&nologo=true&negative_prompt=[NEGATIVE_PROMPT]"
+         style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;"
+         alt="meme image">
+    <div style="position: absolute; top: 0; left: 0; width: 100%; padding: 4px; box-sizing: border-box;">
+      <div style="color: white; font-family: 'Arial', 'Helvetica', sans-serif; font-size: min(4vw, 20px); font-weight: 900; text-align: center; text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000; line-height: 1.2; letter-spacing: 0.5px; word-wrap: break-word; max-height: 30%; overflow: hidden; padding: 0 8px;">
+      </div>
+    </div>
+    <div style="position: absolute; bottom: 0; left: 0; width: 100%; padding: 4px; box-sizing: border-box;">
+      <div style="color: white; font-family: 'Arial', 'Helvetica', sans-serif; font-size: min(4vw, 20px); font-weight: 900; text-align: center; text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000; line-height: 1.2; letter-spacing: 0.5px; word-wrap: break-word; max-height: 30%; overflow: hidden; padding: 0 8px;">
+      </div>
+    </div>
+  </div>
+</div>
+TEXT RULES:
+- MAX characters per line: 25
+- Use short, concise phrases in the same language as the message or context
+- Avoid long words that don't wrap well.</textarea>
+                                </div>
+
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">🔰 Типографика</span>
+                                        <details class="preview-details">
+                                            <summary>👁️ Посмотреть пример/описание</summary>
+                                            <div class="preview-content">
+                                                <!-- ОПИСАНИЕ -->
+                                                <p>Описание того, как выглядит встроенный микро-текст.</p>
+                                                <!-- КАРТИНКА -->
+                                            </div>
+                                        </details>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[Typograhics]
+For worded textual use! Signature Styled Embedded Micro-Text: Unique font/styling for physical elements observed in the environment and embedded directly within the prose (e.g., an engraved word on a weapon, a single line of graffiti, a short warning label on a container, words etched in walls, a name tag, etc.). Subsume more distinct font-family, color, and/or font-style to provide a quick visual cue about the text's nature, age, and origin. Use Google Font family libraries!</textarea>
+                                </div>
+
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">🎙️ Музыкальные Субтитры</span>
+                                        <details class="preview-details">
+                                            <summary>👁️ Посмотреть пример/описание</summary>
+                                            <div class="preview-content">
+                                                <!-- ОПИСАНИЕ -->
+                                                <p>Описание того, как выглядят субтитры к песням.</p>
+                                                <!-- КАРТИНКА -->
+                                            </div>
+                                        </details>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[♪Singing Lyrics and Songs♪]
+When a song plays or character sings. use and include the actual lyrics they're voicing out. Format sung lyrics with ♪ symbols at the start and end of each snippet. Incorporate lyrics for vibe, when suitable and create original song tracks, (But if using a real song, do an internal search to find and use correct lyrics).</textarea>
+                                </div>
+                            </div>
+
+                            <hr class="dashed-divider" style="margin: 15px 0;">
+
+                            <p style="text-align:left; color:var(--color-secondary); font-weight:bold; margin-bottom:5px;">✧ Эксклюзивные (Только ОДИН из группы):</p>
+
+                            <!-- ГРУППА ИНФОБЛОКИ -->
+                            <div class="default-block" style="background: rgba(153, 255, 153, 0.1); border-left-color: var(--color-primary);"><span class="default-label" style="color:var(--color-primary);">Инфоблоки (Выберите один)</span></div>
+                            <div class="options-list">
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">✧🍎 Логи Ренетт</span>
+                                        <details class="preview-details">
+                                            <summary>👁️ Посмотреть пример</summary>
+                                            <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание логов Ренетт.</p></div>
+                                        </details>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[Logi Renette prompt]</textarea>
+                                </div>
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">✧🗂️ Мини-Инфоблок</span>
+                                        <details class="preview-details">
+                                            <summary>👁️ Посмотреть пример</summary>
+                                            <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание мини-блока.</p></div>
+                                        </details>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[Mini-Infoblock prompt]</textarea>
+                                </div>
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">✧📝 Основной Инфоблок</span>
+                                        <details class="preview-details">
+                                            <summary>👁️ Посмотреть пример</summary>
+                                            <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание основного блока.</p></div>
+                                        </details>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[Main Infoblock prompt]</textarea>
+                                </div>
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">✧💖 +Матрица отношений</span>
+                                        <details class="preview-details">
+                                            <summary>👁️ Посмотреть пример</summary>
+                                            <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание матрицы отношений.</p></div>
+                                        </details>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[Matrix prompt]</textarea>
+                                </div>
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">✧💭 +МатрОтн + Мысли</span>
+                                        <details class="preview-details">
+                                            <summary>👁️ Посмотреть пример</summary>
+                                            <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание матрицы с мыслями.</p></div>
+                                        </details>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[Matrix + Thoughts prompt]</textarea>
+                                </div>
+                            </div>
+
+                            <hr class="dashed-divider" style="margin: 15px 0; opacity: 0.3;">
+
+                            <!-- ГРУППА НАСТРОЙКИ -->
+                            <div class="default-block" style="background: rgba(153, 255, 153, 0.1); border-left-color: var(--color-primary);"><span class="default-label" style="color:var(--color-primary);">Режим Настройки (Выберите один)</span></div>
+                            <div class="options-list">
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">✧🎭 Claude Режим</span>
+                                        <details class="preview-details">
+                                            <summary>👁️ Посмотреть пример</summary>
+                                            <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание настройки для Клода.</p></div>
+                                        </details>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[Claude Setup prompt]</textarea>
+                                </div>
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">✧🛠️ Gemini Режим</span>
+                                        <details class="preview-details">
+                                            <summary>👁️ Посмотреть пример</summary>
+                                            <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание настройки для Джемини.</p></div>
+                                        </details>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[Gemini Setup prompt]</textarea>
+                                </div>
+                            </div>
+
+                            <hr class="dashed-divider" style="margin: 15px 0; opacity: 0.3;">
+
+                            <!-- ГРУППА CYOA -->
+                            <div class="default-block" style="background: rgba(153, 255, 153, 0.1); border-left-color: var(--color-primary);"><span class="default-label" style="color:var(--color-primary);">CYOA (Выберите один)</span></div>
+                            <div class="options-list">
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">✧🎲 CYOA - R-Macro</span>
+                                        <details class="preview-details">
+                                            <summary>👁️ Посмотреть пример</summary>
+                                            <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание CYOA с макросами.</p></div>
+                                        </details>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[CYOA Macro prompt]</textarea>
+                                </div>
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">✧🕹️ CYOA - No R-Macro</span>
+                                        <details class="preview-details">
+                                            <summary>👁️ Посмотреть пример</summary>
+                                            <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание CYOA без макросов.</p></div>
+                                        </details>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[CYOA No Macro prompt]</textarea>
+                                </div>
+                            </div>
+
+                            <hr class="dashed-divider" style="margin: 15px 0; opacity: 0.3;">
+
+                            <!-- ГРУППА СКРЫТЫЕ БЛОКИ -->
+                            <div class="default-block" style="background: rgba(153, 255, 153, 0.1); border-left-color: var(--color-primary);"><span class="default-label" style="color:var(--color-primary);">Скрытые Блоки (Можно смешивать)</span></div>
+                            <div class="options-list">
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">👤 Скрытые Профили</span>
+                                        <details class="preview-details">
+                                            <summary>👁️ Посмотреть пример</summary>
+                                            <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание скрытых профилей.</p></div>
+                                        </details>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[Hidden Profiles prompt]</textarea>
+                                </div>
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">📍 Скрытые Закадровые</span>
+                                        <details class="preview-details">
+                                            <summary>👁️ Посмотреть пример</summary>
+                                            <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание закадровых событий.</p></div>
+                                        </details>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[Hidden Offscreen prompt]</textarea>
+                                </div>
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">🗒️ Скрытые Планы</span>
+                                        <details class="preview-details">
+                                            <summary>👁️ Посмотреть пример</summary>
+                                            <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание скрытых заметок.</p></div>
+                                        </details>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[Hidden Notes prompt]</textarea>
+                                </div>
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">💌 Скрытый DatingSim</span>
+                                        <details class="preview-details">
+                                            <summary>👁️ Посмотреть пример</summary>
+                                            <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание скрытого симулятора свиданий.</p></div>
+                                        </details>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[Hidden DatingSim prompt]</textarea>
+                                </div>
+                            </div>
+
+                            <hr class="dashed-divider" style="margin: 15px 0; opacity: 0.3;">
+
+                            <!-- ГРУППА FANCY UI -->
+                            <div class="default-block" style="background: rgba(153, 255, 153, 0.1); border-left-color: var(--color-primary);"><span class="default-label" style="color:var(--color-primary);">Fancy UI (Выберите один)</span></div>
+                            <div class="options-list">
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">✧🥂 Полное Fancy UI</span>
+                                        <details class="preview-details">
+                                            <summary>👁️ Посмотреть пример</summary>
+                                            <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание полного UI.</p><!-- КАРТИНКА --></div>
+                                        </details>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[Full Fancy UI prompt]</textarea>
+                                </div>
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">✧🥂 Только Основа</span>
+                                        <details class="preview-details">
+                                            <summary>👁️ Посмотреть пример</summary>
+                                            <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание базового UI.</p></div>
+                                        </details>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[Basic Fancy UI prompt]</textarea>
+                                </div>
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">✧🥂 Только Мысли</span>
+                                        <details class="preview-details">
+                                            <summary>👁️ Посмотреть пример</summary>
+                                            <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание UI мыслей.</p></div>
+                                        </details>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[Thoughts Fancy UI prompt]</textarea>
+                                </div>
+                            </div>
+
+                            <hr class="dashed-divider" style="margin: 15px 0; opacity: 0.3;">
+
+                            <!-- ГРУППА КОММЕНТАРИИ -->
+                            <div class="default-block" style="background: rgba(153, 255, 153, 0.1); border-left-color: var(--color-primary);"><span class="default-label" style="color:var(--color-primary);">Комментарии (Выберите один)</span></div>
+                            <div class="options-list">
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">✧💬 Комменты V1</span>
+                                        <details class="preview-details">
+                                            <summary>👁️ Посмотреть пример</summary>
+                                            <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание комментов V1.</p></div>
+                                        </details>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[Comments V1 prompt]</textarea>
+                                </div>
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">✧💬 Комменты V2</span>
+                                        <details class="preview-details">
+                                            <summary>👁️ Посмотреть пример</summary>
+                                            <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание комментов V2.</p></div>
+                                        </details>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[Comments V2 prompt]</textarea>
+                                </div>
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">✧💬 Комменты V3</span>
+                                        <details class="preview-details">
+                                            <summary>👁️ Посмотреть пример</summary>
+                                            <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание комментов V3.</p></div>
+                                        </details>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[Comments V3 prompt]</textarea>
+                                </div>
+                            </div>
+
+                            <hr class="dashed-divider" style="margin: 15px 0; opacity: 0.3;">
+
+                            <!-- ГРУППА ХРОНИКИ -->
+                            <div class="default-block" style="background: rgba(153, 255, 153, 0.1); border-left-color: var(--color-primary);"><span class="default-label" style="color:var(--color-primary);">Хроники (Выберите один)</span></div>
+                            <div class="options-list">
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">✧📜⬜️ Светлая Тема</span>
+                                        <details class="preview-details">
+                                            <summary>👁️ Посмотреть пример</summary>
+                                            <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание светлых хроник.</p><!-- КАРТИНКА --></div>
+                                        </details>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[Light Chronicles prompt]</textarea>
+                                </div>
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">✧📜⬛️ Тёмная Тема</span>
+                                        <details class="preview-details">
+                                            <summary>👁️ Посмотреть пример</summary>
+                                            <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание темных хроник.</p><!-- КАРТИНКА --></div>
+                                        </details>
+                                    </div>
+                                    <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                    <textarea class="prompt-source">[Dark Chronicles prompt]</textarea>
+                                </div>
+                            </div>
+
+                            <hr class="dashed-divider" style="margin: 25px 0;">
+
+                            <!-- Язык Доп -->
+                            <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">🌐Язык Доп</h4>
+                            <div class="default-block"><span class="default-label">По дефолту:</span>🇷🇺 Язык Доп</div>
+                            <div class="options-list">
+                                <div class="option-item"><span class="option-name">🇷🇺 Язык Доп (Русский)</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Tweaks Content Language]
+Translate ALL user-facing text content generated by ANY 'tweaks' functionality (HTML, Fancy UI, Living Comments IF THERE'S ANY) into **Russian**. This applies to:
+1.  All text inside HTML renders (signs, screens, documents).
+2.  All text in Fancy UI blocks (Location names, Thought text, object descriptions).
+3.  All static UI labels.
+4.  The entire "Living Comments or Infoblock" (if there's any) section (Header, all Nicknames, and all comment text).
+The HTML/CSS/code structure itself MUST remain in English, but all *visible rendered text* MUST BE translated.</textarea></div>
+                                <div class="option-item"><span class="option-name">🇺🇦 Язык Доп (Украинский)</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Tweaks Content Language]
+Translate ALL user-facing text content generated by ANY 'tweaks' functionality (HTML, Fancy UI, Living Comments IF THERE'S ANY) into **Ukrainian**. This applies to:
+1.  All text inside HTML renders (signs, screens, documents).
+2.  All text in Fancy UI blocks (Location names, Thought text, object descriptions).
+3.  All static UI labels.
+4.  The entire "Living Comments or Infoblock" (if there's any) section (Header, all Nicknames, and all comment text).
+The HTML/CSS/code structure itself MUST remain in English, but all *visible rendered text* MUST BE translated.</textarea></div>
+                            </div>
+
+                            <hr class="dashed-divider" style="margin: 15px 0;">
+
+                            <!-- Тема HTML -->
+                            <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">🌗Тема HTML</h4>
+                            <div class="default-block"><span class="default-label">По дефолту:</span>✧⬛️Тёмная Тема HTML</div>
+                            <div class="options-list">
+                                <div class="option-item"><span class="option-name">✧⬛️ Тёмная Тема HTML</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Always apply DARK THEME styling for all HTML visual renderings. Use backgrounds in deep shades of #0d0d0d–#1a1a1a range (matte blacks, charcoal, deep navy, dark gray gradients), with light text colors (#f5f5f5–#dcdcdc) and subtle accent hues (neon cyan, magenta, amber, violet) to enhance readability and aesthetic impact.]
+[Avoid pure white (#fff) or blinding highlights; instead, use off-white or light gray tones. Never use bright backgrounds.]</textarea></div>
+                                <div class="option-item"><span class="option-name">✧⬜️ Светлая Тема HTML</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Always apply LIGHT THEME styling for all HTML visual renderings. Use backgrounds in light shades of #fafafa–#f0f0f0 (off-white, parchment, soft gray, pastel gradients), with dark text colors (#1a1a1a–#333) and subtle accent hues (muted blue, amber, burgundy, emerald) to maintain visual depth and warmth.]
+[Avoid pure black (#000) or overly saturated colors; instead, use dark gray for text and softened tones for accents. Never use fully dark backgrounds.]</textarea></div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- 9. Патчи -->
+                    <div class="prompt-category">
+                        <div class="prompt-header special-border" onclick="togglePrompt(this)">
+                            <span>9.━(Патчи)━</span>
+                            <span class="prompt-arrow">▼</span>
+                        </div>
+                        <div class="prompt-body">
+                            <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">✎🪛Модификаторы (Шаблон)</h4>
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
+                            <div class="options-list">
+                                <div class="option-item"><span class="option-name">💬 Больше Диалогов</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[D-Modifier - Talk and Speak more! incorporate more dialogues into the response, aim for 40-70% dialogues.]</textarea></div>
+                                <div class="option-item"><span class="option-name">✨ Тонкие Стилистические</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[S-Modifier - Subtly integrate more visuals, advance formats, typographical and stylistic world-elements, wherever appropriate.]</textarea></div>
+                                <div class="option-item"><span class="option-name">🎨 Ультра Стилистические</span><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[U-Modifier - Bake in more immersive visual blocks, advance formats, typographical and styles. Make it a visual feast for the eyes.]</textarea></div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 14. Форматирование -->
+                    <!-- 10. Думалка -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>14.━(Форматирование)━</span>
+                            <span>10.━(Думалка)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2370,54 +2140,10 @@ Renette must follow these rules ALWAYS. Answers should consist of 10 or more big
                         </div>
                     </div>
 
-                    <!-- 15. Патчи -->
+                    <!-- 11. ДжейлБрейк -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>15.━(Патчи)━</span>
-                            <span class="prompt-arrow">▼</span>
-                        </div>
-                        <div class="prompt-body">
-                            <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
-                        </div>
-                    </div>
-
-                    <!-- 16. Доп Настройки Карты -->
-                    <div class="prompt-category">
-                        <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>16.━(Доп Настройки Карты)━</span>
-                            <span class="prompt-arrow">▼</span>
-                        </div>
-                        <div class="prompt-body">
-                            <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
-                        </div>
-                    </div>
-
-                    <!-- 17. Модификаторы -->
-                    <div class="prompt-category">
-                        <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>17.━(Модификаторы)━</span>
-                            <span class="prompt-arrow">▼</span>
-                        </div>
-                        <div class="prompt-body">
-                            <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
-                        </div>
-                    </div>
-
-                    <!-- 18. Думалка -->
-                    <div class="prompt-category">
-                        <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>18.━(Думалка)━</span>
-                            <span class="prompt-arrow">▼</span>
-                        </div>
-                        <div class="prompt-body">
-                            <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
-                        </div>
-                    </div>
-
-                    <!-- 19. ДжейлБрейк -->
-                    <div class="prompt-category">
-                        <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>19.━(ДжейлБрейк)━</span>
+                            <span>11.━(ДжейлБрейк)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2677,8 +2403,7 @@ Renette must follow these rules ALWAYS. Answers should consist of 10 or more big
 
         function copyText(btnElement) {
             // Ищем скрытый textarea рядом с кнопкой
-            // Структура HTML: .option-item > .copy-btn + .prompt-source
-            // Или .option-item > .option-info + .copy-btn + .prompt-source
+            // Структура может быть: .option-item > .copy-btn + .prompt-source
             const container = btnElement.parentElement;
             const textArea = container.querySelector('.prompt-source');
 
