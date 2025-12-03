@@ -904,11 +904,11 @@
 
 
         .option-info {
-            display: block !important;
-            width: 100% !important;
-            padding-right: 0 !important;
+            display: block;   
+            text-align: left;
+            width: 100%;      
+            min-width: 0;   
         }
-
 
 
         .option-name {
@@ -955,16 +955,15 @@
             color: #ccc;
             line-height: 1.5;
         }
-        .preview-content {
-            margin-top: 10px;
-            padding: 10px;
-            background: rgba(0,0,0,0.3);
+        .preview-content img {
+            width: 100%;          /* БЫЛО max-width, СТАЛО width */
+            min-width: 100%;      /* ДОБАВЛЕНО: не даём сжиматься */
+            height: auto;
             border-radius: 6px;
-            border: 1px dashed rgba(255,255,255,0.1);
-            width: 100% !important;              /* ДОБАВЛЕНО */
-            box-sizing: border-box !important;   /* ДОБАВЛЕНО */
+            border: 1px solid rgba(255,255,255,0.1);
+            display: block;
+            margin: 10px auto;
         }
-
 
 
 
@@ -1161,114 +1160,119 @@
         /* МОБИЛЬНЫЕ ПРАВКИ (MAX-WIDTH: 600PX) */
         /* ===================================== */
         @media (max-width: 600px) {
-    /* Заставляем блок с описанием растянуться */
-    .option-info {
-        width: 100% !important;
-        display: block !important;
-        padding-right: 0 !important;
-    }
+            .header-banner {
+                height: 190px;
+                padding-bottom: 10px;
+            }
 
-    /* Растягиваем контейнер картинки */
-    .preview-content {
-        width: 100% !important;
-        box-sizing: border-box !important;
-        margin: 10px 0 !important;
-    }
+            .main-container {
+                margin-top: -20px;
+                padding: 10px 15px 40px 15px;
+            }
 
-    /* Растягиваем САМУ картинку */
-    .preview-content img {
-        width: 100% !important;
-        min-width: 100% !important;
-        height: auto !important;
-        display: block !important;
-        
-    .header-banner {
-            height: 190px;
-            padding-bottom: 10px;
-        }
+            .header-banner h1 {
+                flex-direction: column;
+                gap: 5px;
+            }
+            .apple-icon {
+                margin-bottom: 5px;
+                margin-left: 0;
+            }
 
-    .main-container {
-            margin-top: -20px;
-            padding: 10px 15px 40px 15px;
-        }
+            .tab-content { padding: 25px 15px; }
 
-    .header-banner h1 {
-            flex-direction: column;
-            gap: 5px;
-        }
-        .apple-icon {
-            margin-bottom: 5px;
-            margin-left: 0;
-        }
+            .tab-content h2 img {
+                margin-left: 0;
+                margin-right: 12px;
+            }
 
-        .tab-content { padding: 25px 15px; }
+            .tab-buttons {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+                margin-bottom: 25px;
+            }
 
-        .tab-content h2 img {
-            margin-left: 0;
-            margin-right: 12px;
-        }
-
-        .tab-buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-bottom: 25px;
-        }
-
+            /* Кнопка ПРОМПТЫ (последняя в HTML) растягивается на всю ширину на мобилках */
             .tab-button:last-child {
-            grid-column: span 2;
-        }
+                grid-column: span 2;
+            }
 
-        .tab-button {
-            font-size: 1rem;
-            padding: 12px 15px;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            justify-content: center;
-        }
-        .tab-button.active {
-            padding-left: 15px;
-            padding-top: 15px;
-        }
-        .tab-button img {
-            margin-right: 0;
-            margin-bottom: 5px;
-            height: 22px;
-        }
+            .tab-button {
+                font-size: 1rem;
+                padding: 12px 15px;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                justify-content: center;
+            }
+            .tab-button.active {
+                padding-left: 15px;
+                padding-top: 15px;
+            }
+            .tab-button img {
+                margin-right: 0;
+                margin-bottom: 5px;
+                height: 22px;
+            }
 
-        .download-button, .link-button {
-            width: 100%;
-            font-size: 0.9rem;
-        }
+            .download-button, .link-button {
+                width: 100%;
+                font-size: 0.9rem;
+            }
 
-        .option-item {
-            flex-direction: column !important;
-            align-items: stretch !important; /* Растянуть на всю ширину */
-            position: relative; /* Чтобы позиционировать галочку */
-            padding-right: 15px;
-            padding-top: 15px;
-            padding-bottom: 15px;
-        }
+            /* === ИСПРАВЛЕНИЕ ДЛЯ КНОПКИ И ТЕКСТА НА МОБИЛЬНЫХ === */
+            /* Делаем столбик, чтобы текст был широким */
+            .option-item {
+                flex-direction: column !important;
+                align-items: stretch !important; /* Растянуть на всю ширину */
+                position: relative; /* Чтобы позиционировать галочку */
+                padding-right: 15px;
+                padding-top: 15px;
+                padding-bottom: 15px;
+            }
 
             /* Галочка/Радио - В ПРАВЫЙ ВЕРХНИЙ УГОЛ (абсолютно) */
-        .select-input {
-            position: absolute !important;
-            top: 15px;
-            right: 15px;
-            margin: 0 !important;
-            order: unset;
-        }
+            .select-input {
+                position: absolute !important;
+                top: 15px;
+                right: 15px;
+                margin: 0 !important;
+                order: unset;
+            }
+
+            /* Текст - НА ВСЮ ШИРИНУ */
+                        /* Текст - НА ВСЮ ШИРИНУ */
+                        /* Текст - НА ВСЮ ШИРИНУ */
+            .option-info {
+                width: 100%;
+                margin-right: 0;
+                order: 1;
+                text-align: left;
+                padding-right: 35px; /* Отступ справа, чтобы текст не налез на галочку */
+                margin-bottom: 12px; /* Место до кнопки */
+            }
+
+            /* Галочку двигаем выше, чтобы не мешала */
+            .option-item {
+                padding-top: 45px !important; /* Место сверху под галочку */
+            }
+
+            .select-input {
+                top: 12px !important;
+                right: 12px !important;
+            }
+
 
             /* Кнопка "Копировать" - СНИЗУ И ШИРОКАЯ */
-        .copy-btn {
-            width: 100%;
-            margin-top: 0;
-            order: 2;
-            align-self: center;
-            padding: 12px; /* Чуть побольше для пальца */
+            .copy-btn {
+                width: 100%;
+                margin-top: 0;
+                order: 2;
+                align-self: center;
+                padding: 12px; /* Чуть побольше для пальца */
+            }
         }
-    }
 
         /* ===================================== */
         /* СТИЛИ ДЛЯ FAQ (АККОРДЕОН) */
@@ -1365,24 +1369,54 @@
             background: var(--color-primary);
             color: #000;
         }
-            /* Кнопку возвращаем в угол, чтобы не мешала пальцам */
-        #scrollTopBtn {
-            right: 20px !important;
-            bottom: 20px !important;
-        }
 
-        .guide-header, .prompt-header {
-            justify-content: flex-start !important;
-            padding-left: 60px !important; /* Место для цифры */
-            min-height: 50px;
+        /* 2. НАСТРОЙКИ ДЛЯ ТЕЛЕФОНА (Исправление картинок и текста) */
+        @media (max-width: 600px) {
+
+            /* Кнопку возвращаем в угол, чтобы не мешала пальцам */
+            #scrollTopBtn {
+                right: 20px !important;
+                bottom: 20px !important;
+            }
+
+            /* === ЧИНИМ КАРТИНКИ (Самое важное!) === */
+            /* Заставляем блок с описанием растянуться */
+            .option-info {
+                width: 100% !important;
+                display: block !important;
+                padding-right: 0 !important;
+            }
+
+            /* Растягиваем контейнер картинки */
+            .preview-content {
+                width: 100% !important;
+                box-sizing: border-box !important;
+                margin: 10px 0 !important;
+            }
+
+            /* Растягиваем САМУ картинку */
+            .preview-content img {
+                width: 100% !important;
+                min-width: 100% !important;
+                height: auto !important;
+                display: block !important;
+            }
+
+            /* === ЧИНИМ ЗАГОЛОВКИ === */
+            /* Текст заголовков (чтобы не наезжал на цифры) */
+            .guide-header, .prompt-header {
+                justify-content: flex-start !important;
+                padding-left: 60px !important; /* Место для цифры */
+                min-height: 50px;
+            }
+
+            /* Ставим цифры и иконки ровно слева */
+            .num-tag, .guide-header-icon {
+                left: 15px !important;
+                top: 50% !important;
+                transform: translateY(-50%) !important;
+            }
         }
-        
-        .num-tag, .guide-header-icon {
-            left: 15px !important;
-            top: 50% !important;
-            transform: translateY(-50%) !important;
-        }
-    }
 
 
     </style>
