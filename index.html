@@ -1313,43 +1313,53 @@
             opacity: 1;
             padding: 0 20px 20px 20px; /* Возвращаем отступы */
         }
-                /* === КНОПКА "НАВЕРХ" === */
+
         #scrollTopBtn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: rgba(15, 15, 15, 0.8);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--color-primary); /* Зеленая обводка */
-            border-radius: 50%; /* Делаем круг */
-            color: var(--color-primary);
-            font-size: 1.5em;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            z-index: 9999; /* Чтобы была поверх всего */
-            opacity: 0; /* Сначала невидимая */
-            pointer-events: none; /* Чтобы не мешала кликать, пока невидима */
-            transition: all 0.4s ease;
-            box-shadow: 0 0 15px rgba(153, 255, 153, 0.2);
+            right: 80px !important;  /* Было 30, стало 80 (левее) */
+            bottom: 50px !important; /* Чуть выше от пола */
         }
 
-        #scrollTopBtn:hover {
-            transform: translateY(-5px);
-            background: var(--color-primary);
-            color: #000;
-            box-shadow: 0 0 25px rgba(153, 255, 153, 0.6);
+        @media (max-width: 600px) {
+
+        #scrollTopBtn {
+            right: 20px !important;
+            bottom: 20px !important;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2em;
         }
 
-        /* Класс, который мы добавим скриптом, чтобы показать кнопку */
-        #scrollTopBtn.show {
-            opacity: 1;
-            pointer-events: auto;
+           
+        .guide-header, .prompt-header {
+            justify-content: flex-start !important;
+            padding-left: 60px !important; 
+            padding-right: 40px !important;
+            font-size: 0.95rem !important;
+            min-height: 50px; 
         }
-    </style>
+
+            
+        .guide-header-icon, .num-tag {
+            left: 15px !important; 
+            font-size: 1.3em !important; 
+        }
+
+            
+        .preview-content img {
+            width: 100% !important; 
+            max-width: 100% !important;
+            height: auto !important;
+            margin: 10px 0 !important;
+        }
+
+            
+        .preview-content {
+            width: 100% !important;
+            box-sizing: border-box;
+        }
+    }
+
+</style>
 </head>
 <body>
 
