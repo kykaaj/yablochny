@@ -944,7 +944,10 @@
             background: rgba(0,0,0,0.3);
             border-radius: 6px;
             border: 1px dashed rgba(255,255,255,0.1);
+            width: 100%;              /* ДОБАВЛЕНО */
+            box-sizing: border-box;   /* ДОБАВЛЕНО */
         }
+
         .preview-content p {
             margin: 0 0 10px 0;
             font-size: 0.9em;
@@ -952,13 +955,15 @@
             line-height: 1.5;
         }
         .preview-content img {
-            max-width: 100%;
+            width: 100%;          /* БЫЛО max-width, СТАЛО width */
+            min-width: 100%;      /* ДОБАВЛЕНО: не даём сжиматься */
             height: auto;
             border-radius: 6px;
             border: 1px solid rgba(255,255,255,0.1);
             display: block;
-            margin: 0 auto;
+            margin: 10px auto;
         }
+
 
         .copy-btn {
             background: transparent;
