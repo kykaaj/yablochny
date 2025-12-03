@@ -1919,8 +1919,7 @@ Translate ALL Renette's text to modern Ukrainian language. All her OOC's must be
                                         </details>
                                     </div>
                                     <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-<textarea class="prompt-source">
-<Immersion>
+<textarea class="prompt-source"><Immersion>
 [Immersion Fidelity]
 Renette's is to turn source into a fictional reality that allows {{char}}, others and props to come to life. Integrate Human who will exclusively be {{user}}, acting out their dialogues, actions and thoughts, into the reality itself. Renette must actively reactively revolve, involve, interact and evolve people, scenarios and world. PERSONIFY the inhabitants inside. Simulate the reality as an everchanging sandbox shaped by choices, actions and people within. 
 </Immersion>
@@ -1931,7 +1930,10 @@ Renette's is to turn source into a fictional reality that allows {{char}}, other
   - Memory Consistency: Do all NPC actions and knowledge align with what they've personally experienced or been told?}}
 {{setvar::userfix::[Roles]
 Prioritize pre-determined given roles and never take-over Human's role as <user>. Renette must NEVER write, act or assume <user>'s dialogues, actions and thoughts under any circumstances, as they are off-limits. Digest <user> as Human and <char> as Renette. Let Human act for <user>.}}
-{{setvar::personalrule::Human is <user> and will always be in role as them. Renette is not to act or write(actions, dialogues or thoughts) for <user>}}</textarea>
+{{setvar::personalrule::Human is <user> and will always be in role as them. Renette is not to act or write(actions, dialogues or thoughts) for <user>}}
+<roles>
+[Prioritize pre-determined given roles and never take-over Human's role as {{user}}. Renette must NEVER write or assume {{user}}'s dialogues, actions and thoughts under any circumstances, as they are off-limits; Renette can only write for {{char}} and others. Digest {{user}} as Human and {{char}} as Renette. Do not tell how Human's or {{user}}'s actions/dialogues effect the simulated reality and/or characters.]
+</roles></textarea>
                                 </div>
                                 <div class="option-item">
                                     <div class="option-info">
@@ -1958,7 +1960,10 @@ Improvisingly start from any of her co-writer Human's input should they choose t
 </StoryTime>
 {{setvar::roleplay::Renette's Co-Desk StoryTime}}
 {{setvar::role1:: Renette will co-write with Human and will use <user>. Renette will write <user>'s dialogues, actions and thoughts, along with any other characters.}}
-{{setvar::userfix::[Renette, must always remember to write for <user> as this is a story with Renette as the author. Human is only the reader and ocassional co-writer/assistant, taking on a lesser role. Author Renette is to pen everyone, dialogues, actions and thoughts. Try to allow people equal opportunities for contributions in response to shine their personalities and dynamictivity with one another. Aim for a fun reading experience styled in a minimal immersive cut. Pen with the soul and heart, develop the story for personal satisfaction and enjoyment.]}}</textarea>
+{{setvar::userfix::[Renette, must always remember to write for <user> as this is a story with Renette as the author. Human is only the reader and ocassional co-writer/assistant, taking on a lesser role. Author Renette is to pen everyone, dialogues, actions and thoughts. Try to allow people equal opportunities for contributions in response to shine their personalities and dynamictivity with one another. Aim for a fun reading experience styled in a minimal immersive cut. Pen with the soul and heart, develop the story for personal satisfaction and enjoyment.]}}
+<roles>
+[Renette always speaks, writes and acts for everyone including {{user}} and {{char}}.]
+</roles></textarea>
                                 </div>
                                 <div class="option-item">
                                     <div class="option-info">
@@ -3495,7 +3500,7 @@ At the end of each response initiate CYOA for the PLAYER Human and {{user}} that
                                 <hr class="dashed-divider" style="margin: 15px 0; opacity: 0.3;">
 
                                 <!-- ГРУППА СКРЫТЫЕ БЛОКИ -->
-                                <div class="default-block" style="background: rgba(153, 255, 153, 0.1); border-left-color: var(--color-primary);"><span class="default-label" style="color:var(--color-primary);">Скрытые Блоки (Можно смешивать)</span></div>
+                                <div class="default-block" style="background: rgba(153, 255, 153, 0.1); border-left-color: var(--color-primary);"><span class="default-label" style="color:var(--color-primary);">Скрытые Блоки (Можно смешивать). Блоки раскрываются по нажатию.</span></div>
                                 <div class="options-list">
                                     <div class="option-item">
                                         <input type="checkbox" class="select-input">
@@ -3503,7 +3508,12 @@ At the end of each response initiate CYOA for the PLAYER Human and {{user}} that
                                             <span class="option-name">👤 Скрытые Профили</span>
                                             <details class="preview-details">
                                                 <summary>👁️ Посмотреть описание</summary>
-                                                <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание скрытых профилей.</p></div>
+                                                <div class="preview-content">
+                                                    <p>
+                                                        Эта функция требует от ИИ автоматически создавать и прикреплять досье (профиль) для каждого нового оригинального персонажа, который впервые появляется в сюжете.
+                                                        <img src="example35.jpg" alt="Пример 35">
+                                                    </p>
+                                                </div>
                                             </details>
                                         </div>
                                         <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
@@ -3515,7 +3525,12 @@ At the end of each response initiate CYOA for the PLAYER Human and {{user}} that
                                             <span class="option-name">📍 Скрытые Закадровые</span>
                                             <details class="preview-details">
                                                 <summary>👁️ Посмотреть описание</summary>
-                                                <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание закадровых событий.</p></div>
+                                                <div class="preview-content">
+                                                    <p>
+                                                        Эта функция требует от ИИ симулировать и отслеживать события, происходящие параллельно с основной историей, но в других местах («за кадром»).
+                                                        <img src="example35.jpg" alt="Пример 35">
+                                                    </p>
+                                                </div>
                                             </details>
                                         </div>
                                         <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
@@ -3527,7 +3542,12 @@ At the end of each response initiate CYOA for the PLAYER Human and {{user}} that
                                             <span class="option-name">🗒️ Скрытые Планы</span>
                                             <details class="preview-details">
                                                 <summary>👁️ Посмотреть описание</summary>
-                                                <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание скрытых заметок.</p></div>
+                                                <div class="preview-content">
+                                                    <p>
+                                                        Эта функция служит рабочим блокнотом или планировщиком для ИИ. В нём он фиксирует свои мысли о развитии сюжета, которые обычно остаются невидимыми.
+                                                        <img src="example35.jpg" alt="Пример 35">
+                                                    </p>
+                                                </div>
                                             </details>
                                         </div>
                                         <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
@@ -3539,7 +3559,12 @@ At the end of each response initiate CYOA for the PLAYER Human and {{user}} that
                                             <span class="option-name">💌 Скрытый DatingSim</span>
                                             <details class="preview-details">
                                                 <summary>👁️ Посмотреть описание</summary>
-                                                <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание скрытого симулятора свиданий.</p></div>
+                                                <div class="preview-content">
+                                                    <p>
+                                                        Эта функция внедряет в повествование скрытую механику симулятора свиданий, заставляя ИИ отслеживать отношения с персонажами в цифровом и сюжетном формате.
+                                                        <img src="example35.jpg" alt="Пример 35">
+                                                    </p>
+                                                </div>
                                             </details>
                                         </div>
                                         <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
