@@ -955,14 +955,17 @@
             line-height: 1.5;
         }
         .preview-content img {
-            width: 100%;          /* БЫЛО max-width, СТАЛО width */
-            min-width: 100%;      /* ДОБАВЛЕНО: не даём сжиматься */
-            height: auto;
+            width: calc(100% + 35px) !important;  /* Компенсируем padding родителя */
+            max-width: none !important;
+            min-width: 0 !important;
+            height: auto !important;
             border-radius: 6px;
             border: 1px solid rgba(255,255,255,0.1);
-            display: block;
-            margin: 10px auto;
+            display: block !important;
+            margin: 10px 0 10px -0px !important;
+            box-sizing: border-box !important;
         }
+
 
 
         .copy-btn {
@@ -1239,14 +1242,28 @@
             }
 
             /* Текст - НА ВСЮ ШИРИНУ */
+                        /* Текст - НА ВСЮ ШИРИНУ */
             .option-info {
-                width: 100%;
+                width: 100% !important;
+                max-width: 100% !important;
                 margin-right: 0;
                 order: 1;
                 text-align: left;
-                padding-right: 35px; /* Отступ справа, чтобы текст не налез на галочку */
-                margin-bottom: 12px; /* Место до кнопки */
+                padding-right: 0 !important; /* УБРАЛИ отступ — он мешал картинке */
+                margin-bottom: 12px;
+                box-sizing: border-box !important;
             }
+
+            /* Галочку двигаем выше, чтобы не мешала */
+            .option-item {
+                padding-top: 45px !important; /* Место сверху под галочку */
+            }
+
+            .select-input {
+                top: 12px !important;
+                right: 12px !important;
+            }
+
 
             /* Кнопка "Копировать" - СНИЗУ И ШИРОКАЯ */
             .copy-btn {
