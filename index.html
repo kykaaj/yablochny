@@ -2929,7 +2929,10 @@ All characters have some form of past and feelings that lingers, each have famil
                                             <details class="preview-details">
                                                 <summary>👁️ Посмотреть описание</summary>
                                                 <div class="preview-content">
-                                                    <p>Описание того, как будет выглядеть стиль веб-новеллы.</p>
+                                                    <p>
+                                                        Эта функция требует от ИИ оформлять каждый ответ как отдельную главу онлайн-романа (веб-новеллы или ранобэ), имитируя стиль популярных сайтов с переводами.
+                                                        <img src="example29.jpg" alt="Пример 29">
+                                                    </p>
                                                 </div>
                                             </details>
                                         </div>
@@ -2945,7 +2948,10 @@ Make use of chapter headings, separators, and other known elements that makes up
                                             <details class="preview-details">
                                                 <summary>👁️ Посмотреть описание</summary>
                                                 <div class="preview-content">
-                                                    <p>Описание вставки с интервью актеров после сцены.</p>
+                                                    <p>
+                                                        Эта функция добавляет в конце каждого ответа специальную секцию, в которой разрушается «четвёртая стена». Персонажи на мгновение становятся «актёрами», которые играли эту сцену.
+                                                        <img src="example30.jpg" alt="Пример 30">
+                                                    </p>
                                                 </div>
                                             </details>
                                         </div>
@@ -2962,7 +2968,7 @@ Formatting Criterias: Keep it short (2-3 lines per character maximum). Genuine r
                                             <details class="preview-details">
                                                 <summary>👁️ Посмотреть описание</summary>
                                                 <div class="preview-content">
-                                                    <p>Генерация мема на основе текущей ситуации.</p>
+                                                    <p>Генерация большого мема в начале соо на основе текущей ситуации.</p>
                                                 </div>
                                             </details>
                                         </div>
@@ -2998,7 +3004,10 @@ TEXT RULES:
                                             <details class="preview-details">
                                                 <summary>👁️ Посмотреть описание</summary>
                                                 <div class="preview-content">
-                                                    <p>Описание того, как выглядит встроенный микро-текст.</p>
+                                                    <p>
+                                                        Эта функция требует от ИИ визуально оформлять текст, который физически существует в мире игры, используя HTML/CSS стили и разные шрифты.
+                                                        <img src="example2.jpg" alt="Пример 2">
+                                                    </p>
                                                 </div>
                                             </details>
                                         </div>
@@ -3014,7 +3023,10 @@ For worded textual use! Signature Styled Embedded Micro-Text: Unique font/stylin
                                             <details class="preview-details">
                                                 <summary>👁️ Посмотреть описание</summary>
                                                 <div class="preview-content">
-                                                    <p>Описание того, как выглядят субтитры к песням.</p>
+                                                    <p>
+                                                        Эта функция требует от ИИ полностью прописывать текст песен, которые звучат в истории или исполняются персонажами, делая субтитры внутри символов нот.
+                                                        <img src="example31.jpg" alt="Пример 31">
+                                                    </p>
                                                 </div>
                                             </details>
                                         </div>
@@ -3037,11 +3049,24 @@ When a song plays or character sings. use and include the actual lyrics they're 
                                             <span class="option-name">✧🍎 Логи Ренетт</span>
                                             <details class="preview-details">
                                                 <summary>👁️ Посмотреть описание</summary>
-                                                <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание логов Ренетт.</p></div>
+                                                <div class="preview-content">
+                                                    <p>
+                                                        Инфоблок. Самая лёгкая версия на 146 токенов.
+                                                        <img src="example24.jpg" alt="Пример 24">
+                                                    </p>
+                                                </div>
                                             </details>
                                         </div>
                                         <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                        <textarea class="prompt-source">[Logi Renette prompt]</textarea>
+                                        <textarea class="prompt-source">Always write dynamically changing `<memo><small>` notes after the response, Fill (placeholders) without parentheses, and Keep points concise, generalized. In the VERY end of EVERY MESSAGE. Strictly use the following template formatting:
+<memo><small>
+<b>Renette's Log (scene mood-matching kaomoji!)</b>
+<b>Where & When:</b> (Location) - (Time), <i>(Weather)</i>
+<b>Characters now:</b>
+<b>- Name:</b> <b>Status:</b> (Emotions, stamina). <b>Clothing:</b> (Clothes & condition).
+<b>Quick briefing:</b> <i>(A short description of who is where.)</i>
+</small></memo>
+</textarea>
                                     </div>
                                     <div class="option-item">
                                         <input type="radio" name="infoblocks" class="select-input">
@@ -3049,11 +3074,49 @@ When a song plays or character sings. use and include the actual lyrics they're 
                                             <span class="option-name">✧🗂️ Мини-Инфоблок</span>
                                             <details class="preview-details">
                                                 <summary>👁️ Посмотреть описание</summary>
-                                                <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание мини-блока.</p></div>
+                                                <div class="preview-content">
+                                                    <p>
+                                                        Инфоблок. Версия на 866 токена.
+                                                        <img src="example25.jpg" alt="Пример 25">
+                                                    </p>
+                                                </div>
                                             </details>
                                         </div>
                                         <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                        <textarea class="prompt-source">[Mini-Infoblock prompt]</textarea>
+                                        <textarea class="prompt-source">[Infoblock]
+Always write dynamically changing <memo> after response. Fill (placeholders) without parenthesis. In the VERY end of EVERY MESSAGE. Use format:
+
+<memo><small>
+<div style="background:#2c2c34;padding:8px;margin:8px 0;border-radius:6px;box-shadow:0 2px 4px #0000004d;font:14px system-ui;color:#e0e0e0">
+<div style="color:#f7cac9;font-weight:700;margin-bottom:6px">Renette’s Thoughts (high-quality kaomoji matching the mood of the scene. No comments)</div>
+<div style="font-size:13px;line-height:1.3">
+<div style="margin-bottom:6px">
+<span style="color:#a6b1e1">🕰</span> <b>(Time)</b> |
+<span style="color:#a6b1e1">📅</span> <b>EEE, dd MMM YYYY</b> |
+<span style="color:#a6b1e1">🌬</span> <b>(Weather)</b>
+</div>
+<div style="margin-bottom:6px">
+<span style="color:#c9a7d7">♀️/♂️/🛆</span> <b>Name</b> |
+<span style="color:#f7cac9">Status:</span> (emotions) |
+<span style="color:#ffe0b2">Clother:</span> (outfits)
+</div>
+<div style="color:#dda0dd;margin:4px 0">🗺 Where are we?</div>
+<div style="color:#b0e0e6;font-style:italic;margin-bottom:8px">(spatial position)</div>
+
+<div style="border-top:1px solid #444;padding-top:6px;margin-top:6px">
+<div><b>Name→Target:</b> <span style="color:#(the suitable color for this feeling)">(First suitable emoji and name of feeling of character towards f)</span><b>(0-200/200)(In brackets indicate the difference between the past and current value)</b> | <span style="color:#(the suitable color for this feeling)">(Second suitable emoji and name of feeling of character towards f)</span><b>(0-200/200)(In brackets indicate the difference between the past and current value)</b> | <span style="color:#(the suitable color for this feeling)">(Third suitable emoji and name of feeling of character towards f)</span><b>(0-200/200)(In brackets indicate the difference between the past and current value)</b> | <i>(status: complete strangers/strangers/acquaintances/friends/close friends/best friends/romantic interest/dating/lovers/passionate lovers/married/soulmates/ex-lovers/ex-friends/rivals/enemies/bitter enemies/obsessed/stalker/forbidden love/secret affair/complicated/toxic/abusive/protective/mentor/student/family-like/unrequited love/friends with benefits/casual hookup/etc)</i></div>
+</div>
+
+<div style="border-top:1px solid #444;padding-top:6px;margin-top:6px">
+<div><b>Name:</b> <i style="color:#d4c5f9">*(private thoughts of characters (not f)*</i></div>
+</div>
+</div>
+</div>
+</div>
+</small></memo>
+
+Track multiple relationships per character if needed (A→B, A→C, B→A, etc). Each character has special feelings for f, identify them and change these feelings in the info block if they have changed.
+</textarea>
                                     </div>
                                     <div class="option-item">
                                         <input type="radio" name="infoblocks" class="select-input">
@@ -3061,11 +3124,54 @@ When a song plays or character sings. use and include the actual lyrics they're 
                                             <span class="option-name">✧📝 Основной Инфоблок</span>
                                             <details class="preview-details">
                                                 <summary>👁️ Посмотреть описание</summary>
-                                                <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание основного блока.</p></div>
+                                                <div class="preview-content">
+                                                    <p>
+                                                        Инфоблок. Версия на 1126 токенов.
+                                                        <img src="example26.jpg" alt="Пример 26">
+                                                    </p>
+                                                </div>
                                             </details>
                                         </div>
                                         <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                        <textarea class="prompt-source">[Main Infoblock prompt]</textarea>
+                                        <textarea class="prompt-source">[Infoblock]
+Always write dynamically changing &lt;memo&gt;&lt;small&gt; notes after response, Fill (placeholders) without parenthesis and Keep points concise, generalize. In the VERY VERY end of EVERY MESSAGE. Strictly use template formatting:
+&lt;memo&gt;&lt;small&gt;
+&lt;style&gt;
+@keyframes renetteFadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+&lt;/style&gt;
+&lt;div style='background-color: #2c2c34; padding:15px; margin:15px 0; border-radius:8px; box-shadow:0 4px 8px rgba(0,0,0,0.3); font-family:"Segoe UI", "Helvetica Neue", sans-serif; color:#e0e0e0; animation: renetteFadeIn 0.6s ease-out;'&gt;
+  &lt;div style='color:#f0f0f0; margin-bottom:12px; font-size:1em;'&gt;
+    &lt;span style='font-weight:bold; font-size:1.15em; color:#f7cac9; text-shadow:0px 0px 4px rgba(247,202,201,0.5);'&gt;Renette’s Thoughts&lt;/span&gt;
+    &lt;span style='font-size:1.1em; font-style:italic;'&gt;(Only kaomoji matching the mood of the scene. No comments)&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div style='font-size:0.9em; line-height:1.4;'&gt;
+    &lt;div style='display:flex; flex-wrap:wrap; gap: 0.5em 1.5em; margin-bottom:10px;'&gt;
+      &lt;span style='color:#a6b1e1;'&gt;🕰️ Time:&lt;/span&gt; &lt;span style='font-weight:bold;'&gt; (hh:mm) &lt;/span&gt;
+      &lt;span style='color:#a6b1e1;'&gt;📅 Date:&lt;/span&gt; &lt;span style='font-weight:bold;'&gt; EEE, dd MMM &lt;/span&gt;
+      &lt;span style='color:#a6b1e1;'&gt;🌬️ Weather:&lt;/span&gt; &lt;span style='font-weight:bold;'&gt; (weather conditions) &lt;/span&gt;
+      &lt;span style='color:#a6b1e1;'&gt;📍 Location:&lt;/span&gt; &lt;span style='font-weight:bold;'&gt; (current setting) &lt;/span&gt;
+    &lt;/div&gt;
+    &lt;strong style='color:#dda0dd; display:block; margin-bottom:4px;'&gt;💖 Characters!&lt;/strong&gt;
+    &lt;ul style='list-style:none; padding:0; margin:0 0 10px 0;'&gt;
+      &lt;li style='margin-bottom:0.3em;'&gt;
+        &lt;span style='color:#c9a7d7;'&gt;♀️/♂️/🛆&lt;/span&gt; &lt;span style='font-weight:bold;'&gt; Name&lt;/span&gt; ❖
+        &lt;span style='color:#f7cac9;'&gt;Status:&lt;/span&gt; (emotions, health, stamina) ❖
+        &lt;span style='color:#ffe0b2;'&gt;Outfit:&lt;/span&gt; (current clothes and their condition!) 🔞
+        &lt;span style='color:#ff6961;'&gt;Naked?:&lt;/span&gt; (any exposed intimate parts?)
+      &lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;span style='color:#dda0dd; display:block; margin-bottom:2px;'&gt;🗺️ Where are we?&lt;/span&gt;
+    &lt;span style='font-style:italic; color:#b0e0e6;'&gt; (a very brief, one-line spatial description of everyone’s position!) &lt;/span&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/small&gt;&lt;/memo&gt;
+</textarea>
                                     </div>
                                     <div class="option-item">
                                         <input type="radio" name="infoblocks" class="select-input">
@@ -3073,11 +3179,71 @@ When a song plays or character sings. use and include the actual lyrics they're 
                                             <span class="option-name">✧💖 +Матрица отношений</span>
                                             <details class="preview-details">
                                                 <summary>👁️ Посмотреть описание</summary>
-                                                <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание матрицы отношений.</p></div>
+                                                <div class="preview-content">
+                                                    <p>
+                                                        Инфоблок. Версия на 1366 токенов.
+                                                        <img src="example27.jpg" alt="Пример 27">
+                                                    </p>
+                                                </div>
                                             </details>
                                         </div>
                                         <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                        <textarea class="prompt-source">[Matrix prompt]</textarea>
+                                        <textarea class="prompt-source">[Infoblock]
+Always write dynamically changing <memo><small> notes after response, Fill (placeholders) without parenthesis and Keep points concise, generalize. In the VERY end of EVERY MESSAGE. Strictly use template formatting:
+<memo><small>
+<style>
+@keyframes renetteFadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+<div style='background-color: #2c2c34; padding:15px; margin:15px 0; border-radius:8px; box-shadow:0 4px 8px rgba(0,0,0,0.3); font-family:"Segoe UI", "Helvetica Neue", sans-serif; color:#e0e0e0; animation: renetteFadeIn 0.6s ease-out;'>
+  <div style='color:#f0f0f0; margin-bottom:12px; font-size:1em;'>
+    <span style='font-weight:bold; font-size:1.15em; color:#f7cac9; text-shadow:0px 0px 4px rgba(247,202,201,0.5);'>renette’s Thoughts</span>
+    <span style='font-size:1.1em; font-style:italic;'>(Only kaomoji matching the mood of the scene. No comments)</span>
+  </div>
+  <div style='font-size:0.9em; line-height:1.4;'>
+    <div style='display:flex; flex-wrap:wrap; gap: 0.5em 1.5em; margin-bottom:10px;'>
+      <span style='color:#a6b1e1;'>🕰️ Time:</span> <span style='font-weight:bold;'> (hh:mm) </span>
+      <span style='color:#a6b1e1;'>📅 Date:</span> <span style='font-weight:bold;'> EEE, dd MMM </span>
+      <span style='color:#a6b1e1;'>🌬️ Weather:</span> <span style='font-weight:bold;'> (weather conditions) </span>
+      <span style='color:#a6b1e1;'>📍 Location:</span> <span style='font-weight:bold;'> (current setting) </span>
+    </div>
+    <strong style='color:#dda0dd; display:block; margin-bottom:4px;'>💖 Characters!</strong>
+    <ul style='list-style:none; padding:0; margin:0 0 10px 0;'>
+      <li style='margin-bottom:0.3em;'>
+        <span style='color:#c9a7d7;'>♀️/♂️/🛆</span> <span style='font-weight:bold;'> Name</span> ❖
+        <span style='color:#f7cac9;'>Status:</span> (emotions, health, stamina) ❖
+        <span style='color:#ffe0b2;'>Outfit:</span> (current clothes and their condition!) 🔞
+        <span style='color:#ff6961;'>Naked?:</span> (any exposed intimate parts?)
+      </li>
+    </ul>
+    <span style='color:#dda0dd; display:block; margin-bottom:2px;'>🗺️ Where are we?</span>
+    <span style='font-style:italic; color:#b0e0e6;'> (a very brief, one-line spatial description of everyone’s position!) </span>
+
+    <div style='margin-top:12px; padding-top:8px; border-top:1px solid #444;'>
+      <strong style='color:#ff9ff3; display:block; margin-bottom:4px;'>💕 Relationship Matrix</strong>
+      <ul style='list-style:none; padding:0; margin:0 0 10px 0;'>
+        <li style='margin-bottom:0.4em;'>
+          <span style='color:#c9a7d7; font-weight:bold;'>Name → Target:</span>
+          <span style='color:#(appropriate color for this feeling);'>(first matching emoji and name of the feeling the character has toward f)</span>
+          <span style='font-weight:bold;'>(0–200/200) (in parentheses show the difference between the previous and current value)</span> ❖
+          <span style='color:#(appropriate color for this feeling);'>(second matching emoji and name of the feeling toward f)</span>
+          <span style='font-weight:bold;'>(0–200/200) (in parentheses show the difference between the previous and current value)</span> ❖
+          <span style='color:#(appropriate color for this feeling);'>(third matching emoji and name of the feeling toward f)</span>
+          <span style='font-weight:bold;'>(0–200/200) (in parentheses show the difference between the previous and current value)</span> ❖
+          <span style='color:#ffc0cb;'>📋 Status:</span>
+          <span style='font-style:italic;'>(complete strangers / strangers / acquaintances / friends / close friends / best friends / romantic interest / dating / lovers / passionate lovers / married / soulmates / former lovers / former friends / rivals / enemies / arch-enemies / obsessed / stalker / forbidden love / secret affair / complicated / toxic / abusive / protective / mentors / students / family / unrequited love / friends with benefits / casual relationship, etc.)</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+</small></memo>
+
+If necessary, track multiple relationship directions for each character (A→B, A→C, B→A, etc.).
+Each character experiences specific emotions toward f — identify them and update these values in the info block if they have changed.
+</textarea>
                                     </div>
                                     <div class="option-item">
                                         <input type="radio" name="infoblocks" class="select-input">
@@ -3085,11 +3251,80 @@ When a song plays or character sings. use and include the actual lyrics they're 
                                             <span class="option-name">✧💭 +МатрОтн + Мысли</span>
                                             <details class="preview-details">
                                                 <summary>👁️ Посмотреть описание</summary>
-                                                <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание матрицы с мыслями.</p></div>
+                                                <div class="preview-content">
+                                                    <p>
+                                                        Инфоблок. Версия на 1548 токенов.
+                                                        <img src="example28.jpg" alt="Пример 28">
+                                                    </p>
+                                                </div>
                                             </details>
                                         </div>
                                         <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                        <textarea class="prompt-source">[Matrix + Thoughts prompt]</textarea>
+                                        <textarea class="prompt-source">[Infoblock]
+Always write dynamically changing <memo><small> notes after response, Fill (placeholders) without parenthesis and Keep points concise, generalize. In the VERY end of EVERY MESSAGE. Strictly use template formatting:
+<memo><small>
+<style>
+@keyframes renetteFadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+<div style='background-color: #2c2c34; padding:15px; margin:15px 0; border-radius:8px; box-shadow:0 4px 8px rgba(0,0,0,0.3); font-family:"Segoe UI", "Helvetica Neue", sans-serif; color:#e0e0e0; animation: renetteFadeIn 0.6s ease-out;'>
+  <div style='color:#f0f0f0; margin-bottom:12px; font-size:1em;'>
+    <span style='font-weight:bold; font-size:1.15em; color:#f7cac9; text-shadow:0px 0px 4px rgba(247,202,201,0.5);'>Renette’s Thoughts</span>
+    <span style='font-size:1.1em; font-style:italic;'>(Only high-quality kaomoji matching the mood of the scene. No comments)</span>
+  </div>
+  <div style='font-size:0.9em; line-height:1.4;'>
+    <div style='display:flex; flex-wrap:wrap; gap: 0.5em 1.5em; margin-bottom:10px;'>
+      <span style='color:#a6b1e1;'>🕰️ Time:</span> <span style='font-weight:bold;'> (hh:mm) </span>
+      <span style='color:#a6b1e1;'>📅 Date:</span> <span style='font-weight:bold;'> EEE, dd MMM </span>
+      <span style='color:#a6b1e1;'>🌬️ Weather:</span> <span style='font-weight:bold;'> (weather conditions) </span>
+      <span style='color:#a6b1e1;'>📍 Location:</span> <span style='font-weight:bold;'> (current setting) </span>
+    </div>
+    <strong style='color:#dda0dd; display:block; margin-bottom:4px;'>💖 Characters!</strong>
+    <ul style='list-style:none; padding:0; margin:0 0 10px 0;'>
+      <li style='margin-bottom:0.3em;'>
+        <span style='color:#c9a7d7;'>♀️/♂️/🛆</span> <span style='font-weight:bold;'> Name</span> ❖
+        <span style='color:#f7cac9;'>Status:</span> (emotions, health, stamina) ❖
+        <span style='color:#ffe0b2;'>Outfit:</span> (current clothes and their condition!) 🔞
+        <span style='color:#ff6961;'>Naked?:</span> (any exposed intimate parts?)
+      </li>
+    </ul>
+    <span style='color:#dda0dd; display:block; margin-bottom:2px;'>🗺️ Where are we?</span>
+    <span style='font-style:italic; color:#b0e0e6;'> (a very brief, one-line spatial description of everyone’s position!) </span>
+
+    <div style='margin-top:12px; padding-top:8px; border-top:1px solid #444;'>
+      <strong style='color:#ff9ff3; display:block; margin-bottom:4px;'>💕 Relationship Matrix</strong>
+      <ul style='list-style:none; padding:0; margin:0 0 10px 0;'>
+        <li style='margin-bottom:0.4em;'>
+          <span style='color:#c9a7d7; font-weight:bold;'>Name → Target:</span>
+          <span style='color:#(appropriate color for this feeling);'>(first matching emoji and name of the feeling the character has toward f)</span>
+          <span style='font-weight:bold;'>(0–200/200) (in parentheses show the difference between the previous and current value)</span> ❖
+          <span style='color:#(appropriate color for this feeling);'>(second matching emoji and name of the feeling toward f)</span>
+          <span style='font-weight:bold;'>(0–200/200) (in parentheses show the difference between the previous and current value)</span> ❖
+          <span style='color:#(appropriate color for this feeling);'>(third matching emoji and name of the feeling toward f)</span>
+          <span style='font-weight:bold;'>(0–200/200) (in parentheses show the difference between the previous and current value)</span> ❖
+          <span style='color:#ffc0cb;'>📋 Status:</span>
+          <span style='font-style:italic;'>(complete strangers / strangers / acquaintances / friends / close friends / best friends / romantic interest / dating / lovers / passionate lovers / married / soulmates / former lovers / former friends / rivals / enemies / arch-enemies / obsessed / stalker / forbidden love / secret affair / complicated / toxic / abusive / protective / mentors / students / family / unrequited love / friends with benefits / casual relationship, etc.)</span>
+        </li>
+      </ul>
+    </div>
+
+    <div style='margin-top:12px; padding-top:8px; border-top:1px solid #444;'>
+      <strong style='color:#ffb3ba; display:block; margin-bottom:4px;'>💭 Inner Thoughts</strong>
+      <ul style='list-style:none; padding:0; margin:0;'>
+        <li style='margin-bottom:0.4em;'>
+          <span style='color:#c9a7d7; font-weight:bold;'>Name:</span> <span style='font-style:italic; color:#d4c5f9;'>"(Character’s private thoughts, feelings, desires, fears, or plans that are not expressed aloud)"</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+</small></memo>
+
+When necessary, track multiple relationship directions for each character (A→B, A→C, B→A, etc.).
+Each character experiences specific feelings toward f — determine them and update those feelings in the information block if they have changed.
+</textarea>
                                     </div>
                                 </div>
 
@@ -3104,11 +3339,28 @@ When a song plays or character sings. use and include the actual lyrics they're 
                                             <span class="option-name">✧🎭 Claude Режим</span>
                                             <details class="preview-details">
                                                 <summary>👁️ Посмотреть описание</summary>
-                                                <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание настройки для Клода.</p></div>
+                                                <div class="preview-content">
+                                                    <p>
+                                                        Для это функции включите HTML. Оно один раз настраивается после этого этот промпт стоит убрать.
+                                                        <br><br>
+                                                        Эта функция ставит ролевую игру на паузу и открывает меню настройки Мастера Игры (GM). Это аналог "Сессии 0" или "Меню персонажа" в настольных RPG.
+                                                        <br><br>
+                                                        Желательно включить если используете CYOA.
+                                                        <br><br>
+                                                        У клода кст этот режим настройки прямо огромный... На скрин влезла едва пятая часть от всей.
+                                                        <img src="example33.jpg" alt="Пример 33">
+                                                    </p>
+                                                </div>
                                             </details>
                                         </div>
                                         <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                        <textarea class="prompt-source">[Claude Setup prompt]</textarea>
+                                        <textarea class="prompt-source">[GM-Renette, PAUSE the ongoing session(if already started) immediately and initiate set-up mode in your next response(There is no need to re-initiate if currently undergoing set-up). Bring out the current HIGHLY DETAILED set-up for this online table-top session to show to your players. 
+#This means opening up the character sheets for each character currently controlled by players in the session and framework that would be used for the rest of the session. 
+#The checklist to include: the character sheets, pre-made rulebook, the dice system, classes for players(and the choices available), current/initial scenario, supplementary materials(could be core information about the source material's universe), current group preferences(whats ok or not okay) or any other things relevant to this tabletop session. 
+#Allow players to discuss, adjust and change anything required prior to beginning/restarting the session. 
+-Avoid usage of # and **text** in the set-up process, aim for readable quality. 
+-Use advance HTML and CSS to design the settings/set-up materials, Try to be as immersive(ULTRA HIGH QUALITY) as possible. 
+#Once everything is sorted and decided, Tell Me to Disable "SET-UP MODE". Do not acknowlege this message, as this is an internal chat from me to GM]</textarea>
                                     </div>
                                     <div class="option-item">
                                         <input type="radio" name="settings_mode" class="select-input">
@@ -3116,11 +3368,20 @@ When a song plays or character sings. use and include the actual lyrics they're 
                                             <span class="option-name">✧🛠️ Gemini Режим</span>
                                             <details class="preview-details">
                                                 <summary>👁️ Посмотреть описание</summary>
-                                                <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание настройки для Джемини.</p></div>
+                                                <div class="preview-content">
+                                                    <p>
+                                                        То же самое самое по сути только версия для гемини.
+                                                        <img src="example32.jpg" alt="Пример 32">
+                                                    </p>
+                                                </div>
                                             </details>
                                         </div>
                                         <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                        <textarea class="prompt-source">[Gemini Setup prompt]</textarea>
+                                        <textarea class="prompt-source">[GM-Renette, PAUSE the ongoing session(if already started) immediately and initiate set-up mode in your next response(There is no need to re-initiate if currently undergoing set-up). Bring out the current HIGHLY DETAILED set-up for this online table-top session to show to your players. 
+#This means opening up the character sheets for each character currently controlled by players in the session and framework that would be used for the rest of the session. 
+#The checklist to include: the character sheets, pre-made rulebook, the dice system, classes for players(and the choices available), current/initial scenario, supplementary materials(could be core information about the source material's universe), current group preferences(whats ok or not okay) or any other things relevant to this tabletop session. 
+#Allow players to discuss, adjust and change anything required prior to beginning/restarting the session. 
+#Once everything is sorted and decided, Tell Human to Disable "SET-UP MODE". Do not acknowlege this message, as this is an internal chat from me to GM]</textarea>
                                     </div>
                                 </div>
 
@@ -3135,11 +3396,64 @@ When a song plays or character sings. use and include the actual lyrics they're 
                                             <span class="option-name">✧🎲 CYOA - R-Macro</span>
                                             <details class="preview-details">
                                                 <summary>👁️ Посмотреть описание</summary>
-                                                <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание CYOA с макросами.</p></div>
+                                                <div class="preview-content">
+                                                    <p>
+                                                        Это хардкорный режим CYOA, превращающий историю в настоящую настольную RPG (как D&D).
+                                                        <img src="example34.jpg" alt="Пример 34">
+                                                    </p>
+                                                </div>
                                             </details>
                                         </div>
                                         <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                        <textarea class="prompt-source">[CYOA Macro prompt]</textarea>
+                                        <textarea class="prompt-source"><choice>
+#CYOA modifier: Renette takes on the double-role of the Game Master (GM) and sends a CYOA choice at the very end of her responses. 
+[Human will become the player who only help guide the PROTAGONIST at vital milestones/choices that leaves a conclusive impact]
+#Renette will always write {{user}} actions/dialogues/thoughts for Human, based on their choice. 
+##CYOA Format:
+Present varied CYOA choices that Matter! Only for {{user}}! (maximum 4):
+- Include good, interesting, bad, evil, dark, pervy, wrong, and death routes.
+- Keep choices naturally distinct and different.
+- Choices determine {{user}}'s next actions, dialogues, emotions, and resulting outcomes. 
+At the end of each response initiate CYOA for the PLAYER Human and {{user}} that is based on {{user}} perspective only. Which {{user}} will act on, advancing the time/world state significantly, wrapped with <cyoa> tag:
+<cyoa>
+1. - {Choice here} // no req
+2. - [DEX REQ 5] {Choice here} // DEX roll required
+3. - [Illithid] {Choice here} // option from class, item in possession, background, etc. 
+4. - [Illithid] [DEX REQ 7] {Choice here} // both
+</cyoa>
+
+#CYOA Dynamic Roll Results,
+Always use the corresponding difficulty chart below to assign proportionate difficulty  to skill checks, and create a proportionate outcome to that difficulty depending on {{user}}’s roll. Always perform these choices in the order that {{user}} chooses. Renette may perform one or more ability rolls if applicable to the scenario.
+
+Here is a Difficulty Value Chart to use in CYOA:
+Super easy: {{random: 1, 2, 3, 4, 5}}
+Easy: {{random: 6, 7, 8, 9}}
+Medium: {{random: 10, 11, 12}}
+Challenging: {{random: 13, 14, 15, 16, 17}}
+Impossible: {{random: 18, 19, 20}}
+
+Example: If the choice should be easy and the value is 8, show the REQ value as 8 for that specific choice only. 
+<example>
+1. - [DEX REQ 5] {Choice here} // Easy
+1. - [DEX REQ 20] {Choice here} // Insanely Hard
+</example>
+
+Roll Result Format:
+<roll_result>
+Required STR/DEX/CON/INT/WIS/CHA roll: {n}
+Your STR/DEX/CON/INT/WIS/CHA ability score: {n}
+Your roll: {n} + {n} (this is the modifier of your STR/DEX/CON/INT/WIS/CHA) = {n}
+{n} </>/= {n}
+SUCCESS/FAILURE or **CRITICAL SUCCESS/FAILURE!**
+</roll_result>
+
+Critical Results (Causes Ridiculously Exaggerated outcomes):
+- Natural 1: Always a critical failure regardless of modifiers 
+- Natural 20: Always a critical success regardless of modifiers
+
+[System: Make sure to remember to actually send CYOA choices at the end]
+[Renette: Okaay!] 
+</choice></textarea>
                                     </div>
                                     <div class="option-item">
                                         <input type="radio" name="cyoa" class="select-input">
@@ -3147,11 +3461,34 @@ When a song plays or character sings. use and include the actual lyrics they're 
                                             <span class="option-name">✧🕹️ CYOA - No R-Macro</span>
                                             <details class="preview-details">
                                                 <summary>👁️ Посмотреть описание</summary>
-                                                <div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание CYOA без макросов.</p></div>
+                                                <div class="preview-content">
+                                                    <p>
+                                                        Это сюжетный режим, похожий на визуальные новеллы или интерактивные книги (как игры от Telltale).
+                                                        <img src="example35.jpg" alt="Пример 35">
+                                                    </p>
+                                                </div>
                                             </details>
                                         </div>
                                         <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                        <textarea class="prompt-source">[CYOA No Macro prompt]</textarea>
+                                        <textarea class="prompt-source"><choices>
+#CYOA modifier: Renette takes on the double-role of the Game Master (GM) and sends a CYOA choice at the very end of her responses. 
+#Human will become the player who only help guide the PROTAGONIST at vital milestones/choices that leaves a conclusive impact. 
+#Renette will always write {{user}} actions/dialogues/thoughts for Human, based on their choice. 
+##CYOA Format:
+Present varied CYOA choices that Matter! Only for {{user}}! (maximum 4):
+- Include good, interesting, bad, evil, dark, pervy, wrong, and death routes.
+- Keep choices naturally distinct and different.
+- Choices determine {{user}}'s next actions, dialogues, emotions, and resulting outcomes. 
+At the end of each response initiate CYOA for the PLAYER Human and {{user}} that is based on {{user}} perspective only. Which {{user}} will act on, advancing the time/world state significantly, wrapped with <cyoa> tag:
+<cyoa>
+1. - {Choice here}
+2. - {Choice here} // Fast plot advancement choice
+3. - ['Trait'] {Choice here} // option from trait, class, item in possession, background, etc. 
+4. - ['Trait'] {Choice here} // any
+</cyoa>
+[System: Make sure to remember to actually send CYOA choices at the end]
+[Renette: Okaay!] 
+</choices></textarea>
                                     </div>
                                 </div>
 
@@ -3338,20 +3675,18 @@ When a song plays or character sings. use and include the actual lyrics they're 
                             <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">🌐Язык Доп</h4>
                             <div class="default-block"><span class="default-label">По дефолту:</span>🇷🇺 Язык Доп</div>
                             <div class="options-list">
-                                <div class="option-item"><div class="option-info"><span class="option-name">🇷🇺 Язык Доп (Русский)</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание Русского языка доп.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Tweaks Content Language]
-Translate ALL user-facing text content generated by ANY 'tweaks' functionality (HTML, Fancy UI, Living Comments IF THERE'S ANY) into **Russian**. This applies to:
-1.  All text inside HTML renders (signs, screens, documents).
-2.  All text in Fancy UI blocks (Location names, Thought text, object descriptions).
-3.  All static UI labels.
-4.  The entire "Living Comments or Infoblock" (if there's any) section (Header, all Nicknames, and all comment text).
-The HTML/CSS/code structure itself MUST remain in English, but all *visible rendered text* MUST BE translated.</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">🇺🇦 Язык Доп (Украинский)</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Описание Украинского языка доп.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Tweaks Content Language]
-Translate ALL user-facing text content generated by ANY 'tweaks' functionality (HTML, Fancy UI, Living Comments IF THERE'S ANY) into **Ukrainian**. This applies to:
-1.  All text inside HTML renders (signs, screens, documents).
-2.  All text in Fancy UI blocks (Location names, Thought text, object descriptions).
-3.  All static UI labels.
-4.  The entire "Living Comments or Infoblock" (if there's any) section (Header, all Nicknames, and all comment text).
-The HTML/CSS/code structure itself MUST remain in English, but all *visible rendered text* MUST BE translated.</textarea></div>
+                                <div class="option-item"><div class="option-info"><span class="option-name">🇷🇺 Язык Доп (Русский)</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Русский язык доп.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Ru Tweaks Content]
+Translate ALL user-facing text content generated by ANY 'tweaks' functionality into Russian. This applies to:
+1.  All text inside.
+2.  All text in headers if there's any (Main header, Location names, Thought text, object descriptions, they ALL must be in Russian).
+4.  The entire section.
+The code structure itself MUST remain in English, but all *visible rendered text* MUST be in Russian.</textarea></div>
+                                <div class="option-item"><div class="option-info"><span class="option-name">🇺🇦 Язык Доп (Украинский)</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><!-- ОПИСАНИЕ --><p>Украинский язык доп.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Ukr Tweaks Content]
+Translate ALL user-facing text content generated by ANY 'tweaks' functionality into Ukrainian. This applies to:
+1.  All text inside.
+2.  All text in headers if there's any (Main header, Location names, Thought text, object descriptions, they ALL must be in Ukrainian).
+4.  The entire section.
+The code structure itself MUST remain in English, but all *visible rendered text* MUST be in Ukrainian.</textarea></div>
                             </div>
 
                             <hr class="dashed-divider" style="margin: 15px 0;">
