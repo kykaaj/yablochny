@@ -1336,87 +1336,87 @@
         }
         /* === ФИНАЛЬНЫЙ БЛОК (ВСТАВЛЯТЬ ПОСЛЕ FAQ) === */
 
-/* 1. Кнопка "Наверх" (Красивая, круглая, слева) */
-#scrollTopBtn {
-    position: fixed;
-    right: 100px; /* Сдвинута от края на ПК */
-    bottom: 50px;
-    width: 50px;
-    height: 50px;
-    background: rgba(15, 15, 15, 0.8);
-    border: 1px solid var(--color-primary);
-    border-radius: 50%; /* Кружочек */
-    color: var(--color-primary);
-    font-size: 1.5em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    z-index: 9999;
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.4s ease;
-    box-shadow: 0 0 15px rgba(153, 255, 153, 0.2);
-}
+        /* 1. Кнопка "Наверх" (Красивая, круглая, слева) */
+        #scrollTopBtn {
+            position: fixed;
+            right: 100px; /* Сдвинута от края на ПК */
+            bottom: 50px;
+            width: 50px;
+            height: 50px;
+            background: rgba(15, 15, 15, 0.8);
+            border: 1px solid var(--color-primary);
+            border-radius: 50%; /* Кружочек */
+            color: var(--color-primary);
+            font-size: 1.5em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 15px rgba(153, 255, 153, 0.2);
+        }
 
-#scrollTopBtn.show {
-    opacity: 1;
-    pointer-events: auto;
-}
+        #scrollTopBtn.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
 
-#scrollTopBtn:hover {
-    transform: translateY(-5px);
-    background: var(--color-primary);
-    color: #000;
-}
+        #scrollTopBtn:hover {
+            transform: translateY(-5px);
+            background: var(--color-primary);
+            color: #000;
+        }
 
-/* 2. НАСТРОЙКИ ДЛЯ ТЕЛЕФОНА (Исправление картинок и текста) */
-@media (max-width: 600px) {
+        /* 2. НАСТРОЙКИ ДЛЯ ТЕЛЕФОНА (Исправление картинок и текста) */
+        @media (max-width: 600px) {
 
-    /* Кнопку возвращаем в угол, чтобы не мешала пальцам */
-    #scrollTopBtn {
-        right: 20px !important;
-        bottom: 20px !important;
-    }
+            /* Кнопку возвращаем в угол, чтобы не мешала пальцам */
+            #scrollTopBtn {
+                right: 20px !important;
+                bottom: 20px !important;
+            }
 
-    /* === ЧИНИМ КАРТИНКИ (Самое важное!) === */
-    /* Заставляем блок с описанием растянуться */
-    .option-info {
-        width: 100% !important;
-        display: block !important;
-        padding-right: 0 !important;
-    }
+            /* === ЧИНИМ КАРТИНКИ (Самое важное!) === */
+            /* Заставляем блок с описанием растянуться */
+            .option-info {
+                width: 100% !important;
+                display: block !important;
+                padding-right: 0 !important;
+            }
 
-    /* Растягиваем контейнер картинки */
-    .preview-content {
-        width: 100% !important;
-        box-sizing: border-box !important;
-        margin: 10px 0 !important;
-    }
+            /* Растягиваем контейнер картинки */
+            .preview-content {
+                width: 100% !important;
+                box-sizing: border-box !important;
+                margin: 10px 0 !important;
+            }
 
-    /* Растягиваем САМУ картинку */
-    .preview-content img {
-        width: 100% !important;
-        min-width: 100% !important;
-        height: auto !important;
-        display: block !important;
-    }
+            /* Растягиваем САМУ картинку */
+            .preview-content img {
+                width: 100% !important;
+                min-width: 100% !important;
+                height: auto !important;
+                display: block !important;
+            }
 
-    /* === ЧИНИМ ЗАГОЛОВКИ === */
-    /* Текст заголовков (чтобы не наезжал на цифры) */
-    .guide-header, .prompt-header {
-        justify-content: flex-start !important;
-        padding-left: 60px !important; /* Место для цифры */
-        min-height: 50px;
-    }
+            /* === ЧИНИМ ЗАГОЛОВКИ === */
+            /* Текст заголовков (чтобы не наезжал на цифры) */
+            .guide-header, .prompt-header {
+                justify-content: flex-start !important;
+                padding-left: 60px !important; /* Место для цифры */
+                min-height: 50px;
+            }
 
-    /* Ставим цифры и иконки ровно слева */
-    .num-tag, .guide-header-icon {
-        left: 15px !important;
-        top: 50% !important;
-        transform: translateY(-50%) !important;
-    }
-}
+            /* Ставим цифры и иконки ровно слева */
+            .num-tag, .guide-header-icon {
+                left: 15px !important;
+                top: 50% !important;
+                transform: translateY(-50%) !important;
+            }
+        }
 
 
     </style>
