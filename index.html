@@ -1313,6 +1313,42 @@
             opacity: 1;
             padding: 0 20px 20px 20px; /* Возвращаем отступы */
         }
+                /* === КНОПКА "НАВЕРХ" === */
+        #scrollTopBtn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: rgba(15, 15, 15, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--color-primary); /* Зеленая обводка */
+            border-radius: 50%; /* Делаем круг */
+            color: var(--color-primary);
+            font-size: 1.5em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 9999; /* Чтобы была поверх всего */
+            opacity: 0; /* Сначала невидимая */
+            pointer-events: none; /* Чтобы не мешала кликать, пока невидима */
+            transition: all 0.4s ease;
+            box-shadow: 0 0 15px rgba(153, 255, 153, 0.2);
+        }
+
+        #scrollTopBtn:hover {
+            transform: translateY(-5px);
+            background: var(--color-primary);
+            color: #000;
+            box-shadow: 0 0 25px rgba(153, 255, 153, 0.6);
+        }
+
+        /* Класс, который мы добавим скриптом, чтобы показать кнопку */
+        #scrollTopBtn.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
     </style>
 </head>
 <body>
@@ -1916,8 +1952,9 @@ Translate ALL Renette's text to modern Ukrainian language. All her OOC's must be
 
                     <!-- 2. РП -->
                     <div class="prompt-category">
-                        <div class="prompt-header special-border" onclick="togglePrompt(this)">
-                            <span>2.━━(РП)━━</span>
+                        <div class="prompt-header" onclick="togglePrompt(this)">
+                            <span class="num-tag">2.</span>
+                            <span>━━(РП)━━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2132,7 +2169,8 @@ There is no need to fill extraneously. Shun extras, interjections and other happ
                     <!-- 3. Карты -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>3.━━(Карты)━━</span>
+                            <span class="num-tag">3.</span>
+                            <span>━━(Карты)━━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2142,8 +2180,9 @@ There is no need to fill extraneously. Shun extras, interjections and other happ
 
                     <!-- 4. Основное -->
                     <div class="prompt-category">
-                        <div class="prompt-header special-border" onclick="togglePrompt(this)">
-                            <span>4.━━(Основное)━━</span>
+                        <div class="prompt-header" onclick="togglePrompt(this)">
+                            <span class="num-tag">4.</span>
+                            <span>━━(Основное)━━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2547,8 +2586,9 @@ Immediate Gut Reactions: How should they show their true feelings outwardly rath
 
                     <!-- 5. Откровенный Контент -->
                     <div class="prompt-category">
-                        <div class="prompt-header special-border" onclick="togglePrompt(this)">
-                            <span>5.━━(Откровенный Контент)━━</span>
+                        <div class="prompt-header" onclick="togglePrompt(this)">
+                            <span class="num-tag">5.</span>
+                            <span>━━(Откровенный Контент)━━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2598,8 +2638,9 @@ Replicate the finer bodily, skin, blood to organs nuanced direct textual reactio
 
                     <!-- 6. Язык -->
                     <div class="prompt-category">
-                        <div class="prompt-header special-border" onclick="togglePrompt(this)">
-                            <span>6.━━(Язык)━━</span>
+                        <div class="prompt-header" onclick="togglePrompt(this)">
+                            <span class="num-tag">6.</span>
+                            <span>━━(Язык)━━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2780,8 +2821,9 @@ Instead of using a banned phrase, randomly pick one of the alternatives.
 
                     <!-- 7. Настройки -->
                     <div class="prompt-category">
-                        <div class="prompt-header special-border" onclick="togglePrompt(this)">
-                            <span>7.━━(Настройки)━━</span>
+                        <div class="prompt-header" onclick="togglePrompt(this)">
+                            <span class="num-tag">7.</span>
+                            <span>━━(Настройки)━━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2928,8 +2970,9 @@ Always pen all turn responses between:WORD Count Length: 350-650 {{setvar::clauw
 
                     <!-- 8. Дополнительное -->
                     <div class="prompt-category">
-                        <div class="prompt-header special-border" onclick="togglePrompt(this)">
-                            <span>8.━━(Дополнительное)━━</span>
+                        <div class="prompt-header" onclick="togglePrompt(this)">
+                            <span class="num-tag">8.</span>
+                            <span>━━(Дополнительное)━━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -4086,8 +4129,9 @@ The code structure itself MUST remain in English, but all *visible rendered text
 
                     <!-- 9. Патчи -->
                     <div class="prompt-category">
-                        <div class="prompt-header special-border" onclick="togglePrompt(this)">
-                            <span>9.━(Патчи)━</span>
+                        <div class="prompt-header" onclick="togglePrompt(this)">
+                            <span class="num-tag">9.</span>
+                            <span>━━(Патчи)━━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -4111,7 +4155,8 @@ The code structure itself MUST remain in English, but all *visible rendered text
                     <!-- 10. Думалка -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>10.━(Думалка)━</span>
+                            <span class="num-tag">10.</span>
+                            <span>━━(Думалка)━━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -4122,7 +4167,8 @@ The code structure itself MUST remain in English, but all *visible rendered text
                     <!-- 11. ДжейлБрейк -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span>11.━(ДжейлБрейк)━</span>
+                            <span class="num-tag">11.</span>
+                            <span>━━(ДжейлБрейк)━━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -4135,8 +4181,9 @@ The code structure itself MUST remain in English, but all *visible rendered text
 
         </div>
     </div>
-
+    <div id="scrollTopBtn" onclick="scrollToTop()">▲</div>
     <script>
+        
         // === ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК С ПАМЯТЬЮ ===
         function openTab(evt, tabName) {
             var i, tabcontent, tablinks;
@@ -4495,6 +4542,26 @@ The code structure itself MUST remain in English, but all *visible rendered text
                 showToast('Ошибка', 'Не удалось скопировать.');
             });
         }
+                // === ЛОГИКА КНОПКИ "НАВЕРХ" ===
+        const scrollBtn = document.getElementById("scrollTopBtn");
+
+        window.addEventListener("scroll", function() {
+            // Если пролистали больше 300px, показываем кнопку
+            if (window.scrollY > 300) {
+                scrollBtn.classList.add("show");
+            } else {
+                scrollBtn.classList.remove("show");
+            }
+        });
+
+        function scrollToTop() {
+            // Плавный скролл наверх
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+
     </script>
 </body>
 </html>
