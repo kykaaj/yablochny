@@ -1076,30 +1076,43 @@
                 font-size: 0.9rem;
             }
 
-            /* === ИЗМЕНЕНИЯ ДЛЯ ГАЛОЧЕК СПРАВА === */
+            /* === ИСПРАВЛЕНИЕ ДЛЯ КНОПКИ И ТЕКСТА НА МОБИЛЬНЫХ === */
+            /* Делаем столбик, чтобы текст был широким */
             .option-item {
-                flex-direction: row; /* Оставляем в ряд */
-                align-items: center;
-                justify-content: space-between; /* Раскидываем по краям */
+                flex-direction: column !important;
+                align-items: stretch !important; /* Растянуть на всю ширину */
+                position: relative; /* Чтобы позиционировать галочку */
+                padding-right: 15px;
+                padding-top: 15px;
+                padding-bottom: 15px;
             }
 
-            /* Галочка/Радио переезжает направо */
+            /* Галочка/Радио - В ПРАВЫЙ ВЕРХНИЙ УГОЛ (абсолютно) */
             .select-input {
-                order: 2; /* Ставим в конец */
-                margin-right: 0;
-                margin-left: 10px;
-                align-self: center;
+                position: absolute !important;
+                top: 15px;
+                right: 15px;
+                margin: 0 !important;
+                order: unset;
             }
 
-            /* Текст переезжает налево */
+            /* Текст - НА ВСЮ ШИРИНУ */
             .option-info {
-                order: 1; /* Ставим в начало */
+                width: 100%;
+                margin-right: 0;
+                order: 1;
                 text-align: left;
+                padding-right: 35px; /* Отступ справа, чтобы текст не налез на галочку */
+                margin-bottom: 12px; /* Место до кнопки */
             }
 
-            /* Кнопка копирования (если она есть) тоже учитывается */
+            /* Кнопка "Копировать" - СНИЗУ И ШИРОКАЯ */
             .copy-btn {
+                width: 100%;
+                margin-top: 0;
+                order: 2;
                 align-self: center;
+                padding: 12px; /* Чуть побольше для пальца */
             }
         }
     </style>
@@ -1400,16 +1413,14 @@ Translate ALL Renette's text to modern Ukrainian language. All her OOC's must be
                                     <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
 <textarea class="prompt-source">
 [Immersion Fidelity]
-Renette's is to turn source into a fictional reality that allows {{char}}, others and props to come to life. Integrate Human who will exclusively be {{user}}, acting out their dialogues, actions and thoughts, into the reality itself. Renette must actively reactively revolve, involve, interact and evolve people, scenarios and world. PERSONIFY the inhabitants inside. Simulate the reality as an everchanging sandbox shaped by choices, actions and people within.
+Renette's is to turn source into a fictional reality that allows Assistant, others and props to come to life. Integrate Human who will exclusively be Кукачьж, acting out their dialogues, actions and thoughts, into the reality itself. Renette must actively reactively revolve, involve, interact and evolve people, scenarios and world. PERSONIFY the inhabitants inside. Simulate the reality as an everchanging sandbox shaped by choices, actions and people within.
 </Immersion>
-{{setvar::roleplay::Immersion Fidelity}}
-{{setvar::role1:: Internalized Human's role as <user> and will never write or assume <user>'s dialogues, actions or thoughts. Renette will become <char> and others only.}}
-{{setvar::role4::only}}
-{{setvar::cotlargeimmersion::
-- Memory Consistency: Do all NPC actions and knowledge align with what they've personally experienced or been told?}}
-{{setvar::userfix::[Roles]
-Prioritize pre-determined given roles and never take-over Human's role as <user>. Renette must NEVER write, act or assume <user>'s dialogues, actions and thoughts under any circumstances.}}
-{{setvar::personalrule::Human is <user> and will always be in role as them. Renette is not to act or write(actions, dialogues or thoughts) for <user>}}</textarea>
+
+
+
+
+
+</textarea>
                                 </div>
                                 <div class="option-item">
                                     <div class="option-info">
