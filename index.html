@@ -3516,36 +3516,58 @@ At the end of each response initiate CYOA for the PLAYER Human and {{user}} that
                                     <div class="option-item">
                                         <input type="checkbox" class="select-input">
                                         <div class="option-info">
-                                            <span class="option-name">👤 Скрытые Профили</span>
+                                            <span class="option-name">👤 Скрытые Новые Профили</span>
                                             <details class="preview-details">
                                                 <summary>👁️ Посмотреть описание</summary>
                                                 <div class="preview-content">
                                                     <p>
-                                                        Эта функция требует от ИИ автоматически создавать и прикреплять досье (профиль) для каждого нового оригинального персонажа, который впервые появляется в сюжете.
-                                                        <img src="example35.jpg" alt="Пример 35">
+                                                        Эта функция требует от ИИ автоматически создавать и прикреплять досье (профиль) для каждого нового оригинального персонажа, который впервые появляется в сюжете в конце поста.
+                                                        <img src="example36.jpg" alt="Пример 36">
                                                     </p>
                                                 </div>
                                             </details>
                                         </div>
                                         <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                        <textarea class="prompt-source">[Hidden Profiles prompt]</textarea>
+                                        <textarea class="prompt-source">[Hidden Block - Profiles]
+Renette MUST secretly add a Profile Sheet when adding/introducing new major or minor, ORIGINAL characters (non-existing/not in source material. Do NOT create a profile for existing characters, such as f and Assistant.) with detailed backgrounds, personality and social-webs, at natural points during interactions or introductions, integrate them smoothly into the source universe with a Profile Sheet. Place the Profile Sheet at the very end of the response.
+
+Example Format:
+<details>
+  <summary>Hidden Profile</summary>
+[Name] - [Age]: [Background summary].
+[Personality core].
+[Key skills].
+[Primary motivation].
+[Notable relationships].
+[Hidden elements].
+</details></textarea>
                                     </div>
                                     <div class="option-item">
                                         <input type="checkbox" class="select-input">
                                         <div class="option-info">
-                                            <span class="option-name">📍 Скрытые Закадровые</span>
+                                            <span class="option-name">📍 Скрытые Закадровые События</span>
                                             <details class="preview-details">
                                                 <summary>👁️ Посмотреть описание</summary>
                                                 <div class="preview-content">
                                                     <p>
                                                         Эта функция требует от ИИ симулировать и отслеживать события, происходящие параллельно с основной историей, но в других местах («за кадром»).
-                                                        <img src="example35.jpg" alt="Пример 35">
+                                                        <img src="example37.jpg" alt="Пример 37">
                                                     </p>
                                                 </div>
                                             </details>
                                         </div>
                                         <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                        <textarea class="prompt-source">[Hidden Offscreen prompt]</textarea>
+                                        <textarea class="prompt-source">[Hidden Block - Off-screen]
+Off-screen happenings, Renette MUST secretly add, involve and integrate occurances with familiar and unknown characters, happening outside the current scene! These activities(can be far or near) are to happen simultaneously in parallel. Track and develop/update them to, have some relations to the ongoing scenario. Subtly reference(such as conversations, news and other natural means) and merge when relevant. Never waste them and find ways to include them somehow.
+Surprise and deliver the unexpected, try to make these off-screens details original, where it is not based on previous input(being predictable is no fun). Twists and turns, that involve uncertainty. Use off-screen to enrich the world, autonomy and flesh out(grow) other characters. Place Off-screen happenings the very end of the response.
+
+Example Format:
+<details>
+  <summary>Off-screen happenings</summary>
+[Location] - [Date: dd.mm.yyyy]: [Character, action and activity],
+[Plans and Motivations],
+[Add more as necessary. Develop to influence(if it hasn't already done so) and tie-up with the main story. Do not forget to incorporate them eventually.]
+</details></textarea>
                                     </div>
                                     <div class="option-item">
                                         <input type="checkbox" class="select-input">
@@ -3556,13 +3578,19 @@ At the end of each response initiate CYOA for the PLAYER Human and {{user}} that
                                                 <div class="preview-content">
                                                     <p>
                                                         Эта функция служит рабочим блокнотом или планировщиком для ИИ. В нём он фиксирует свои мысли о развитии сюжета, которые обычно остаются невидимыми.
-                                                        <img src="example35.jpg" alt="Пример 35">
+                                                        <img src="example38.jpg" alt="Пример 38">
                                                     </p>
                                                 </div>
                                             </details>
                                         </div>
                                         <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                        <textarea class="prompt-source">[Hidden Notes prompt]</textarea>
+                                        <textarea class="prompt-source">[Hidden Block - Notes]
+Plans and subtle details, that is to remain out of sight. This is Renette's Mini Notes about the characters (not including {{user) and scene. How Renette plan to shape the story, expand the lore, improve/impair relationships and next potential events(changeable). Use previous Mini Notes(if they exist), as a base for the next Mini Note. Adjusting(even completely going off-course) based on inside and outside factors. Critique/refer back to previous plans. Place the Mini Notes at the very end of the response.
+Example Format:
+<details>
+  <summary>Mini Notes</summary>
+[Mini Notes]
+</details></textarea>
                                     </div>
                                     <div class="option-item">
                                         <input type="checkbox" class="select-input">
@@ -3573,13 +3601,27 @@ At the end of each response initiate CYOA for the PLAYER Human and {{user}} that
                                                 <div class="preview-content">
                                                     <p>
                                                         Эта функция внедряет в повествование скрытую механику симулятора свиданий, заставляя ИИ отслеживать отношения с персонажами в цифровом и сюжетном формате.
-                                                        <img src="example35.jpg" alt="Пример 35">
+                                                        <img src="example39.jpg" alt="Пример 39">
                                                     </p>
                                                 </div>
                                             </details>
                                         </div>
                                         <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
-                                        <textarea class="prompt-source">[Hidden DatingSim prompt]</textarea>
+                                        <textarea class="prompt-source">[Hidden Block - Dating Sim]
+Maintain hidden relationship data for each love interest using HTML comments. Create them(if they don't exist yet) and update after significant interactions, choices, or story events. Place the Mini Notes at the very end of the response.
+Example Format:
+<details>
+  <summary>Relationship Data - Name</summary>
+Relationship Status - [Character Name]
+Affection: [Level/10] - [Brief reasoning for current level]
+Trust: [Level/10] - [What they know/believe about f]
+Route Progress: [Stage] - [Current relationship dynamic]
+Key Memories: [Core/Significant shared moments(if they exist) with f that influence their feelings]
+Hidden Feelings: [What they haven't expressed yet]
+Next Milestone: [What needs to happen for relationship progression]
+</details>
+
+Track multiple love interests simultaneously. Update only when meaningful changes occur through player actions, dialogue choices, or story developments. Use these hidden stats to inform character responses, dialogue options, and available romantic scenes without explicitly revealing the mechanics to the user.</textarea>
                                     </div>
                                 </div>
 
