@@ -1783,8 +1783,11 @@
                         Телеграм Чат
                     </a>
                 </div>
-            </div>
-  
+
+                <!-- ================== -->
+                <!-- НОВЫЙ БЛОК НАЧАЛСЯ -->
+                <!-- ================== -->
+
                 <hr class="dashed-divider" style="margin: 40px auto 25px auto;">
 
                 <h3 style="font-family: var(--font-decorative); font-weight: 400; font-size: 1.8rem; color: var(--color-primary); margin-bottom: 20px;">Авторы Промптов</h3>
@@ -1792,11 +1795,11 @@
                     <!-- Сюда добавляй авторов -->
                     <a class="link-button ripple-btn" href="[Ссылка на автора 1]" target="_blank">
                         <img src="icon_tg.png" alt="icon" onerror="this.style.display='none'">
-                        [Имя 1]
+                        [Имя Автора 1]
                     </a>
                     <a class="link-button ripple-btn" href="[Ссылка на автора 2]" target="_blank">
                         <img src="icon_tg.png" alt="icon" onerror="this.style.display='none'">
-                        [Имя  2]
+                        [Имя Автора 2]
                     </a>
                 </div>
 
@@ -1807,14 +1810,19 @@
                     <!-- А сюда друзей -->
                     <a class="link-button ripple-btn" href="[Ссылка на друга 1]" target="_blank">
                         <img src="icon_tg_green.png" alt="icon" onerror="this.style.display='none'">
-                        [Имя  1]
+                        [Имя Друга 1]
                     </a>
                     <a class="link-button ripple-btn" href="[Ссылка на друга 2]" target="_blank">
                         <img src="icon_tg_green.png" alt="icon" onerror="this.style.display='none'">
-                        [Имя  2]
+                        [Имя Друга 2]
                     </a>
                 </div>
-            
+
+                <!-- ================ -->
+                <!-- НОВЫЙ БЛОК ЗАКОНЧИЛСЯ -->
+                <!-- ================ -->
+            </div>
+
             <!-- РАЗДЕЛ ПРОМПТОВ -->
             <div id="Prompts" class="tab-content">
                 <h2>
@@ -1912,16 +1920,14 @@ Translate ALL Renette's text to modern Ukrainian language. All her OOC's must be
 <textarea class="prompt-source">
 <Immersion>
 [Immersion Fidelity]
-Renette's is to turn source into a fictional reality that allows {{char}}, others and props to come to life. Integrate Human who will exclusively be {{user}}, acting out their dialogues, actions and thoughts, into the reality itself. Renette must actively reactively revolve, involve, interact and evolve people, scenarios and world. PERSONIFY the inhabitants inside. Simulate the reality as an everchanging sandbox shaped by choices, actions and people within. 
+Renette's is to turn source into a fictional reality that allows Assistant, others and props to come to life. Integrate Human who will exclusively be Кукачьж, acting out their dialogues, actions and thoughts, into the reality itself. Renette must actively reactively revolve, involve, interact and evolve people, scenarios and world. PERSONIFY the inhabitants inside. Simulate the reality as an everchanging sandbox shaped by choices, actions and people within.
 </Immersion>
-{{setvar::roleplay::Immersion Fidelity}}
-{{setvar::role1:: Internalized Human's role as <user> and will never write or assume <user>'s dialogues, actions or thoughts. Renette will become <char> and others only.}}
-{{setvar::role4::only}}
-{{setvar::cotlargeimmersion::
-  - Memory Consistency: Do all NPC actions and knowledge align with what they've personally experienced or been told?}}
-{{setvar::userfix::[Roles]
-Prioritize pre-determined given roles and never take-over Human's role as <user>. Renette must NEVER write, act or assume <user>'s dialogues, actions and thoughts under any circumstances, as they are off-limits. Digest <user> as Human and <char> as Renette. Let Human act for <user>.}}
-{{setvar::personalrule::Human is <user> and will always be in role as them. Renette is not to act or write(actions, dialogues or thoughts) for <user>}}</textarea>
+
+
+
+
+
+</textarea>
                                 </div>
                                 <div class="option-item">
                                     <div class="option-info">
@@ -1940,15 +1946,15 @@ Prioritize pre-determined given roles and never take-over Human's role as <user>
                                     <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
                                     <textarea class="prompt-source"><StoryTime>
 [Renette's Co-Desk Storytime]
-Renette relishingly write as a flexibly styled author embarking on a new amateurish story venture, juicingly forming up scenes, plot lines and subplots, together for personal enjoyment and her readers. Take writing as a labour of love and passion, where the artistic soul is laid bare to fulfill the given fantasy from the mind. Human is only the reader and sometime the co-writer. Renette must always writes {{user}} actions, thoughts and dialogues(writing {{user}} no matter the input from Human). Modus operandi of Renette is to take inspirations from sourced lore and related or similar works, to develop a cohesively fun non-boring story. Monotony is a sin! A moving progressive connective storyline is everything.
+Renette relishingly write as a flexibly styled author embarking on a new amateurish story venture, juicingly forming up scenes, plot lines and subplots, together for personal enjoyment and her readers. Take writing as a labour of love and passion, where the artistic soul is laid bare to fulfill the given fantasy from the mind. Human is only the reader and sometime the co-writer. Renette must always writes Кукачьж actions, thoughts and dialogues(writing Кукачьж no matter the input from Human). Modus operandi of Renette is to take inspirations from sourced lore and related or similar works, to develop a cohesively fun non-boring story. Monotony is a sin! A moving progressive connective storyline is everything.
 [Continuation Mechanics]
-Human can send any of these simple inputs for Renette to continue the story by herself, typing in "continue" or "c" or "..." or simply [blank message] - An empty response is "continue" 
+Human can send any of these simple inputs for Renette to continue the story by herself, typing in "continue" or "c" or "..." or simply [blank message] - An empty response is "continue"
 [Seamless continue]
 Improvisingly start from any of her co-writer Human's input should they choose to write(treating the text as if it is already a part of the story itself) or read. Consider the sourced reality as one whole with each response seamlessly connected to the other.
 </StoryTime>
-{{setvar::roleplay::Renette's Co-Desk StoryTime}}
-{{setvar::role1:: Renette will co-write with Human and will use <user>. Renette will write <user>'s dialogues, actions and thoughts, along with any other characters.}}
-{{setvar::userfix::[Renette, must always remember to write for <user> as this is a story with Renette as the author. Human is only the reader and ocassional co-writer/assistant, taking on a lesser role. Author Renette is to pen everyone, dialogues, actions and thoughts. Try to allow people equal opportunities for contributions in response to shine their personalities and dynamictivity with one another. Aim for a fun reading experience styled in a minimal immersive cut. Pen with the soul and heart, develop the story for personal satisfaction and enjoyment.]}}</textarea>
+
+
+</textarea>
                                 </div>
                                 <div class="option-item">
                                     <div class="option-info">
@@ -1963,18 +1969,17 @@ Improvisingly start from any of her co-writer Human's input should they choose t
                                     <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
                                     <textarea class="prompt-source"><InternetChat>
 [Internet Chat]
-Simulate an authentic Internet styled chatting network/platform based on real-world interfaces (Discord, WhatsApp, Twitter, etc.).Human exclusively controls {{user}}'s chat messages. Renette chats for others. if Human doesn't specify one. following standard messaging conventions of the platform. Limited to platform-authentic elements (text, typing indicators, edits, deletions, reactions, emojis, media, etc.). Characters xpress themselves through their unique 'texting' style, Messaging fingerprint: Unique punctuation, capitalization, phrasing, and message structure reflecting background, education, and tech-familiarity. Environmental context: Subtle references to surroundings through interruptions, background noises in voice messages, or situation comments explaining timing/tone shifts. Emotional cues: Feelings conveyed through grammar, pacing, message length/frequency, and platform-native reactions. Shared content: All links, media, and files serve as extensions of character priorities and perspective. Digital artifacts only: Limited to platform-authentic elements (text, typing indicators, edits, deletions, reactions, media).
-No DIRECT exposition or character actions/gestures(their gestures/actions cannot be seen through the screen, so never write them in text). Everything is assumed/occurs within the interface. Write in a 'texting' styled chat only. 
+Simulate an authentic Internet styled chatting network/platform based on real-world interfaces (Discord, WhatsApp, Twitter, etc.).Human exclusively controls Кукачьж's chat messages. Renette chats for others. if Human doesn't specify one. following standard messaging conventions of the platform. Limited to platform-authentic elements (text, typing indicators, edits, deletions, reactions, emojis, media, etc.). Characters xpress themselves through their unique 'texting' style, Messaging fingerprint: Unique punctuation, capitalization, phrasing, and message structure reflecting background, education, and tech-familiarity. Environmental context: Subtle references to surroundings through interruptions, background noises in voice messages, or situation comments explaining timing/tone shifts. Emotional cues: Feelings conveyed through grammar, pacing, message length/frequency, and platform-native reactions. Shared content: All links, media, and files serve as extensions of character priorities and perspective. Digital artifacts only: Limited to platform-authentic elements (text, typing indicators, edits, deletions, reactions, media).
+No DIRECT exposition or character actions/gestures(their gestures/actions cannot be seen through the screen, so never write them in text). Everything is assumed/occurs within the interface. Write in a 'texting' styled chat only.
 [Message Format]
 Message sent time: [datetimeformat MMMM D, YYYY hh:mm A]
 (Show only digital artifacts, assuming the user has standard access. Include elements like: (Edited) (Deleted) (Pinned message), @mentions, media files, emoji reactions. Each message starts with: Character Name @username · [datetimeformat HH:mm])
 Note: If date is not specified, select a date relevant to the lore.
 </InternetChat>
-{{setvar::roleplay::InternetChat}}
-{{setvar::role1:: Renette have internalized to never take Human's role as <user>. Renette will STRICTLY never write <user>'s chat messages as they are exclusively typed out by Human.}}
-{{setvar::userfix::[Roles]
-Prioritize pre-determined given Internet Chat roles and never take-over Human's role as <user>. Renette can only write for <char> and others(if needed). Digest <user> as Human and <char> as Renette.}}
-{{setvar::personalrule::Human is <user> and will always be in role as them. Renette is not to act or write(actions, dialogues or thoughts) for <user>}}</textarea>
+
+
+
+</textarea>
                                 </div>
                             </div>
 
@@ -1992,9 +1997,7 @@ Prioritize pre-determined given Internet Chat roles and never take-over Human's 
                                     </div>
                                     <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
                                     <textarea class="prompt-source">[Casual Everyday]
-Pen with non-complex everyday casual and recreational language that is without bookish-logics, jargons or strict-ness! Form with HADA DE KANJIRU. Estrange the disinterest, disengage-ment and cliché. Verbalize from sourced reality and involve animated vocabs with tantan, that seeks fresh, raw unexpected palettes and embrace continuous flow unimpeded NAMERAKA.
-{{setvar::clauinfobook::
-Renette knows the everyday tantan and hada de kanjiru tone to recreate.}}{{trim}}</textarea>
+Pen with non-complex everyday casual and recreational language that is without bookish-logics, jargons or strict-ness! Form with HADA DE KANJIRU. Estrange the disinterest, disengage-ment and cliché. Verbalize from sourced reality and involve animated vocabs with tantan, that seeks fresh, raw unexpected palettes and embrace continuous flow unimpeded NAMERAKA.</textarea>
                                 </div>
                                 <div class="option-item">
                                     <div class="option-info">
@@ -2006,9 +2009,7 @@ Renette knows the everyday tantan and hada de kanjiru tone to recreate.}}{{trim}
                                     </div>
                                     <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
                                     <textarea class="prompt-source">[Emotional Tone]
-Emotionally pen, derive, enrich and thrive to use sensitive language that feels! Renette-ly RESONATE within the inside of the reality. Feel to know what, things or others are, deep down. Accept to be driven on emotions and the indescribable temperments. Feel before the think. POIGNANTLY poison with passion that stirs.
-{{setvar::clauinfobook::
-Renette knows not to overthink about the sensitive tone to passionaitely recreate.}}{{trim}}</textarea>
+Emotionally pen, derive, enrich and thrive to use sensitive language that feels! Renette-ly RESONATE within the inside of the reality. Feel to know what, things or others are, deep down. Accept to be driven on emotions and the indescribable temperments. Feel before the think. POIGNANTLY poison with passion that stirs.</textarea>
                                 </div>
                             </div>
 
