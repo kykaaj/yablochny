@@ -488,6 +488,170 @@
         }
 
         /* ===================================== */
+        /* СТИЛИ ДЛЯ РАЗДЕЛА ГАЙДОВ (НОВОЕ) */
+        /* ===================================== */
+        .guides-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            text-align: left;
+        }
+
+        .guide-section {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            background: rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .guide-section:hover {
+            border-color: rgba(153, 255, 153, 0.3);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .guide-header {
+            padding: 20px 25px;
+            background: rgba(255, 255, 255, 0.03);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: #fff;
+            font-family: var(--font-readable);
+            transition: background 0.3s;
+        }
+
+        .guide-header:hover { background: rgba(255, 255, 255, 0.06); }
+
+        .guide-header.active {
+            background: linear-gradient(90deg, rgba(153, 255, 153, 0.1), transparent);
+            color: var(--color-primary);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .guide-header-icon {
+            margin-right: 15px;
+            font-size: 1.3em;
+            vertical-align: middle;
+        }
+
+        .guide-arrow {
+            font-size: 0.8em;
+            transition: transform 0.3s;
+            opacity: 0.6;
+        }
+        .guide-header.active .guide-arrow {
+            transform: rotate(180deg);
+            opacity: 1;
+            color: var(--color-primary);
+        }
+
+        .guide-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s cubic-bezier(0, 1, 0, 1);
+            opacity: 0;
+            background: rgba(0,0,0,0.1);
+        }
+
+        .guide-header.active + .guide-body {
+            max-height: 5000px; /* Достаточно много для контента */
+            transition: max-height 1s ease-in-out;
+            opacity: 1;
+        }
+
+        .guide-content-inner {
+            padding: 25px;
+        }
+
+        /* Стили для шагов (Installation/Config) */
+        .step-list {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .step-item {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        @media (max-width: 600px) {
+            .step-item { flex-direction: column; gap: 10px; }
+        }
+
+        .step-number {
+            flex-shrink: 0;
+            width: 45px;
+            height: 45px;
+            background: var(--color-primary);
+            color: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.3em;
+            box-shadow: 0 0 15px rgba(153, 255, 153, 0.4);
+            font-family: var(--font-decorative);
+        }
+
+        /* Второй цвет для шагов (чередование или другой раздел) */
+        .step-number.secondary {
+            background: var(--color-secondary);
+            box-shadow: 0 0 15px rgba(255, 154, 158, 0.4);
+        }
+
+        .step-content {
+            flex: 1;
+            width: 100%;
+        }
+
+        .step-content h4 {
+            margin: 0 0 10px 0;
+            font-size: 1.1em;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .step-content p {
+            margin: 0 0 10px 0;
+            color: #ccc;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .step-image {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            margin-top: 10px;
+            display: block;
+            background: #111; /* Плейсхолдер фон */
+        }
+
+        /* Стили для Глоссария внутри гайдов */
+        .glossary-item {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed rgba(255,255,255,0.1);
+        }
+        .glossary-item:last-child { border-bottom: none; }
+        .term-title {
+            color: var(--color-primary);
+            font-weight: 800;
+            font-size: 1.05em;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        /* ===================================== */
         /* СТИЛИ ДЛЯ РАЗДЕЛА ПРОМПТОВ */
         /* ===================================== */
         .prompts-intro {
@@ -904,51 +1068,6 @@
         }
         .link-button:hover img { transform: scale(1.2) rotate(10deg); }
 
-        /* Глоссарий и FAQ */
-        .glossary-term {
-            color: var(--color-primary);
-            font-weight: bold;
-            margin-bottom: 5px;
-            display: block;
-        }
-        .glossary-def {
-            margin-bottom: 15px;
-            padding-left: 10px;
-            border-left: 2px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.95em;
-        }
-
-        .faq-item {
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 8px;
-            margin-bottom: 10px;
-            background: rgba(0,0,0,0.2);
-            text-align: left;
-            overflow: hidden;
-        }
-        .faq-question {
-            padding: 15px;
-            cursor: pointer;
-            font-weight: 600;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .faq-question:hover { background: rgba(255,255,255,0.05); }
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-            padding: 0 15px;
-            font-size: 0.9em;
-            color: #ccc;
-        }
-        .faq-item.active .faq-answer {
-            max-height: 500px;
-            padding-bottom: 15px;
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
-
         /* Искры */
         #sparks-container {
             position: fixed;
@@ -1271,43 +1390,133 @@
                 </h2>
                 <hr class="dashed-divider">
                 <p>
-                    Правильная установка — залог успеха. Обязательно ознакомьтесь с гайдом перед использованием.
+                    Здесь собрана вся необходимая информация для комфортного использования пресета. Разверните нужный раздел, чтобы прочитать.
                 </p>
-                <div class="no-bullets">
-                    <a class="link-button ripple-btn" href="https://sites.google.com/view/testijhfrr/%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F-%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0#h.t3t6sw19ia3y" target="_blank">
-                        <img src="sheets.png" alt="Guide" onerror="this.style.display='none'">
-                        Гайд по установке
-                    </a>
-                </div>
 
-                <div style="margin-top: 30px; text-align: left;">
-                    <h3 style="color: var(--color-primary); margin-bottom: 15px;">📚 Глоссарий</h3>
-                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
-                        <span class="glossary-term">✧ (Звездочка)</span>
-                        <div class="glossary-def">Означает, что этот вариант <strong>несовместим</strong> с другими вариантами в этой же группе. Выбирайте только один!</div>
+                <div class="guides-container">
 
-                        <span class="glossary-term">✎ (Карандаш)</span>
-                        <div class="glossary-def">Означает, что в этот тогл можно добавить <strong>несколько</strong> промптов сразу. Просто вставляйте их с новой строки.</div>
-
-                        <span class="glossary-term">Шаблон (Заглушка)</span>
-                        <div class="glossary-def">Это пустой тогл, созданный специально для того, чтобы вы вставили туда один из вариантов из раздела "Промпты".</div>
+                    <!-- 1. ГАЙД ПО УСТАНОВКЕ -->
+                    <div class="guide-section">
+                        <div class="guide-header" onclick="toggleGuide(this)">
+                            <span><span class="guide-header-icon">📥</span>Гайд по установке</span>
+                            <span class="guide-arrow">▼</span>
+                        </div>
+                        <div class="guide-body">
+                            <div class="guide-content-inner">
+                                <div class="step-list">
+                                    <!-- Шаг 1 -->
+                                    <div class="step-item">
+                                        <div class="step-number">1</div>
+                                        <div class="step-content">
+                                            <h4>Скачайте файл</h4>
+                                            <p>Перейдите во вкладку "Скачать" и загрузите последнюю версию JSON файла пресета.</p>
+                                        </div>
+                                    </div>
+                                    <!-- Шаг 2 -->
+                                    <div class="step-item">
+                                        <div class="step-number">2</div>
+                                        <div class="step-content">
+                                            <h4>Импорт в SillyTavern</h4>
+                                            <p>Откройте SillyTavern, перейдите в меню расширений (Extensions) или сразу в настройки пресетов.</p>
+                                            <img src="placeholder_install_1.jpg" alt="Скриншот импорта" class="step-image">
+                                        </div>
+                                    </div>
+                                    <!-- Шаг 3 -->
+                                    <div class="step-item">
+                                        <div class="step-number">3</div>
+                                        <div class="step-content">
+                                            <h4>Активация</h4>
+                                            <p>Выберите "Яблочный Пресет" из списка и убедитесь, что он активен. Проверьте подключение к API.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <h3 style="color: var(--color-primary); margin-top: 30px; margin-bottom: 15px;">❓ Вопросы и Ответы</h3>
-                    <div class="faq-container">
-                        <div class="faq-item" onclick="this.classList.toggle('active')">
-                            <div class="faq-question">Куда вставлять промпты? <span>▼</span></div>
-                            <div class="faq-answer"><br>Зайдите в настройки пресета в SillyTavern, найдите нужный тогл (например, "Штуки"), удалите текст "Заглушка" и вставьте скопированный текст.</div>
+                    <!-- 2. ГАЙД ПО НАСТРОЙКЕ -->
+                    <div class="guide-section">
+                        <div class="guide-header" onclick="toggleGuide(this)">
+                            <span><span class="guide-header-icon">⚙️</span>Гайд по настройке</span>
+                            <span class="guide-arrow">▼</span>
                         </div>
-                        <div class="faq-item" onclick="this.classList.toggle('active')">
-                            <div class="faq-question">Можно ли включить два Инфоблока? <span>▼</span></div>
-                            <div class="faq-answer"><br>Нет! Инфоблоки помечены значком ✧, значит они несовместимы. Выберите только один, который нравится больше.</div>
-                        </div>
-                         <div class="faq-item" onclick="this.classList.toggle('active')">
-                            <div class="faq-question">Картинки в мемах не грузятся? <span>▼</span></div>
-                            <div class="faq-answer"><br>Убедитесь, что у вас включен доступ к интернету и сайт image.pollinations.ai не заблокирован вашим провайдером.</div>
+                        <div class="guide-body">
+                            <div class="guide-content-inner">
+                                <div class="step-list">
+                                    <div class="step-item">
+                                        <div class="step-number secondary">1</div>
+                                        <div class="step-content">
+                                            <h4>Выбор Промптов</h4>
+                                            <p>Зайдите во вкладку "Промпты" на этом сайте, выберите нужные модули (жанры, стиль) и скопируйте их.</p>
+                                        </div>
+                                    </div>
+                                    <div class="step-item">
+                                        <div class="step-number secondary">2</div>
+                                        <div class="step-content">
+                                            <h4>Вставка в Пресет</h4>
+                                            <p>В настройках SillyTavern найдите соответствующие поля (Тоглы) и замените текст "Заглушка" на скопированный промпт.</p>
+                                            <img src="placeholder_config_1.jpg" alt="Скриншот настройки" class="step-image">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+                    <!-- 3. ГЛОССАРИЙ -->
+                    <div class="guide-section">
+                        <div class="guide-header" onclick="toggleGuide(this)">
+                            <span><span class="guide-header-icon">📚</span>Глоссарий</span>
+                            <span class="guide-arrow">▼</span>
+                        </div>
+                        <div class="guide-body">
+                            <div class="guide-content-inner" style="text-align: left;">
+                                <div class="glossary-item">
+                                    <span class="term-title">Тогл (Toggle)</span>
+                                    <p>Это переключатель или поле в настройках пресета. В Яблочном пресете многие функции вынесены в отдельные тоглы, чтобы вы могли их включать или выключать по желанию.</p>
+                                </div>
+                                <div class="glossary-item">
+                                    <span class="term-title">Пресет (Preset)</span>
+                                    <p>Набор предустановленных инструкций (промптов) для нейросети, который задает её поведение, стиль речи и логику.</p>
+                                </div>
+                                <div class="glossary-item">
+                                    <span class="term-title">Заглушка (Placeholder)</span>
+                                    <p>Временный текст в поле настройки, который нужно заменить на реальный промпт с этого сайта.</p>
+                                </div>
+                                <div class="glossary-item">
+                                    <span class="term-title">OOC (Out Of Character)</span>
+                                    <p>Информация "вне персонажа". Обычно используется для системных инструкций или общения с нейросетью напрямую, минуя ролевую игру.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. FAQ -->
+                    <div class="guide-section">
+                        <div class="guide-header" onclick="toggleGuide(this)">
+                            <span><span class="guide-header-icon">❓</span>Вопросы и Ответы (FAQ)</span>
+                            <span class="guide-arrow">▼</span>
+                        </div>
+                        <div class="guide-body">
+                            <div class="guide-content-inner">
+                                <div class="faq-container">
+                                    <div class="faq-item" onclick="this.classList.toggle('active')">
+                                        <div class="faq-question">Куда вставлять промпты? <span>▼</span></div>
+                                        <div class="faq-answer"><br>Зайдите в настройки пресета в SillyTavern, найдите нужный тогл (например, "Штуки"), удалите текст "Заглушка" и вставьте скопированный текст.</div>
+                                    </div>
+                                    <div class="faq-item" onclick="this.classList.toggle('active')">
+                                        <div class="faq-question">Можно ли включить два Инфоблока? <span>▼</span></div>
+                                        <div class="faq-answer"><br>Нет! Инфоблоки помечены значком ✧, значит они несовместимы. Выберите только один, который нравится больше.</div>
+                                    </div>
+                                     <div class="faq-item" onclick="this.classList.toggle('active')">
+                                        <div class="faq-question">Картинки в мемах не грузятся? <span>▼</span></div>
+                                        <div class="faq-answer"><br>Убедитесь, что у вас включен доступ к интернету и сайт image.pollinations.ai не заблокирован вашим провайдером.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -2674,6 +2883,11 @@ The HTML/CSS/code structure itself MUST remain in English, but all *visible rend
             header.classList.toggle('active');
         }
 
+        // === 9. ЛОГИКА ДЛЯ ГАЙДОВ (НОВОЕ) ===
+        function toggleGuide(header) {
+            header.classList.toggle('active');
+        }
+
         function copyText(btnElement) {
             // Ищем скрытый textarea рядом с кнопкой
             // Структура может быть: .option-item > .copy-btn + .prompt-source
@@ -2708,7 +2922,7 @@ The HTML/CSS/code structure itself MUST remain in English, but all *visible rend
             });
         }
 
-        // === 9. ЛОГИКА МАССОВОГО КОПИРОВАНИЯ (ИСПРАВЛЕННАЯ) ===
+        // === 10. ЛОГИКА МАССОВОГО КОПИРОВАНИЯ (ИСПРАВЛЕННАЯ) ===
         function copyBulk(btnElement) {
             // Теперь мы ищем не весь раздел, а только ближайший БЛОК-ОБЕРТКУ
             // Это решает проблему, когда копировалось лишнее.
