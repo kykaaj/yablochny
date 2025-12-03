@@ -515,13 +515,14 @@
             background: rgba(255, 255, 255, 0.03);
             cursor: pointer;
             display: flex;
-            justify-content: space-between;
+            justify-content: center; /* ТЕПЕРЬ ПО ЦЕНТРУ! */
             align-items: center;
             font-weight: 700;
             font-size: 1.15rem;
             color: #fff;
             font-family: var(--font-readable);
             transition: background 0.3s;
+            position: relative; /* Важно для приклеивания иконок */
         }
 
         .guide-header:hover { background: rgba(255, 255, 255, 0.06); }
@@ -533,12 +534,16 @@
         }
 
         .guide-header-icon {
-            margin-right: 15px;
-            font-size: 1.3em;
-            vertical-align: middle;
+            position: absolute; /* Отклеиваем от текста */
+            left: 20px;         /* Приклеиваем влево */
+            font-size: 1.4em;
+            top: 50%;
+            transform: translateY(-50%);
         }
 
         .guide-arrow {
+            position: absolute; /* Отклеиваем */
+            right: 20px;        /* Приклеиваем вправо */
             font-size: 0.8em;
             transition: transform 0.3s;
             opacity: 0.6;
@@ -677,13 +682,24 @@
             border-radius: 12px;
             cursor: pointer;
             display: flex;
-            justify-content: space-between;
+            justify-content: center; /* ТЕПЕРЬ ПО ЦЕНТРУ! */
             align-items: center;
             transition: all 0.3s ease;
             font-family: var(--font-readable);
             font-weight: 600;
             font-size: 1rem;
             color: #eee;
+            position: relative; /* Важно! */
+            min-height: 25px;
+        }
+        .num-tag {
+        position: absolute;
+        left: 20px;
+        color: var(--color-primary);
+        font-family: var(--font-decorative);
+        font-size: 1.4em;
+        font-weight: 400;
+        text-shadow: 0 0 10px rgba(153, 255, 153, 0.3);
         }
 
         /* Стиль для ВАЖНЫХ разделов (с контентом) в закрытом состоянии */
@@ -714,6 +730,8 @@
         }
 
         .prompt-arrow {
+            position: absolute;
+            right: 20px;
             transition: transform 0.3s ease;
             font-size: 0.8em;
             opacity: 0.6;
@@ -1843,10 +1861,13 @@
 
                     <!-- 1. OOC -->
                     <div class="prompt-category">
-                        <div class="prompt-header special-border" onclick="togglePrompt(this)">
-                            <span>1.━━(OOC)━━</span>
+                        <div class="prompt-header" onclick="togglePrompt(this)">
+                            <span class="num-tag">1.</span> <!-- Цифра отдельно! -->
+                            <span>━━(OOC)━━</span>              <!-- Название посередине -->
                             <span class="prompt-arrow">▼</span>
                         </div>
+
+
                         <div class="prompt-body">
                             <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">🌐Язык OOC</h4>
                             <div class="default-block"><span class="default-label">По дефолту:</span>✧⚪️Язык OOC (Русский)</div>
