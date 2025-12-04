@@ -515,14 +515,13 @@
             background: rgba(255, 255, 255, 0.03);
             cursor: pointer;
             display: flex;
-            justify-content: center; /* ТЕПЕРЬ ПО ЦЕНТРУ! */
+            justify-content: space-between;
             align-items: center;
             font-weight: 700;
             font-size: 1.15rem;
             color: #fff;
             font-family: var(--font-readable);
             transition: background 0.3s;
-            position: relative; /* Важно для приклеивания иконок */
         }
 
         .guide-header:hover { background: rgba(255, 255, 255, 0.06); }
@@ -534,16 +533,12 @@
         }
 
         .guide-header-icon {
-            position: absolute; /* Отклеиваем от текста */
-            left: 20px;         /* Приклеиваем влево */
-            font-size: 1.4em;
-            top: 50%;
-            transform: translateY(-50%);
+            margin-right: 15px;
+            font-size: 1.3em;
+            vertical-align: middle;
         }
 
         .guide-arrow {
-            position: absolute; /* Отклеиваем */
-            right: 20px;        /* Приклеиваем вправо */
             font-size: 0.8em;
             transition: transform 0.3s;
             opacity: 0.6;
@@ -682,24 +677,13 @@
             border-radius: 12px;
             cursor: pointer;
             display: flex;
-            justify-content: center; /* ТЕПЕРЬ ПО ЦЕНТРУ! */
+            justify-content: space-between;
             align-items: center;
             transition: all 0.3s ease;
             font-family: var(--font-readable);
             font-weight: 600;
             font-size: 1rem;
             color: #eee;
-            position: relative; /* Важно! */
-            min-height: 25px;
-        }
-        .num-tag {
-        position: absolute;
-        left: 20px;
-        color: var(--color-primary);
-        font-family: var(--font-decorative);
-        font-size: 1.4em;
-        font-weight: 400;
-        text-shadow: 0 0 10px rgba(153, 255, 153, 0.3);
         }
 
         /* Стиль для ВАЖНЫХ разделов (с контентом) в закрытом состоянии */
@@ -730,8 +714,6 @@
         }
 
         .prompt-arrow {
-            position: absolute;
-            right: 20px;
             transition: transform 0.3s ease;
             font-size: 0.8em;
             opacity: 0.6;
@@ -904,12 +886,11 @@
 
 
         .option-info {
-            display: block;   
+            display: flex;
+            flex-direction: column;
             text-align: left;
-            width: 100%;      
-            min-width: 0;   
+            flex: 1;
         }
-
 
         .option-name {
             font-weight: 700;
@@ -945,10 +926,7 @@
             background: rgba(0,0,0,0.3);
             border-radius: 6px;
             border: 1px dashed rgba(255,255,255,0.1);
-            width: 100%;              /* ДОБАВЛЕНО */
-            box-sizing: border-box;   /* ДОБАВЛЕНО */
         }
-
         .preview-content p {
             margin: 0 0 10px 0;
             font-size: 0.9em;
@@ -956,17 +934,13 @@
             line-height: 1.5;
         }
         .preview-content img {
-            width: 100%;          /* БЫЛО max-width, СТАЛО width */
-            min-width: 100%;      /* ДОБАВЛЕНО: не даём сжиматься */
+            max-width: 100%;
             height: auto;
             border-radius: 6px;
             border: 1px solid rgba(255,255,255,0.1);
             display: block;
-            margin: 10px auto;
+            margin: 0 auto;
         }
-
-
-
 
         .copy-btn {
             background: transparent;
@@ -1242,8 +1216,6 @@
             }
 
             /* Текст - НА ВСЮ ШИРИНУ */
-                        /* Текст - НА ВСЮ ШИРИНУ */
-                        /* Текст - НА ВСЮ ШИРИНУ */
             .option-info {
                 width: 100%;
                 margin-right: 0;
@@ -1252,17 +1224,6 @@
                 padding-right: 35px; /* Отступ справа, чтобы текст не налез на галочку */
                 margin-bottom: 12px; /* Место до кнопки */
             }
-
-            /* Галочку двигаем выше, чтобы не мешала */
-            .option-item {
-                padding-top: 45px !important; /* Место сверху под галочку */
-            }
-
-            .select-input {
-                top: 12px !important;
-                right: 12px !important;
-            }
-
 
             /* Кнопка "Копировать" - СНИЗУ И ШИРОКАЯ */
             .copy-btn {
@@ -1334,91 +1295,6 @@
             opacity: 1;
             padding: 0 20px 20px 20px; /* Возвращаем отступы */
         }
-        /* === ФИНАЛЬНЫЙ БЛОК (ВСТАВЛЯТЬ ПОСЛЕ FAQ) === */
-
-        /* 1. Кнопка "Наверх" (Красивая, круглая, слева) */
-        #scrollTopBtn {
-            position: fixed;
-            right: 100px; /* Сдвинута от края на ПК */
-            bottom: 50px;
-            width: 50px;
-            height: 50px;
-            background: rgba(15, 15, 15, 0.8);
-            border: 1px solid var(--color-primary);
-            border-radius: 50%; /* Кружочек */
-            color: var(--color-primary);
-            font-size: 1.5em;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            z-index: 9999;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.4s ease;
-            box-shadow: 0 0 15px rgba(153, 255, 153, 0.2);
-        }
-
-        #scrollTopBtn.show {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        #scrollTopBtn:hover {
-            transform: translateY(-5px);
-            background: var(--color-primary);
-            color: #000;
-        }
-
-        /* 2. НАСТРОЙКИ ДЛЯ ТЕЛЕФОНА (Исправление картинок и текста) */
-        @media (max-width: 600px) {
-
-            /* Кнопку возвращаем в угол, чтобы не мешала пальцам */
-            #scrollTopBtn {
-                right: 20px !important;
-                bottom: 20px !important;
-            }
-
-            /* === ЧИНИМ КАРТИНКИ (Самое важное!) === */
-            /* Заставляем блок с описанием растянуться */
-            .option-info {
-                width: 100% !important;
-                display: block !important;
-                padding-right: 0 !important;
-            }
-
-            /* Растягиваем контейнер картинки */
-            .preview-content {
-                width: 100% !important;
-                box-sizing: border-box !important;
-                margin: 10px 0 !important;
-            }
-
-            /* Растягиваем САМУ картинку */
-            .preview-content img {
-                width: 100% !important;
-                min-width: 100% !important;
-                height: auto !important;
-                display: block !important;
-            }
-
-            /* === ЧИНИМ ЗАГОЛОВКИ === */
-            /* Текст заголовков (чтобы не наезжал на цифры) */
-            .guide-header, .prompt-header {
-                justify-content: flex-start !important;
-                padding-left: 60px !important; /* Место для цифры */
-                min-height: 50px;
-            }
-
-            /* Ставим цифры и иконки ровно слева */
-            .num-tag, .guide-header-icon {
-                left: 15px !important;
-                top: 50% !important;
-                transform: translateY(-50%) !important;
-            }
-        }
-
-
     </style>
 </head>
 <body>
@@ -1967,13 +1843,10 @@
 
                     <!-- 1. OOC -->
                     <div class="prompt-category">
-                        <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span class="num-tag">1.</span> <!-- Цифра отдельно! -->
-                            <span>━━(OOC)━━</span>              <!-- Название посередине -->
+                        <div class="prompt-header special-border" onclick="togglePrompt(this)">
+                            <span>1.━━(OOC)━━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
-
-
                         <div class="prompt-body">
                             <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">🌐Язык OOC</h4>
                             <div class="default-block"><span class="default-label">По дефолту:</span>✧⚪️Язык OOC (Русский)</div>
@@ -2022,9 +1895,8 @@ Translate ALL Renette's text to modern Ukrainian language. All her OOC's must be
 
                     <!-- 2. РП -->
                     <div class="prompt-category">
-                        <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span class="num-tag">2.</span>
-                            <span>━━(РП)━━</span>
+                        <div class="prompt-header special-border" onclick="togglePrompt(this)">
+                            <span>2.━━(РП)━━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2239,8 +2111,7 @@ There is no need to fill extraneously. Shun extras, interjections and other happ
                     <!-- 3. Карты -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span class="num-tag">3.</span>
-                            <span>━━(Карты)━━</span>
+                            <span>3.━━(Карты)━━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2250,9 +2121,8 @@ There is no need to fill extraneously. Shun extras, interjections and other happ
 
                     <!-- 4. Основное -->
                     <div class="prompt-category">
-                        <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span class="num-tag">4.</span>
-                            <span>━━(Основное)━━</span>
+                        <div class="prompt-header special-border" onclick="togglePrompt(this)">
+                            <span>4.━━(Основное)━━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2656,9 +2526,8 @@ Immediate Gut Reactions: How should they show their true feelings outwardly rath
 
                     <!-- 5. Откровенный Контент -->
                     <div class="prompt-category">
-                        <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span class="num-tag">5.</span>
-                            <span>━━(Откровенный Контент)━━</span>
+                        <div class="prompt-header special-border" onclick="togglePrompt(this)">
+                            <span>5.━━(Откровенный Контент)━━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2708,9 +2577,8 @@ Replicate the finer bodily, skin, blood to organs nuanced direct textual reactio
 
                     <!-- 6. Язык -->
                     <div class="prompt-category">
-                        <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span class="num-tag">6.</span>
-                            <span>━━(Язык)━━</span>
+                        <div class="prompt-header special-border" onclick="togglePrompt(this)">
+                            <span>6.━━(Язык)━━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2891,9 +2759,8 @@ Instead of using a banned phrase, randomly pick one of the alternatives.
 
                     <!-- 7. Настройки -->
                     <div class="prompt-category">
-                        <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span class="num-tag">7.</span>
-                            <span>━━(Настройки)━━</span>
+                        <div class="prompt-header special-border" onclick="togglePrompt(this)">
+                            <span>7.━━(Настройки)━━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -3040,9 +2907,8 @@ Always pen all turn responses between:WORD Count Length: 350-650 {{setvar::clauw
 
                     <!-- 8. Дополнительное -->
                     <div class="prompt-category">
-                        <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span class="num-tag">8.</span>
-                            <span>━━(Дополнительное)━━</span>
+                        <div class="prompt-header special-border" onclick="togglePrompt(this)">
+                            <span>8.━━(Дополнительное)━━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -4199,9 +4065,8 @@ The code structure itself MUST remain in English, but all *visible rendered text
 
                     <!-- 9. Патчи -->
                     <div class="prompt-category">
-                        <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span class="num-tag">9.</span>
-                            <span>━━(Патчи)━━</span>
+                        <div class="prompt-header special-border" onclick="togglePrompt(this)">
+                            <span>9.━(Патчи)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -4225,8 +4090,7 @@ The code structure itself MUST remain in English, but all *visible rendered text
                     <!-- 10. Думалка -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span class="num-tag">10.</span>
-                            <span>━━(Думалка)━━</span>
+                            <span>10.━(Думалка)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -4237,8 +4101,7 @@ The code structure itself MUST remain in English, but all *visible rendered text
                     <!-- 11. ДжейлБрейк -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span class="num-tag">11.</span>
-                            <span>━━(ДжейлБрейк)━━</span>
+                            <span>11.━(ДжейлБрейк)━</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -4251,9 +4114,8 @@ The code structure itself MUST remain in English, but all *visible rendered text
 
         </div>
     </div>
-    <div id="scrollTopBtn" onclick="scrollToTop()">▲</div>
+
     <script>
-        
         // === ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК С ПАМЯТЬЮ ===
         function openTab(evt, tabName) {
             var i, tabcontent, tablinks;
@@ -4610,25 +4472,6 @@ The code structure itself MUST remain in English, but all *visible rendered text
                 }, 2000);
             }).catch(err => {
                 showToast('Ошибка', 'Не удалось скопировать.');
-            });
-        }
-                // === ЛОГИКА КНОПКИ "НАВЕРХ" ===
-        const scrollBtn = document.getElementById("scrollTopBtn");
-
-        window.addEventListener("scroll", function() {
-            // Если пролистали больше 300px, показываем кнопку
-            if (window.scrollY > 300) {
-                scrollBtn.classList.add("show");
-            } else {
-                scrollBtn.classList.remove("show");
-            }
-        });
-
-        function scrollToTop() {
-            // Плавный скролл наверх
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
             });
         }
     </script>
