@@ -904,12 +904,11 @@
 
 
         .option-info {
-            display: block;   
+            display: flex;
+            flex-direction: column;
             text-align: left;
-            width: 100%;      
-            min-width: 0;   
+            flex: 1;
         }
-
 
         .option-name {
             font-weight: 700;
@@ -964,8 +963,6 @@
             display: block;
             margin: 10px auto;
         }
-
-
 
 
         .copy-btn {
@@ -1242,8 +1239,6 @@
             }
 
             /* Текст - НА ВСЮ ШИРИНУ */
-                        /* Текст - НА ВСЮ ШИРИНУ */
-                        /* Текст - НА ВСЮ ШИРИНУ */
             .option-info {
                 width: 100%;
                 margin-right: 0;
@@ -1252,17 +1247,6 @@
                 padding-right: 35px; /* Отступ справа, чтобы текст не налез на галочку */
                 margin-bottom: 12px; /* Место до кнопки */
             }
-
-            /* Галочку двигаем выше, чтобы не мешала */
-            .option-item {
-                padding-top: 45px !important; /* Место сверху под галочку */
-            }
-
-            .select-input {
-                top: 12px !important;
-                right: 12px !important;
-            }
-
 
             /* Кнопка "Копировать" - СНИЗУ И ШИРОКАЯ */
             .copy-btn {
@@ -4631,6 +4615,7 @@ The code structure itself MUST remain in English, but all *visible rendered text
                 behavior: "smooth"
             });
         }
+
     </script>
 </body>
 </html>
