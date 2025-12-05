@@ -4039,8 +4039,26 @@ HTML structure:
 
         // === ПРИ ЗАГРУЗКЕ СТРАНИЦЫ ===
         document.addEventListener('DOMContentLoaded', function() {
-            // Проверяем, есть ли что-то в памяти
-            var savedTab = localStorage.getItem('yablochnyActiveTab');
+
+    	// === ПРОСМОТРЩИК ИЗОБРАЖЕНИЙ ===
+    		const lightbox = document.getElementById('lightbox');
+    		const lightboxImg = document.getElementById('lightbox-img');
+
+    		document.querySelectorAll('.preview-content img').forEach(img => {
+        		img.addEventListener('click', () => {
+            		lightboxImg.src = img.src;
+            		lightbox.classList.add('active');
+        		});
+    		});
+
+    		lightbox.addEventListener('click', () => {
+    			lightbox.classList.remove('active');
+    		});
+    		// === КОНЕЦ ПРОСМОТРЩИКА ===
+
+    		// Проверяем, есть ли что-то в памяти
+    		var savedTab = localStorage.getItem('yablochnyActiveTab');
+
 
             // Если в памяти пусто (первый заход), открываем Description
             if (!savedTab) {
@@ -4374,20 +4392,6 @@ HTML structure:
                 behavior: "smooth"
             });
         }
-		// === ПРОСМОТРЩИК ИЗОБРАЖЕНИЙ ===
-		const lightbox = document.getElementById('lightbox');
-		const lightboxImg = document.getElementById('lightbox-img');
-
-		document.querySelectorAll('.preview-content img').forEach(img => {
-    		img.addEventListener('click', () => {
-        		lightboxImg.src = img.src;
-        		lightbox.classList.add('active');
-    		});
-		});
-
-		lightbox.addEventListener('click', () => {
-    		lightbox.classList.remove('active');
-		});
 
     </script>
 	
