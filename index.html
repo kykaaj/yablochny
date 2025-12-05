@@ -2376,7 +2376,10 @@ Fly in with the Dead Dove! Express the Darker, Cruel, bleaker, more taboo elemen
                             <!-- ГРУППА ДЛЯ ИЗОЛЯЦИИ УЛУЧШАЛОК -->
                             <div class="group-block">
                                 <div class="options-list">
-                                    <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">✧🍃Повседневный Тон</span>
+                                    <div class="option-item">
+                                    <input type="radio" name="chronicles" class="select-input">
+                                        <div class="option-info">
+                                            <span class="option-name">✧🍃Повседневный Тон</span>
                                         <details class="preview-details">
                                             <summary>👁️ Посмотреть описание</summary>
                                             <div class="preview-content"><p>Большинству подойдёт именно он.</p></div>
@@ -2386,7 +2389,10 @@ Fly in with the Dead Dove! Express the Darker, Cruel, bleaker, more taboo elemen
                                     <textarea class="prompt-source">[Casual Everyday]
 Pen with non-complex everyday casual and recreational language that is without bookish-logics, jargons or strict-ness! Form with HADA DE KANJIRU. Estrange the disinterest, disengage-ment and cliché. Verbalize from sourced reality and involve animated vocabs with tantan, that seeks fresh, raw unexpected palettes and embrace continuous flow unimpeded NAMERAKA.</textarea>
                                 </div>
-                               <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">✧💫Эмоциональный Тон</span>
+                               <div class="option-item">
+                                        <input type="radio" name="chronicles" class="select-input">
+                                        <div class="option-info">
+                                            <span class="option-name">✧💫Эмоциональный Тон</span>
                                         <details class="preview-details">
                                             <summary>👁️ Посмотреть описание</summary>
                                             <div class="preview-content"><p>Разница с повседневным небольшая, но в нем идет больший упор на чувства персонажей.</p></div>
@@ -2609,6 +2615,30 @@ Shift between differing structural forms within the same response. Incorporate u
 Follow a theatre-like format in responses. Always use the following template for dialogues: **NAME**: "speech" optional brief actions, regardless of previous style. Write for the ear, not the eye. Keep actions minimal and purposeful.
 </screenplay></textarea></div>
                             </div>
+							 <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">✎🪛Модификаторы (Шаблон)</h4>
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
+
+                            <!-- ГРУППА ДЛЯ ИЗОЛЯЦИИ ПАТЧЕЙ -->
+                            <div class="group-block">
+                                <div class="options-list">
+                                    <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">💬 Больше Диалогов</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Больше диалогов.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[D-Modifier - Talk and Speak more! incorporate more dialogues into the response, aim for 40-70% dialogues.]</textarea></div>
+				<div class="default-block" style="background: rgba(153, 255, 153, 0.1); border-left-color: var(--color-primary);"><span class="default-label" style="color:var(--color-primary);">Стилистические ответы (выберите один)</span></div>
+                                <div class="options-list">
+                                    <div class="option-item">
+                                    <input type="radio" name="chronicles" class="select-input">
+                                        <div class="option-info">
+                                            <span class="option-name">✨ Тонкие Стилистические</span>
+					    <details class="preview-details">
+					    	<summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Немного больше стиля.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[S-Modifier - Subtly integrate more visuals, advance formats, typographical and stylistic world-elements, wherever appropriate.]</textarea></div>
+                                    <div class="option-item">
+                                        <input type="radio" name="chronicles" class="select-input">
+                                        <div class="option-info">
+                                            <span class="option-name">🎨 Ультра Стилистические</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>БОЛЬШЕ стиля.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[U-Modifier - Bake in more immersive visual blocks, advance formats, typographical and styles. Make it a visual feast for the eyes.]</textarea></div>
+                                </div>
+                                <button class="bulk-copy-btn" onclick="copyBulk(this)">
+                                    <img src="sheets.png" style="height:20px;"> СКОПИРОВАТЬ ВЫБРАННЫЕ МОДЫ
+								</button></div>
+                             </div>
                         </div>
                     </div>
 						<div class="prompt-category">
