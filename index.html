@@ -3895,7 +3895,8 @@ HTML structure:
     		const lightbox = document.getElementById('lightbox');
     		const lightboxImg = document.getElementById('lightbox-img');
 
-    		document.querySelectorAll('.preview-content img').forEach(img => {
+    		document.querySelectorAll('.preview-content img, .step-image').forEach(img => {
+
         		img.addEventListener('click', () => {
             		lightboxImg.src = img.src;
             		lightbox.classList.add('active');
