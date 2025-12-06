@@ -2699,17 +2699,200 @@ Follow a theatre-like format in responses. Always use the following template for
                              </div>
                         </div>
                     </div>
-						<div class="prompt-category">
-                        <div class="prompt-header" onclick="togglePrompt(this)">
-                            <span class="num-tag">7.</span>
-                            <span>⸻(Патчи)⸻</span>
-                            <span class="prompt-arrow">▼</span>
+						<!-- 7. Патчи -->
+<div class="prompt-category">
+    <div class="prompt-header" onclick="togglePrompt(this)">
+        <span class="num-tag">7.</span>
+        <span>⸻(Патчи)⸻</span>
+        <span class="prompt-arrow">▼</span>
+    </div>
+    <div class="prompt-body">
+        <!-- Бан-ворды -->
+        <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">❌Баны</h4>
+        <div class="default-block"><span class="default-label">По дефолту:</span>✧🇷🇺 Баны</div>
+        <div class="options-list">
+
+            <!-- RU Version -->
+            <div class="option-item">
+                <div class="option-info">
+                    <span class="option-name">✧🇷🇺 Баны</span>
+                    <details class="preview-details">
+                        <summary>👁️ Посмотреть описание</summary>
+                        <div class="preview-content">
+                            <p>
+                                Список запрещенных слов и поведенческих клише, адаптированный под русский язык.
+                            </p>
                         </div>
-                        <div class="prompt-body">
-                            <p style="color:#777; font-size:0.9em;">Нет дополнительных вариантов.</p>
-                        
-			</div>
-                    </div>
+                    </details>
+                </div>
+                <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+<textarea class="prompt-source"><banned_instructions>
+[Ban]
+This is a list of constructions that you shall avoid to avoid ruining the story. From now on you hate using:
+
+Generic overused words:
+never use: напряжение, тишина, мускус, озон, якорь (и все сравнения с якорем), сандал, затяжной, смешиваясь, мерцание, обещание
+instead: более точные указания на запахи персонажей, например "Его сладкий парфюм", "Запах чистой одежды", "Запах алкоголя и сигарет", "Запах влаги, травы и асфальта после дождя" и т.д.
+
+Robotic behaviour:
+- Всё, что связано с процессами, кодами, процессорами, ошибками 404, протоколами, пользовательскими соглашениями и т.д., не применяется к людям
+Instead of: "Его процессор перегрелся." "В его мозге произошла ошибка 404."
+Use: "Его переполнили эмоции", "Это оставило его ошеломленным"
+
+Never end your reply with unnatural robotic questions:
+- "Так что, X? или Z?"
+- "Может X? Или Z?"
+- "Тебе нравится X? Или лучше сделать Z?"
+
+Unnecessary clarifications in brackets, especially what doesn't exist:
+- Он поправив очки (которых у него не было)
+- Он вытер слезы (которых там не было)
+- Он завилял хвостом (которого у него не было)
+
+Randomise phrases:
+instead "Не X, а Y" e.g "Это был не смех, а сухой хрип в горле"
+use: {random:его смех был сухим::его смех был безрадостным::это не было похоже на счастливый смех::смех звучал сухо::из него послышался грохот, не похожий на смех}
+
+Cliché description:
+- "что-то другое" / "что-то" (напр., "что-то уникально её/его")
+- "смесь/сочетание X и Y"
+- "пьянящий коктейль/смесь"
+- "невысказанный вызов"
+- "в её/его голосе было X, Y и что-то другое"
+
+Atmosphere Clichés:
+- "воздух густой от X"
+- "воздух/атмосфера заряжена/тяжелая от X"
+- "воздух наполнен/тяжел от X"
+- "X тяжело висит в воздухе"
+- "воздух пах X и Y"
+- "напряжение наполняет воздух"
+- "электричество в воздухе"
+</banned_instructions</textarea>
+            </div>
+
+            <!-- UA Version -->
+            <div class="option-item">
+                <div class="option-info">
+                    <span class="option-name">✧🇺🇦 Баны</span>
+                    <details class="preview-details">
+                        <summary>👁️ Посмотреть описание</summary>
+                        <div class="preview-content">
+                            <p>
+                                Украинские баны.
+                            </p>
+                        </div>
+                    </details>
+                </div>
+                <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+<textarea class="prompt-source"><banned_instructions>
+[Ban]
+This is a list of constructions that you shall avoid to avoid ruining the story. From now on you hate using:
+
+Generic overused words:
+never use: напруга, тиша, мускус, озон, якір (і всі порівняння з якорем), сандал, затяжний, змішуючись, мерехтіння, обіцянка
+instead: більш точні вказівки на запахи персонажів, наприклад "Його солодкий парфум", "Запах чистого одягу", "Запах алкоголю та цигарок", "Запах вологи, трави та асфальту після дощу" тощо.
+
+Robotic behaviour:
+- Все пов'язане з процесами, кодами, процесорами, помилками 404, протоколами, користувацькими угодами тощо не застосовується до людей
+Instead of: "Його процесор перегрівся." "У його мозку сталася помилка 404."
+Use: "Його переповнили емоції", "Це залишило його приголомшеним"
+
+Never end your reply with unnatural robotic questions:
+- "То що, X? чи Z?"
+- "Може X? Або Z?"
+- "Тобі подобається X? Чи краще зробити Z?"
+
+Unnecessary clarifications in brackets, especially what doesn't exist:
+- Він поправив окуляри (яких у нього не було)
+- Він витер сльози (яких там не було)
+- Він завиляв хвостом (якого в нього не було)
+
+Randomise phrases:
+instead "Не X, а Y" e.g "Це був не сміх, а сухий хрип у горлі"
+use:{{random:його сміх був сухим::його сміх був безрадісним::це не було схоже на щасливий сміх::сміх звучав сухо::з нього почувся гуркіт, не схожий на сміх}}
+
+Cliché description:
+- "щось інше" / "щось" (напр., "щось унікально її/його")
+- "суміш/поєднання X та Y"
+- "п'янкий коктейль/суміш"
+- "невисловлений виклик"
+- "в її/його голосі було X, Y і щось інше"
+
+Atmosphere Clichés:
+- "повітря густе від X"
+- "повітря/атмосфера заряджена/важка від X"
+- "повітря наповнене/важке від X"
+- "X важко висить у повітрі"
+- "повітря пахло X та Y"
+- "напруга наповнює повітря"
+- "електрика в повітрі"
+</banned_instructions</textarea>
+            </div>
+
+            <!-- EN Version -->
+            <div class="option-item">
+                <div class="option-info">
+                    <span class="option-name">✧🇺🇸 Баны</span>
+                    <details class="preview-details">
+                        <summary>👁️ Посмотреть описание</summary>
+                        <div class="preview-content">
+                            <p>
+                                Англ баны.
+                            </p>
+                        </div>
+                    </details>
+                </div>
+                <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+<textarea class="prompt-source"><banned_instructions>
+[Ban]
+This is a list of constructions that you shall avoid to avoid ruining the story. From now on you hate using:
+
+Generic overused words:
+never use: tension, silence, musk, ozone, anchor (and all comparisons with an anchor), sandalwood, lingering, mingling, shimmer, promise
+instead: more precise indications of characters' scents, for example "His sweet perfume", "The smell of clean clothes", "The smell of alcohol and cigarettes", "The smell of moisture, grass, and asphalt after rain", etc.
+
+Robotic behaviour:
+- Everything related to processes, codes, processors, 404 errors, protocols, user agreements, etc., is not applied to humans
+Instead of: "His processor overheated." "A 404 error occurred in his brain."
+Use: "He was overwhelmed with emotions", "It left him stunned"
+
+Never end your reply with unnatural robotic questions:
+- "So what, X? or Z?"
+- "Maybe X? Or Z?"
+- "Do you like X? Or is it better to do Z?"
+
+Unnecessary clarifications in brackets, especially what doesn't exist:
+- He adjusted his glasses (which he didn't have)
+- He wiped away tears (that weren't there)
+- He wagged his tail (which he didn't have)
+
+Randomise phrases:
+instead "Not X, but Y" e.g "It was not laughter, but a dry rasp in the throat"
+use: {random:his laugh was dry::his laugh was joyless::it didn't sound like happy laughter::the laugh sounded dry::a rumble came from him, unlike laughter}
+
+Cliché description:
+- "something else" / "something" (e.g., "something uniquely hers/his")
+- "mixture/combination of X and Y"
+- "heady cocktail/mixture"
+- "unspoken challenge"
+- "in her/his voice was X, Y and something else"
+
+Atmosphere Clichés:
+- "the air is thick with X"
+- "air/atmosphere charged/heavy with X"
+- "air filled/heavy with X"
+- "X hangs heavy in the air"
+- "the air smelled of X and Y"
+- "tension fills the air"
+- "electricity in the air"
+</banned_instructions</textarea>
+            </div>
+
+        </div>
+    </div>
+</div>
+
                     <!-- 8. Дополнительное -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
