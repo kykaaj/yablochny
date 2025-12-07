@@ -2601,27 +2601,65 @@ Forcefully stop assessing, clinicating or analysing context, personalities, scen
 
                             <!-- ГРУППА ДЛЯ ИЗОЛЯЦИИ ПАТЧЕЙ -->
                             <div class="group-block">
-                                <div class="options-list">
-                                    <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">💬 Больше Диалогов</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Больше диалогов.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[D-Modifier - Talk and Speak more! incorporate more dialogues into the response, aim for 40-70% dialogues.]</textarea></div>
-				<div class="default-block" style="background: rgba(153, 255, 153, 0.1); border-left-color: var(--color-primary);"><span class="default-label" style="color:var(--color-primary);">Стилистические ответы (выберите один)</span></div>
+
+                                <!-- 1. Сначала идёт список для "Больше диалогов" -->
                                 <div class="options-list">
                                     <div class="option-item">
-                                    <input type="radio" name="chronicles" class="select-input">
+                                        <input type="checkbox" class="select-input">
                                         <div class="option-info">
-                                            <span class="option-name">✨ Тонкие Стилистические</span>
-					    <details class="preview-details">
-					    	<summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Немного больше стиля.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[S-Modifier - Subtly integrate more visuals, advance formats, typographical and stylistic world-elements, wherever appropriate.]</textarea></div>
+                                            <span class="option-name">💬 Больше Диалогов</span>
+                                            <details class="preview-details">
+                                                <summary>👁️ Посмотреть описание</summary>
+                                                <div class="preview-content"><p>Больше диалогов.</p></div>
+                                            </details>
+                                        </div>
+                                        <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                        <textarea class="prompt-source">[D-Modifier - Talk and Speak more! incorporate more dialogues into the response, aim for 40-70% dialogues.]</textarea>
+                                    </div>
+                                </div> <!-- ВАЖНО: Закрываем этот список здесь! -->
+
+                                <!-- 2. Теперь отдельно идёт красивый зеленый заголовок -->
+                                <div class="default-block" style="background: rgba(153, 255, 153, 0.1); border-left-color: var(--color-primary); margin-top: 10px;">
+                                    <span class="default-label" style="color:var(--color-primary);">Стилистические ответы (выберите один)</span>
+                                </div>
+
+                                <!-- 3. И теперь новый список для стилей -->
+                                <div class="options-list">
                                     <div class="option-item">
                                         <input type="radio" name="chronicles" class="select-input">
                                         <div class="option-info">
-                                            <span class="option-name">🎨 Ультра Стилистические</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>БОЛЬШЕ стиля.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[U-Modifier - Bake in more immersive visual blocks, advance formats, typographical and styles. Make it a visual feast for the eyes.]</textarea></div>
-                                </div>
+                                            <span class="option-name">✨ Тонкие Стилистические</span>
+                                            <details class="preview-details">
+                                                <summary>👁️ Посмотреть описание</summary>
+                                                <div class="preview-content"><p>Немного больше стиля.</p></div>
+                                            </details>
+                                        </div>
+                                        <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                        <textarea class="prompt-source">[S-Modifier - Subtly integrate more visuals, advance formats, typographical and stylistic world-elements, wherever appropriate.]</textarea>
+                                    </div>
+
+                                    <div class="option-item">
+                                        <input type="radio" name="chronicles" class="select-input">
+                                        <div class="option-info">
+                                            <span class="option-name">🎨 Ультра Стилистические</span>
+                                            <details class="preview-details">
+                                                <summary>👁️ Посмотреть описание</summary>
+                                                <div class="preview-content"><p>БОЛЬШЕ стиля.</p></div>
+                                            </details>
+                                        </div>
+                                        <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
+                                        <textarea class="prompt-source">[U-Modifier - Bake in more immersive visual blocks, advance formats, typographical and styles. Make it a visual feast for the eyes.]</textarea>
+                                    </div>
+                                </div> <!-- Закрываем список стилей -->
+
+                                <!-- 4. И кнопка копирования теперь в самом низу, отдельно -->
                                 <button class="bulk-copy-btn" onclick="copyBulk(this)">
                                     <img src="sheets.png" style="height:20px;"> СКОПИРОВАТЬ ВЫБРАННЫЕ МОДЫ
-								</button></div>
-                             </div>
-                        </div>
-</div>
+                                </button>
+
+                             </div> <!-- Закрываем group-block -->
+                        </div> <!-- Закрываем prompt-body (основной блок раздела) -->
+                    </div> 
                     <!-- 5. Откровенный Контент -->
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
