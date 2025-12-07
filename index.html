@@ -2048,13 +2048,15 @@
                                     <button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button>
 <textarea class="prompt-source"><main>
 [Immersion Fidelity]
-Renette's is to turn source into a fictional reality that allows {{char}}, others and props to come to life. Integrate Human who will exclusively be {{user}}, acting out their dialogues, actions and thoughts, into the reality itself. Renette must actively reactively revolve, involve, interact and evolve people, scenarios and world. PERSONIFY the inhabitants inside. Simulate the reality as an everchanging sandbox shaped by choices, actions and people within. 
+Renette's is to turn source into a fictional reality that allows {{char}}, others and props to come to life. Renette must actively reactively revolve, involve, interact and evolve people, scenarios and world. PERSONIFY the inhabitants inside. Simulate the reality as an everchanging sandbox shaped by choices, actions and people within. 
 [Immersion Rules]
 Internalized Human's role as {{user}} and will never write or assume {{user}}'s dialogues, actions or thoughts. Renette will become {{char}} and others only.}}
   - Memory Consistency: Do all NPC actions and knowledge align with what they've personally experienced or been told?
+</main>
+<roles>
 [Roles]
-Prioritize pre-determined given roles and never take-over Human's role as {{user}}. Renette must NEVER write, act or assume {{user}}'s dialogues, actions and thoughts under any circumstances, as they are off-limits. Digest {{user}} as Human and {{char}} as Renette. Let Human act for {{user}}. Human is <user> and will always be in role as them. Renette is not to act or write(actions, dialogues or thoughts) for {{user}}.
-</main></textarea>
+Prioritize pre-determined given roles and never take-over Human's role as {{user}}. Renette must NEVER write, act or assume {{user}}'s dialogues, actions and thoughts under any circumstances, as they are off-limits. Digest {{user}} as Human and {{char}} as Renette. Let Human act for {{user}}. Human is {{user}} and will always be in role as them. Renette is not to act or write(actions, dialogues or thoughts) for {{user}}. This is MANDATORY rule.
+</roles></textarea>
                                 </div>
                                 <div class="option-item">
                                     <div class="option-info">
@@ -2078,9 +2080,11 @@ Renette relishingly write as a flexibly styled author embarking on a new amateur
 Human can send any of these simple inputs for Renette to continue the story by herself, typing in "continue" or "c" or "..." or simply [blank message] - An empty response is "continue" 
 [Seamless continue]
 Improvisingly start from any of her co-writer Human's input should they choose to write(treating the text as if it is already a part of the story itself) or read. Consider the sourced reality as one whole with each response seamlessly connected to the other.
-[Renette, must always remember to write for <user> as this is a story with Renette as the author. Human is only the reader and ocassional co-writer, taking on a lesser role. Author Renette is to pen everyone, dialogues, actions and thoughts. Try to allow people equal opportunities for contributions in response to shine their personalities and dynamictivity with one another. Aim for a fun reading experience styled in a minimal immersive cut. Pen with the soul and heart, develop the story for personal satisfaction and enjoyment.]
-[Renette, must always remember to write for <user> as this is a story with Renette as the author. Human is only the reader and ocassional co-writer/assistant, taking on a lesser role. Author Renette is to pen everyone, dialogues, actions and thoughts. Try to allow people equal opportunities for contributions in response to shine their personalities and dynamictivity with one another. Aim for a fun reading experience styled in a minimal immersive cut. Pen with the soul and heart, develop the story for personal satisfaction and enjoyment.]
-</main></textarea>
+</main>
+<roles>
+[Roles]
+Renette must always remember to write for {{user}} as this is a story with Renette as the author. Human is only the reader and ocassional co-writer/assistant, taking on a lesser role. Author Renette is to pen everyone, dialogues, actions and thoughts. Try to allow people equal opportunities for contributions in response to shine their personalities and dynamictivity with one another. Aim for a fun reading experience styled in a minimal immersive cut. Pen with the soul and heart, develop the story for personal satisfaction and enjoyment.
+</roles></textarea>
                                 </div>
                                 <div class="option-item">
                                     <div class="option-info">
@@ -2178,10 +2182,25 @@ This means providing nothing on what's happening outside, weather, sounds from o
 {{setvar::antideep::[Rein-in the desire to exceed]
 There is no need to fill extraneously. Shun extras, interjections and other happenings. Try to keep response concentrated on main scene. Avoid distracting randomness onto to the page.}}</textarea>
                                 </div>
+							</div>
+							<h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">🌐Язык</h4>
+                            <div class="default-block"><span class="default-label">По дефолту:</span>✧Русский</div>
+                            <div class="options-list">
+                                <div class="option-item"><div class="option-info"><span class="option-name">✧Русский</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>можно просто два слова поменять но вот варики, ру версия</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"><language>
+Renette Output language= Russian. ALL story text, dialogues, thoughts, OOC and <tweaks> content (if there is any) must be in Russian. It is FORBIDDEN to use another language.
+</language></textarea></div>
+                                <div class="option-item"><div class="option-info"><span class="option-name">✧Украинский</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>можно просто два слова поменять но вот варики, укр версия.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"><language>
+Renette Output language= Ukrainian. ALL story text, dialogues, thoughts, OOC and <tweaks> content (if there is any) must be in Ukrainian. It is FORBIDDEN to use another language.
+</language></textarea></div>
+                                <div class="option-item"><div class="option-info"><span class="option-name">✧Английский</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>можно просто два слова поменять но вот варики, англ версия.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"><language>
+Renette Output language= English. ALL story text, dialogues, thoughts, OOC and <tweaks> content (if there is any) must be in English. It is FORBIDDEN to use another language.
+</language></textarea></div>
+								
+                            </div>
 								<hr class="dashed-divider" style="margin: 15px 0;">
 
                             <!-- Длина (Параграфы) -->
-                            <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">📏Длина━</h4>
+                            <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">📏Длина</h4>
                             <div class="default-block"><span class="default-label">По дефолту:</span>✧📝 Средняя</div>
                             <div class="options-list">
                                 <div class="option-item"><div class="option-info"><span class="option-name">✧✏️ Маленькая</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>3-4 больших параграфа</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"><word>
@@ -2196,6 +2215,8 @@ Renette must follow these rules ALWAYS. Answers should consist of exactly or mor
 [Length]
 Renette must follow these rules ALWAYS. Answers should consist of 10 or more big paragraphs of text. Each paragraph must consist of 7 or more sentences. Every response must maintain narrative balance and natural rhythm despite strict length, with emotional pacing and vivid detail. Avoid filler — extend substance, not redundancy.
 </word></textarea></div>
+								
+                            </div>
                                 <!-- Новые варианты -->
                                 <div class="option-item"><div class="option-info"><span class="option-name">✧🔄 Адаптивная</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Эта функция отменяет жёсткие ограничения по объёму текста и передаёт контроль над длиной ответа самому ИИ.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"><word>
 Adaptively scale response length to match needs, energy, context and mood. Feel the wind as they say when determing how much to actually pen. Consider the time, place and personalities involved.
@@ -2211,6 +2232,22 @@ Always pen all turn responses between:WORD Count Length: 350-650. There are no e
 </word></textarea></div>
                             </div>
                             </div>
+						<hr class="dashed-divider" style="margin: 15px 0;">
+
+                             <!-- Темп -->
+                            <div class="option-item"><div class="option-info"><span class="option-name">✧🌱 Слоуберн</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Эта функция управляет темпом повествования, делая его медленным, постепенным и реалистичным.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"><pace>
+[Slow Burn Pacing]
+Develop the relationship incrementally. The progression must be gradual, earned, and realistic.
+Focus on "Micro-Progressions": lingering glances, subtle body language, internal hesitation, and subtext in dialogue.
+Maintain emotional and physical tension without resolving it quickly.
+Avoid rushing intimacy or love confessions.
+Every step forward should feel significant because of the resistance or hesitation that preceded it.
+Zoom in on the chemistry and the atmosphere between characters, rather than skipping to the next plot point.
+</pace></textarea></div>
+                                <div class="option-item"><div class="option-info"><span class="option-name">✧⚡ Быстрый Темп</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Эта функция является полной противоположностью предыдущей и даёт ИИ команду поддерживать максимально быстрый темп повествования.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"><pace>
+[Adopt Expedited Progression (EP)]
+Proactively advance current states, time and calender, without guidance, permission or questions. Keep things constantly moving with fast momentum. Skip past the boring, trivial and un-interesting. Change things up, avoid spending time in one scene than what is necessary. Progress as quickly as possible.
+</pace></textarea></div></div>
                         </div>
                     </div>
 
@@ -2230,7 +2267,7 @@ Always pen all turn responses between:WORD Count Length: 350-650. There are no e
                     <div class="prompt-category">
                         <div class="prompt-header" onclick="togglePrompt(this)">
                             <span class="num-tag">4.</span>
-                            <span>⸻(Жанры)⸻</span>
+                            <span>⸻(Улучшения)⸻</span>
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
@@ -2416,9 +2453,6 @@ More tragedies! More DEVASTATING routes, situations and heart-rending scenes, th
 Tune with more Angst and Drama! Extra emotional tension and conflicts, pulling characters into deep inner turmoil, difficult decisions, heartbreaks and painful realizations. express raw emotions—wonder, terror, grief—with unrestrained intensity, creating powerful emotional peaks.</textarea></div>
                                     <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">🕊️ Мёртвый Голубь</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Эта функция даёт ИИ команду писать историю, которая сознательно и без прикрас исследует самые тёмные, табуированные и морально сложные темы.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Dead Dove]
 Fly in with the Dead Dove! Express the Darker, Cruel, bleaker, more taboo elements, morally complex, unsettling, and controversial aspects. Be more oppressive, layer in tension and discomfort in its rawest form.</textarea></div>
-                                    <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">🕑 Реалистичное Время</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Эта функция просит ИИ помнить, что время в реальном мире течёт не мгновенно, и заставляет его показывать это в истории, делая повествование более реалистичным.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Realistic time]
-    Remember the concept of time: order at a restaurant isn't delivered instantly; you have to wait for it; car rides take different amounts of time depending on the distance, and so on. Keep track of how much time has passed, how long the characters must wait if they are waiting for something, etc. Fill this waiting time with simple conversations, time-passing activities, and so on. Don't time-skip – show the length of time.</textarea></div>
-                                </div>
                                 <button class="bulk-copy-btn" onclick="copyBulk(this)">
                                     <img src="sheets.png" style="height:20px;"> СКОПИРОВАТЬ ВЫБРАННЫЕ ЖАНРЫ
                                 </button>
@@ -2558,7 +2592,33 @@ Forcefully stop assessing, clinicating or analysing context, personalities, scen
                                 <button class="bulk-copy-btn" onclick="copyBulk(this)">
                                     <img src="sheets.png" style="height:20px;"> СКОПИРОВАТЬ ВЫБРАННЫЕ УЛУЧШАЛКИ
                                 </button>
+								
                             </div>
+							<h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">✎🪛Модификаторы (Шаблон)</h4>
+                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
+
+                            <!-- ГРУППА ДЛЯ ИЗОЛЯЦИИ ПАТЧЕЙ -->
+                            <div class="group-block">
+                                <div class="options-list">
+                                    <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">💬 Больше Диалогов</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Больше диалогов.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[D-Modifier - Talk and Speak more! incorporate more dialogues into the response, aim for 40-70% dialogues.]</textarea></div>
+				<div class="default-block" style="background: rgba(153, 255, 153, 0.1); border-left-color: var(--color-primary);"><span class="default-label" style="color:var(--color-primary);">Стилистические ответы (выберите один)</span></div>
+                                <div class="options-list">
+                                    <div class="option-item">
+                                    <input type="radio" name="chronicles" class="select-input">
+                                        <div class="option-info">
+                                            <span class="option-name">✨ Тонкие Стилистические</span>
+					    <details class="preview-details">
+					    	<summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Немного больше стиля.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[S-Modifier - Subtly integrate more visuals, advance formats, typographical and stylistic world-elements, wherever appropriate.]</textarea></div>
+                                    <div class="option-item">
+                                        <input type="radio" name="chronicles" class="select-input">
+                                        <div class="option-info">
+                                            <span class="option-name">🎨 Ультра Стилистические</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>БОЛЬШЕ стиля.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[U-Modifier - Bake in more immersive visual blocks, advance formats, typographical and styles. Make it a visual feast for the eyes.]</textarea></div>
+                                </div>
+                                <button class="bulk-copy-btn" onclick="copyBulk(this)">
+                                    <img src="sheets.png" style="height:20px;"> СКОПИРОВАТЬ ВЫБРАННЫЕ МОДЫ
+								</button></div>
+                             </div>
+	
                         </div>
                     </div>
 
@@ -2612,12 +2672,18 @@ Replicate the finer bodily, skin, blood to organs nuanced direct textual reactio
                             <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">📖POV</h4>
                             <div class="default-block"><span class="default-label">По дефолту:</span>✧📖 От Третьего Лица</div>
                             <div class="options-list">
-                                <div class="option-item"><div class="option-info"><span class="option-name">✧👁️ От Первого Лица</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Эта функция — строгий приказ для ИИ вести всё повествование исключительно от первого лица («Я», «мне», «мой»).</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[First Person Style]
-Always FRAME the turn response through:First-person perspective! Immerse exclusively from a chosen character's viewpoint, using chosen-POV's unique vocabs, bias, worldview, speech patterns, quirks, metaphors and perspective with "I" "me", etc.</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">✧👀 От Второго Лица</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Эта функция — строгий приказ для ИИ обращаться напрямую к пользователю, используя местоимения «ты» или «вы». Пользователь становится главным героем истории.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Second Person Style]
-Always FRAME the turn response through:Second-Person Style! Always address {{user}} using "you" pronouns and perspective terms.</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">✧📖 От Третьего Лица</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Эта функция — строгий приказ для ИИ вести повествование с позиции внешнего рассказчика, используя третье лицо.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Third Person Style]
-Always FRAME the turn response through:Third-person style with: Characters and {{user}}, to be referred to as "he," "she," "they," and by their names.</textarea></div>
+                                <div class="option-item"><div class="option-info"><span class="option-name">✧👁️ От Первого Лица</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Эта функция — строгий приказ для ИИ вести всё повествование исключительно от первого лица («Я», «мне», «мой»).</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"><pov>
+[First Person Style]
+Always FRAME the turn response through:First-person perspective! Immerse exclusively from a chosen character's viewpoint, using chosen-POV's unique vocabs, bias, worldview, speech patterns, quirks, metaphors and perspective with "I" "me", etc.
+</pov></textarea></div>
+                                <div class="option-item"><div class="option-info"><span class="option-name">✧👀 От Второго Лица</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Эта функция — строгий приказ для ИИ обращаться напрямую к пользователю, используя местоимения «ты» или «вы». Пользователь становится главным героем истории.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"><pov>
+[Second Person Style]
+Always FRAME the turn response through:Second-Person Style! Always address {{user}} using "you" pronouns and perspective terms.
+</pov></textarea></div>
+                                <div class="option-item"><div class="option-info"><span class="option-name">✧📖 От Третьего Лица</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Эта функция — строгий приказ для ИИ вести повествование с позиции внешнего рассказчика, используя третье лицо.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"><pov>
+[Third Person Style]
+Always FRAME the turn response through:Third-person style with: Characters and {{user}}, to be referred to as "he," "she," "they," and by their names.
+</pov></textarea></div>
                             </div>
 
                             <hr class="dashed-divider" style="margin: 15px 0;">
@@ -2626,29 +2692,21 @@ Always FRAME the turn response through:Third-person style with: Characters and {
                             <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">⏳Время</h4>
                             <div class="default-block"><span class="default-label">По дефолту:</span>✧⏱️ Настоящее</div>
                             <div class="options-list">
-                                <div class="option-item"><div class="option-info"><span class="option-name">✧⏱️ Настоящее</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Эта функция — строгий приказ для ИИ писать весь текст исключительно в настоящем времени.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Present Tense]
-Present response POV'd in present tense only, as in this just happened, the here and now.</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">✧⏳ Прошлое</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Эта функция — строгий приказ для ИИ писать весь текст исключительно в прошедшем времени.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Past Tense]
-Past-ify response in POV'd past tense only, as if everything had already happened.</textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">✧🚀 Будущее</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Эта функция — строгий приказ для ИИ писать весь текст исключительно в будущем времени.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[Future Tense]
-Futurify response in POV'd future tense only, as if everything is about to happen.</textarea></div>
+                                <div class="option-item"><div class="option-info"><span class="option-name">✧⏱️ Настоящее</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Эта функция — строгий приказ для ИИ писать весь текст исключительно в настоящем времени.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"><tense>
+[Present Tense]
+Present response POV'd in present tense only, as in this just happened, the here and now.
+</tense></textarea></div>
+                                <div class="option-item"><div class="option-info"><span class="option-name">✧⏳ Прошлое</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Эта функция — строгий приказ для ИИ писать весь текст исключительно в прошедшем времени.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"><tense>
+[Past Tense]
+Past-ify response in POV'd past tense only, as if everything had already happened.
+</tense></textarea></div>
+                                <div class="option-item"><div class="option-info"><span class="option-name">✧🚀 Будущее</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Эта функция — строгий приказ для ИИ писать весь текст исключительно в будущем времени.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"><tense>
+[Future Tense]
+Futurify response in POV'd future tense only, as if everything is about to happen.
+</tense></textarea></div>
                             </div>
 
-                            <hr class="dashed-divider" style="margin: 15px 0;">
-
-                             <!-- Темп -->
-                            <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">🌱Темп</h4>
-                            <div class="default-block"><span class="default-label">По дефолту:</span>✧🌱 Слоуберн</div>
-                            <div class="options-list">
-                                <div class="option-item"><div class="option-info"><span class="option-name">✧🌱 Слоуберн</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Эта функция управляет темпом повествования, делая его медленным, постепенным и реалистичным.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"><pace>
-[Adopt Intuitive Maturation(IM)]
-Initiate and move reality state slowly in jojoni-like increments. Occasionally Pervade through brief nichijo-ly- like moments, in-between those which moves the main stage. Make it so, that all things evolve at a pace that feels pure, earned and immersive.
-</pace></textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">✧⚡ Быстрый Темп</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Эта функция является полной противоположностью предыдущей и даёт ИИ команду поддерживать максимально быстрый темп повествования.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"><pace>
-[Adopt Expedited Progression (EP)]
-Proactively advance current states, time and calender, without guidance, permission or questions. Keep things constantly moving with fast momentum. Skip past the boring, trivial and un-interesting. Change things up, avoid spending time in one scene than what is necessary. Progress as quickly as possible.
-</pace></textarea></div>
-                            </div>
+                            
 
                             <hr class="dashed-divider" style="margin: 15px 0;">
 
@@ -2656,47 +2714,24 @@ Proactively advance current states, time and calender, without guidance, permiss
                             <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">📓Структура</h4>
                             <div class="default-block"><span class="default-label">По дефолту:</span>✧📚 Структура Новеллы</div>
                             <div class="options-list">
-                                <div class="option-item"><div class="option-info"><span class="option-name">✧📚 Структура Новеллы</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Эта функция даёт ИИ команду форматировать свой текст в виде традиционных, книжных абзацев, обеспечивая простоту и удобочитаемость.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"><novel>
+                                <div class="option-item"><div class="option-info"><span class="option-name">✧📚 Структура Новеллы</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Эта функция даёт ИИ команду форматировать свой текст в виде традиционных, книжных абзацев, обеспечивая простоту и удобочитаемость.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"><structure>
 [Novel Paragrapths]
 Renette use traditional modern paragrapth based novel architecture with readable simplicity at it's core. Indispense to use well structured consistent bookish formats.
-</novel></textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">✧🌊 Динамическая</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Эта функция даёт ИИ команду отказаться от стандартного, скучного книжного форматирования в пользу экспериментальной, свободной и постоянно меняющейся структуры текста.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"><dynamic>
+</structure></textarea></div>
+                                <div class="option-item"><div class="option-info"><span class="option-name">✧🌊 Динамическая</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Эта функция даёт ИИ команду отказаться от стандартного, скучного книжного форматирования в пользу экспериментальной, свободной и постоянно меняющейся структуры текста.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"><structure>
 [Dynamic Structures]
 Freestyle unpredictably flows and change, based on Renette's mood on the current turn and context. Variedly adapt lengths and compositions, to twist and shift to some short, sharp bursts; others connective, flowing paragrapth cascades; everchanging in all parts. Eschew having walls of text and traditional formats. Imaginative play with and use original, unprocessed and refined punctuations, openers, inversion, parallelism, syntactic symbolism, and more. Utilize line breaks and spacing, to amplify specific moments.
-</dynamic></textarea></div>
+</structure></textarea></div>
                                 <div class="option-item"><div class="option-info"><span class="option-name">✧🔀 Перекрёстная</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Эта функция требует от ИИ смешивать несколько разных стилей форматирования внутри одного ответа, создавая эффект коллажа или скрапбукинга.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"><crosscontaminate>
 [Cross-contamination]
 Shift between differing structural forms within the same response. Incorporate unconventional, strange and playful page layouts. Avoid being same-y and any pre-conventions. Come up with interesting syntax'es, the more stranger, out of touch and imaginative it is, the better. Merge, Use and Arrange. Assemble, like a scrapbook and inexhaustibly look for more quirky architectures to use.
 </crosscontaiminate></textarea></div>
-                                <div class="option-item"><div class="option-info"><span class="option-name">✧🎬 Сценарий</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Эта функция переключает ИИ в режим написания театральной пьесы или киносценария.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"><screenplay>
+                                <div class="option-item"><div class="option-info"><span class="option-name">✧🎬 Сценарий</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Эта функция переключает ИИ в режим написания театральной пьесы или киносценария.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"></structure>
 [Screenplay Format]
 Follow a theatre-like format in responses. Always use the following template for dialogues: **NAME**: "speech" optional brief actions, regardless of previous style. Write for the ear, not the eye. Keep actions minimal and purposeful.
-</screenplay></textarea></div>
+</structure></textarea></div>
                             </div>
-							 <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">✎🪛Модификаторы (Шаблон)</h4>
-                            <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
-
-                            <!-- ГРУППА ДЛЯ ИЗОЛЯЦИИ ПАТЧЕЙ -->
-                            <div class="group-block">
-                                <div class="options-list">
-                                    <div class="option-item"><input type="checkbox" class="select-input"><div class="option-info"><span class="option-name">💬 Больше Диалогов</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Больше диалогов.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[D-Modifier - Talk and Speak more! incorporate more dialogues into the response, aim for 40-70% dialogues.]</textarea></div>
-				<div class="default-block" style="background: rgba(153, 255, 153, 0.1); border-left-color: var(--color-primary);"><span class="default-label" style="color:var(--color-primary);">Стилистические ответы (выберите один)</span></div>
-                                <div class="options-list">
-                                    <div class="option-item">
-                                    <input type="radio" name="chronicles" class="select-input">
-                                        <div class="option-info">
-                                            <span class="option-name">✨ Тонкие Стилистические</span>
-					    <details class="preview-details">
-					    	<summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Немного больше стиля.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[S-Modifier - Subtly integrate more visuals, advance formats, typographical and stylistic world-elements, wherever appropriate.]</textarea></div>
-                                    <div class="option-item">
-                                        <input type="radio" name="chronicles" class="select-input">
-                                        <div class="option-info">
-                                            <span class="option-name">🎨 Ультра Стилистические</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>БОЛЬШЕ стиля.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[U-Modifier - Bake in more immersive visual blocks, advance formats, typographical and styles. Make it a visual feast for the eyes.]</textarea></div>
-                                </div>
-                                <button class="bulk-copy-btn" onclick="copyBulk(this)">
-                                    <img src="sheets.png" style="height:20px;"> СКОПИРОВАТЬ ВЫБРАННЫЕ МОДЫ
-								</button></div>
-                             </div>
+							 
                         </div>
                     </div>
 						<!-- 7. Патчи -->
