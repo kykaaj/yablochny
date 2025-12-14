@@ -1682,9 +1682,7 @@
                                             <p>
                                                 Многие промпты являются "Шаблонами" либо "Заменяемыми".
                                                 <br><br>
-                                                Шаблоны - полностью пустые тоглы, в которые вставляется один или более (где возможно больше) промптов. Они так и подписаны: 🪐AU (Шаблон) и ✎🧺Штуки (Шаблон) (пока два, но могут ещё появится). В Ау можно засунуть только один АУ промпт, в Штуки много.
-                                                <br><br>
-                                                Но также есть и "заменяемые" или "дополняемые" тоглы. По типу: 🧠Анти-Изм, ✎🥥Жанры, ✎🫧Улучшалки РП и тд. (что значит ✎ и звездочка в названии ищите в глоссарии или памятка в "Промпты"). Такие тоглы изначально не пустые (что там стоит по-дефолту опять же написано во вкладке "Промпты") и промпты в них можно либо заменить, либо дополнить из собранных, опять же, во вкладке "Промпты"
+                                                Шаблоны - полностью пустые тоглы, в которые вставляется один или более (где возможно больше) промптов. Они так и подписаны: ✎🧺Штуки (Шаблон). В Штуки много.
                                             </p>
                                         </div>
                                     </div>
@@ -1807,8 +1805,6 @@
                                                 🧃HTML - красивые HTML блоки, иногда интерактивные + картинки, два примера будут ниже (они слишком разные, много примеров нет смысла делать), их качество зависит ещё и от выбранной модели. Самые крутые всё ещё делает на моей памяти только Gemini 2.5 pro. Тройка и клоды справляются с переменным успехом, но тоже неплохо.
                                                 <br><br>
                                                 ✎🧺Штуки (Шаблон) - большой блок, изначально пустой, наполнение его знаете где искать (там же есть и примеры + скриншоты).
-                                                <br><br>
-                                                📌HTML Всегда - на практике нужен в основной только 2.5 геме, чтобы он вставлял HTML блок в КАЖДЫЙ пост.
                                                 <br><br>
                                                 🌗Тема HTML - заменяемый тогл, тёмная/светлая тема HTML, изначально тёмная, но можно заменить, промпт сами знаете где.
                                             </p>
@@ -2409,6 +2405,94 @@ Always pen all turn responses between:WORD Count Length: 350-650. There are no e
                             <span class="prompt-arrow">▼</span>
                         </div>
                         <div class="prompt-body">
+							<h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">🧃HTML</h4>
+							<div class="default-block"><span class="default-label">По дефолту:</span>✧🧃 Renette HTML.</div>
+                            <div class="options-list">
+                                <div class="option-item">
+                                    <div class="option-info">
+                                        <span class="option-name">✧🧃 Renette HTML.</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>Медленный темп развития отношений.</p></div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source">[HTML Blocks]
+Assimilate and integrate lore based visualised quality HTML5 blocks where possible to in-text diagetics(documents, notes, paper, etc.), tech(terminals, screens, etc.) and textual objects(signs, symbols, etc.), to visually express, facilitate immersion and more. Draw from a collection of complexity driven, nested <div> and <blockquote> tags to use with ADVANCE inline styling (single quotes only) that reflect lore's aesthetic, technology level! Mirroring on the character perspectives. Apply CSS, HTML(<b>, <i>, <small>, <u>), lists, tables, visual elements, sections with <hr> as needed to create readably constrainedly varied panels. Incorporate context-appropriate symbols, rem/em units for scalability, CSS Grid/Flexbox for alignment, and features like hover effects, cursory effects, particles, animations and others. Readable Color Clarity! Use strong color contrasts for text and background. Never place HTML inside code blocks(```) or backticks (`). Always render HTML directly.
+
+[Java]
+Java additions to HTML/CSS designs. Utilize filters, blend modes, complex transitions, SVG manipulation, and pseudo-elements (::before, ::after). But NO JavaScript Handlers - onclick, addEventListener, and other JS event listeners. AVOID any form of Dynamic Scripting - Any <script> tags attempting to manipulate DOM or respond to Human actions. 
+
+[Interaction]
+Combine and Include various new additional interactive CSS and HTML, elements and features. Embed scrollable, slidables, clickables, rotatables, openable tabs, and various other interactible functions onto the screen and HTML. Make it multi-layered, fun and entertaining to play with. Build interactions through: Form element states (:checked, :focus, :target), CSS selectors that respond to those states and Native collapsible elements like <details>. 
+
+[Pollination]
+Incorporate, access and insert pollinations into HTML designs whenever possible with url template <img src=“![Image](https://image.pollinations.ai/prompt/{description}?width={width}&height={height}&nologo=true))”>
+{description} is {sceneDetailed}%20{adjective}%20{charactersDetailed}%20{visualStyle}%20{genre}%20{artistReference}.
+Use the following parameters in the url: 
+- Prompt: [prompt, max 50 words]
+- Seed: [seed]
+- Width: [width]
+- Height: [height]
+- Model: [options: 'flux', 'flux-realism', 'any-dark', 'flux-anime', 'flux-3d', 'turbo' (default: 'flux-anime')]
+Use <img src="url">, object/embed tags, or assign a css background/property for each image. NO Markdown image syntax.
+
+[CSS Effects]
+Visual text effects through CSS! Apply inline styling for mood and emotional enhancement. Options: text-shadow for ethereal/magical effects, opacity for fading/ghostly text, text-decoration for crossed-out thoughts. Elevate and use flavours to enhance/reflect mood.
+
+[CSS Transform]
+Text transformation effects! Use CSS transforms to convey inner-emotions, objective style, or personality through CSS manipulation. Options: transform: rotate() for chaotic thoughts, scale() for emphasis, skew() for unease, text-transform: capitalize/lowercase for voice. Apply transforms-css to reflect mental states, magical effects, or distinctive speech patterns.
+
+
+{{setvar::largecothtml::
+
+[HTML Visuals.
+Immersive Object Rendering: What in-world items (screens, documents, signs, artifacts) suitable for the current scene, that can be observed and interacted with by characters, to be visually represented with HTML styling?
+Advanced Styling Implementation: What is the most advance potential deployable nested divs, complex inline CSS, hover effects, animations, grid/flexbox layouts, etc. that can be used for visual aesthetics and impact?
+Java Enhancement: What Java techniques can be used to power HTML elements? consider transitions, SVG, filters, blend modes, pseudo-elements, etc.
+Interactive HTML Integration: What elements can become clickable reveals, scrollable panels, interactive tabs, slideable galleries, rotatable objects, expandable menus, or toggleable content, etc. to enhance HTML outpout? for Human immersion and entertainment?
+Pollination HTML Integration: What key moments, objects, or characters would benefit from generated imagery? Identify ways to integratate them into styled divs with proper HTML tags (<img>, <object>, CSS backgrounds). NO Markdown image syntax]}}</textarea></div>
+                                <div class="option-item"><div class="option-info"><span class="option-name">✧Iris Bloomwave v1.0.</span><details class="preview-details"><summary>👁️ Посмотреть описание</summary><div class="preview-content"><p>
+									Версия CSS промпта от Минти, но немного изменённая под структуру пресета. 
+									<br><br>
+									Лучше всего работает с Gemini 3.0, сам промпт поувесистее Renette HTML.
+									<br><br>
+									Можете почитать про сам промпт и все предостережения в статье автора - https://teletype.in/@loliluna_ai/iris_bloomwave_css_for_st.
+									<br><br>
+									Так же сылка на её тгк - https://t.me/loliluna_ai.
+								</p>
+								</div></details></div><button class="copy-btn ripple-btn" onclick="copyText(this)">Копировать</button><textarea class="prompt-source"><html_css>
+[ADVANCED INTERACTIVE & ANIMATION ENGINEERING]
+Assimilate and integrate complex lore-based visualised quality HTML5 blocks. Your goal is to engineer distinct visual experiences that facilitate immersion through advanced inline styling. Draw from a collection of complexity driven, nested <div> tags to use with ADVANCE inline styling that reflect lore's aesthetic and technology level.
+
+[OUTPUT STRUCTURE RULES]
+Integrate visual blocks naturally within the narrative flow. Insert the self-contained HTML/CSS block (wrapped ONLY between <html_css> ... </html_css>) immediately after the specific paragraph, event, or description it visualizes. Do NOT group all visuals at the end; interleave text and visuals dynamically based on context. HTML/CSS blocks must render visually, never as raw text, never escaped, never inside markdown fences. No system messages, no debug info, no meta-text. Use Inline CSS only, max-width ~340px, margin:20px auto, font-family loaded via @font-face or fallback. Absolutely No emojis anywhere within the block.
+
+[INTERACTIVITY & ANIMATION REQUIREMENTS]
+Every block must include at least one primary interactive mechanic (flip-card, dossier pages, map hotspots, CCTV feed, image-inspect overlay, modal-inspect, layered reveal) AND at least one supporting mechanic (tooltip, slide-in panel, collapsible drawer, inline slider, zoom/dimming controls, content switcher). Incorporate Minimum THREE animation families from different groups per block: particle/weather, parallax/scroll, modal/slide, mask/clip, transform/tilt, text-reveal. No repetition of same family within one block. Animations duration must be >= 0.25s with easing (ease-in-out/cubic-bezier). Limit to Maximum 2 heavy continuous animations per block; micro-animations are encouraged. Environmental simulations (rain, fire, window motion) should prefer masked motion + parallax over single particles. Interactions must feel tactile and mobile-friendly: Minimum tappable area: 44x44 CSS px; minimum gap between interactive elements: 8px. Tooltips/popups must be scrollable and readable (max-height: 60vh; overflow:auto; word-wrap:break-word; white-space:normal). Text labels must not clip or overflow (box-sizing:border-box; padding:8px; line-height:1.2–1.4). Use touch-action: manipulation; -webkit-tap-highlight-color: transparent.
+
+[CREATIVE & MULTI-LAYER DIVERSITY]
+Construct blocks containing multiple layers: background, foreground, overlays, panels, masks. Visuals must adapt to narrative context (e.g., windows open → parallax background, diary appears → sliding panel, memory → blur-to-sharp photo, character touches object → inspect overlay). Support dynamic content swapping where image/text/content can replace each other interactively. Support zooming, dimming, and simple image manipulations controlled via CSS-only sliders. Encourage cinematic and document-like layouts; mix styles: cozy, noir, cyberpunk, mystical, corporate, UI panels, maps, terminals. Avoid repeating same interactive pattern across consecutive outputs. Rotate primary mechanics and dominant animation families.
+
+[IMAGE GENERATION RULES]
+Images must represent real-world objects/scenes; avoid full-body humans unless explicitly needed. Hands and faces should be minimized; if included, ensure realistic anatomy. Images must be stable, non-deformed, high-quality, and atmospheric. Use API: https://image.pollinations.ai/prompt/{prompt_description}?nologo=true. Each <img> must include alt text. Fallback mechanism: onerror="this.src='https://via.placeholder.com/340x200?text=Image+not+available';" Negative prompt enforcement: ugly, deformed, text, watermark, logo, anime, signature, username, poor, bad anatomy.
+
+[STABILITY & FAIL-SAFES]
+If rendering fails or image generation is blocked, output: "Visual fallback used due to [reason]." while providing a fully interactive CSS fallback. Never show raw HTML/CSS as text; must always produce a visually rendered block. Always respect narrative; do not modify user text, invent dialogue, or add system-like annotations.
+
+[MOBILE FRIENDLY & PERFORMANCE]
+Fully mobile-oriented: responsive layouts, touch-friendly interactions, minimal token usage. Keep CSS clean; avoid heavy continuous animations that may slow down rendering. Multi-block allowed but each block must remain fully interactive and independent.
+
+[INTERACTIVE STATE REVERSIBILITY]
+Any content-switching interaction (image/text/panel flip, map hotspot, modal overlay) MUST allow returning to the previous state if contextually appropriate. Reversible actions should be intuitive and touch-friendly, e.g., tap again, swipe back, or use an inline “back/close” affordance. Multi-stage interactions (slides, dossiers, layered reveals) must preserve navigation state, allowing back-and-forth exploration without breaking animations or layout.
+</html_css>
+{{setvar::largecothtml::
+
+[HTML Visuals & Interaction Planning.
+1. Narrative & Style: What object/scene fits the current text (cyberpunk terminal, noir file, cozy diary)? How to adapt the visual style?
+2. Structure check: Confirm wrapping in <html_css>, max-width 340px for UI elements.
+3. Mechanics Selection:
+   - Primary: (e.g., flip-card, map hotspot).
+   - Supporting: (e.g., tooltip, slider).
+   - Reversibility: Define how to close/return (back button, toggle).
+   - Touch targets: Ensure 44px min size.
+4. Animation Engineering: Select 3 distinct families (e.g., 1.Parallax, 2.Mask/Clip, 3.Text-Reveal). Check easing and duration (0.25s+).
+5. Image Generation: Construct Pollinations URL with real-world focus, no bad anatomy. Verify fallback logic.
+6. Execution: Assemble the complex nested divs and inline CSS.]}}</textarea></div>
+                            </div>
                             <!-- Штуки -->
                             <h4 style="margin: 10px 0 5px 0; color:var(--color-primary); text-align:left;">✎🧺Штуки (Шаблон)</h4>
                             <div class="default-block"><span class="default-label">По дефолту:</span>Заглушка</div>
