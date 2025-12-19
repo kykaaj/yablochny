@@ -1,1527 +1,735 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="google-site-verification" content="L1aS8txxzlMjDV_Efl0Oi1WDR0J7_DCdyazGjG1zVPk" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="L1aS8txxzlMjDV_Efl0Oi1WDR0J7_DCdyazGjG1zVPk" />
+    <title>Renette Project | SillyTavern Preset</title>
 
-  <title>Renette Preset • SillyTavern Hub</title>
-  <meta name="description" content="Современный хаб пресета для SillyTavern: промпты, тогглы, гайды, сборщик копирования. Ренетт — дух яблони в сети." />
-  <meta name="theme-color" content="#0b0d12" />
+    <!-- Подключаем стильные шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Montserrat:wght@300;600;800&display=swap" rel="stylesheet">
 
-  <style>
-    :root{
-      --bg0:#07090d;
-      --bg1:#0b0d12;
-      --bg2:#0f131b;
-      --card:#0e121a;
-      --stroke:rgba(255,255,255,.09);
-      --stroke2:rgba(255,255,255,.14);
-      --txt:#e8ecf3;
-      --mut:rgba(232,236,243,.72);
-      --mut2:rgba(232,236,243,.55);
-      --good:#7CFFB2;
-      --warn:#FFCA7A;
-      --bad:#FF6B8A;
+    <!-- Иконки -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-      --a1:#8D7BFF;  /* violet neon */
-      --a2:#00F5D4;  /* cyan neon */
-      --a3:#FF4FD8;  /* magenta neon */
-      --a4:#A6FF4D;  /* apple neon */
-      --a5:#FFD36E;  /* amber */
+    <style>
+        /* --- CORE VARIABLES --- */
+        :root {
+            --bg-color: #050505;
+            --accent-green: #4aff88;
+            --accent-red: #ff3355;
+            --glass-bg: rgba(20, 25, 20, 0.6);
+            --glass-border: rgba(74, 255, 136, 0.2);
+            --text-main: #e0e0e0;
+            --text-muted: #8a9a90;
+            --card-hover: rgba(74, 255, 136, 0.05);
+            --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
 
-      --r:18px;
-      --r2:24px;
+        /* --- RESET & BASE --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
-      --shadow: 0 18px 60px rgba(0,0,0,.55);
-      --shadow2: 0 8px 22px rgba(0,0,0,.42);
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
-    }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:var(--sans);
-      color:var(--txt);
-      background:
-        radial-gradient(1200px 800px at 75% 20%, rgba(141,123,255,.14), transparent 60%),
-        radial-gradient(1000px 900px at 20% 70%, rgba(0,245,212,.10), transparent 60%),
-        radial-gradient(900px 700px at 90% 80%, rgba(255,79,216,.08), transparent 60%),
-        linear-gradient(180deg, var(--bg0), var(--bg1) 40%, var(--bg2));
-      overflow-x:hidden;
-    }
+        /* --- BACKGROUND ANIMATION (Digital Roots) --- */
+        .bg-canvas {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background:
+                radial-gradient(circle at 15% 50%, rgba(74, 255, 136, 0.05) 0%, transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(255, 51, 85, 0.03) 0%, transparent 25%);
+            overflow: hidden;
+        }
 
-    a{color:inherit}
-    button, input, textarea, select{font:inherit; color:inherit}
+        .bg-grid {
+            position: absolute;
+            width: 200%; height: 200%;
+            background-image: linear-gradient(rgba(74, 255, 136, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(74, 255, 136, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: perspective(500px) rotateX(60deg) translateY(-100px) translateZ(-200px);
+            animation: gridMove 20s linear infinite;
+        }
 
-    /* subtle animated noise layer */
-    .noise{
-      pointer-events:none;
-      position:fixed; inset:0;
-      opacity:.08;
-      mix-blend-mode:overlay;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
-      animation: noiseMove 9s steps(9) infinite;
-    }
-    @keyframes noiseMove{
-      0%{transform:translate3d(0,0,0)}
-      10%{transform:translate3d(-10px,6px,0)}
-      20%{transform:translate3d(-18px,-12px,0)}
-      30%{transform:translate3d(14px,18px,0)}
-      40%{transform:translate3d(22px,-8px,0)}
-      50%{transform:translate3d(-12px,20px,0)}
-      60%{transform:translate3d(-22px,-10px,0)}
-      70%{transform:translate3d(18px,10px,0)}
-      80%{transform:translate3d(6px,-22px,0)}
-      90%{transform:translate3d(-8px,14px,0)}
-      100%{transform:translate3d(0,0,0)}
-    }
+        @keyframes gridMove {
+            0% { transform: perspective(500px) rotateX(60deg) translateY(0) translateZ(-200px); }
+            100% { transform: perspective(500px) rotateX(60deg) translateY(50px) translateZ(-200px); }
+        }
 
-    /* top nav */
-    .nav{
-      position:sticky; top:0; z-index:60;
-      backdrop-filter: blur(12px);
-      background: linear-gradient(180deg, rgba(7,9,13,.85), rgba(7,9,13,.55));
-      border-bottom:1px solid var(--stroke);
-    }
-    .nav-inner{
-      max-width:1160px;
-      margin:0 auto;
-      padding:14px 16px;
-      display:flex; align-items:center; gap:12px;
-    }
-    .brand{
-      display:flex; align-items:center; gap:10px;
-      min-width: 220px;
-    }
-    .sigil{
-      width:34px; height:34px; border-radius:12px;
-      background:
-        radial-gradient(12px 12px at 30% 30%, rgba(166,255,77,.9), transparent 60%),
-        radial-gradient(14px 14px at 70% 70%, rgba(0,245,212,.85), transparent 60%),
-        radial-gradient(18px 18px at 65% 30%, rgba(141,123,255,.65), transparent 62%),
-        linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
-      border:1px solid var(--stroke2);
-      box-shadow: 0 10px 26px rgba(0,0,0,.35);
-      position:relative;
-      overflow:hidden;
-    }
-    .sigil:after{
-      content:"";
-      position:absolute; inset:-40%;
-      background: conic-gradient(from 190deg, rgba(0,245,212,.0), rgba(0,245,212,.22), rgba(255,79,216,.18), rgba(166,255,77,.18), rgba(0,245,212,.0));
-      animation: spin 8s linear infinite;
-      filter: blur(10px);
-      opacity:.9;
-    }
-    @keyframes spin { to{ transform: rotate(360deg); } }
+        /* --- LAYOUT --- */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-    .brand b{font-weight:750; letter-spacing:.2px}
-    .brand small{display:block; color:var(--mut2); margin-top:2px; font-size:12px}
+        header {
+            padding: 40px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
 
-    .navlinks{
-      display:flex; gap:10px; align-items:center;
-      flex:1;
-      overflow:auto;
-      scrollbar-width:none;
-    }
-    .navlinks::-webkit-scrollbar{display:none}
-    .pill{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:9px 12px;
-      border:1px solid var(--stroke);
-      background:rgba(255,255,255,.03);
-      border-radius:999px;
-      text-decoration:none;
-      color:var(--mut);
-      white-space:nowrap;
-      transition: transform .15s ease, background .15s ease, border-color .15s ease, color .15s ease;
-    }
-    .pill:hover{
-      transform:translateY(-1px);
-      background:rgba(255,255,255,.05);
-      border-color:rgba(255,255,255,.16);
-      color:var(--txt);
-    }
-    .pill[data-active="1"]{
-      background:linear-gradient(180deg, rgba(141,123,255,.18), rgba(0,245,212,.10));
-      border-color:rgba(141,123,255,.32);
-      color:var(--txt);
-    }
+        .logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            text-shadow: 0 0 10px rgba(74, 255, 136, 0.4);
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-    .nav-cta{
-      display:flex; gap:10px; align-items:center;
-    }
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      gap:10px;
-      padding:10px 12px;
-      border-radius:12px;
-      border:1px solid var(--stroke);
-      background:rgba(255,255,255,.03);
-      color:var(--txt);
-      cursor:pointer;
-      transition: transform .15s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease;
-      box-shadow: 0 0 0 rgba(0,0,0,0);
-      user-select:none;
-    }
-    .btn:hover{
-      transform:translateY(-1px);
-      border-color:rgba(255,255,255,.18);
-      background:rgba(255,255,255,.05);
-    }
-    .btn.primary{
-      border-color: rgba(0,245,212,.35);
-      background: linear-gradient(180deg, rgba(0,245,212,.14), rgba(255,255,255,.02));
-      box-shadow: 0 18px 40px rgba(0,245,212,.10);
-    }
-    .btn.danger{
-      border-color: rgba(255,107,138,.30);
-      background: linear-gradient(180deg, rgba(255,107,138,.14), rgba(255,255,255,.02));
-    }
+        .logo i { font-size: 1.2rem; }
 
-    /* layout */
-    .wrap{
-      max-width:1160px;
-      margin:0 auto;
-      padding:18px 16px 80px;
-    }
+        /* --- HERO SECTION --- */
+        .hero {
+            min-height: 80vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 50px;
+            margin-bottom: 100px;
+        }
 
-    /* hero */
-    .hero{
-      position:relative;
-      padding:26px 0 18px;
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap:16px;
-      align-items:stretch;
-    }
-    .hero-card{
-      border:1px solid var(--stroke);
-      border-radius: var(--r2);
-      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      position:relative;
-    }
-    .hero-card .pad{ padding:18px 18px 16px; }
-    .kicker{
-      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
-      color:var(--mut);
-      font-size:13px;
-    }
-    .tag{
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid var(--stroke);
-      background:rgba(255,255,255,.03);
-      white-space:nowrap;
-    }
-    .tag strong{font-weight:700}
-    h1{
-      margin:10px 0 0;
-      font-size: clamp(26px, 3.4vw, 42px);
-      line-height:1.1;
-      letter-spacing:.2px;
-    }
-    .sub{
-      margin:10px 0 0;
-      color:var(--mut);
-      font-size:15px;
-      line-height:1.5;
-      max-width: 62ch;
-    }
+        .hero-content h1 {
+            font-size: 4.5rem;
+            line-height: 0.9;
+            margin-bottom: 20px;
+            position: relative;
+        }
 
-    .hero-actions{
-      display:flex; flex-wrap:wrap; gap:10px;
-      margin-top:14px;
-    }
-    .mini{
-      font-size:12px;
-      color:var(--mut2);
-      margin-top:10px;
-    }
+        .glitch-text {
+            position: relative;
+            color: #fff;
+        }
 
-    /* Renette cover (apple tree + net) */
-    .cover{
-      position:relative;
-      min-height: 280px;
-      display:flex;
-      align-items:stretch;
-    }
-    .cover .pad{ padding:16px; display:flex; flex-direction:column; gap:10px; }
-    .coverTitle{
-      display:flex; justify-content:space-between; align-items:flex-start; gap:10px;
-    }
-    .coverTitle b{letter-spacing:.2px}
-    .coverTitle small{display:block; color:var(--mut2); margin-top:2px}
-    .portrait{
-      flex:1;
-      border-radius: 16px;
-      border:1px solid var(--stroke);
-      background:
-        radial-gradient(120px 120px at 25% 35%, rgba(166,255,77,.18), transparent 62%),
-        radial-gradient(180px 160px at 70% 35%, rgba(0,245,212,.14), transparent 62%),
-        radial-gradient(220px 220px at 65% 80%, rgba(141,123,255,.14), transparent 62%),
-        linear-gradient(135deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
-      position:relative;
-      overflow:hidden;
-      box-shadow: var(--shadow2);
-    }
-    /* stylized "roots" + "packet lines" */
-    .portrait:before{
-      content:"";
-      position:absolute; inset:-1px;
-      background:
-        repeating-linear-gradient(90deg, rgba(255,255,255,.0), rgba(255,255,255,.0) 14px, rgba(255,255,255,.035) 14px, rgba(255,255,255,.035) 15px),
-        radial-gradient(700px 320px at 50% 120%, rgba(166,255,77,.18), transparent 55%),
-        radial-gradient(520px 260px at 30% 110%, rgba(0,245,212,.14), transparent 60%),
-        radial-gradient(520px 260px at 70% 110%, rgba(141,123,255,.14), transparent 60%);
-      opacity:.9;
-      mix-blend-mode: screen;
-      filter: blur(.3px);
-    }
-    .portrait:after{
-      content:"";
-      position:absolute; inset:-40% -30%;
-      background: conic-gradient(from 0deg, rgba(0,245,212,.0), rgba(0,245,212,.18), rgba(255,79,216,.12), rgba(166,255,77,.14), rgba(0,245,212,.0));
-      animation: spin 16s linear infinite;
-      opacity:.85;
-      filter: blur(14px);
-    }
+        .glitch-text::before, .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+        }
 
-    .glitchline{
-      position:absolute;
-      left:-10%;
-      width:120%;
-      height:2px;
-      background: linear-gradient(90deg, transparent, rgba(0,245,212,.55), rgba(141,123,255,.45), transparent);
-      opacity:.35;
-      transform: translateY(0);
-      animation: scan 5.2s ease-in-out infinite;
-      filter: blur(.2px);
-    }
-    @keyframes scan{
-      0%{ top: 18%; opacity:.15 }
-      20%{ opacity:.45 }
-      40%{ top: 52%; opacity:.25 }
-      60%{ opacity:.48 }
-      80%{ top: 78%; opacity:.2 }
-      100%{ top: 18%; opacity:.15 }
-    }
+        .glitch-text::before {
+            left: 2px;
+            text-shadow: -1px 0 var(--accent-red);
+            clip-path: inset(44% 0 61% 0);
+            animation: glitch-anim-1 2.5s infinite linear alternate-reverse;
+        }
 
-    /* sections */
-    .grid{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:16px;
-      margin-top:16px;
-    }
-    .section{
-      border:1px solid var(--stroke);
-      border-radius: var(--r2);
-      background: linear-gradient(180deg, rgba(255,255,255,.025), rgba(255,255,255,.012));
-      box-shadow: var(--shadow2);
-      overflow:hidden;
-      position:relative;
-    }
-    .section .head{
-      padding:14px 16px 12px;
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:10px;
-      border-bottom:1px solid var(--stroke);
-      background:
-        radial-gradient(600px 120px at 50% 0%, rgba(141,123,255,.14), transparent 60%),
-        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.0));
-    }
-    .section .head h2{
-      margin:0;
-      font-size:16px;
-      letter-spacing:.2px;
-    }
-    .section .head p{
-      margin:4px 0 0;
-      font-size:13px;
-      color:var(--mut);
-      line-height:1.4;
-      max-width: 70ch;
-    }
-    .section .body{ padding:14px 16px 16px; }
+        .glitch-text::after {
+            left: -2px;
+            text-shadow: -1px 0 var(--accent-green);
+            clip-path: inset(20% 0 10% 0);
+            animation: glitch-anim-2 3s infinite linear alternate-reverse;
+        }
 
-    .split{
-      display:grid;
-      grid-template-columns: 360px 1fr;
-      gap:14px;
-      align-items:start;
-    }
-    .panel{
-      border:1px solid var(--stroke);
-      border-radius: 16px;
-      background: rgba(255,255,255,.02);
-      overflow:hidden;
-    }
-    .panel .phead{
-      padding:12px 12px 10px;
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-      border-bottom:1px solid var(--stroke);
-      background: rgba(255,255,255,.015);
-    }
-    .panel .pbody{ padding:12px; }
+        .hero-desc {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            max-width: 500px;
+            border-left: 3px solid var(--accent-green);
+            padding-left: 20px;
+        }
 
-    /* Toggle list */
-    .toggleList{ display:flex; flex-direction:column; gap:10px; }
-    .toggleBtn{
-      width:100%;
-      text-align:left;
-      border:1px solid var(--stroke);
-      background: rgba(255,255,255,.02);
-      padding:12px 12px;
-      border-radius: 14px;
-      cursor:pointer;
-      transition: transform .15s ease, border-color .15s ease, background .15s ease;
-      position:relative;
-      overflow:hidden;
-    }
-    .toggleBtn:hover{
-      transform:translateY(-1px);
-      border-color:rgba(255,255,255,.18);
-      background: rgba(255,255,255,.04);
-    }
-    .toggleBtn[data-on="1"]{
-      border-color: rgba(0,245,212,.36);
-      background: linear-gradient(180deg, rgba(0,245,212,.10), rgba(255,255,255,.02));
-    }
-    .toggleBtn b{ display:block; font-size:13.5px; letter-spacing:.2px; }
-    .toggleBtn small{ display:block; margin-top:3px; color:var(--mut); font-size:12px; line-height:1.35; }
-    .spark{
-      position:absolute; inset:-2px;
-      background: radial-gradient(220px 120px at 20% 20%, rgba(166,255,77,.14), transparent 60%),
-                  radial-gradient(240px 140px at 80% 10%, rgba(141,123,255,.14), transparent 60%),
-                  radial-gradient(220px 140px at 50% 110%, rgba(0,245,212,.12), transparent 60%);
-      opacity:.0;
-      transition: opacity .2s ease;
-      pointer-events:none;
-    }
-    .toggleBtn:hover .spark{ opacity:.75; }
-    .toggleBtn[data-on="1"] .spark{ opacity:.95; }
+        .hero-mascot {
+            position: relative;
+            height: 600px;
+            background: radial-gradient(circle, rgba(74,255,136,0.1) 0%, transparent 70%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    /* cards in right side */
-    .cards{
-      display:grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap:12px;
-    }
-    .card{
-      border:1px solid var(--stroke);
-      border-radius: 16px;
-      background: rgba(255,255,255,.02);
-      overflow:hidden;
-      position:relative;
-      min-height: 170px;
-    }
-    .card .top{
-      padding:12px 12px 10px;
-      border-bottom:1px solid var(--stroke);
-      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
-      background: rgba(255,255,255,.015);
-    }
-    .card .top b{ font-size:13.5px; letter-spacing:.2px; }
-    .card .top small{ display:block; margin-top:3px; color:var(--mut); font-size:12px; line-height:1.35; }
-    .card .mid{
-      padding:12px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
+        .mascot-img {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            filter: drop-shadow(0 0 20px rgba(74, 255, 136, 0.3));
+            animation: float 6s ease-in-out infinite;
+            /* Placeholder styling */
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px dashed var(--accent-green);
+            color: var(--accent-green);
+        }
 
-    .thumb{
-      width:100%;
-      aspect-ratio: 16/9;
-      border-radius: 12px;
-      border:1px solid var(--stroke);
-      background: linear-gradient(135deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
-      overflow:hidden;
-      position:relative;
-    }
-    .thumb img{
-      width:100%; height:100%;
-      object-fit:cover;
-      display:block;
-      filter: saturate(1.05) contrast(1.03);
-      opacity:.95;
-    }
-    .thumb:after{
-      content:"";
-      position:absolute; inset:0;
-      background: radial-gradient(400px 220px at 50% 0%, rgba(0,245,212,.10), transparent 55%),
-                  radial-gradient(360px 240px at 20% 100%, rgba(166,255,77,.09), transparent 60%),
-                  radial-gradient(400px 240px at 90% 90%, rgba(141,123,255,.10), transparent 60%);
-      pointer-events:none;
-    }
+        /* --- TABS & NAVIGATION --- */
+        .nav-wrapper {
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: center;
+        }
 
-    .codebox{
-      border:1px solid var(--stroke);
-      border-radius: 14px;
-      background: rgba(0,0,0,.35);
-      padding:10px 10px;
-      font-family: var(--mono);
-      font-size: 12px;
-      line-height:1.45;
-      color: rgba(232,236,243,.86);
-      white-space: pre-wrap;
-      word-break: break-word;
-      position:relative;
-    }
-    .codebox .fade{
-      position:absolute; inset:auto 0 0 0;
-      height:22px;
-      background: linear-gradient(180deg, transparent, rgba(0,0,0,.35));
-      pointer-events:none;
-      border-radius: 0 0 14px 14px;
-      opacity:.9;
-    }
+        .glass-nav {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 50px;
+            display: flex;
+            gap: 5px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
 
-    .row{
-      display:flex; gap:10px; flex-wrap:wrap;
-      align-items:center; justify-content:space-between;
-    }
-    .row .left{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
-    .chip{
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid var(--stroke);
-      background: rgba(255,255,255,.02);
-      color:var(--mut);
-      font-size:12px;
-      white-space:nowrap;
-    }
-    .chip .dot{
-      display:inline-block; width:7px; height:7px; border-radius:999px;
-      margin-right:8px; vertical-align:middle;
-      background: var(--a2);
-      box-shadow: 0 0 18px rgba(0,245,212,.35);
-    }
+        .nav-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 12px 24px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
 
-    /* Builder */
-    .builder{
-      display:grid;
-      grid-template-columns: 1fr 420px;
-      gap:14px;
-      align-items:start;
-    }
-    .builder .leftcol{ display:flex; flex-direction:column; gap:12px; }
-    .builder .rightcol{ position:sticky; top:76px; align-self:start; }
+        .nav-btn.active {
+            color: #000;
+            background: var(--accent-green);
+        }
 
-    .list{
-      display:flex; flex-direction:column; gap:10px;
-    }
-    .item{
-      border:1px solid var(--stroke);
-      border-radius: 16px;
-      background: rgba(255,255,255,.02);
-      overflow:hidden;
-    }
-    .item .ih{
-      padding:12px 12px 10px;
-      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
-      border-bottom:1px solid var(--stroke);
-      background: rgba(255,255,255,.015);
-    }
-    .item .ih b{ font-size:13.5px; }
-    .item .ih small{ display:block; color:var(--mut); margin-top:3px; font-size:12px; line-height:1.35; }
-    .item .ib{ padding:12px; display:grid; gap:10px; }
-    .checks{
-      display:flex; flex-direction:column; gap:8px;
-    }
-    .chk{
-      display:flex; gap:10px; align-items:flex-start;
-      padding:10px 10px;
-      border-radius: 12px;
-      border:1px solid rgba(255,255,255,.07);
-      background: rgba(0,0,0,.22);
-    }
-    .chk input{ margin-top:2px; accent-color: var(--a2); }
-    .chk .meta{ flex:1; }
-    .chk .meta b{ display:block; font-size:12.5px; }
-    .chk .meta span{ display:block; margin-top:2px; color:var(--mut); font-size:12px; line-height:1.35; }
-    .chk .actions{ display:flex; gap:8px; align-items:center; }
-    .iconBtn{
-      border:1px solid var(--stroke);
-      background: rgba(255,255,255,.02);
-      border-radius: 12px;
-      padding:8px 10px;
-      cursor:pointer;
-      transition: transform .15s ease, background .15s ease, border-color .15s ease;
-      font-size:12px;
-      white-space:nowrap;
-    }
-    .iconBtn:hover{
-      transform:translateY(-1px);
-      background: rgba(255,255,255,.05);
-      border-color: rgba(255,255,255,.18);
-    }
+        .nav-btn:hover:not(.active) {
+            color: #fff;
+            background: rgba(255,255,255,0.05);
+        }
 
-    .stickyBox{
-      border:1px solid var(--stroke);
-      border-radius: 18px;
-      background: rgba(255,255,255,.02);
-      overflow:hidden;
-      box-shadow: var(--shadow2);
-    }
-    .stickyBox .sh{
-      padding:12px 12px 10px;
-      border-bottom:1px solid var(--stroke);
-      background:
-        radial-gradient(520px 140px at 50% 0%, rgba(166,255,77,.12), transparent 60%),
-        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.0));
-      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
-    }
-    .stickyBox .sh b{ font-size:13.5px; }
-    .stickyBox .sh small{ display:block; margin-top:3px; color:var(--mut); font-size:12px; line-height:1.35; }
-    .stickyBox .sb{
-      padding:12px;
-      display:grid;
-      gap:10px;
-    }
-    .textarea{
-      min-height: 240px;
-      resize: vertical;
-      border-radius: 14px;
-      border:1px solid var(--stroke);
-      background: rgba(0,0,0,.28);
-      padding:10px;
-      color: rgba(232,236,243,.9);
-      font-family: var(--mono);
-      font-size: 12px;
-      line-height:1.45;
-      outline:none;
-    }
-    .textarea:focus{
-      border-color: rgba(0,245,212,.35);
-      box-shadow: 0 0 0 3px rgba(0,245,212,.08);
-    }
+        /* --- CONTENT SECTIONS --- */
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        .content-section.active { display: block; }
 
-    /* Guides */
-    .guideGrid{
-      display:grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap:12px;
-    }
-    .guide{
-      border:1px solid var(--stroke);
-      border-radius: 16px;
-      background: rgba(255,255,255,.02);
-      overflow:hidden;
-      position:relative;
-    }
-    .guide .gh{
-      padding:12px 12px 10px;
-      border-bottom:1px solid var(--stroke);
-      background: rgba(255,255,255,.015);
-      display:flex; justify-content:space-between; gap:10px;
-      align-items:flex-start;
-    }
-    .guide .gh b{ font-size:13.5px; }
-    .guide .gh small{ display:block; margin-top:3px; color:var(--mut); font-size:12px; line-height:1.35; }
-    .guide .gb{ padding:12px; display:grid; gap:10px; }
-    .guide .gb p{
-      margin:0;
-      color:var(--mut);
-      font-size:12.5px;
-      line-height:1.5;
-    }
+        /* --- PRESET GRID (Masonry style) --- */
+        .preset-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 100px;
+        }
 
-    /* Toast */
-    .toast{
-      position:fixed; z-index:80;
-      left:50%; bottom:18px;
-      transform: translateX(-50%);
-      background: rgba(10,12,16,.72);
-      border:1px solid rgba(255,255,255,.12);
-      border-radius: 999px;
-      padding:10px 12px;
-      display:flex; gap:10px; align-items:center;
-      box-shadow: var(--shadow2);
-      backdrop-filter: blur(10px);
-      opacity:0;
-      pointer-events:none;
-      transition: opacity .2s ease, transform .2s ease;
-      max-width: min(720px, calc(100% - 24px));
-    }
-    .toast[data-on="1"]{
-      opacity:1;
-      transform: translateX(-50%) translateY(-2px);
-    }
-    .toast .bar{
-      width:10px; height:10px; border-radius:999px;
-      background: var(--a2);
-      box-shadow: 0 0 18px rgba(0,245,212,.35);
-      flex:none;
-    }
-    .toast span{ color: rgba(232,236,243,.88); font-size:12.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .toast i{ color: rgba(232,236,243,.6); font-style:normal; }
+        .card {
+            background: var(--glass-bg);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 0;
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
 
-    /* footer */
-    footer{
-      margin-top:18px;
-      padding:18px 0 0;
-      color:var(--mut2);
-      font-size:12px;
-    }
-    .foot{
-      border-top: 1px solid var(--stroke);
-      padding-top:14px;
-      display:flex; gap:10px; flex-wrap:wrap;
-      justify-content:space-between; align-items:center;
-    }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: var(--accent-green);
+            opacity: 0;
+            transition: var(--transition);
+        }
 
-    /* responsive */
-    @media (max-width: 980px){
-      .hero{ grid-template-columns: 1fr; }
-      .split{ grid-template-columns: 1fr; }
-      .cards{ grid-template-columns: 1fr; }
-      .builder{ grid-template-columns: 1fr; }
-      .builder .rightcol{ position:static; }
-      .guideGrid{ grid-template-columns: 1fr; }
-      .brand{ min-width: 0; }
-    }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--glass-border);
+            box-shadow: 0 10px 40px rgba(74, 255, 136, 0.1);
+        }
 
-    /* reduced motion */
-    @media (prefers-reduced-motion: reduce){
-      .noise, .sigil:after, .portrait:after, .glitchline { animation:none !important; }
-      *{ scroll-behavior:auto !important; transition:none !important; }
-    }
-  </style>
+        .card:hover::before { opacity: 1; }
+
+        .card-img-container {
+            height: 200px;
+            background: #111;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-img-container img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+            opacity: 0.8;
+        }
+
+        .card:hover .card-img-container img {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .card-body {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        /* --- CODE BLOCK STYLING --- */
+        .code-snippet {
+            background: #0a0a0a;
+            border: 1px solid #222;
+            border-radius: 8px;
+            padding: 15px;
+            position: relative;
+            margin-top: auto;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 0.75rem;
+            color: var(--accent-green);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        textarea.prompt-text {
+            width: 100%;
+            height: 80px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            resize: none;
+            outline: none;
+        }
+
+        .btn-copy {
+            width: 100%;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'JetBrains Mono', monospace;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .btn-copy:hover {
+            background: var(--accent-green);
+            color: #000;
+            border-color: var(--accent-green);
+        }
+
+        /* --- GUIDES SECTION --- */
+        .guide-timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto 100px;
+        }
+
+        .guide-timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent-green), transparent);
+        }
+
+        .guide-item {
+            margin-bottom: 50px;
+            padding-left: 60px;
+            position: relative;
+        }
+
+        .guide-marker {
+            position: absolute;
+            left: 11px;
+            top: 5px;
+            width: 20px;
+            height: 20px;
+            background: #000;
+            border: 2px solid var(--accent-green);
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        .guide-content {
+            background: var(--glass-bg);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 30px;
+            border-radius: 16px;
+        }
+
+        .guide-img {
+            width: 100%;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* --- TOAST NOTIFICATION --- */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent-green);
+            color: #000;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-weight: 700;
+            transform: translateY(150%);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 999;
+            box-shadow: 0 10px 30px rgba(74, 255, 136, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toast.show { transform: translateY(0); }
+
+        /* --- FOOTER --- */
+        footer {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 50px 0;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes glitch-anim-1 {
+            0% { clip-path: inset(20% 0 80% 0); }
+            20% { clip-path: inset(60% 0 10% 0); }
+            40% { clip-path: inset(40% 0 50% 0); }
+            60% { clip-path: inset(80% 0 5% 0); }
+            80% { clip-path: inset(10% 0 70% 0); }
+            100% { clip-path: inset(30% 0 20% 0); }
+        }
+        @keyframes glitch-anim-2 {
+            0% { clip-path: inset(10% 0 60% 0); }
+            20% { clip-path: inset(30% 0 10% 0); }
+            40% { clip-path: inset(70% 0 20% 0); }
+            60% { clip-path: inset(20% 0 40% 0); }
+            80% { clip-path: inset(50% 0 30% 0); }
+            100% { clip-path: inset(10% 0 80% 0); }
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero { grid-template-columns: 1fr; text-align: center; gap: 30px; }
+            .hero-content h1 { font-size: 3rem; }
+            .hero-desc { margin: 0 auto 30px; border-left: none; border-bottom: 3px solid var(--accent-green); padding-bottom: 20px; padding-left: 0;}
+            .hero-mascot { height: 300px; }
+            .nav-wrapper { bottom: 20px; top: auto; }
+            .guide-timeline::before { left: 0; }
+            .guide-item { padding-left: 20px; }
+            .guide-marker { display: none; }
+        }
+    </style>
 </head>
-
 <body>
-  <div class="noise" aria-hidden="true"></div>
 
-  <header class="nav">
-    <div class="nav-inner">
-      <div class="brand">
-        <div class="sigil" aria-hidden="true"></div>
-        <div>
-          <b>Renette Preset Hub</b>
-          <small>яблоня → сеть • тогглы • промпты • гайды</small>
-        </div>
-      </div>
-
-      <nav class="navlinks" aria-label="Навигация">
-        <a class="pill" href="#lab" data-nav="lab">Лаборатория</a>
-        <a class="pill" href="#toggles" data-nav="toggles">Тогглы</a>
-        <a class="pill" href="#builder" data-nav="builder">Сборщик</a>
-        <a class="pill" href="#guides" data-nav="guides">Гайды</a>
-      </nav>
-
-      <div class="nav-cta">
-        <button class="btn" id="btnTheme" type="button" title="Переключить акцент">
-          Акцент
-        </button>
-        <button class="btn primary" id="btnCopyAll" type="button" title="Скопировать сборку из Сборщика">
-          Копировать сборку
-        </button>
-      </div>
+    <!-- Живой фон -->
+    <div class="bg-canvas">
+        <div class="bg-grid"></div>
     </div>
-  </header>
 
-  <main class="wrap">
-    <section class="hero" id="lab">
-      <div class="hero-card">
-        <div class="pad">
-          <div class="kicker">
-            <span class="tag"><strong>Renette</strong> • цифровой дух яблони</span>
-            <span class="tag">SillyTavern Preset</span>
-            <span class="tag">GitHub Pages</span>
-          </div>
-
-          <h1>Сайт пресета, который выглядит как <span style="color: var(--a2);">интернет-алхимия</span> и помнит про <span style="color: var(--a4);">корни</span>.</h1>
-          <p class="sub">
-            Здесь нет “простого списка пунктов”. Здесь — рабочая панель: выбираешь тогглы, открываешь промпты, добавляешь в сборку, копируешь.
-            Все тексты промптов сейчас заполнены <span style="font-family: var(--mono); color: rgba(232,236,243,.9);">[placeholder]</span>-ами — ты заменишь вручную.
-          </p>
-
-          <div class="hero-actions">
-            <a class="btn primary" href="#toggles">Открыть тогглы</a>
-            <a class="btn" href="#builder">Перейти в сборщик</a>
-            <a class="btn" href="#guides">Посмотреть гайды</a>
-          </div>
-
-          <div class="mini">
-            Подсказка: любые промпты можно копировать отдельно или собрать пачку из разных тогглов в “Сборщике”.
-          </div>
-        </div>
-      </div>
-
-      <div class="hero-card cover">
-        <div class="pad">
-          <div class="coverTitle">
-            <div>
-              <b>Обложка / маскот</b>
-              <small>вставь сюда финальный арт Ренетт</small>
+    <div class="container">
+        <!-- HEADER -->
+        <header>
+            <div class="logo">
+                <i class="fa-solid fa-apple-whole"></i>
+                <span>RENETTE</span>
             </div>
-            <span class="chip"><span class="dot"></span>LIVE</span>
-          </div>
-
-          <div class="portrait" role="img" aria-label="Панель обложки Ренетт">
-            <div class="glitchline" aria-hidden="true"></div>
-          </div>
-
-          <div class="row">
-            <div class="left">
-              <span class="chip">Тема: яблоня × сеть</span>
-              <span class="chip">Эффекты: шум, скан-линия, неон</span>
+            <div class="socials">
+                <!-- Ссылки на твои соцсети -->
+                <a href="#" style="color:white; font-size: 1.5rem;"><i class="fa-brands fa-github"></i></a>
             </div>
-            <button class="iconBtn" type="button" id="btnScrollToggles">К тогглам</button>
-          </div>
-        </div>
-      </div>
-    </section>
+        </header>
 
-    <!-- TOGGLES -->
-    <section class="section" id="toggles">
-      <div class="head">
-        <div>
-          <h2>Тогглы пресета</h2>
-          <p>
-            Слева — переключатели. Справа — набор промптов выбранного тоггла: у каждого есть описание, скрин и кнопки копирования/добавления в сборку.
-          </p>
+        <!-- NAVIGATION (Floating) -->
+        <div class="nav-wrapper">
+            <nav class="glass-nav">
+                <button class="nav-btn active" onclick="switchTab('home')">ГЛАВНАЯ</button>
+                <button class="nav-btn" onclick="switchTab('presets')">ПРОМПТЫ</button>
+                <button class="nav-btn" onclick="switchTab('guides')">ГАЙДЫ</button>
+            </nav>
         </div>
-        <div class="row">
-          <div class="left">
-            <span class="chip">Ctrl/⌘ + F работает</span>
-            <span class="chip">Сборка: из разных тогглов</span>
-          </div>
-        </div>
-      </div>
 
-      <div class="body">
-        <div class="split">
-          <div class="panel">
-            <div class="phead">
-              <b>Переключатели</b>
-              <small style="color: var(--mut2);">выбор влияет на правую панель</small>
-            </div>
-            <div class="pbody">
-              <div class="toggleList" id="toggleList"></div>
-            </div>
-          </div>
-
-          <div class="panel">
-            <div class="phead">
-              <b id="toggleTitle">—</b>
-              <small id="toggleHint" style="color: var(--mut2);">—</small>
-            </div>
-            <div class="pbody">
-              <div class="cards" id="promptCards"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- BUILDER -->
-    <section class="section" id="builder">
-      <div class="head">
-        <div>
-          <h2>Сборщик (выбери несколько → скопируй одним блоком)</h2>
-          <p>
-            Выбирай галочками нужные промпты из разных тогглов. Справа появится “сборка”.
-            Можно копировать один промпт кнопкой или собрать пачку.
-          </p>
-        </div>
-        <div class="row">
-          <div class="left">
-            <button class="btn" type="button" id="btnSelectNone">Снять все</button>
-            <button class="btn danger" type="button" id="btnClearBuild">Очистить сборку</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="body">
-        <div class="builder">
-          <div class="leftcol">
-            <div class="list" id="builderList"></div>
-          </div>
-
-          <div class="rightcol">
-            <div class="stickyBox">
-              <div class="sh">
-                <div>
-                  <b>Сборка</b>
-                  <small>формат: заголовок → промпт</small>
+        <!-- HERO SECTION (Home) -->
+        <section id="home" class="content-section active">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1 class="glitch-text" data-text="RENETTE CORE">RENETTE CORE</h1>
+                    <p class="hero-desc">
+                        Продвинутый пресет для SillyTavern. Цифровая душа в мире кода.
+                        Синтез природы и алгоритмов для идеального ролеплея.
+                    </p>
+                    <button class="nav-btn" style="background: var(--accent-green); color: black;" onclick="switchTab('presets')">
+                        <i class="fa-solid fa-download"></i> ПЕРЕЙТИ К ДАННЫМ
+                    </button>
                 </div>
-                <span class="chip" id="buildCount"><span class="dot"></span>0 выбрано</span>
-              </div>
-              <div class="sb">
-                <textarea class="textarea" id="buildOutput" spellcheck="false" placeholder="[placeholder]"></textarea>
-                <div class="row">
-                  <div class="left">
-                    <button class="btn primary" type="button" id="btnCopyBuild">Копировать</button>
-                    <button class="btn" type="button" id="btnNormalizeBuild">Нормализовать</button>
-                  </div>
-                  <span class="chip">без лишних пробелов</span>
+                <div class="hero-mascot">
+                    <!-- СЮДА ВСТАВИТЬ МАСКОТА (Ренетт) -->
+                    <!-- Замени src на путь к картинке. Например: images/renette_cover.png -->
+                    <div class="mascot-img">
+                        <img src="[ССЫЛКА_НА_ИЗОБРАЖЕНИЕ_РЕНЕТТ]" alt="Renette Mascot" onerror="this.style.display='none'">
+                        <span style="position: absolute;">[PLACEHOLDER: МАСКОТ]</span>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
+        </section>
 
-        </div>
-      </div>
-    </section>
+        <!-- PRESETS SECTION -->
+        <section id="presets" class="content-section">
+            <h2 style="margin-bottom: 30px; font-size: 2rem;"> <i class="fa-solid fa-database"></i> БАЗА ДАННЫХ</h2>
 
-    <!-- GUIDES -->
-    <section class="section" id="guides">
-      <div class="head">
-        <div>
-          <h2>Гайды</h2>
-          <p>
-            Карточки с гайдами: описание + скрин + блок для копирования.
-            Отмечай несколько — добавляй в сборку или копируй по одному.
-          </p>
-        </div>
-        <div class="row">
-          <div class="left">
-            <span class="chip">гайд = текст + скрин</span>
-            <span class="chip">копирование одним кликом</span>
-          </div>
-        </div>
-      </div>
+            <div class="preset-grid">
 
-      <div class="body">
-        <div class="guideGrid" id="guideGrid"></div>
-      </div>
-    </section>
+                <!-- CARD 1: MAIN PROMPT -->
+                <div class="card">
+                    <div class="card-img-container">
+                        <!-- Картинка для промпта -->
+                        <img src="[ССЫЛКА_НА_СКРИНШОТ_1]" alt="Main Prompt Preview">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-title">Main Prompt <i class="fa-solid fa-microchip"></i></div>
+                        <p class="card-desc">
+                            Основной системный промпт. Задает логику, стиль речи и поведение Ренетт.
+                            Обязателен для корректной работы ядра.
+                        </p>
+                        <div class="code-snippet">
+                            <div class="code-header">
+                                <span>SYSTEM.JSON</span>
+                                <i class="fa-solid fa-code"></i>
+                            </div>
+                            <textarea class="prompt-text" id="prompt1" readonly>[СЮДА ВСТАВИТЬ ТВОЙ ОСНОВНОЙ ПРОМПТ ДЛЯ КОПИРОВАНИЯ]</textarea>
+                            <button class="btn-copy" onclick="copyToClipboard('prompt1')">
+                                <i class="fa-regular fa-copy"></i> КОПИРОВАТЬ
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
-    <footer>
-      <div class="foot">
-        <div>
-          <div style="color: var(--mut);">Renette Preset Hub</div>
-          <div>Собрано без лишних зависимостей. Можно хостить на GitHub Pages.</div>
-        </div>
-        <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="pill" href="#lab">Наверх</a>
-          <a class="pill" href="#toggles">Тогглы</a>
-          <a class="pill" href="#builder">Сборщик</a>
-          <a class="pill" href="#guides">Гайды</a>
-        </div>
-      </div>
-    </footer>
-  </main>
+                <!-- CARD 2: NSFW MODULE -->
+                <div class="card">
+                    <div class="card-img-container">
+                        <img src="[ССЫЛКА_НА_СКРИНШОТ_2]" alt="NSFW Preview">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-title" style="color: var(--accent-red);">NSFW Module <i class="fa-solid fa-fire"></i></div>
+                        <p class="card-desc">
+                            Дополнительный модуль для снятия ограничений. Используйте с осторожностью.
+                            Активирует "дикую" сторону цифровой природы.
+                        </p>
+                        <div class="code-snippet">
+                            <div class="code-header">
+                                <span>UNRESTRICTED.TXT</span>
+                            </div>
+                            <textarea class="prompt-text" id="prompt2" readonly>[СЮДА ВСТАВИТЬ ПРОМПТ NSFW МОДУЛЯ]</textarea>
+                            <button class="btn-copy" onclick="copyToClipboard('prompt2')">
+                                <i class="fa-regular fa-copy"></i> КОПИРОВАТЬ
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
-  <div class="toast" id="toast" role="status" aria-live="polite">
-    <div class="bar" aria-hidden="true"></div>
-    <span id="toastText">—</span>
-    <i id="toastMeta"></i>
-  </div>
+                <!-- CARD 3: FORMATTING -->
+                <div class="card">
+                    <div class="card-img-container">
+                        <img src="[ССЫЛКА_НА_СКРИНШОТ_3]" alt="Formatting Preview">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-title">Visuals & HTML <i class="fa-solid fa-palette"></i></div>
+                        <p class="card-desc">
+                            Промпт для красивого оформления ответов. Цвета, шрифты, стилизация под терминал.
+                        </p>
+                        <div class="code-snippet">
+                            <div class="code-header">
+                                <span>STYLE.CSS</span>
+                            </div>
+                            <textarea class="prompt-text" id="prompt3" readonly>[СЮДА ВСТАВИТЬ ПРОМПТ НА ВИЗУАЛ]</textarea>
+                            <button class="btn-copy" onclick="copyToClipboard('prompt3')">
+                                <i class="fa-regular fa-copy"></i> КОПИРОВАТЬ
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
-  <script>
-    'use strict';
+                <!-- ADD MORE CARDS HERE -->
 
-    // ---------------------------
-    // DATA (замени placeholder'ы руками)
-    // ---------------------------
-    const DATA = {
-      toggles: [
-        {
-          id: 'core',
-          title: 'Ядро поведения',
-          hint: 'Базовые установки, которые держат весь характер и тон.',
-          onByDefault: true,
-          prompts: [
-            {
-              id: 'core-main',
-              name: 'Main / Core Prompt',
-              desc: 'Главный промпт. Держит рамки поведения и формат.',
-              img: 'assets/screens/core-main.jpg',
-              text:
-`[placeholder]
-[placeholder]
-[placeholder]`
-            },
-            {
-              id: 'core-format',
-              name: 'Формат и стиль',
-              desc: 'Правила оформления, перспективы, времени, речи.',
-              img: 'assets/screens/core-format.jpg',
-              text:
-`[placeholder]
-[placeholder]`
-            }
-          ]
-        },
+            </div>
+        </section>
 
-        {
-          id: 'story',
-          title: 'Симуляция и мир',
-          hint: 'Слой “реальности”: правила симуляции, логика мира, реактивность.',
-          onByDefault: false,
-          prompts: [
-            {
-              id: 'story-sim',
-              name: 'Simulation Rules',
-              desc: 'Как развивается сцена и что запрещено делать ассистенту.',
-              img: 'assets/screens/story-sim.jpg',
-              text:
-`[placeholder]
-[placeholder]
-[placeholder]`
-            },
-            {
-              id: 'story-pacing',
-              name: 'Темп отношений',
-              desc: 'Медленное развитие, шаги должны быть заслужены.',
-              img: 'assets/screens/story-pacing.jpg',
-              text:
-`[placeholder]
-[placeholder]`
-            }
-          ]
-        },
+        <!-- GUIDES SECTION -->
+        <section id="guides" class="content-section">
+            <h2 style="margin-bottom: 30px; font-size: 2rem; text-align: center;"> <i class="fa-solid fa-book-open"></i> РУКОВОДСТВО ПОДКЛЮЧЕНИЯ</h2>
 
-        {
-          id: 'ui',
-          title: 'UI / HTML-вставки',
-          hint: 'Если тебе нужны визуальные панели, документы, терминалы и т.п.',
-          onByDefault: false,
-          prompts: [
-            {
-              id: 'ui-panels',
-              name: 'Визуальные блоки',
-              desc: 'Правила для вставок панелей/документов/экранов.',
-              img: 'assets/screens/ui-panels.jpg',
-              text:
-`[placeholder]
-[placeholder]`
-            },
-            {
-              id: 'ui-theme',
-              name: 'Тема оформления',
-              desc: 'Единая тема для визуальных вставок, контраст, аккуратность.',
-              img: 'assets/screens/ui-theme.jpg',
-              text:
-`[placeholder]`
-            }
-          ]
-        },
+            <div class="guide-timeline">
 
-        {
-          id: 'safety',
-          title: 'Ограничители (твои личные)',
-          hint: 'Пакет настроек, чтобы тон не уходил не туда.',
-          onByDefault: false,
-          prompts: [
-            {
-              id: 'safety-soft',
-              name: 'Soft Limits',
-              desc: 'Мягкие запреты/предпочтения.',
-              img: 'assets/screens/safety-soft.jpg',
-              text:
-`[placeholder]
-[placeholder]`
-            },
-            {
-              id: 'safety-hard',
-              name: 'Hard Limits',
-              desc: 'Жёсткие границы (если надо).',
-              img: 'assets/screens/safety-hard.jpg',
-              text:
-`[placeholder]`
-            }
-          ]
+                <!-- STEP 1 -->
+                <div class="guide-item">
+                    <div class="guide-marker"></div>
+                    <div class="guide-content">
+                        <h3>01. Импорт Пресета</h3>
+                        <p>Скачайте JSON файл или скопируйте основной промпт из раздела "Промпты".</p>
+                        <img src="[СКРИНШОТ_ГАЙДА_1]" alt="Step 1" class="guide-img" onerror="this.style.display='none'">
+                        <p style="color: var(--text-muted); font-size: 0.9em;">Перейдите в SillyTavern -> Extensions -> ...</p>
+                    </div>
+                </div>
+
+                <!-- STEP 2 -->
+                <div class="guide-item">
+                    <div class="guide-marker"></div>
+                    <div class="guide-content">
+                        <h3>02. Настройка Context Template</h3>
+                        <p>Убедитесь, что порядок инъекций (Injection Order) выставлен верно.</p>
+                        <img src="[СКРИНШОТ_ГАЙДА_2]" alt="Step 2" class="guide-img" onerror="this.style.display='none'">
+                        <div class="code-snippet" style="margin-top: 10px;">
+                            <textarea class="prompt-text" id="guideCode1" readonly style="height: 40px;">Recommended Depth: 4</textarea>
+                            <button class="btn-copy" onclick="copyToClipboard('guideCode1')">КОПИРОВАТЬ НАСТРОЙКИ</button>
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- STEP 3 -->
+                 <div class="guide-item">
+                    <div class="guide-marker"></div>
+                    <div class="guide-content">
+                        <h3>03. Активация Ренетт</h3>
+                        <p>После установки всех модулей, напишите в чат команду активации или просто начните ролеплей.</p>
+                        <img src="[СКРИНШОТ_ГАЙДА_3]" alt="Step 3" class="guide-img" onerror="this.style.display='none'">
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer>
+            <p>DESIGNED BY RENETTE SYSTEM © 2024</p>
+            <p style="font-size: 0.8em; opacity: 0.5;">POWERED BY SILLY TAVERN COMMUNITY</p>
+        </footer>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="toast">
+        <i class="fa-solid fa-check-circle"></i>
+        <span>Скопировано в буфер!</span>
+    </div>
+
+    <script>
+        // --- TAB SWITCHING ---
+        function switchTab(tabId) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(el => {
+                el.classList.remove('active');
+            });
+            // Show selected
+            document.getElementById(tabId).classList.add('active');
+
+            // Update buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            // Highlight current button (simple logic based on order or text could be added,
+            // but for now relying on click event target parent logic if needed,
+            // here we just refresh styling based on the onclick trigger in HTML)
+            event.target.classList.add('active');
+
+            // Scroll to top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-      ],
 
-      guides: [
-        {
-          id: 'g-install',
-          name: 'Установка пресета',
-          desc: 'Куда вставлять, что включать, как проверить, что работает.',
-          img: 'assets/screens/guide-install.jpg',
-          text:
-`[placeholder]
-[placeholder]`
-        },
-        {
-          id: 'g-toggles',
-          name: 'Как работать с тогглами',
-          desc: 'Логика включения, сочетания, порядок, типовые кейсы.',
-          img: 'assets/screens/guide-toggles.jpg',
-          text:
-`[placeholder]
-[placeholder]
-[placeholder]`
-        },
-        {
-          id: 'g-debug',
-          name: 'Диагностика и отладка',
-          desc: 'Если стиль “поплыл”: что отключать первым, что проверять.',
-          img: 'assets/screens/guide-debug.jpg',
-          text:
-`[placeholder]
-[placeholder]`
+        // --- COPY TO CLIPBOARD ---
+        function copyToClipboard(elementId) {
+            const copyText = document.getElementById(elementId);
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); // For mobile devices
+
+            navigator.clipboard.writeText(copyText.value).then(() => {
+                showToast();
+            });
         }
-      ]
-    };
 
-    // ---------------------------
-    // HELPERS
-    // ---------------------------
-    const $ = (sel, root=document) => root.querySelector(sel);
-    const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
-
-    const toast = (msg, meta='') => {
-      const el = $('#toast');
-      $('#toastText').textContent = msg;
-      $('#toastMeta').textContent = meta ? '• ' + meta : '';
-      el.dataset.on = '1';
-      clearTimeout(toast._t);
-      toast._t = setTimeout(()=>{ el.dataset.on='0'; }, 1600);
-    };
-
-    const safeCopy = async (text) => {
-      try{
-        await navigator.clipboard.writeText(text);
-        toast('Скопировано', (text.length>80 ? (text.slice(0,77)+'…') : text).replace(/\s+/g,' ').trim());
-      }catch(e){
-        // fallback
-        const ta = document.createElement('textarea');
-        ta.value = text;
-        ta.style.position='fixed';
-        ta.style.left='-9999px';
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-        toast('Скопировано (fallback)');
-      }
-    };
-
-    const normalizeText = (t) => {
-      return (t || '')
-        .replace(/\r\n/g, '\n')
-        .replace(/[ \t]+\n/g, '\n')
-        .replace(/\n{3,}/g, '\n\n')
-        .trim() + '\n';
-    };
-
-    // ---------------------------
-    // STATE
-    // ---------------------------
-    const state = {
-      activeToggleId: null,
-      selected: new Set(), // prompt ids and guide ids
-      accent: 0
-    };
-
-    // ---------------------------
-    // RENDER: Toggles list + prompt cards
-    // ---------------------------
-    function renderToggleList(){
-      const host = $('#toggleList');
-      host.innerHTML = '';
-
-      DATA.toggles.forEach(t => {
-        const btn = document.createElement('button');
-        btn.className = 'toggleBtn';
-        btn.type = 'button';
-        btn.dataset.id = t.id;
-        btn.dataset.on = (t.onByDefault ? '1' : '0');
-
-        btn.innerHTML = `
-          <span class="spark" aria-hidden="true"></span>
-          <b>${escapeHtml(t.title)}</b>
-          <small>${escapeHtml(t.hint)}</small>
-        `;
-
-        btn.addEventListener('click', () => {
-          state.activeToggleId = t.id;
-          $$('.toggleBtn', host).forEach(x => x.dataset.on = (x.dataset.id === t.id ? '1' : '0'));
-          renderActiveToggle();
-        });
-
-        host.appendChild(btn);
-      });
-
-      // set default active
-      const defaultOne = DATA.toggles.find(t => t.onByDefault) || DATA.toggles[0];
-      state.activeToggleId = defaultOne?.id || null;
-      $$('.toggleBtn', host).forEach(x => x.dataset.on = (x.dataset.id === state.activeToggleId ? '1' : '0'));
-      renderActiveToggle();
-    }
-
-    function renderActiveToggle(){
-      const t = DATA.toggles.find(x => x.id === state.activeToggleId) || DATA.toggles[0];
-      if(!t) return;
-
-      $('#toggleTitle').textContent = t.title;
-      $('#toggleHint').textContent = t.hint;
-
-      const host = $('#promptCards');
-      host.innerHTML = '';
-
-      t.prompts.forEach(p => {
-        const card = document.createElement('div');
-        card.className = 'card';
-
-        card.innerHTML = `
-          <div class="top">
-            <div>
-              <b>${escapeHtml(p.name)}</b>
-              <small>${escapeHtml(p.desc)}</small>
-            </div>
-            <span class="chip"><span class="dot"></span>prompt</span>
-          </div>
-          <div class="mid">
-            <div class="thumb">
-              <img src="${escapeAttr(p.img)}" alt="${escapeAttr(p.name)}" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, rgba(255,255,255,.03), rgba(255,255,255,.01))';">
-            </div>
-
-            <div class="codebox" data-code="${escapeAttr(p.text)}">${escapeHtml(truncate(p.text, 260))}<div class="fade" aria-hidden="true"></div></div>
-
-            <div class="row">
-              <div class="left">
-                <button class="iconBtn" type="button" data-copy="${escapeAttr(p.text)}">Копировать</button>
-                <button class="iconBtn" type="button" data-add="${escapeAttr(p.id)}">В сборку</button>
-              </div>
-              <span class="chip" title="ID">${escapeHtml(p.id)}</span>
-            </div>
-          </div>
-        `;
-
-        card.querySelector('[data-copy]').addEventListener('click', (e)=>{
-          safeCopy(p.text);
-        });
-
-        card.querySelector('[data-add]').addEventListener('click', ()=>{
-          state.selected.add(p.id);
-          syncBuilderChecks();
-          rebuildOutput();
-          toast('Добавлено в сборку', p.name);
-          // scroll builder lightly on mobile
-          if(window.innerWidth < 980) document.getElementById('builder').scrollIntoView({behavior:'smooth', block:'start'});
-        });
-
-        host.appendChild(card);
-      });
-
-      updateNavActive();
-    }
-
-    // ---------------------------
-    // RENDER: Builder list
-    // ---------------------------
-    function renderBuilder(){
-      const host = $('#builderList');
-      host.innerHTML = '';
-
-      DATA.toggles.forEach(t => {
-        const wrap = document.createElement('div');
-        wrap.className = 'item';
-
-        const checks = t.prompts.map(p => {
-          return `
-            <label class="chk">
-              <input type="checkbox" data-sel="${escapeAttr(p.id)}">
-              <div class="meta">
-                <b>${escapeHtml(p.name)}</b>
-                <span>${escapeHtml(p.desc)}</span>
-              </div>
-              <div class="actions">
-                <button class="iconBtn" type="button" data-copyone="${escapeAttr(p.id)}">Копировать</button>
-              </div>
-            </label>
-          `;
-        }).join('');
-
-        wrap.innerHTML = `
-          <div class="ih">
-            <div>
-              <b>${escapeHtml(t.title)}</b>
-              <small>${escapeHtml(t.hint)}</small>
-            </div>
-            <span class="chip">${t.prompts.length} шт.</span>
-          </div>
-          <div class="ib">
-            <div class="checks">${checks}</div>
-          </div>
-        `;
-
-        // checkbox wiring
-        $$('input[data-sel]', wrap).forEach(chk => {
-          chk.addEventListener('change', () => {
-            const id = chk.dataset.sel;
-            if(chk.checked) state.selected.add(id);
-            else state.selected.delete(id);
-            rebuildOutput();
-          });
-        });
-
-        // copy one wiring
-        $$('button[data-copyone]', wrap).forEach(btn => {
-          btn.addEventListener('click', () => {
-            const id = btn.dataset.copyone;
-            const found = findPromptById(id);
-            if(found) safeCopy(found.text);
-          });
-        });
-
-        host.appendChild(wrap);
-      });
-
-      syncBuilderChecks();
-      rebuildOutput();
-    }
-
-    function syncBuilderChecks(){
-      $$('input[data-sel]').forEach(chk => {
-        const id = chk.dataset.sel;
-        chk.checked = state.selected.has(id);
-      });
-    }
-
-    function rebuildOutput(){
-      // Build output: keep stable ordering by DATA structure
-      const blocks = [];
-
-      // prompts
-      DATA.toggles.forEach(t => {
-        t.prompts.forEach(p => {
-          if(state.selected.has(p.id)){
-            blocks.push(`### ${p.name}\n${normalizeText(p.text)}`);
-          }
-        });
-      });
-
-      // guides (if selected)
-      DATA.guides.forEach(g => {
-        if(state.selected.has(g.id)){
-          blocks.push(`### ${g.name}\n${normalizeText(g.text)}`);
+        // --- TOAST ANIMATION ---
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
         }
-      });
 
-      const out = blocks.join('\n');
-      $('#buildOutput').value = out;
-      $('#buildCount').innerHTML = `<span class="dot"></span>${countSelected()} выбрано`;
-    }
-
-    function countSelected(){
-      return state.selected.size;
-    }
-
-    // ---------------------------
-    // RENDER: Guides
-    // ---------------------------
-    function renderGuides(){
-      const host = $('#guideGrid');
-      host.innerHTML = '';
-
-      DATA.guides.forEach(g => {
-        const el = document.createElement('div');
-        el.className = 'guide';
-
-        el.innerHTML = `
-          <div class="gh">
-            <div>
-              <b>${escapeHtml(g.name)}</b>
-              <small>${escapeHtml(g.desc)}</small>
-            </div>
-            <span class="chip"><span class="dot"></span>guide</span>
-          </div>
-          <div class="gb">
-            <div class="thumb">
-              <img src="${escapeAttr(g.img)}" alt="${escapeAttr(g.name)}" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, rgba(255,255,255,.03), rgba(255,255,255,.01))';">
-            </div>
-
-            <div class="codebox">${escapeHtml(truncate(g.text, 240))}<div class="fade" aria-hidden="true"></div></div>
-
-            <div class="row">
-              <div class="left">
-                <button class="iconBtn" type="button" data-copyguide="${escapeAttr(g.id)}">Копировать</button>
-                <button class="iconBtn" type="button" data-addguide="${escapeAttr(g.id)}">В сборку</button>
-              </div>
-              <label class="chip" style="cursor:pointer;">
-                <input type="checkbox" data-selguide="${escapeAttr(g.id)}" style="vertical-align:middle; margin-right:8px; accent-color: var(--a2);">
-                выбрать
-              </label>
-            </div>
-          </div>
-        `;
-
-        el.querySelector('[data-copyguide]').addEventListener('click', ()=>{
-          safeCopy(g.text);
+        // --- INTERSECTION OBSERVER FOR SCROLL ANIMATIONS ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
         });
 
-        el.querySelector('[data-addguide]').addEventListener('click', ()=>{
-          state.selected.add(g.id);
-          rebuildOutput();
-          syncGuideChecks();
-          toast('Добавлено в сборку', g.name);
+        // Add fade-in effect to cards initially
+        document.querySelectorAll('.card').forEach((el) => {
+            el.style.opacity = 0;
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
         });
-
-        el.querySelector('input[data-selguide]').addEventListener('change', (e)=>{
-          if(e.target.checked) state.selected.add(g.id);
-          else state.selected.delete(g.id);
-          rebuildOutput();
-        });
-
-        host.appendChild(el);
-      });
-
-      syncGuideChecks();
-    }
-
-    function syncGuideChecks(){
-      $$('input[data-selguide]').forEach(chk => {
-        chk.checked = state.selected.has(chk.dataset.selguide);
-      });
-    }
-
-    // ---------------------------
-    // NAV active link on scroll
-    // ---------------------------
-    const sections = ['lab','toggles','builder','guides'].map(id => document.getElementById(id));
-    const navMap = new Map(sections.map(s => [s.id, $(`.pill[data-nav="${s.id}"]`)]));
-    function updateNavActive(){
-      // No-op (scroll handler sets)
-    }
-
-    function onScroll(){
-      const y = window.scrollY + 120;
-      let current = 'lab';
-      for(const s of sections){
-        if(s.offsetTop <= y) current = s.id;
-      }
-      navMap.forEach((a)=> a && (a.dataset.active='0'));
-      const link = navMap.get(current);
-      if(link) link.dataset.active='1';
-    }
-
-    // ---------------------------
-    // Accent cycling (small but fun)
-    // ---------------------------
-    const accents = [
-      {a2:'#00F5D4', a4:'#A6FF4D', a1:'#8D7BFF', a3:'#FF4FD8'},
-      {a2:'#8D7BFF', a4:'#00F5D4', a1:'#A6FF4D', a3:'#FF4FD8'},
-      {a2:'#FF4FD8', a4:'#A6FF4D', a1:'#00F5D4', a3:'#8D7BFF'},
-      {a2:'#A6FF4D', a4:'#00F5D4', a1:'#FF4FD8', a3:'#8D7BFF'}
-    ];
-
-    function applyAccent(idx){
-      const a = accents[idx % accents.length];
-      document.documentElement.style.setProperty('--a2', a.a2);
-      document.documentElement.style.setProperty('--a4', a.a4);
-      document.documentElement.style.setProperty('--a1', a.a1);
-      document.documentElement.style.setProperty('--a3', a.a3);
-      toast('Акцент обновлён');
-    }
-
-    // ---------------------------
-    // Finders
-    // ---------------------------
-    function findPromptById(id){
-      for(const t of DATA.toggles){
-        const p = t.prompts.find(x => x.id === id);
-        if(p) return p;
-      }
-      return null;
-    }
-
-    // ---------------------------
-    // Escaping
-    // ---------------------------
-    function escapeHtml(str){
-      return String(str)
-        .replaceAll('&','&')
-        .replaceAll('<','<')
-        .replaceAll('>','>')
-        .replaceAll('"','"')
-        .replaceAll("'",''');
-    }
-    function escapeAttr(str){
-      return escapeHtml(str).replaceAll('\n','
-');
-    }
-    function truncate(s, n){
-      const t = (s || '').trim();
-      return t.length <= n ? t : (t.slice(0, n-1) + '…');
-    }
-
-    // ---------------------------
-    // Buttons
-    // ---------------------------
-    $('#btnScrollToggles').addEventListener('click', ()=>{
-      document.getElementById('toggles').scrollIntoView({behavior:'smooth', block:'start'});
-    });
-
-    $('#btnCopyAll').addEventListener('click', ()=>{
-      const txt = $('#buildOutput').value.trim();
-      if(!txt){ toast('Сборка пустая'); return; }
-      safeCopy(txt);
-    });
-    $('#btnCopyBuild').addEventListener('click', ()=>{
-      const txt = $('#buildOutput').value.trim();
-      if(!txt){ toast('Сборка пустая'); return; }
-      safeCopy(txt);
-    });
-
-    $('#btnNormalizeBuild').addEventListener('click', ()=>{
-      const t = normalizeText($('#buildOutput').value);
-      $('#buildOutput').value = t;
-      toast('Нормализовано', 'пробелы/переносы');
-    });
-
-    $('#btnSelectNone').addEventListener('click', ()=>{
-      state.selected.clear();
-      syncBuilderChecks();
-      syncGuideChecks();
-      rebuildOutput();
-      toast('Снято всё');
-    });
-
-    $('#btnClearBuild').addEventListener('click', ()=>{
-      state.selected.clear();
-      $('#buildOutput').value = '';
-      syncBuilderChecks();
-      syncGuideChecks();
-      rebuildOutput();
-      toast('Сборка очищена');
-    });
-
-    $('#btnTheme').addEventListener('click', ()=>{
-      state.accent = (state.accent + 1) % accents.length;
-      applyAccent(state.accent);
-    });
-
-    // Smooth anchor nav (keep default, but nicer)
-    $$('.pill[href^="#"]').forEach(a=>{
-      a.addEventListener('click', (e)=>{
-        const id = a.getAttribute('href').slice(1);
-        const el = document.getElementById(id);
-        if(el){
-          e.preventDefault();
-          el.scrollIntoView({behavior:'smooth', block:'start'});
-        }
-      });
-    });
-
-    // ---------------------------
-    // INIT
-    // ---------------------------
-    renderToggleList();
-    renderBuilder();
-    renderGuides();
-    onScroll();
-    window.addEventListener('scroll', onScroll, {passive:true});
-
-    // In case user edits buildOutput manually, keep count stable, but allow freedom
-    $('#buildOutput').addEventListener('input', ()=>{
-      // not auto-rebuilding to respect manual edits
-    });
-  </script>
+    </script>
 </body>
 </html>
