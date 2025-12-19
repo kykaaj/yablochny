@@ -4,732 +4,669 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="L1aS8txxzlMjDV_Efl0Oi1WDR0J7_DCdyazGjG1zVPk" />
-    <title>Renette Project | SillyTavern Preset</title>
+    <title>Renette • Project Eden</title>
 
-    <!-- Подключаем стильные шрифты -->
+    <!-- Шрифты: Space Grotesk для заголовков, Inter для текста -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Montserrat:wght@300;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
 
     <!-- Иконки -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <style>
-        /* --- CORE VARIABLES --- */
         :root {
             --bg-color: #050505;
-            --accent-green: #4aff88;
-            --accent-red: #ff3355;
-            --glass-bg: rgba(20, 25, 20, 0.6);
-            --glass-border: rgba(74, 255, 136, 0.2);
-            --text-main: #e0e0e0;
-            --text-muted: #8a9a90;
-            --card-hover: rgba(74, 255, 136, 0.05);
-            --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            --card-bg: rgba(20, 20, 20, 0.6);
+            --accent-green: #4fffa3;
+            --accent-red: #ff4f4f;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+            --glow: 0 0 20px rgba(79, 255, 163, 0.15);
         }
 
-        /* --- RESET & BASE --- */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none; /* Скрываем стандартный курсор */
+        }
 
         body {
             background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: 'Montserrat', sans-serif;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            line-height: 1.6;
+            min-height: 100vh;
         }
 
-        /* --- BACKGROUND ANIMATION (Digital Roots) --- */
-        .bg-canvas {
+        /* --- КАСТОМНЫЙ КУРСОР --- */
+        .cursor-dot, .cursor-outline {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-green);
+        }
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--accent-green);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+        body:hover .cursor-outline {
+            opacity: 1;
+        }
+
+        /* Эффект при наведении на интерактивные элементы */
+        body.hovered .cursor-outline {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(79, 255, 163, 0.1);
+            border-color: transparent;
+        }
+
+        /* --- ФОНОВЫЕ ЭФФЕКТЫ --- */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48ZmlsdGVyIGlkPSJmIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC42NSIgbnVtT2N0YXZlcz0iMyIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNmKSIgb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==');
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
             z-index: -1;
-            background:
-                radial-gradient(circle at 15% 50%, rgba(74, 255, 136, 0.05) 0%, transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(255, 51, 85, 0.03) 0%, transparent 25%);
-            overflow: hidden;
+            animation: float 10s infinite ease-in-out;
+        }
+        .orb-1 {
+            top: -10%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(79, 255, 163, 0.2) 0%, rgba(0,0,0,0) 70%);
+        }
+        .orb-2 {
+            bottom: -10%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 79, 79, 0.15) 0%, rgba(0,0,0,0) 70%);
+            animation-delay: -5s;
         }
 
-        .bg-grid {
-            position: absolute;
-            width: 200%; height: 200%;
-            background-image: linear-gradient(rgba(74, 255, 136, 0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(74, 255, 136, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            transform: perspective(500px) rotateX(60deg) translateY(-100px) translateZ(-200px);
-            animation: gridMove 20s linear infinite;
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, -30px); }
         }
 
-        @keyframes gridMove {
-            0% { transform: perspective(500px) rotateX(60deg) translateY(0) translateZ(-200px); }
-            100% { transform: perspective(500px) rotateX(60deg) translateY(50px) translateZ(-200px); }
-        }
-
-        /* --- LAYOUT --- */
+        /* --- UI CONTAINER --- */
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
+            position: relative;
+            z-index: 10;
         }
 
+        /* --- HEADER & HERO --- */
         header {
             padding: 40px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: relative;
         }
 
         .logo {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.5rem;
+            font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: -0.05em;
+            color: var(--text-primary);
+            position: relative;
+        }
+        .logo span { color: var(--accent-green); }
+
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            min-height: 70vh;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 0.9;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .glitch-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin-bottom: 40px;
+            line-height: 1.6;
+            border-left: 2px solid var(--accent-green);
+            padding-left: 20px;
+        }
+
+        .renette-mascot {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 400px;
+            height: 500px;
+            /* ПЛЕЙСХОЛДЕР ДЛЯ РЕНЕТТ */
+            background: url('https://placehold.co/400x500/1a1a1a/4fffa3/png?text=RENETTE\\n(Mascot)') center/cover no-repeat;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border: var(--glass-border);
+            opacity: 0.8;
+            mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+            z-index: -1;
+        }
+
+        @media (max-width: 768px) {
+            .renette-mascot {
+                position: relative;
+                width: 100%;
+                height: 300px;
+                top: 0;
+                transform: none;
+                margin-bottom: 30px;
+                opacity: 0.6;
+            }
+        }
+
+        /* --- NAVIGATION TABS --- */
+        .nav-tabs {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            padding: 10px;
+            border-radius: 100px;
+            background: rgba(10, 10, 10, 0.7);
+            border: var(--glass-border);
+            width: fit-content;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            padding: 10px 24px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab-btn.active {
+            color: #000;
+            background: var(--accent-green);
+            font-weight: 600;
+        }
+
+        .tab-btn:hover:not(.active) {
+            color: var(--text-primary);
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* --- SECTIONS --- */
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+            padding-bottom: 100px;
+        }
+        .content-section.active {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- CARDS (PROMPTS & GUIDES) --- */
+        .card {
+            background: var(--card-bg);
+            border: var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.27), border-color 0.3s;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(5px);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-green);
+        }
+
+        /* Декоративная линия сверху карточки */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+            transform-origin: left;
+        }
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-img-container {
+            width: 100%;
+            height: 160px;
+            background: #111;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        .card:hover .card-img { opacity: 1; }
+
+        .card-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.8);
             color: var(--accent-green);
-            text-shadow: 0 0 10px rgba(74, 255, 136, 0.4);
-            letter-spacing: -1px;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-family: 'Space Grotesk', sans-serif;
+            text-transform: uppercase;
+            border: 1px solid var(--accent-green);
+        }
+
+        .card-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--text-primary);
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .logo i { font-size: 1.2rem; }
-
-        /* --- HERO SECTION --- */
-        .hero {
-            min-height: 80vh;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            align-items: center;
-            gap: 50px;
-            margin-bottom: 100px;
-        }
-
-        .hero-content h1 {
-            font-size: 4.5rem;
-            line-height: 0.9;
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-        .glitch-text {
-            position: relative;
-            color: #fff;
-        }
-
-        .glitch-text::before, .glitch-text::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-        }
-
-        .glitch-text::before {
-            left: 2px;
-            text-shadow: -1px 0 var(--accent-red);
-            clip-path: inset(44% 0 61% 0);
-            animation: glitch-anim-1 2.5s infinite linear alternate-reverse;
-        }
-
-        .glitch-text::after {
-            left: -2px;
-            text-shadow: -1px 0 var(--accent-green);
-            clip-path: inset(20% 0 10% 0);
-            animation: glitch-anim-2 3s infinite linear alternate-reverse;
-        }
-
-        .hero-desc {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            margin-bottom: 40px;
-            max-width: 500px;
-            border-left: 3px solid var(--accent-green);
-            padding-left: 20px;
-        }
-
-        .hero-mascot {
-            position: relative;
-            height: 600px;
-            background: radial-gradient(circle, rgba(74,255,136,0.1) 0%, transparent 70%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .mascot-img {
-            width: 100%;
-            max-width: 500px;
-            height: auto;
-            filter: drop-shadow(0 0 20px rgba(74, 255, 136, 0.3));
-            animation: float 6s ease-in-out infinite;
-            /* Placeholder styling */
-            background: rgba(255,255,255,0.05);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px dashed var(--accent-green);
-            color: var(--accent-green);
-        }
-
-        /* --- TABS & NAVIGATION --- */
-        .nav-wrapper {
-            position: sticky;
-            top: 20px;
-            z-index: 100;
-            margin-bottom: 40px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .glass-nav {
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 10px;
-            border-radius: 50px;
-            display: flex;
-            gap: 5px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        .nav-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            padding: 12px 24px;
-            border-radius: 40px;
-            cursor: pointer;
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 700;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .nav-btn.active {
-            color: #000;
-            background: var(--accent-green);
-        }
-
-        .nav-btn:hover:not(.active) {
-            color: #fff;
-            background: rgba(255,255,255,0.05);
-        }
-
-        /* --- CONTENT SECTIONS --- */
-        .content-section {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-        .content-section.active { display: block; }
-
-        /* --- PRESET GRID (Masonry style) --- */
-        .preset-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 25px;
-            margin-bottom: 100px;
-        }
-
-        .card {
-            background: var(--glass-bg);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 0;
-            overflow: hidden;
-            transition: var(--transition);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 4px; height: 100%;
-            background: var(--accent-green);
-            opacity: 0;
-            transition: var(--transition);
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: var(--glass-border);
-            box-shadow: 0 10px 40px rgba(74, 255, 136, 0.1);
-        }
-
-        .card:hover::before { opacity: 1; }
-
-        .card-img-container {
-            height: 200px;
-            background: #111;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card-img-container img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            transition: var(--transition);
-            opacity: 0.8;
-        }
-
-        .card:hover .card-img-container img {
-            opacity: 1;
-            transform: scale(1.05);
-        }
-
-        .card-body {
-            padding: 25px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card-title {
-            font-size: 1.4rem;
-            margin-bottom: 10px;
-            color: #fff;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
         .card-desc {
             font-size: 0.9rem;
-            color: var(--text-muted);
+            color: var(--text-secondary);
             margin-bottom: 20px;
+            line-height: 1.5;
             flex-grow: 1;
         }
 
-        /* --- CODE BLOCK STYLING --- */
-        .code-snippet {
-            background: #0a0a0a;
-            border: 1px solid #222;
-            border-radius: 8px;
-            padding: 15px;
-            position: relative;
-            margin-top: auto;
-        }
-
-        .code-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            font-size: 0.75rem;
-            color: var(--accent-green);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        textarea.prompt-text {
-            width: 100%;
-            height: 80px;
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            resize: none;
-            outline: none;
-        }
-
-        .btn-copy {
-            width: 100%;
-            padding: 10px;
+        .copy-btn {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #fff;
-            border-radius: 6px;
-            cursor: pointer;
-            font-family: 'JetBrains Mono', monospace;
-            transition: var(--transition);
+            color: var(--text-primary);
+            padding: 12px;
+            border-radius: 8px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            width: 100%;
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             gap: 8px;
-            margin-top: 10px;
+            transition: all 0.2s;
         }
 
-        .btn-copy:hover {
+        .copy-btn:hover {
             background: var(--accent-green);
             color: #000;
-            border-color: var(--accent-green);
+            box-shadow: 0 0 15px rgba(79, 255, 163, 0.4);
         }
 
-        /* --- GUIDES SECTION --- */
-        .guide-timeline {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto 100px;
-        }
-
-        .guide-timeline::before {
-            content: '';
-            position: absolute;
-            left: 20px;
-            top: 0;
-            height: 100%;
-            width: 2px;
-            background: linear-gradient(to bottom, var(--accent-green), transparent);
-        }
-
-        .guide-item {
-            margin-bottom: 50px;
-            padding-left: 60px;
-            position: relative;
-        }
-
-        .guide-marker {
-            position: absolute;
-            left: 11px;
-            top: 5px;
-            width: 20px;
-            height: 20px;
-            background: #000;
-            border: 2px solid var(--accent-green);
-            border-radius: 50%;
-            z-index: 2;
-        }
-
-        .guide-content {
-            background: var(--glass-bg);
-            border: 1px solid rgba(255,255,255,0.05);
-            padding: 30px;
-            border-radius: 16px;
-        }
-
-        .guide-img {
-            width: 100%;
-            border-radius: 8px;
-            margin: 15px 0;
-            border: 1px solid rgba(255,255,255,0.1);
+        .copy-btn i {
+            font-size: 1.1rem;
         }
 
         /* --- TOAST NOTIFICATION --- */
         .toast {
             position: fixed;
             bottom: 30px;
-            right: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
             background: var(--accent-green);
             color: #000;
-            padding: 15px 30px;
-            border-radius: 8px;
-            font-weight: 700;
-            transform: translateY(150%);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 999;
-            box-shadow: 0 10px 30px rgba(74, 255, 136, 0.3);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(79, 255, 163, 0.3);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.27);
+            z-index: 9999;
             display: flex;
             align-items: center;
             gap: 10px;
         }
-
-        .toast.show { transform: translateY(0); }
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
 
         /* --- FOOTER --- */
         footer {
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding: 50px 0;
+            border-top: var(--glass-border);
+            padding: 40px 0;
+            margin-top: auto;
             text-align: center;
-            color: var(--text-muted);
+            color: var(--text-secondary);
             font-size: 0.9rem;
+            position: relative;
+            z-index: 10;
+            background: #020202;
         }
 
-        /* --- ANIMATIONS --- */
-        @keyframes glitch-anim-1 {
-            0% { clip-path: inset(20% 0 80% 0); }
-            20% { clip-path: inset(60% 0 10% 0); }
-            40% { clip-path: inset(40% 0 50% 0); }
-            60% { clip-path: inset(80% 0 5% 0); }
-            80% { clip-path: inset(10% 0 70% 0); }
-            100% { clip-path: inset(30% 0 20% 0); }
+        .footer-link {
+            color: var(--accent-green);
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s;
         }
-        @keyframes glitch-anim-2 {
-            0% { clip-path: inset(10% 0 60% 0); }
-            20% { clip-path: inset(30% 0 10% 0); }
-            40% { clip-path: inset(70% 0 20% 0); }
-            60% { clip-path: inset(20% 0 40% 0); }
-            80% { clip-path: inset(50% 0 30% 0); }
-            100% { clip-path: inset(10% 0 80% 0); }
-        }
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .footer-link:hover { color: #fff; text-decoration: underline; }
 
-        /* --- RESPONSIVE --- */
-        @media (max-width: 768px) {
-            .hero { grid-template-columns: 1fr; text-align: center; gap: 30px; }
-            .hero-content h1 { font-size: 3rem; }
-            .hero-desc { margin: 0 auto 30px; border-left: none; border-bottom: 3px solid var(--accent-green); padding-bottom: 20px; padding-left: 0;}
-            .hero-mascot { height: 300px; }
-            .nav-wrapper { bottom: 20px; top: auto; }
-            .guide-timeline::before { left: 0; }
-            .guide-item { padding-left: 20px; }
-            .guide-marker { display: none; }
-        }
+        /* --- DATA HIDDEN --- */
+        .hidden-data { display: none; }
+
+        /* --- SCROLLBAR --- */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-green); }
+
     </style>
 </head>
 <body>
 
-    <!-- Живой фон -->
-    <div class="bg-canvas">
-        <div class="bg-grid"></div>
-    </div>
+    <!-- Фоновый шум и Орбы -->
+    <div class="noise-overlay"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <!-- Кастомный курсор -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
 
     <div class="container">
-        <!-- HEADER -->
-        <header>
-            <div class="logo">
-                <i class="fa-solid fa-apple-whole"></i>
-                <span>RENETTE</span>
-            </div>
-            <div class="socials">
-                <!-- Ссылки на твои соцсети -->
-                <a href="#" style="color:white; font-size: 1.5rem;"><i class="fa-brands fa-github"></i></a>
-            </div>
+        <!-- Шапка -->
+        <header class="hover-trigger">
+            <div class="logo">RENETTE <span>//</span> PRESET</div>
+            <a href="https://github.com/твоя_ссылка" target="_blank" class="tab-btn" style="border:1px solid var(--accent-green); color: var(--accent-green)">
+                <i class="ph ph-github-logo"></i> Repo
+            </a>
         </header>
 
-        <!-- NAVIGATION (Floating) -->
-        <div class="nav-wrapper">
-            <nav class="glass-nav">
-                <button class="nav-btn active" onclick="switchTab('home')">ГЛАВНАЯ</button>
-                <button class="nav-btn" onclick="switchTab('presets')">ПРОМПТЫ</button>
-                <button class="nav-btn" onclick="switchTab('guides')">ГАЙДЫ</button>
+        <!-- Герой -->
+        <section class="hero">
+            <div class="glitch-wrapper">
+                <h1>Digital<br><span style="color: var(--accent-green)">Orchard</span></h1>
+            </div>
+            <p>
+                Добро пожаловать в цифровое пространство Ренетт.
+                Здесь сплетаются природа и код. Выбери свой модуль, скопируй промпт
+                и позволь истории прорасти в SillyTavern.
+            </p>
+
+            <!-- МАСКОТ (Можно заменить URL на свою картинку) -->
+            <div class="renette-mascot"></div>
+
+            <!-- Навигация -->
+            <nav class="nav-tabs hover-trigger">
+                <button class="tab-btn active" onclick="switchTab('prompts')">
+                    <i class="ph ph-code"></i> Промпты
+                </button>
+                <button class="tab-btn" onclick="switchTab('guides')">
+                    <i class="ph ph-book-open"></i> Гайды
+                </button>
             </nav>
-        </div>
-
-        <!-- HERO SECTION (Home) -->
-        <section id="home" class="content-section active">
-            <div class="hero">
-                <div class="hero-content">
-                    <h1 class="glitch-text" data-text="RENETTE CORE">RENETTE CORE</h1>
-                    <p class="hero-desc">
-                        Продвинутый пресет для SillyTavern. Цифровая душа в мире кода.
-                        Синтез природы и алгоритмов для идеального ролеплея.
-                    </p>
-                    <button class="nav-btn" style="background: var(--accent-green); color: black;" onclick="switchTab('presets')">
-                        <i class="fa-solid fa-download"></i> ПЕРЕЙТИ К ДАННЫМ
-                    </button>
-                </div>
-                <div class="hero-mascot">
-                    <!-- СЮДА ВСТАВИТЬ МАСКОТА (Ренетт) -->
-                    <!-- Замени src на путь к картинке. Например: images/renette_cover.png -->
-                    <div class="mascot-img">
-                        <img src="[ССЫЛКА_НА_ИЗОБРАЖЕНИЕ_РЕНЕТТ]" alt="Renette Mascot" onerror="this.style.display='none'">
-                        <span style="position: absolute;">[PLACEHOLDER: МАСКОТ]</span>
-                    </div>
-                </div>
-            </div>
         </section>
 
-        <!-- PRESETS SECTION -->
-        <section id="presets" class="content-section">
-            <h2 style="margin-bottom: 30px; font-size: 2rem;"> <i class="fa-solid fa-database"></i> БАЗА ДАННЫХ</h2>
+        <!-- Секция 1: ПРОМПТЫ -->
+        <main id="prompts" class="content-section active">
 
-            <div class="preset-grid">
-
-                <!-- CARD 1: MAIN PROMPT -->
-                <div class="card">
-                    <div class="card-img-container">
-                        <!-- Картинка для промпта -->
-                        <img src="[ССЫЛКА_НА_СКРИНШОТ_1]" alt="Main Prompt Preview">
-                    </div>
-                    <div class="card-body">
-                        <div class="card-title">Main Prompt <i class="fa-solid fa-microchip"></i></div>
-                        <p class="card-desc">
-                            Основной системный промпт. Задает логику, стиль речи и поведение Ренетт.
-                            Обязателен для корректной работы ядра.
-                        </p>
-                        <div class="code-snippet">
-                            <div class="code-header">
-                                <span>SYSTEM.JSON</span>
-                                <i class="fa-solid fa-code"></i>
-                            </div>
-                            <textarea class="prompt-text" id="prompt1" readonly>[СЮДА ВСТАВИТЬ ТВОЙ ОСНОВНОЙ ПРОМПТ ДЛЯ КОПИРОВАНИЯ]</textarea>
-                            <button class="btn-copy" onclick="copyToClipboard('prompt1')">
-                                <i class="fa-regular fa-copy"></i> КОПИРОВАТЬ
-                            </button>
-                        </div>
-                    </div>
+            <!-- Карточка Промпта 1 -->
+            <article class="card hover-trigger">
+                <div class="card-img-container">
+                    <img src="https://placehold.co/600x400/111/4fffa3?text=Main+Prompt" alt="Main Prompt" class="card-img">
+                    <span class="card-tag">Core</span>
                 </div>
+                <h3 class="card-title"><i class="ph ph-cpu"></i> Основной Промпт</h3>
+                <p class="card-desc">
+                    [DESCRIPTION_PLACEHOLDER] - Это база для Ренетт. Включает в себя логику духа, поведение и основные директивы. Используй для Vanilla setup.
+                </p>
+                <button class="copy-btn" onclick="copyText('prompt1')">
+                    <i class="ph ph-copy"></i> Скопировать
+                </button>
+                <textarea id="prompt1" class="hidden-data">
+[PROMPT_PLACEHOLDER]
+Здесь будет текст основного промпта.
+Замени этот текст на свой вручную.
+                </textarea>
+            </article>
 
-                <!-- CARD 2: NSFW MODULE -->
-                <div class="card">
-                    <div class="card-img-container">
-                        <img src="[ССЫЛКА_НА_СКРИНШОТ_2]" alt="NSFW Preview">
-                    </div>
-                    <div class="card-body">
-                        <div class="card-title" style="color: var(--accent-red);">NSFW Module <i class="fa-solid fa-fire"></i></div>
-                        <p class="card-desc">
-                            Дополнительный модуль для снятия ограничений. Используйте с осторожностью.
-                            Активирует "дикую" сторону цифровой природы.
-                        </p>
-                        <div class="code-snippet">
-                            <div class="code-header">
-                                <span>UNRESTRICTED.TXT</span>
-                            </div>
-                            <textarea class="prompt-text" id="prompt2" readonly>[СЮДА ВСТАВИТЬ ПРОМПТ NSFW МОДУЛЯ]</textarea>
-                            <button class="btn-copy" onclick="copyToClipboard('prompt2')">
-                                <i class="fa-regular fa-copy"></i> КОПИРОВАТЬ
-                            </button>
-                        </div>
-                    </div>
+            <!-- Карточка Промпта 2 -->
+            <article class="card hover-trigger">
+                <div class="card-img-container">
+                    <img src="https://placehold.co/600x400/111/ff4f4f?text=NSFW+Module" alt="NSFW Module" class="card-img">
+                    <span class="card-tag" style="border-color: var(--accent-red); color: var(--accent-red)">NSFW</span>
                 </div>
+                <h3 class="card-title"><i class="ph ph-fire"></i> Модуль Страсти</h3>
+                <p class="card-desc">
+                    [DESCRIPTION_PLACEHOLDER] - Расширение для более откровенных сцен. Снимает ограничения на лексику и описания.
+                </p>
+                <button class="copy-btn" onclick="copyText('prompt2')">
+                    <i class="ph ph-copy"></i> Скопировать
+                </button>
+                <textarea id="prompt2" class="hidden-data">
+[PROMPT_PLACEHOLDER]
+Вставь сюда промпт для NSFW логики.
+                </textarea>
+            </article>
 
-                <!-- CARD 3: FORMATTING -->
-                <div class="card">
-                    <div class="card-img-container">
-                        <img src="[ССЫЛКА_НА_СКРИНШОТ_3]" alt="Formatting Preview">
-                    </div>
-                    <div class="card-body">
-                        <div class="card-title">Visuals & HTML <i class="fa-solid fa-palette"></i></div>
-                        <p class="card-desc">
-                            Промпт для красивого оформления ответов. Цвета, шрифты, стилизация под терминал.
-                        </p>
-                        <div class="code-snippet">
-                            <div class="code-header">
-                                <span>STYLE.CSS</span>
-                            </div>
-                            <textarea class="prompt-text" id="prompt3" readonly>[СЮДА ВСТАВИТЬ ПРОМПТ НА ВИЗУАЛ]</textarea>
-                            <button class="btn-copy" onclick="copyToClipboard('prompt3')">
-                                <i class="fa-regular fa-copy"></i> КОПИРОВАТЬ
-                            </button>
-                        </div>
-                    </div>
+            <!-- Карточка Промпта 3 -->
+            <article class="card hover-trigger">
+                <div class="card-img-container">
+                    <img src="https://placehold.co/600x400/111/ffffff?text=Jailbreak" alt="Jailbreak" class="card-img">
+                    <span class="card-tag">System</span>
                 </div>
+                <h3 class="card-title"><i class="ph ph-lock-key-open"></i> Jailbreak Ядро</h3>
+                <p class="card-desc">
+                    [DESCRIPTION_PLACEHOLDER] - Специальный джейлбрейк для обхода фильтров. Работает с Claude и GPT.
+                </p>
+                <button class="copy-btn" onclick="copyText('prompt3')">
+                    <i class="ph ph-copy"></i> Скопировать
+                </button>
+                <textarea id="prompt3" class="hidden-data">
+[PROMPT_PLACEHOLDER]
+Вставь сюда текст джейлбрейка.
+                </textarea>
+            </article>
 
-                <!-- ADD MORE CARDS HERE -->
+            <!-- ДОБАВЛЯЙ СКОЛЬКО УГОДНО КАРТОЧЕК ПО ЭТОМУ ШАБЛОНУ -->
 
-            </div>
-        </section>
+        </main>
 
-        <!-- GUIDES SECTION -->
-        <section id="guides" class="content-section">
-            <h2 style="margin-bottom: 30px; font-size: 2rem; text-align: center;"> <i class="fa-solid fa-book-open"></i> РУКОВОДСТВО ПОДКЛЮЧЕНИЯ</h2>
+        <!-- Секция 2: ГАЙДЫ -->
+        <main id="guides" class="content-section">
 
-            <div class="guide-timeline">
-
-                <!-- STEP 1 -->
-                <div class="guide-item">
-                    <div class="guide-marker"></div>
-                    <div class="guide-content">
-                        <h3>01. Импорт Пресета</h3>
-                        <p>Скачайте JSON файл или скопируйте основной промпт из раздела "Промпты".</p>
-                        <img src="[СКРИНШОТ_ГАЙДА_1]" alt="Step 1" class="guide-img" onerror="this.style.display='none'">
-                        <p style="color: var(--text-muted); font-size: 0.9em;">Перейдите в SillyTavern -> Extensions -> ...</p>
-                    </div>
+            <!-- Гайд 1 -->
+            <article class="card hover-trigger" style="grid-column: span 2;">
+                <div class="card-img-container" style="height: 250px;">
+                    <img src="https://placehold.co/800x400/1a1a1a/cccccc?text=Installation+Guide" alt="Install Guide" class="card-img">
+                    <span class="card-tag">Manual</span>
                 </div>
+                <h3 class="card-title"><i class="ph ph-wrench"></i> Полная Установка</h3>
+                <p class="card-desc">
+                    [DESCRIPTION_PLACEHOLDER] - Пошаговая инструкция, как импортировать пресет в SillyTavern, настроить контекст и подключить API.
+                </p>
+                <button class="copy-btn" onclick="copyText('guide1')">
+                    <i class="ph ph-read-cv-logo"></i> Скопировать текст гайда
+                </button>
+                <textarea id="guide1" class="hidden-data">
+[GUIDE_PLACEHOLDER]
+1. Открой SillyTavern.
+2. Перейди в...
+(Замени на полный текст гайда)
+                </textarea>
+            </article>
 
-                <!-- STEP 2 -->
-                <div class="guide-item">
-                    <div class="guide-marker"></div>
-                    <div class="guide-content">
-                        <h3>02. Настройка Context Template</h3>
-                        <p>Убедитесь, что порядок инъекций (Injection Order) выставлен верно.</p>
-                        <img src="[СКРИНШОТ_ГАЙДА_2]" alt="Step 2" class="guide-img" onerror="this.style.display='none'">
-                        <div class="code-snippet" style="margin-top: 10px;">
-                            <textarea class="prompt-text" id="guideCode1" readonly style="height: 40px;">Recommended Depth: 4</textarea>
-                            <button class="btn-copy" onclick="copyToClipboard('guideCode1')">КОПИРОВАТЬ НАСТРОЙКИ</button>
-                        </div>
-                    </div>
-                </div>
+            <!-- Гайд 2 -->
+            <article class="card hover-trigger">
+                <h3 class="card-title"><i class="ph ph-sliders-horizontal"></i> Настройка Samplers</h3>
+                <p class="card-desc">
+                    [DESCRIPTION_PLACEHOLDER] - Рекомендованные настройки температуры и rep penalty для лучшего отыгрыша Ренетт.
+                </p>
+                <button class="copy-btn" onclick="copyText('guide2')">
+                    <i class="ph ph-copy"></i> Скопировать
+                </button>
+                <textarea id="guide2" class="hidden-data">
+[GUIDE_PLACEHOLDER]
+Temp: 0.95
+Rep Pen: 1.05
+Min P: 0.05
+                </textarea>
+            </article>
 
-                 <!-- STEP 3 -->
-                 <div class="guide-item">
-                    <div class="guide-marker"></div>
-                    <div class="guide-content">
-                        <h3>03. Активация Ренетт</h3>
-                        <p>После установки всех модулей, напишите в чат команду активации или просто начните ролеплей.</p>
-                        <img src="[СКРИНШОТ_ГАЙДА_3]" alt="Step 3" class="guide-img" onerror="this.style.display='none'">
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- FOOTER -->
-        <footer>
-            <p>DESIGNED BY RENETTE SYSTEM © 2024</p>
-            <p style="font-size: 0.8em; opacity: 0.5;">POWERED BY SILLY TAVERN COMMUNITY</p>
-        </footer>
+        </main>
     </div>
 
-    <!-- TOAST NOTIFICATION -->
+    <footer>
+        <p>Designed with <i class="ph-fill ph-heart" style="color:var(--accent-red)"></i> for Renette</p>
+        <p style="margin-top: 10px; opacity: 0.5;">
+            <a href="#" class="footer-link">GitHub</a> •
+            <a href="#" class="footer-link">SillyTavern</a>
+        </p>
+    </footer>
+
+    <!-- Уведомление -->
     <div id="toast" class="toast">
-        <i class="fa-solid fa-check-circle"></i>
-        <span>Скопировано в буфер!</span>
+        <i class="ph-bold ph-check-circle"></i> Скопировано в буфер!
     </div>
 
     <script>
-        // --- TAB SWITCHING ---
+        // 1. Логика переключения табов
         function switchTab(tabId) {
-            // Hide all sections
-            document.querySelectorAll('.content-section').forEach(el => {
-                el.classList.remove('active');
+            // Скрыть все секции
+            document.querySelectorAll('.content-section').forEach(sec => {
+                sec.classList.remove('active');
             });
-            // Show selected
-            document.getElementById(tabId).classList.add('active');
-
-            // Update buttons
-            document.querySelectorAll('.nav-btn').forEach(btn => {
+            // Деактивировать кнопки
+            document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
-            // Highlight current button (simple logic based on order or text could be added,
-            // but for now relying on click event target parent logic if needed,
-            // here we just refresh styling based on the onclick trigger in HTML)
-            event.target.classList.add('active');
 
-            // Scroll to top smoothly
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Показать нужную секцию
+            document.getElementById(tabId).classList.add('active');
+            // Активировать нажатую кнопку (ищем по onclick, простой хак)
+            const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
+            if(activeBtn) activeBtn.classList.add('active');
         }
 
-        // --- COPY TO CLIPBOARD ---
-        function copyToClipboard(elementId) {
-            const copyText = document.getElementById(elementId);
-            copyText.select();
-            copyText.setSelectionRange(0, 99999); // For mobile devices
+        // 2. Логика копирования
+        function copyText(elementId) {
+            const text = document.getElementById(elementId).value;
 
-            navigator.clipboard.writeText(copyText.value).then(() => {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast();
+            }).catch(err => {
+                console.error('Ошибка копирования: ', err);
+                // Фоллбэк для старых браузеров
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand("Copy");
+                textArea.remove();
                 showToast();
             });
         }
 
-        // --- TOAST ANIMATION ---
         function showToast() {
             const toast = document.getElementById('toast');
             toast.classList.add('show');
             setTimeout(() => {
                 toast.classList.remove('show');
-            }, 3000);
+            }, 2500);
         }
 
-        // --- INTERSECTION OBSERVER FOR SCROLL ANIMATIONS ---
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = 1;
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
+        // 3. Кастомный курсор
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            // Точка следует мгновенно
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+
+            // Круг с задержкой (анимация через CSS transition лучше работает)
+            // Но мы просто задаем позицию, плавность в CSS
+            cursorOutline.style.left = `${posX}px`;
+            cursorOutline.style.top = `${posY}px`;
         });
 
-        // Add fade-in effect to cards initially
-        document.querySelectorAll('.card').forEach((el) => {
-            el.style.opacity = 0;
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'all 0.6s ease';
-            observer.observe(el);
+        // Эффект увеличения курсора при наведении
+        document.querySelectorAll('a, button, .hover-trigger').forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('hovered'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('hovered'));
         });
+
     </script>
 </body>
 </html>
