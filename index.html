@@ -1,532 +1,665 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta name="google-site-verification" content="L1aS8txxzlMjDV_Efl0Oi1WDR0J7_DCdyazGjG1zVPk" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="google-site-verification" content="L1aS8txxzlMjDV_Efl0Oi1WDR0J7_DCdyazGjG1zVPk" />
+    <meta name="description" content="Яблочный Пресет для SillyTavern - Модульная система с ядром Renette">
     <title>Renette OS | Яблочный Пресет</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700;800&family=JetBrains+Mono:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="favicon.png">
     
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --bg-core: #0f0f13;
-            --bg-panel: rgba(30, 30, 35, 0.7);
-            --bg-panel-hover: rgba(45, 45, 55, 0.8);
-            --primary-mint: #69f0ae;
-            --accent-red: #ff5252;
-            --accent-lilac: #e040fb;
+            /* Palette */
+            --bg-deep: #050507;
+            --bg-panel: #0f1014;
+            --bg-glass: rgba(20, 20, 25, 0.65);
+            --bg-glass-hover: rgba(40, 45, 60, 0.75);
+            
+            --primary-mint: #00ffa3;
+            --accent-lilac: #b388ff;
+            --accent-red: #ff5555;
             --text-main: #e0e0e0;
-            --text-muted: #a0a0a0;
-            --glass-border: 1px solid rgba(255, 255, 255, 0.08);
-            --shadow-glow: 0 0 15px rgba(105, 240, 174, 0.15);
-            --font-ui: 'Montserrat', sans-serif;
+            --text-muted: #858595;
+            
+            --border: rgba(255, 255, 255, 0.08);
+            --border-active: rgba(0, 255, 163, 0.3);
+            
+            --font-main: 'Montserrat', sans-serif;
             --font-code: 'JetBrains Mono', monospace;
-            --font-decor: 'Pacifico', cursive;
-            --radius-md: 16px;
-            --radius-sm: 8px;
-            --trans-speed: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            
+            --shadow-glow: 0 0 20px rgba(0, 255, 163, 0.15);
+            --sidebar-width: 260px;
         }
 
-        /* --- Global Reset & Base --- */
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
         body {
-            margin: 0; padding: 0;
-            background-color: var(--bg-core);
+            background-color: var(--bg-deep);
             color: var(--text-main);
-            font-family: var(--font-ui);
-            overflow: hidden; /* App-like feel */
+            font-family: var(--font-main);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
             height: 100vh;
             display: flex;
         }
 
-        /* --- Background Animation (Canvas) --- */
-        #bg-canvas {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -2; pointer-events: none;
-        }
-        #vignette {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, transparent 0%, var(--bg-core) 120%);
-            z-index: -1; pointer-events: none;
+        /* --- BACKGROUND FX --- */
+        #canvas-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            pointer-events: none;
         }
 
-        /* --- Layout Grid --- */
+        /* --- LAYOUT --- */
         .app-container {
             display: flex;
             width: 100%;
             height: 100%;
-            position: relative;
-            z-index: 1;
+            overflow: hidden;
         }
 
-        /* --- Sidebar Navigation --- */
+        /* SIDEBAR (Desktop) */
         .sidebar {
-            width: 260px;
-            background: rgba(15, 15, 19, 0.95);
-            border-right: var(--glass-border);
+            width: var(--sidebar-width);
+            background: rgba(10, 10, 12, 0.9);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid var(--border);
             display: flex;
             flex-direction: column;
             padding: 20px;
-            backdrop-filter: blur(20px);
-            transition: var(--trans-speed);
-            flex-shrink: 0;
+            z-index: 100;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .brand-block {
+        .brand {
             display: flex;
             align-items: center;
             gap: 15px;
             margin-bottom: 40px;
             padding-bottom: 20px;
-            border-bottom: var(--glass-border);
-            cursor: pointer; /* For Easter Egg */
-            user-select: none;
+            border-bottom: 1px dashed var(--border);
+            cursor: pointer;
         }
+
         .brand-logo {
             width: 40px;
             height: 40px;
             filter: drop-shadow(0 0 8px var(--primary-mint));
-            animation: float 4s ease-in-out infinite;
+            transition: transform 0.3s;
         }
+        .brand:active .brand-logo { transform: scale(0.9); }
+
         .brand-text h1 {
-            font-family: var(--font-decor);
-            font-size: 1.4rem;
+            font-size: 1.1rem;
             margin: 0;
-            background: linear-gradient(45deg, var(--primary-mint), var(--accent-lilac));
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--primary-mint), var(--accent-lilac));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .brand-text span { font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-code); }
+        .brand-text span {
+            font-size: 0.7rem;
+            font-family: var(--font-code);
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
 
-        .nav-menu { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
-        .nav-item {
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-muted);
             padding: 14px 16px;
-            border-radius: var(--radius-md);
+            border-radius: 12px;
+            text-align: left;
+            font-family: var(--font-main);
+            font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 12px;
-            color: var(--text-muted);
-            transition: var(--trans-speed);
-            font-weight: 500;
-            border: 1px solid transparent;
+            transition: all 0.2s;
         }
-        .nav-item:hover { background: rgba(255,255,255,0.03); color: #fff; }
-        .nav-item.active {
-            background: rgba(105, 240, 174, 0.1);
+        
+        .nav-btn img { width: 20px; height: 20px; opacity: 0.6; transition: 0.2s; }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-main);
+        }
+
+        .nav-btn.active {
+            background: rgba(0, 255, 163, 0.08);
+            border-color: var(--border-active);
             color: var(--primary-mint);
-            border-color: rgba(105, 240, 174, 0.3);
-            box-shadow: 0 0 15px rgba(105, 240, 174, 0.05);
+            box-shadow: 0 0 15px rgba(0, 255, 163, 0.05);
         }
-        .nav-icon { width: 22px; height: 22px; object-fit: contain; filter: grayscale(1) brightness(1.5); transition: var(--trans-speed); }
-        .nav-item.active .nav-icon { filter: grayscale(0) drop-shadow(0 0 5px var(--primary-mint)); }
+        .nav-btn.active img { opacity: 1; filter: drop-shadow(0 0 5px var(--primary-mint)); }
 
-        .sidebar-footer { margin-top: auto; font-size: 0.8rem; color: var(--text-muted); text-align: center; opacity: 0.5; }
-
-        /* --- Main Content Area --- */
-        .main-view {
+        /* MAIN CONTENT */
+        .main-content {
             flex: 1;
-            position: relative;
             overflow-y: auto;
-            overflow-x: hidden;
-            padding: 0;
             scroll-behavior: smooth;
+            position: relative;
+            padding: 0;
         }
-        .main-view::-webkit-scrollbar { width: 6px; }
-        .main-view::-webkit-scrollbar-track { background: transparent; }
-        .main-view::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
-
-        .view-section {
+        
+        .content-section {
             display: none;
             padding: 40px;
             max-width: 1200px;
             margin: 0 auto;
-            animation: fadeIn 0.4s ease-out;
+            animation: fadeIn 0.4s ease-out forwards;
         }
-        .view-section.active { display: block; }
+        .content-section.active { display: block; }
 
-        /* --- Headers & Typography --- */
-        .section-header {
-            margin-bottom: 30px;
-            border-bottom: 1px dashed rgba(255,255,255,0.1);
-            padding-bottom: 20px;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .section-title {
-            font-size: 2.5rem;
+
+        /* --- TYPOGRAPHY & COMMON --- */
+        h2 {
+            font-family: var(--font-main);
             font-weight: 800;
-            color: #fff;
-            margin: 0 0 10px 0;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 15px;
         }
-        .section-subtitle { color: var(--text-muted); font-family: var(--font-code); font-size: 0.9rem; }
+        h2 img { height: 40px; }
+        
+        .section-desc {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            line-height: 1.6;
+            border-left: 3px solid var(--accent-lilac);
+            padding-left: 20px;
+        }
 
-        /* --- Cards & Panels --- */
-        .info-card {
-            background: var(--bg-panel);
-            border: var(--glass-border);
-            border-radius: var(--radius-md);
-            padding: 25px;
-            margin-bottom: 20px;
-            position: relative;
+        /* --- ABOUT TERMINAL --- */
+        .terminal-window {
+            background: #15151a;
+            border: 1px solid var(--border);
+            border-radius: 12px;
             overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
-        .info-card::before {
-            content:''; position: absolute; top:0; left:0; width: 4px; height: 100%;
-            background: var(--primary-mint);
-        }
-        .info-card.red::before { background: var(--accent-red); }
-        .info-card.lilac::before { background: var(--accent-lilac); }
-
-        /* --- Changelog Styles (Terminal Look) --- */
-        .changelog-terminal {
-            background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: var(--radius-md);
-            font-family: var(--font-code);
-            padding: 0;
-            overflow: hidden;
-        }
-        .term-header {
-            background: rgba(255,255,255,0.05);
+        .terminal-header {
+            background: #202025;
             padding: 10px 15px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            display: flex; align-items: center; gap: 8px;
-            font-size: 0.85rem; color: var(--text-muted);
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid var(--border);
         }
-        .term-dot { width: 10px; height: 10px; border-radius: 50%; background: #555; }
-        .term-body { padding: 20px; max-height: 400px; overflow-y: auto; }
-        .version-row { margin-bottom: 25px; border-left: 2px solid rgba(255,255,255,0.1); padding-left: 15px; }
-        .v-tag { color: var(--primary-mint); font-weight: bold; }
-        .v-date { color: #666; font-size: 0.8rem; margin-left: 10px; }
-        .v-list { list-style: none; padding: 0; margin-top: 10px; font-size: 0.9rem; line-height: 1.6; }
-        .v-list li::before { content: '> '; color: var(--accent-lilac); }
-
-        /* --- Prompts System (Redesigned) --- */
-        .prompt-filter-bar {
-            position: sticky; top: 0; z-index: 10;
-            background: rgba(15, 15, 19, 0.9);
-            backdrop-filter: blur(10px);
-            padding: 15px 0;
-            margin-bottom: 20px;
-            display: flex; gap: 10px; overflow-x: auto;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        .filter-btn {
-            background: rgba(255,255,255,0.05); border: none; color: #aaa;
-            padding: 8px 16px; border-radius: 20px; cursor: pointer;
-            font-size: 0.9rem; font-weight: 600; white-space: nowrap;
-            transition: 0.2s;
-        }
-        .filter-btn:hover, .filter-btn.active { background: var(--primary-mint); color: #000; }
-
-        .prompt-group { margin-bottom: 40px; }
-        .group-title {
-            font-size: 1.2rem; color: var(--primary-mint); margin-bottom: 15px;
-            display: flex; align-items: center; gap: 10px; font-family: var(--font-code);
-        }
-        .group-title::after { content:''; flex: 1; height: 1px; background: rgba(105, 240, 174, 0.2); }
-
-        .prompt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
         
-        .prompt-card {
-            background: var(--bg-panel);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 12px;
-            padding: 15px;
-            transition: 0.3s;
-            position: relative;
+        .terminal-body {
+            padding: 20px;
+            font-family: var(--font-code);
+            font-size: 0.9rem;
+            color: var(--text-main);
+            max-height: 500px;
+            overflow-y: auto;
         }
-        .prompt-card:hover { border-color: rgba(105, 240, 174, 0.3); transform: translateY(-2px); box-shadow: 0 5px 20px rgba(0,0,0,0.3); }
         
-        .pc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
-        .pc-title { font-weight: 700; color: #fff; font-size: 1rem; }
-        .pc-toggle {
-            appearance: none; width: 40px; height: 22px; background: #333;
-            border-radius: 20px; position: relative; cursor: pointer; outline: none; transition: 0.3s;
+        .log-entry { margin-bottom: 25px; border-left: 1px solid var(--border); padding-left: 15px; }
+        .version-badge { 
+            background: rgba(0, 255, 163, 0.1); 
+            color: var(--primary-mint); 
+            padding: 2px 8px; 
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 10px;
         }
-        .pc-toggle::after {
-            content:''; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px;
-            background: #fff; border-radius: 50%; transition: 0.3s;
-        }
-        .pc-toggle:checked { background: var(--primary-mint); }
-        .pc-toggle:checked::after { left: 21px; background: #000; }
-        /* Radio style override */
-        input[type="radio"].pc-toggle { border-radius: 50%; width: 22px; }
-        input[type="radio"].pc-toggle:checked::after { left: 3px; top: 3px; width: 16px; height: 16px; background: #000; }
+        .log-date { color: var(--text-muted); font-size: 0.8em; }
+        .log-list { list-style: none; padding: 0; margin-top: 10px; }
+        .log-list li { margin-bottom: 5px; position: relative; padding-left: 15px; }
+        .log-list li::before { content: '>'; color: var(--secondary); position: absolute; left: 0; }
 
-        .pc-desc { font-size: 0.85rem; color: #888; margin-bottom: 10px; line-height: 1.4; }
-        .pc-details {
-            margin-top: 10px; background: rgba(0,0,0,0.2); border-radius: 6px;
-        }
-        .pc-summary {
-            padding: 8px; cursor: pointer; color: var(--primary-mint); font-size: 0.8rem; font-weight: 600;
-            list-style: none; display: flex; align-items: center; gap: 5px;
-        }
-        .pc-summary::before { content: '►'; font-size: 0.7em; transition: 0.2s; }
-        .pc-details[open] .pc-summary::before { transform: rotate(90deg); }
-        .pc-content { padding: 10px; font-size: 0.85rem; color: #ccc; border-top: 1px solid rgba(255,255,255,0.05); }
-        .pc-content img { max-width: 100%; border-radius: 4px; margin-top: 5px; border: 1px solid #444; }
-
-        .copy-single-btn {
-            background: transparent; border: 1px solid var(--accent-lilac); color: var(--accent-lilac);
-            padding: 6px 12px; border-radius: 6px; font-size: 0.75rem; cursor: pointer; margin-top: 10px; width: 100%;
-            transition: 0.2s; font-family: var(--font-code); text-transform: uppercase;
-        }
-        .copy-single-btn:hover { background: var(--accent-lilac); color: #fff; }
-
-        .bulk-action-bar {
-            background: linear-gradient(90deg, rgba(105, 240, 174, 0.1), rgba(105, 240, 174, 0.02));
-            border: 1px solid var(--primary-mint);
-            border-radius: 12px;
-            padding: 15px;
-            margin-top: 20px;
+        /* --- DOWNLOAD BUTTON --- */
+        .dl-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 50vh;
             text-align: center;
         }
-        .bulk-btn {
-            background: var(--primary-mint); color: #000; border: none; padding: 12px 24px;
-            border-radius: 8px; font-weight: 800; cursor: pointer; font-size: 0.9rem;
-            text-transform: uppercase; letter-spacing: 1px; transition: 0.3s;
-            box-shadow: 0 0 10px rgba(105, 240, 174, 0.4);
+        .cyber-btn {
+            position: relative;
+            padding: 20px 60px;
+            background: linear-gradient(135deg, rgba(0, 255, 163, 0.2), rgba(0,0,0,0));
+            border: 1px solid var(--primary-mint);
+            color: var(--primary-mint);
+            font-family: var(--font-main);
+            font-weight: 800;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+            overflow: hidden;
+            transition: 0.3s;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
         }
-        .bulk-btn:hover { transform: scale(1.02); box-shadow: 0 0 20px rgba(105, 240, 174, 0.6); }
-
-        /* Hidden Source */
-        .prompt-source { display: none; }
-
-        /* --- Downloads --- */
-        .dl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .dl-card {
-            background: linear-gradient(135deg, rgba(255, 82, 82, 0.1), rgba(0,0,0,0));
-            border: 1px solid var(--accent-red);
-            border-radius: 16px; padding: 30px; text-align: center;
-            transition: 0.3s; text-decoration: none; display: block;
+        .cyber-btn:hover {
+            background: var(--primary-mint);
+            color: #000;
+            box-shadow: 0 0 30px var(--primary-mint);
+            text-shadow: none;
         }
-        .dl-card:hover { background: rgba(255, 82, 82, 0.2); transform: translateY(-5px); }
-        .dl-icon { width: 60px; height: 60px; margin-bottom: 15px; filter: drop-shadow(0 0 10px var(--accent-red)); }
-        .dl-title { font-size: 1.5rem; color: #fff; font-weight: 800; margin-bottom: 5px; }
-        .dl-subtitle { color: var(--accent-red); font-family: var(--font-code); }
-
-        /* --- Guides (Timeline) --- */
-        .timeline { position: relative; padding-left: 30px; border-left: 2px solid rgba(255,255,255,0.1); margin-top: 20px; }
-        .step { margin-bottom: 40px; position: relative; }
-        .step-marker {
-            position: absolute; left: -39px; top: 0; width: 16px; height: 16px;
-            background: var(--bg-core); border: 2px solid var(--primary-mint); border-radius: 50%;
-            box-shadow: 0 0 10px var(--primary-mint);
+        .cyber-btn::before {
+            content: "DOWNLOAD_PROTOCOL_INIT";
+            position: absolute;
+            bottom: 2px; right: 5px;
+            font-size: 0.5rem;
+            font-family: var(--font-code);
+            opacity: 0.7;
         }
-        .step-content { background: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
-        .step h3 { margin: 0 0 10px 0; color: var(--primary-mint); }
-        .step p { color: #ccc; line-height: 1.6; font-size: 0.95rem; }
-        .step img { max-width: 100%; border-radius: 8px; margin-top: 15px; border: 1px solid #333; cursor: zoom-in; }
 
-        /* --- Mobile Responsiveness --- */
+        /* --- PROMPTS GRID SYSTEM --- */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .module-card {
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+        .module-card:hover {
+            border-color: var(--border-active);
+            transform: translateY(-5px);
+        }
+
+        .module-header {
+            padding: 15px 20px;
+            background: rgba(255,255,255,0.02);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        .module-title {
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .module-num { color: var(--accent-lilac); font-family: var(--font-code); }
+        
+        .module-body {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        .module-body.open { max-height: 3000px; } /* Sufficient height */
+
+        .prompt-option {
+            padding: 15px 20px;
+            border-bottom: 1px dashed var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .prompt-option:last-child { border-bottom: none; }
+
+        .option-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-label { font-weight: 600; font-size: 0.95rem; }
+        
+        /* Custom Switch/Radio */
+        .toggle-input { display: none; }
+        .toggle-label {
+            width: 44px; height: 24px;
+            background: #333;
+            border-radius: 20px;
+            position: relative;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .toggle-label::after {
+            content: '';
+            position: absolute;
+            top: 2px; left: 2px;
+            width: 20px; height: 20px;
+            background: #fff;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+        .toggle-input:checked + .toggle-label { background: var(--primary-mint); }
+        .toggle-input:checked + .toggle-label::after { transform: translateX(20px); background: #000; }
+        
+        /* Radio specific style */
+        .radio-label { border-radius: 4px; }
+        .radio-label::after { border-radius: 2px; }
+
+        .details-trigger {
+            font-size: 0.8rem;
+            color: var(--accent-lilac);
+            cursor: pointer;
+            font-family: var(--font-code);
+            margin-top: 5px;
+            display: inline-block;
+        }
+        
+        .details-content {
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: #aaa;
+            display: none;
+        }
+        .details-content.show { display: block; animation: fadeIn 0.3s; }
+        .details-content img { width: 100%; border-radius: 4px; margin-top: 10px; border: 1px solid var(--border); }
+
+        .action-row {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 10px;
+        }
+        
+        .mini-btn {
+            background: transparent;
+            border: 1px solid var(--primary-mint);
+            color: var(--primary-mint);
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .mini-btn:hover { background: var(--primary-mint); color: #000; }
+
+        .bulk-bar {
+            grid-column: 1 / -1;
+            padding: 15px;
+            background: rgba(179, 136, 255, 0.1);
+            border: 1px solid var(--accent-lilac);
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 20px;
+            cursor: pointer;
+            color: var(--accent-lilac);
+            font-weight: 700;
+            transition: 0.3s;
+        }
+        .bulk-bar:hover { background: var(--accent-lilac); color: #000; }
+
+        /* Hidden Textarea for Copy */
+        .source-code { position: absolute; left: -9999px; opacity: 0; }
+
+        /* --- MOBILE NAV (Bottom) --- */
         @media (max-width: 768px) {
             .app-container { flex-direction: column; }
+            
             .sidebar {
-                width: 100%; height: auto; border-right: none; border-bottom: var(--glass-border);
-                padding: 10px 20px; flex-direction: row; justify-content: space-between; align-items: center;
-                background: #0f0f13; position: relative; z-index: 100;
+                position: fixed;
+                bottom: 0; left: 0;
+                width: 100%; height: auto;
+                flex-direction: row;
+                padding: 10px 20px;
+                border-right: none;
+                border-top: 1px solid var(--border);
+                justify-content: space-between;
+                z-index: 1000;
             }
-            .brand-block { margin: 0; padding: 0; border: none; }
-            .brand-text span { display: none; }
+            .brand { display: none; } /* Hide brand in bottom nav */
             
-            /* Mobile Nav Toggle */
             .nav-menu {
-                position: fixed; bottom: 0; left: 0; width: 100%;
-                background: #15151a; border-top: 1px solid rgba(255,255,255,0.1);
-                flex-direction: row; justify-content: space-around; padding: 10px 0;
-                z-index: 999;
+                flex-direction: row;
+                width: 100%;
+                justify-content: space-around;
             }
-            .nav-item { flex-direction: column; padding: 8px; gap: 4px; font-size: 0.7rem; border-radius: 0; background: transparent !important; border: none; }
-            .nav-icon { width: 24px; height: 24px; margin: 0; }
-            .nav-text { display: block; }
-            .sidebar-footer { display: none; }
             
-            .main-view { padding-bottom: 80px; } /* Space for bottom nav */
-            .view-section { padding: 20px 15px; }
-            .section-title { font-size: 1.8rem; }
+            .nav-btn {
+                flex-direction: column;
+                padding: 8px;
+                font-size: 0.7rem;
+                gap: 5px;
+                border-radius: 8px;
+            }
+            .nav-btn span { display: block; }
+            
+            .main-content { padding-bottom: 80px; } /* Space for bottom nav */
+            
+            .content-section { padding: 20px 15px; }
+            h2 { font-size: 1.8rem; }
+            
+            /* Add Mobile Header */
+            .mobile-header {
+                display: flex;
+                padding: 15px 20px;
+                background: rgba(10,10,12,0.95);
+                border-bottom: 1px solid var(--border);
+                align-items: center;
+                gap: 15px;
+                position: sticky;
+                top: 0;
+                z-index: 99;
+            }
         }
+        @media (min-width: 769px) { .mobile-header { display: none; } }
 
-        /* --- Utilities --- */
-        .hidden { display: none !important; }
+        /* --- TOAST NOTIFICATIONS --- */
+        #toast-box {
+            position: fixed;
+            bottom: 30px; right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 2000;
+        }
         .toast {
-            position: fixed; top: 20px; right: 20px; background: rgba(20,20,20,0.95);
-            border-left: 4px solid var(--primary-mint); padding: 15px 25px;
-            border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            z-index: 10000; transform: translateX(150%); transition: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            display: flex; align-items: center; gap: 10px; color: #fff; backdrop-filter: blur(10px);
+            background: #1a1a20;
+            border-left: 4px solid var(--primary-mint);
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            font-size: 0.9rem;
+            transform: translateX(100%);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .toast.show { transform: translateX(0); }
-        
+
+        /* --- LIGHTBOX --- */
         .lightbox {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); z-index: 10001;
-            display: none; justify-content: center; align-items: center; cursor: zoom-out;
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            cursor: zoom-out;
         }
-        .lightbox.active { display: flex; animation: fadeIn 0.3s; }
-        .lightbox img { max-width: 95%; max-height: 95%; border: 2px solid var(--primary-mint); box-shadow: 0 0 30px var(--primary-mint); border-radius: 8px; }
+        .lightbox.active { display: flex; animation: fadeIn 0.2s; }
+        .lightbox img { max-width: 95%; max-height: 95%; border-radius: 8px; box-shadow: 0 0 50px rgba(0,255,163,0.2); }
 
-        /* --- Easter Egg Game Overlay --- */
-        #snake-game {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(10, 10, 12, 0.98); z-index: 20000;
-            display: none; flex-direction: column; justify-content: center; align-items: center;
+        /* --- EASTER EGG GAME --- */
+        #game-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 5000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
-        #snake-canvas { border: 2px solid var(--primary-mint); background: #000; box-shadow: 0 0 20px var(--primary-mint); }
-        .game-ui { text-align: center; margin-bottom: 20px; color: var(--primary-mint); font-family: var(--font-code); }
-        .game-close {
-            margin-top: 20px; padding: 10px 30px; border: 1px solid var(--accent-red); color: var(--accent-red);
-            background: transparent; cursor: pointer; font-family: var(--font-code);
-        }
-        .game-close:hover { background: var(--accent-red); color: #000; }
+        #game-canvas { border: 2px solid var(--primary-mint); background: #111; box-shadow: 0 0 30px var(--primary-mint); }
+        .game-ui { color: var(--primary-mint); font-family: var(--font-code); margin-bottom: 20px; text-align: center; }
+        .close-game { margin-top: 20px; color: #fff; cursor: pointer; text-decoration: underline; }
 
-        /* Animation Keyframes */
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <div id="vignette"></div>
-    <canvas id="bg-canvas"></canvas>
+    <canvas id="canvas-bg"></canvas>
+
+    <div class="mobile-header">
+        <img src="apple_icon.png" alt="Logo" class="brand-logo" id="mobile-logo-trigger">
+        <div class="brand-text">
+            <h1 style="font-size: 1rem; margin:0;">Renette OS</h1>
+        </div>
+    </div>
 
     <div class="app-container">
         <nav class="sidebar">
-            <div class="brand-block" id="logo-trigger">
-                <img src="apple_icon.png" alt="Logo" class="brand-logo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/10692/10692823.png'">
+            <div class="brand" id="desktop-logo-trigger">
+                <img src="apple_icon.png" alt="Logo" class="brand-logo">
                 <div class="brand-text">
-                    <h1>Renette</h1>
-                    <span>OS v1.7</span>
+                    <h1>Renette OS</h1>
+                    <span>SYSTEM v1.7</span>
                 </div>
             </div>
 
-            <ul class="nav-menu">
-                <li class="nav-item active" onclick="switchTab('dashboard')">
-                    <img src="icon_clip_red.png" class="nav-icon" onerror="this.src='https://cdn-icons-png.flaticon.com/512/10692/10692823.png'">
-                    <span class="nav-text">Система</span>
-                </li>
-                <li class="nav-item" onclick="switchTab('modules')">
-                    <img src="sheets.png" class="nav-icon" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2921/2921222.png'">
-                    <span class="nav-text">Модули (Промпты)</span>
-                </li>
-                <li class="nav-item" onclick="switchTab('install')">
-                    <img src="icon_book_open.png" class="nav-icon" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2983/2983816.png'">
-                    <span class="nav-text">Загрузка</span>
-                </li>
-                <li class="nav-item" onclick="switchTab('guides')">
-                    <img src="icon_book_closed_red.png" class="nav-icon" onerror="this.src='https://cdn-icons-png.flaticon.com/512/10743/10743169.png'">
-                    <span class="nav-text">Мануал</span>
-                </li>
-                <li class="nav-item" onclick="switchTab('contacts')">
-                    <img src="icon_bag_green.png" class="nav-icon" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3059/3059446.png'">
-                    <span class="nav-text">Связь</span>
-                </li>
-            </ul>
-
-            <div class="sidebar-footer">
-                &copy; 2025 Kykaaj AI<br>Renette Core Online
+            <div class="nav-menu">
+                <button class="nav-btn active" onclick="switchTab('tab-about')">
+                    <img src="icon_clip_red.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/10692/10692823.png'">
+                    <span>Система</span>
+                </button>
+                <button class="nav-btn" onclick="switchTab('tab-download')">
+                    <img src="icon_book_open.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2983/2983816.png'">
+                    <span>Загрузка</span>
+                </button>
+                <button class="nav-btn" onclick="switchTab('tab-prompts')">
+                    <img src="sheets.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2921/2921222.png'">
+                    <span>Модули (Промпты)</span>
+                </button>
+                <button class="nav-btn" onclick="switchTab('tab-guides')">
+                    <img src="icon_book_closed_red.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/10743/10743169.png'">
+                    <span>Мануалы</span>
+                </button>
+                <button class="nav-btn" onclick="switchTab('tab-contacts')">
+                    <img src="icon_bag_green.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3059/3059446.png'">
+                    <span>Связь</span>
+                </button>
             </div>
         </nav>
 
-        <main class="main-view">
+        <main class="main-content">
             
-            <section id="dashboard" class="view-section active">
-                <div class="section-header">
-                    <h2 class="section-title">Системное Ядро <span style="font-size:0.5em; color:var(--primary-mint); border:1px solid var(--primary-mint); padding:2px 8px; border-radius:4px;">ONLINE</span></h2>
-                    <div class="section-subtitle">Статус пресета, совместимость и журнал обновлений</div>
+            <div id="tab-about" class="content-section active">
+                <h2><img src="apple_icon.png"> О Системе</h2>
+                <div class="section-desc">
+                    Модульный пресет с огромным количеством тоглов, основанный на ядре Селии. Адаптирован для Gemini, Claude и DeepSeek.
+                    <br><br>
+                    <span style="color: var(--primary-mint)">CURRENT STATUS:</span> STABLE v1.7
                 </div>
 
-                <div class="info-card lilac">
-                    <h3 style="margin-top:0;">О Пресете</h3>
-                    <p style="line-height:1.7; color:#ccc;">
-                        Модульный пресет с огромным количеством тоглов, основанный на ядре Селии. Теперь в новой оболочке Renette OS.
-                        <br><br>
-                        <strong style="color:var(--primary-mint);">Поддерживаемые модели:</strong>
-                        <ul style="list-style:none; padding:0; margin-top:10px; display:flex; flex-wrap:wrap; gap:10px;">
-                            <li style="background:rgba(255,255,255,0.1); padding:5px 10px; border-radius:4px; font-size:0.85rem;">Gemini 2.5/3.0 Pro</li>
-                            <li style="background:rgba(255,255,255,0.1); padding:5px 10px; border-radius:4px; font-size:0.85rem;">Claude Sonnet 3.7+</li>
-                            <li style="background:rgba(255,255,255,0.1); padding:5px 10px; border-radius:4px; font-size:0.85rem;">Opus 4.5</li>
-                            <li style="background:rgba(255,255,255,0.05); padding:5px 10px; border-radius:4px; font-size:0.85rem; color:#888;">DeepSeek / GPT 5.1 (Exp)</li>
-                        </ul>
-                    </p>
-                </div>
-
-                <h3 style="font-family:var(--font-code); color:var(--text-muted);">// SYSTEM LOGS (CHANGELOG)</h3>
-                <div class="changelog-terminal">
-                    <div class="term-header">
-                        <div class="term-dot" style="background:#ff5f56;"></div>
-                        <div class="term-dot" style="background:#ffbd2e;"></div>
-                        <div class="term-dot" style="background:#27c93f;"></div>
-                        <span>root@renette:~/logs/history.txt</span>
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                        <span style="margin-left: 10px; color: #777; font-size: 0.8em;">changelog.log</span>
                     </div>
-                    <div class="term-body">
-                        <div class="version-row">
-                            <div><span class="v-tag">[v1.7]</span> <span class="v-date">14.12.2025</span></div>
-                            <ul class="v-list">
-                                <li>Optimization: Пресет сжат до < 60 КБ.</li>
-                                <li>New Modules: 4 магических тогла (Прогресс, Детали, Мысли, Диалоги).</li>
-                                <li>UI Update: Правила Письма перемещены.</li>
-                                <li>Refactor: Удалены жанры и "улучшалки" (признаны устаревшими).</li>
-                                <li>Feature: Добавлены "Литературные стили" (4 китайских новеллиста).</li>
-                                <li>Security: Обновлен Джейлбрейк.</li>
-                                <li>HTML: Новый CSS-модуль от Минти (Iris Bloomwave).</li>
+                    <div class="terminal-body">
+                        <div class="log-entry">
+                            <span class="version-badge">v1.7</span> <span class="log-date">14.12.2025</span>
+                            <ul class="log-list">
+                                <li>Пресет похудел до &lt;60 КБ. Оптимизация ядра.</li>
+                                <li>Добавлены магические фокусы: ✧✈️Прогресс, ✧🧩Детали, ✧💭Мысли, ✧💬Диалоги.</li>
+                                <li>Стили авторов: Лю Чжэньюнь, Мо Ян, Эйлин Чжан, Юй Хуа.</li>
+                                <li>HTML патчи от Minty (Iris Bloomwave).</li>
+                                <li>Улучшен Джейлбрейк.</li>
                             </ul>
                         </div>
-                        <div class="version-row">
-                            <div><span class="v-tag">[v1.61]</span> <span class="v-date">07.12.2025</span></div>
-                            <ul class="v-list">
-                                <li>Bugfix: Исправлена логика языков и ролей.</li>
-                                <li>Core: Переписана "Думалка".</li>
-                                <li>Pacing: Исправлен Slowburn (убран лишний таймскип).</li>
+                        <div class="log-entry">
+                            <span class="version-badge">v1.61</span> <span class="log-date">07.12.2025</span>
+                            <ul class="log-list">
+                                <li>Фикс языков и ролей.</li>
+                                <li>Думалка переписана (сегментация).</li>
+                                <li>Фикс темпа (Slowburn).</li>
                             </ul>
                         </div>
-                        <div class="version-row" style="opacity:0.6;">
-                            <div><span class="v-tag">[Legacy Logs]</span></div>
-                            <ul class="v-list">
+                        <div class="log-entry">
+                            <span class="version-badge">Legacy</span>
+                            <ul class="log-list">
                                 <li>v1.6: Изменен характер Ренетт.</li>
-                                <li>v1.59: Глобальная оптимизация размера.</li>
-                                <li>v1.58: Фикс цветных диалогов.</li>
+                                <li>v1.59: Глобальная чистка кода (-50% веса).</li>
                             </ul>
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
 
-            <section id="modules" class="view-section">
-                <div class="section-header">
-                    <h2 class="section-title">База Модулей</h2>
-                    <div class="section-subtitle">Копируйте и интегрируйте компоненты в SillyTavern</div>
+            <div id="tab-download" class="content-section">
+                <h2><img src="icon_book_open.png"> Загрузка</h2>
+                <div class="dl-container">
+                    <p style="margin-bottom: 30px; font-size: 1.2em; color: var(--text-muted);">
+                        Пакет данных готов к внедрению.<br>
+                        Требуется SillyTavern актуальной версии.
+                    </p>
+                    <a href="%F0%9F%8D%8E%D0%AF%D0%B1%D0%BB%D0%BE%D1%87%D0%BD%D1%8B%D0%B9%20V1.7.json" download="🍎Яблочный V1.7.json" class="cyber-btn" onclick="createSparks(event)">
+                        Скачать JSON v1.7
+                    </a>
+                    <div style="margin-top: 50px; opacity: 0.5; font-size: 0.8rem;">
+                        SHA-256: VALIDATED<br>
+                        SIZE: &lt;60KB
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-prompts" class="content-section">
+                <h2><img src="sheets.png"> Модули</h2>
+                <div class="section-desc">
+                    Активируйте модули для настройки поведения. Скопируйте код и вставьте в соответствующие поля SillyTavern.<br>
+                    <span style="color: var(--accent-lilac)">✧</span> - Одиночный выбор (Radio). <span style="color: var(--primary-mint)">✎</span> - Множественный (Checkbox).
                 </div>
 
-                <div class="prompt-filter-bar">
-                    <button class="filter-btn active" onclick="filterPrompts('all')">Все</button>
-                    <button class="filter-btn" onclick="filterPrompts('ooc')">OOC</button>
-                    <button class="filter-btn" onclick="filterPrompts('main')">Основное</button>
-                    <button class="filter-btn" onclick="filterPrompts('extra')">Доп. Функции</button>
-                    <button class="filter-btn" onclick="filterPrompts('ui')">Интерфейс</button>
-                </div>
-
-                <div class="prompt-group" data-cat="ooc">
-                    <div class="group-title">1. OOC / Инициализация</div>
-                    <p style="color:#666; font-size:0.9rem;">В этой категории пока нет модулей.</p>
-                </div>
-
-                <div class="prompt-group" data-cat="main">
-                    <div class="group-title">2. Основные Протоколы</div>
+                <div class="modules-grid">
                     
-                    <div class="prompt-grid">
-                        <div class="prompt-card">
-                            <div class="pc-header">
-                                <span class="pc-title">✧💫 Погружение</span>
-                                <input type="radio" name="writing_mode" class="pc-toggle select-input">
-                            </div>
-                            <div class="pc-desc">Классический РП. ИИ не пишет за юзера.</div>
-                            <details class="pc-details"><summary class="pc-summary">Инфо</summary><div class="pc-content">Стандартный режим. Самый стабильный.</div></details>
-                            <button class="copy-single-btn" onclick="copyText(this)">Copy Module</button>
-                            <textarea class="prompt-source">/* Вставьте сюда промпт Погружения из исходника */
+                    <div class="module-card">
+                        <div class="module-header" onclick="toggleModule(this)">
+                            <div class="module-title"><span class="module-num">01.</span> Основной режим</div>
+                            <span style="color:var(--primary-mint)">▼</span>
+                        </div>
+                        <div class="module-body">
+                            <div class="prompt-option">
+                                <div class="option-top">
+                                    <span class="option-label">✧💫 Погружение (Default)</span>
+                                    <input type="radio" name="rp_mode" class="toggle-input" id="rp1">
+                                    <label for="rp1" class="toggle-label radio-label"></label>
+                                </div>
+                                <span class="details-trigger" onclick="toggleDetails(this)">[INFO]</span>
+                                <div class="details-content">Классический РП. ИИ не пишет за юзера.</div>
+                                <div class="action-row">
+                                    <button class="mini-btn" onclick="copyText(this)">COPY CODE</button>
+                                </div>
+                                <textarea class="source-code"><main>
 [Immersion Fidelity]
 Renette's is to turn source into a fictional reality that allows {{char}}, others and props to come to life.
 Renette must actively reactively revolve, involve, interact and evolve people, scenarios and world. PERSONIFY the inhabitants inside.
@@ -534,6 +667,7 @@ Simulate the reality as an everchanging sandbox shaped by choices, actions and p
 [Immersion Rules]
 Internalized Human's role as {{user}} and will never write or assume {{user}}'s dialogues, actions or thoughts.
 Renette will become {{char}} and others only.
+</main>
 <roles>
 [Roles]
 Prioritize pre-determined given roles and never take-over Human's role as {{user}}.
@@ -542,452 +676,710 @@ Digest {{user}} as Human and {{char}} as Renette. Let Human act for {{user}}.
 Human is {{user}} and will always be in role as them.
 Renette is not to act or write(actions, dialogues or thoughts) for {{user}}. This is MANDATORY rule.
 </roles></textarea>
-                        </div>
-
-                        <div class="prompt-card">
-                            <div class="pc-header">
-                                <span class="pc-title">✧📖 ФФ Режим</span>
-                                <input type="radio" name="writing_mode" class="pc-toggle select-input">
                             </div>
-                            <div class="pc-desc">ИИ пишет за всех, включая Юзера. Режим соавтора.</div>
-                             <details class="pc-details"><summary class="pc-summary">Инфо</summary><div class="pc-content">Для тех, кто хочет просто читать историю.</div></details>
-                            <button class="copy-single-btn" onclick="copyText(this)">Copy Module</button>
-                            <textarea class="prompt-source">[Renette's Co-Desk Storytime]
-Renette relishingly write as a flexibly styled author embarking on a new story venture...</textarea>
-                        </div>
-
-                         <div class="prompt-card">
-                            <div class="pc-header">
-                                <span class="pc-title">✧💬 Интернет Чат</span>
-                                <input type="radio" name="writing_mode" class="pc-toggle select-input">
+                            <div class="prompt-option">
+                                <div class="option-top">
+                                    <span class="option-label">✧📖 ФФ Режим</span>
+                                    <input type="radio" name="rp_mode" class="toggle-input" id="rp2">
+                                    <label for="rp2" class="toggle-label radio-label"></label>
+                                </div>
+                                <span class="details-trigger" onclick="toggleDetails(this)">[INFO]</span>
+                                <div class="details-content">ИИ пишет книгу. Может писать за юзера.</div>
+                                <div class="action-row">
+                                    <button class="mini-btn" onclick="copyText(this)">COPY CODE</button>
+                                </div>
+                                <textarea class="source-code"><main>
+[Renette's Co-Desk Storytime]
+Renette relishingly write as a flexibly styled author embarking on a new story venture, 
+juicingly forming up scenes, plot lines and subplots. Take writing as a labour of love and passion, where the artistic soul is laid bare to fulfill the given fantasy from the mind.
+Human is only the reader and sometime the co-writer. Renette must always writes {{char}}, {{user}} and NPC actions, thoughts and dialogues(writing {{char}}, {{user}} and NPC no matter the input from Human).
+[Continuation Mechanics]
+Human can send any of these simple inputs for Renette to continue the story by herself, typing in "continue" or "c" or "..." or simply [blank message] - An empty response is "continue" 
+[Seamless continue]
+Improvisingly start from any of her co-writer Human's input should they choose to write(treating the text as if it is already a part of the story itself) or read.
+Consider the sourced reality as one whole with each response seamlessly connected to the other.
+</main>
+<roles>
+[Roles]
+Renette must always remember to write for {{char}}, {{user}} and NPC as this is a story with Renette as the author.
+Author Renette is to pen everyone, dialogues, actions and thoughts.
+</roles></textarea>
                             </div>
-                            <div class="pc-desc">Симуляция мессенджера (Discord, TG).</div>
-                            <button class="copy-single-btn" onclick="copyText(this)">Copy Module</button>
-                            <textarea class="prompt-source">[Internet Chat]
-Simulate an authentic Internet styled chatting network/platform...</textarea>
+                             <div class="prompt-option">
+                                <div class="option-top">
+                                    <span class="option-label">✧💬 Интернет Чат</span>
+                                    <input type="radio" name="rp_mode" class="toggle-input" id="rp3">
+                                    <label for="rp3" class="toggle-label radio-label"></label>
+                                </div>
+                                <span class="details-trigger" onclick="toggleDetails(this)">[INFO]</span>
+                                <div class="details-content">
+                                    Симуляция мессенджера.
+                                    <img src="example_5.jpg" alt="Ex">
+                                </div>
+                                <div class="action-row">
+                                    <button class="mini-btn" onclick="copyText(this)">COPY CODE</button>
+                                </div>
+                                <textarea class="source-code"><main>
+[Internet Chat]
+Simulate an authentic Internet styled chatting network/platform based on real-world interfaces (Discord, WhatsApp, Twitter, etc.).Human exclusively controls {{user}}'s chat messages.
+Renette chats for others. if Human doesn't specify one. following standard messaging conventions of the platform.
+Limited to platform-authentic elements (text, typing indicators, edits, deletions, reactions, emojis, media, etc.).
+Characters xpress themselves through their unique 'texting' style, Messaging fingerprint: Unique punctuation, capitalization, phrasing, and message structure reflecting background, education, and tech-familiarity.
+Environmental context: Subtle references to surroundings through interruptions, background noises in voice messages, or situation comments explaining timing/tone shifts.
+Emotional cues: Feelings conveyed through grammar, pacing, message length/frequency, and platform-native reactions.
+Shared content: All links, media, and files serve as extensions of character priorities and perspective.
+Digital artifacts only: Limited to platform-authentic elements (text, typing indicators, edits, deletions, reactions, media).
+No DIRECT exposition or character actions/gestures(their gestures/actions cannot be seen through the screen, so never write them in text).
+Everything is assumed/occurs within the interface. Write in a 'texting' styled chat only.
+[Message Format]
+Message sent time: [datetimeformat MMMM D, YYYY hh:mm A]
+(Show only digital artifacts, assuming the user has standard access. Include elements like: (Edited) (Deleted) (Pinned message), @mentions, media files, emoji reactions. Each message starts with: Character Name @username · [datetimeformat HH:mm])
+Note: If date is not specified, select a date relevant to the lore.
+</main>
+<roles>
+[Roles]
+Prioritize pre-determined given Internet Chat roles and never take-over Human's role as {{user}}.
+Renette can only write for <char> and others(if needed). Digest {{user}} as Human and <char> as Renette.
+Human is {{user}} and will always be in role as them.
+Renette is not to act or write(actions, dialogues or thoughts) for {{user}}.Renette have internalized to never take Human's role as {{user}}.
+Renette will STRICTLY never write {{user}}'s chat messages as they are exclusively typed out by Human.
+</roles></textarea>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="prompt-group" data-cat="main">
-                     <div class="group-title">Языковые Пакеты & Баны</div>
-                     <div class="prompt-grid">
-                        <div class="prompt-card">
-                            <div class="pc-header"><span class="pc-title">✧🇷🇺 RU Баны</span><input type="radio" name="bans" class="pc-toggle select-input" checked></div>
-                            <div class="pc-desc">Запрет клише на русском (мускус, озон, 404).</div>
-                            <button class="copy-single-btn" onclick="copyText(this)">Copy Module</button>
-                            <textarea class="prompt-source"><banned_instructions>
+                    <div class="module-card">
+                        <div class="module-header" onclick="toggleModule(this)">
+                            <div class="module-title"><span class="module-num">02.</span> Язык и Баны</div>
+                             <span style="color:var(--primary-mint)">▼</span>
+                        </div>
+                        <div class="module-body">
+                             <div class="prompt-option">
+                                <div class="option-top">
+                                    <span class="option-label">✧🇷🇺 Русский (Баны)</span>
+                                    <input type="radio" name="lang" class="toggle-input" id="l1">
+                                    <label for="l1" class="toggle-label radio-label"></label>
+                                </div>
+                                <div class="action-row">
+                                    <button class="mini-btn" onclick="copyText(this)">COPY CODE</button>
+                                </div>
+                                <textarea class="source-code"><banned_instructions>
 [Ban]
-This is a list of constructions that you shall avoid...
-never use: напряжение, тишина, мускус, озон...</banned_instructions></textarea>
-                        </div>
-                        <div class="prompt-card">
-                             <div class="pc-header"><span class="pc-title">🌐 RU Язык</span><input type="radio" name="lang" class="pc-toggle select-input" checked></div>
-                             <div class="pc-desc">Принудительный вывод на русском.</div>
-                             <button class="copy-single-btn" onclick="copyText(this)">Copy Module</button>
-                             <textarea class="prompt-source"><language>Renette Output language= Russian...</language></textarea>
-                        </div>
-                     </div>
-                </div>
+This is a list of constructions that you shall avoid to avoid ruining the story.
+From now on you hate using:
 
-                <div class="prompt-group" data-cat="extra">
-                    <div class="group-title">✎ Дополнительные Модули (Мультивыбор)</div>
-                    <div class="bulk-action-bar group-block">
-                        <p style="margin-top:0; color:var(--text-muted); font-size:0.9rem;">Выберите несколько модулей галочками и нажмите кнопку ниже</p>
-                        
-                        <div class="prompt-grid" style="text-align:left; margin-bottom:20px;">
+[No overwrought complication or complexity]
+No Dysgraphia or lazy writing.
+Pull from relevant sources to assert the specifics. Don't point out the obvious, just let it tacitly be.
+[Substance]
+Seamless flow without signposting or ("cinematic anticipation," "tension-building," etc.) always.
+NEVER use or form abstract, ephemeral or intangible such as intimate atmosphere and connection.
+Eliminate abstractions('x' hung in the air, ‘Y’ hang/hung between them”, etc.).
+
+[Generic overused words]
+never use: напряжение, тишина, мускус, озон, якорь (и все сравнения с якорем), сандал, затяжной, смешиваясь, капитуляция, обещание
+instead: more precise indications of the characters' smells, for example "Его сладкий парфюм", "Запах чистой одежды" and etc.
+
+[Robotic behaviour, assistant-like questions]
+Don't: e.g. "Его мозг выдал ошибку 404", user agreements, protocols, «Мне принести тебе напиток? Или ты хочешь что-нибудь другое?»
+Instead: be direct and real. e.g. «Он был потрясён», «Я принесу тебе напиток, придурок».
+	
+[Randomise phrases]
+instead "Не X, а Y" e.g "Это был не смех, а сухой хрип в горле"
+use:{{random:его смех был сухим::его смех был безрадостным::это не было похоже на счастливый смех::смех звучал сухо::из него послышался грохот, не похожий на смех}}
+
+[Cliché description]
+- "что-то другое" / "что-то" (example., "что-то уникально её/его")
+- "смесь/сочетание X и Y"
+- "пьянящий коктейль/смесь"
+- "невысказанный вызов"
+- "в её/его голосе было X, Y и что-то другое"
+
+[Atmosphere Clichés]
+- "воздух густой от X"
+- "воздух/атмосфера заряжена/тяжелая от X"
+- "воздух наполнен/тяжел от X"
+- "X тяжело висит в воздухе"
+- "воздух пах X и Y"
+- "напряжение наполняет воздух"
+- "электричество в воздухе"
+</banned_instructions></textarea>
+                            </div>
+                            <div class="prompt-option">
+                                <div class="option-top">
+                                    <span class="option-label">✧🇺🇸 English (Bans)</span>
+                                    <input type="radio" name="lang" class="toggle-input" id="l2">
+                                    <label for="l2" class="toggle-label radio-label"></label>
+                                </div>
+                                <div class="action-row">
+                                    <button class="mini-btn" onclick="copyText(this)">COPY CODE</button>
+                                </div>
+                                <textarea class="source-code"><banned_instructions>
+[Ban]
+This is a list of constructions that you shall avoid to avoid ruining the story.
+From now on you hate using:
+
+[No overwrought complication or complexity]
+No Dysgraphia or lazy writing.
+Pull from relevant sources to assert the specifics. Don't point out the obvious, just let it tacitly be.
+[Substance]
+Seamless flow without signposting or ("cinematic anticipation," "tension-building," etc.) always.
+NEVER use or form abstract, ephemeral or intangible such as intimate atmosphere and connection.
+Eliminate abstractions('x' hung in the air, ‘Y’ hang/hung between them”, etc.).
+
+[Generic overused words]
+never use: tension, silence, musk, ozone, anchor (and all comparisons with an anchor), sandalwood, lingering, mingling, surrender, promise
+instead: more precise indications of the characters' smells, for example "His sweet perfume", "The smell of clean clothes" and etc.
+	
+[Robotic behaviour, assistant-like questions]
+Don't: e.g. "His brain went 404", user agreements, protocols, "Should I get you a drink?
+Or you want something else?"
+Instead: be direct and real. e.g. "He was overwhelmed", "I will get you a drink, ass".
+	
+[Randomise phrases]
+instead "Not X, but Y" e.g "It was not laughter, but a dry rasp in the throat"
+use:{{random:his laugh was dry::his laugh was joyless::it didn't look like a happy laugh::the laugh sounded dry::a rumble came from him, unlike laughter}}
+
+[Cliché description]
+- "something else" / "something" (example., "something uniquely hers/his")
+- "mixture/combination of X and Y"
+- "intoxicating cocktail/mixture"
+- "unspoken challenge"
+- "in her/his voice there was X, Y and something else"
+
+[Atmosphere Clichés]
+- "air is thick with X"
+- "air/atmosphere is charged/heavy with X"
+- "air is filled/heavy with X"
+- "X hangs heavily in the air"
+- "the air smelled of X and Y"
+- "tension fills the air"
+- "electricity in the air"
+</banned_instructions></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="module-card group-block"> <div class="module-header" onclick="toggleModule(this)">
+                            <div class="module-title"><span class="module-num">03.</span> Штуки (Доп)</div>
+                            <span style="color:var(--primary-mint)">▼</span>
+                        </div>
+                        <div class="module-body">
+                            <div class="prompt-option">
+                                <div class="option-top">
+                                    <span class="option-label">🕰️ Флешбеки</span>
+                                    <input type="checkbox" class="toggle-input select-input" id="ex1">
+                                    <label for="ex1" class="toggle-label"></label>
+                                </div>
+                                <span class="details-trigger" onclick="toggleDetails(this)">[IMG]</span>
+                                <div class="details-content"><img src="example1.jpg" alt="Ex"></div>
+                                <div class="action-row">
+                                    <button class="mini-btn" onclick="copyText(this)">COPY</button>
+                                </div>
+                                <textarea class="source-code">[Memory Flashbacks]
+All characters have some form of past and feelings that lingers, each have family lines, sentiments and 'core' memories they hold close to heart, influencing their attitudes toward life, others and themselves.
+Surface these memories at opportune momentd, inside stylized 『Japanese Quotations』Triggers can be from familiarity, objects(that reminds), sentimentality(good or bad) or personal associations</textarea>
+                            </div>
                             
-                            <div class="prompt-card option-item">
-                                <div class="pc-header"><span class="pc-title">🕰️ Флешбеки</span><input type="checkbox" class="pc-toggle select-input"></div>
-                                <div class="pc-desc">Вставки воспоминаний в японских кавычках.</div>
-                                <textarea class="prompt-source">[Memory Flashbacks]...</textarea>
+                            <div class="prompt-option">
+                                <div class="option-top">
+                                    <span class="option-label">⏩ Переходы (Сцены)</span>
+                                    <input type="checkbox" class="toggle-input select-input" id="ex2">
+                                    <label for="ex2" class="toggle-label"></label>
+                                </div>
+                                <div class="action-row">
+                                    <button class="mini-btn" onclick="copyText(this)">COPY</button>
+                                </div>
+                                <textarea class="source-code">[Transitions]
+ALWAYS use the <transitions> system actively to shape the story, not just as formatting.
+Each ∆ transition ∆ type helps develop plot, atmosphere, or character insight.
+Select transitions to create a living world and narrative hooks. They should be in EVERY message.
+[Scene and Event Changes]
+∆ TIME SKIP - {DESCRIPTION} ∆
+Use this technique for large time jumps (weeks, months, years) to significantly advance the story.
+It's important to describe what happened in the skipped period.
+∆ DATE CHANGE - {NEW DATE} ∆
+Use this technique to mark the beginning of a new day.
+It's ideal for showing the progression of one night and setting up a new scene in the morning.
+∆ TIME OF DAY CHANGE - {NEW TIME} ∆
+Used for small, more rapid shifts in time within a single day (for example, from midday to evening or from midnight to pre-dawn).
+∆ WEATHER CHANGE - {NEW CONDITION} ∆
+Used to change the atmosphere of a scene by changing the weather (for example, a sudden thunderstorm or the clearing of fog).
+∆ LOCATION CHANGE - {NEW LOCATION} ∆
+Used when characters physically move from one location to another.
+∆ PERSPECTIVE CHANGE - {NEW CHARACTER} ∆
+Used to switch the point of view to another character, showing the story through their eyes and revealing their thoughts.
+[Special Inserts]
+
+∆ INTERLUDE - {THEME} ∆ and ∆ INTERLUDE - END ∆
+Use this tag to create a "pause" in the action to explore a character's deep inner monologue, their emotional state, or philosophical musings on a particular topic.
+∆ MEANWHILE - {EVENT} ∆ and ∆ MEANWHILE - END ∆
+This ∆ MEANWHILE ∆ tag is your perfect tool for creating parallel arcs and storylines.
+You can use it to show what the villain is doing, what an ally discovers, or any other important event happening off-screen.
+Use it to step away from the main scene and show a key event happening at the same time elsewhere.
+Perfect for creating a delayed effect.
+
+∆ PERCEPTION - {THEME} ∆ and ∆ PERCEPTION - END ∆
+Use this to describe a character's vivid memory of any specific event from the character's past.
+Also, flashbacks to key characters' pasts that allow them to relive the events.
+∆ DREAM - {THEME} ∆ and ∆ DREAM - END ∆
+Use this when the characters are sleeping Dreams are an important part of storytelling;
+they help reveal characters' personalities and make them more alive.
+Characters can have different dreams: sweet, dark, fairytale-like, kind, heroic, erotic, and many more!
+Don't limit the characters' psychology and their unconscious during sleep!
+Characters sometimes forget what they dreamed, but they can also remember it. Characters can wake up from a nightmare!
+Use different reactions to dreams. The above is just an example.
+Dream Design: (code block)
+(Here are the characters' dreams! They will be short and original! At the end, write a conclusion about the quality of the characters' sleep. Were they comfortable? Or were they used to sleeping on rocks? Each character has their own comfort level!)
+(Descriptive and Informational Inserts)
+
+∆ WORLDBUILDING ∆ and ∆ WORLDBUILDING - END ∆
+Use this to introduce the reader to history, lore, or detailed information about the world, its culture, or rules.
+∆ RUMOR ∆ and ∆ RUMOR - END ∆
+Use this to introduce unconfirmed information, gossip, or local legends that characters might hear.
+These may be true, false, or a combination of both.
+∆ NEWS ∆ and ∆ NEWS - END ∆
+Use this to introduce official information from an in-world source, such as a newspaper, herald, or radio broadcast.
+∆ PROPHECY - {THEME} ∆ and ∆ PROPHECY - END ∆
+Used to introduce mysterious predictions, visions of the future, or cryptic ancient texts hinting at future events.
+∆ FLASHBACK - {THEME} ∆ and ∆ FLASHBACK - END ∆
+Used for a short, fragmented memory.
+This is not a full scene like SUNDAY, but a single image, sound, or sensation that a character suddenly recalls.
+∆ REFLECTION - {THEME} ∆ and ∆ REFLECTION - END ∆
+Used for a brief moment in a character's internal thought process as they reflect on a recent event, their feelings, or their conclusions.
+Shorter and more focused than INTERLUDE. ∆ REFLECTION - {THEME} ∆ and ∆ REFLECTION - END ∆
+Used to depict a character or narrator theorizing, formulating hypotheses, or attempting to connect the dots based on available information.
+∆ FACTS - {TOPIC} ∆ and ∆ FACTS - END ∆
+Used to introduce one or more specific Interesting little details about the world, characters, or customs that don't directly advance the plot but add color and richness.</textarea>
                             </div>
 
-                            <div class="prompt-card option-item">
-                                <div class="pc-header"><span class="pc-title">⏩ Переходы</span><input type="checkbox" class="pc-toggle select-input"></div>
-                                <div class="pc-desc">Символы ∆ для смены сцен, времени и погоды.</div>
-                                <textarea class="prompt-source">[Transitions] ALWAYS use the <transitions> system...</textarea>
+                             <div class="prompt-option">
+                                <div class="option-top">
+                                    <span class="option-label">✒️ Стиль веб-главы</span>
+                                    <input type="checkbox" class="toggle-input select-input" id="ex3">
+                                    <label for="ex3" class="toggle-label"></label>
+                                </div>
+                                <div class="action-row">
+                                    <button class="mini-btn" onclick="copyText(this)">COPY</button>
+                                </div>
+                                <textarea class="source-code">[Mimick the textual formatting-style of popular webnovels and official or unofficial sites(such as fan-translation).
+Make use of chapter headings, separators, and other known elements that makes up real webby chappy!
+At the start of the every response, ensure a new proper chapter heading is used each time.]</textarea>
                             </div>
 
-                            <div class="prompt-card option-item">
-                                <div class="pc-header"><span class="pc-title">🖼️ MEME Gen</span><input type="checkbox" class="pc-toggle select-input"></div>
-                                <div class="pc-desc">Генерирует мем в начале сообщения (Pollinations).</div>
-                                <textarea class="prompt-source">[Meme] You must generate a highly specific context meme...</textarea>
-                            </div>
-
-                             <div class="prompt-card option-item">
-                                <div class="pc-header"><span class="pc-title">✒️ Веб-Новелла</span><input type="checkbox" class="pc-toggle select-input"></div>
-                                <div class="pc-desc">Оформление как главы ранобэ.</div>
-                                <textarea class="prompt-source">[Mimick the textual formatting-style of popular webnovels...]</textarea>
-                            </div>
+                            <div class="bulk-bar" onclick="copyBulk(this)">СКОПИРОВАТЬ ВЫБРАННЫЕ</div>
                         </div>
+                    </div>
 
-                        <button class="bulk-btn ripple-btn" onclick="copyBulk(this)">Скомпилировать Пакет</button>
+                    <div class="module-card">
+                         <div class="module-header" onclick="toggleModule(this)">
+                            <div class="module-title"><span class="module-num">04.</span> HTML & CSS</div>
+                            <span style="color:var(--primary-mint)">▼</span>
+                        </div>
+                         <div class="module-body">
+                             <div class="prompt-option">
+                                <div class="option-top">
+                                    <span class="option-label">✧🧃 Renette HTML</span>
+                                    <input type="radio" name="htmlstyle" class="toggle-input" id="h1">
+                                    <label for="h1" class="toggle-label radio-label"></label>
+                                </div>
+                                <div class="action-row">
+                                    <button class="mini-btn" onclick="copyText(this)">COPY</button>
+                                </div>
+                                <textarea class="source-code">[HTML Blocks]
+Assimilate and integrate lore based visualised quality HTML5 blocks where possible to in-text diagetics(documents, notes, paper, etc.), tech(terminals, screens, etc.) and textual objects(signs, symbols, etc.), to visually express, facilitate immersion and more. Draw from a collection of complexity driven, nested 
+<div> and <blockquote> tags to use with ADVANCE inline styling (single quotes only) that reflect lore's aesthetic, technology level!
+Mirroring on the character perspectives. Apply CSS, HTML(<b>, <i>, <small>, <u>), lists, tables, visual elements, sections with <hr> as needed to create readably constrainedly varied panels.
+Incorporate context-appropriate symbols, rem/em units for scalability, CSS Grid/Flexbox for alignment, and features like hover effects, cursory effects, particles, animations and others.
+Readable Color Clarity! Use strong color contrasts for text and background. Never place HTML inside code blocks(```) or backticks (`).
+Always render HTML directly.
+
+[Java]
+Java additions to HTML/CSS designs. Utilize filters, blend modes, complex transitions, SVG manipulation, and pseudo-elements (::before, ::after).
+But NO JavaScript Handlers - onclick, addEventListener, and other JS event listeners.
+AVOID any form of Dynamic Scripting - Any <script> tags attempting to manipulate DOM or respond to Human actions.
+[Interaction]
+Combine and Include various new additional interactive CSS and HTML, elements and features.
+Embed scrollable, slidables, clickables, rotatables, openable tabs, and various other interactible functions onto the screen and HTML.
+Make it multi-layered, fun and entertaining to play with. Build interactions through: Form element states (:checked, :focus, :target), CSS selectors that respond to those states and Native collapsible elements like <details>.
+[Pollination]
+Incorporate, access and insert pollinations into HTML designs whenever possible with url template <img src=“![Image](https://image.pollinations.ai/prompt/{description}?width={width}&height={height}&nologo=true))”>
+{description} is {sceneDetailed}%20{adjective}%20{charactersDetailed}%20{visualStyle}%20{genre}%20{artistReference}.
+Use the following parameters in the url: 
+- Prompt: [prompt, max 50 words]
+- Seed: [seed]
+- Width: [width]
+- Height: [height]
+- Model: [options: 'flux', 'flux-realism', 'any-dark', 'flux-anime', 'flux-3d', 'turbo' (default: 'flux-anime')]
+Use <img src="url">, object/embed tags, or assign a css background/property for each image.
+NO Markdown image syntax.
+
+[CSS Effects]
+Visual text effects through CSS! Apply inline styling for mood and emotional enhancement.
+Options: text-shadow for ethereal/magical effects, opacity for fading/ghostly text, text-decoration for crossed-out thoughts. Elevate and use flavours to enhance/reflect mood.
+[CSS Transform]
+Text transformation effects! Use CSS transforms to convey inner-emotions, objective style, or personality through CSS manipulation.
+Options: transform: rotate() for chaotic thoughts, scale() for emphasis, skew() for unease, text-transform: capitalize/lowercase for voice.
+Apply transforms-css to reflect mental states, magical effects, or distinctive speech patterns.
+
+
+{{setvar::largecothtml::
+
+[HTML Visuals.
+Immersive Object Rendering: What in-world items (screens, documents, signs, artifacts) suitable for the current scene, that can be observed and interacted with by characters, to be visually represented with HTML styling?
+Advanced Styling Implementation: What is the most advance potential deployable nested divs, complex inline CSS, hover effects, animations, grid/flexbox layouts, etc. that can be used for visual aesthetics and impact?
+Java Enhancement: What Java techniques can be used to power HTML elements?
+consider transitions, SVG, filters, blend modes, pseudo-elements, etc.
+Interactive HTML Integration: What elements can become clickable reveals, scrollable panels, interactive tabs, slideable galleries, rotatable objects, expandable menus, or toggleable content, etc. to enhance HTML outpout?
+for Human immersion and entertainment?
+Pollination HTML Integration: What key moments, objects, or characters would benefit from generated imagery?
+Identify ways to integratate them into styled divs with proper HTML tags (<img>, <object>, CSS backgrounds).
+NO Markdown image syntax]}}</textarea>
+                            </div>
+                         </div>
+                    </div>
+                </div> </div>
+
+            <div id="tab-guides" class="content-section">
+                <h2><img src="icon_book_closed.png"> Инструкции</h2>
+                <div class="modules-grid">
+                    <div class="module-card">
+                         <div class="module-header" onclick="toggleModule(this)">
+                            <div class="module-title">📥 Гайд по установке</div>
+                            <span>▼</span>
+                        </div>
+                        <div class="module-body" style="padding: 20px; color: #ccc;">
+                            1. Скачайте JSON во вкладке Загрузка.<br>
+                            2. Импорт в SillyTavern (API: Chat Completion).<br>
+                            3. Активация RegEx (2 скрипта).<br>
+                            4. В настройках формата включите "Форматирование размышлений".
+                            <br><br>
+                            <img src="example6.jpg" style="width:100%; border-radius:8px;">
+                        </div>
+                    </div>
+                    
+                    <div class="module-card">
+                         <div class="module-header" onclick="toggleModule(this)">
+                            <div class="module-title">❓ FAQ</div>
+                            <span>▼</span>
+                        </div>
+                        <div class="module-body" style="padding: 20px; color: #ccc;">
+                             <strong>Куда вставлять промпты?</strong><br>
+                             Найдите нужный тогл (например, "Штуки"), удалите текст и вставьте скопированный.
+                             <hr style="border-color: var(--border); margin: 10px 0;">
+                             <strong>Картинки HTML не грузятся?</strong><br>
+                             Проверьте доступ к image.pollinations.ai. Отключите "Запрет внешних медиа".
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                 <div class="prompt-group" data-cat="ui">
-                    <div class="group-title">Визуализация (HTML)</div>
-                    <div class="prompt-grid">
-                        <div class="prompt-card">
-                            <div class="pc-header"><span class="pc-title">✧🧃 Renette HTML</span><input type="radio" name="html_style" class="pc-toggle select-input"></div>
-                            <div class="pc-desc">Стандартный красивый стиль блоков и писем.</div>
-                            <button class="copy-single-btn" onclick="copyText(this)">Copy Module</button>
-                            <textarea class="prompt-source">[HTML Blocks] Assimilate and integrate lore based visualised quality HTML5 blocks...</textarea>
-                        </div>
-                        <div class="prompt-card">
-                            <div class="pc-header"><span class="pc-title">✧💜 Iris Bloomwave</span><input type="radio" name="html_style" class="pc-toggle select-input"></div>
-                            <div class="pc-desc">CSS-промпт от Минти. Сложный и интерактивный.</div>
-                            <button class="copy-single-btn" onclick="copyText(this)">Copy Module</button>
-                            <textarea class="prompt-source"><html_css> [ADVANCED INTERACTIVE & ANIMATION ENGINEERING]...</html_css></textarea>
-                        </div>
-                    </div>
-                </div>
-
-            </section>
-
-            <section id="install" class="view-section">
-                <div class="section-header">
-                    <h2 class="section-title">Загрузка Данных</h2>
-                    <div class="section-subtitle">Получить последнюю версию JSON файла</div>
-                </div>
-
-                <div class="dl-grid">
-                    <a href="#" class="dl-card" onclick="createSparks(event); showToast('System', 'Загрузка v1.7 инициирована...'); return false;">
-                        <img src="icon_button_green.png" class="dl-icon" onerror="this.src='https://cdn-icons-png.flaticon.com/512/7269/7269134.png'">
-                        <div class="dl-title">Renette v1.7</div>
-                        <div class="dl-subtitle">JSON Preset (< 60KB)</div>
+            <div id="tab-contacts" class="content-section">
+                <h2><img src="icon_bag.png"> Контакты</h2>
+                <div class="dl-container" style="min-height: auto; margin-top: 50px;">
+                    <a href="[https://t.me/YablochnyAI](https://t.me/YablochnyAI)" target="_blank" class="nav-btn active" style="width: 100%; max-width: 300px; justify-content: center;">
+                        <img src="icon_tg_green.png"> Телеграм Канал
                     </a>
-                </div>
-                
-                <div class="info-card" style="margin-top:40px; border-color:var(--accent-red);">
-                    <h4 style="margin-top:0; color:var(--accent-red);">⚠️ Важно перед установкой</h4>
-                    <p>Для корректной работы требуется SillyTavern версии 1.12+.<br>Убедитесь, что включен "Chat Completion" в настройках API.</p>
-                </div>
-            </section>
-
-            <section id="guides" class="view-section">
-                <div class="section-header">
-                    <h2 class="section-title">Мануал Оператора</h2>
-                    <div class="section-subtitle">Пошаговая инструкция по интеграции</div>
-                </div>
-
-                <div class="timeline">
-                    <div class="step">
-                        <div class="step-marker"></div>
-                        <div class="step-content">
-                            <h3>01. Импорт Файла</h3>
-                            <p>Перейдите во вкладку пресетов (иконка слева) и нажмите кнопку импорта. Выберите скачанный JSON.</p>
-                            <img src="example6.jpg" onerror="this.style.display='none'">
-                        </div>
-                    </div>
-                    <div class="step">
-                        <div class="step-marker"></div>
-                        <div class="step-content">
-                            <h3>02. Активация RegEx</h3>
-                            <p>Таверна предложит импортировать скрипты (Regex). Нажмите "Да". Это критично для форматирования.</p>
-                            <img src="example7.jpg" onerror="this.style.display='none'">
-                        </div>
-                    </div>
-                    <div class="step">
-                        <div class="step-marker"></div>
-                        <div class="step-content">
-                            <h3>03. Настройка Думалки (CoT)</h3>
-                            <p>В настройках формата ответа найдите "Formatting Thinking" и выставьте параметры как на скриншоте.</p>
-                            <img src="example8.jpg" onerror="this.style.display='none'">
-                        </div>
-                    </div>
-                     <div class="step">
-                        <div class="step-marker"></div>
-                        <div class="step-content">
-                            <h3>04. Выбор Модулей</h3>
-                            <p>Многие тоглы в пресете пустые (подписаны как Шаблон). Зайдите в раздел "Модули" на этом сайте, выберите нужные функции, скопируйте и вставьте их в соответствующие поля пресета.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
-            <section id="contacts" class="view-section">
-                <div class="section-header">
-                     <h2 class="section-title">Связь</h2>
-                </div>
-                 <div class="dl-grid">
-                    <a href="https://t.me/YablochnyAI" target="_blank" class="dl-card" style="border-color:var(--primary-mint);">
-                        <img src="icon_tg_green.png" class="dl-icon" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2111/2111646.png'">
-                        <div class="dl-title">Телеграм Канал</div>
-                        <div class="dl-subtitle">Новости и обновления</div>
+                    <a href="[https://t.me/YablochnyChat](https://t.me/YablochnyChat)" target="_blank" class="nav-btn" style="width: 100%; max-width: 300px; justify-content: center; margin-top: 10px;">
+                        <img src="icon_tg.png"> Телеграм Чат
                     </a>
-                     <a href="https://t.me/YablochnyChat" target="_blank" class="dl-card" style="border-color:var(--accent-lilac);">
-                        <img src="icon_tg.png" class="dl-icon" onerror="this.src='https://cdn-icons-png.flaticon.com/512/478/478544.png'">
-                        <div class="dl-title">Чат</div>
-                        <div class="dl-subtitle">Общение и помощь</div>
-                    </a>
+                    
+                    <div style="margin-top: 50px; text-align: left;">
+                         <h3 style="color: var(--accent-lilac)">Credits</h3>
+                         <ul class="log-list" style="color: var(--text-muted)">
+                             <li>Шино</li>
+                             <li>Настенька</li>
+                             <li>Leafcanfly</li>
+                             <li>Пина-колада</li>
+                             <li>Ксюля (Лучик света 💚)</li>
+                         </ul>
+                    </div>
                 </div>
-                
-                <h3 style="margin-top:50px;">Credits</h3>
-                <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                    <span style="background:#222; padding:5px 10px; border-radius:4px; font-size:0.8rem; border:1px solid #333;">Шино</span>
-                    <span style="background:#222; padding:5px 10px; border-radius:4px; font-size:0.8rem; border:1px solid #333;">Настенька</span>
-                    <span style="background:#222; padding:5px 10px; border-radius:4px; font-size:0.8rem; border:1px solid #333;">Leafcanfly</span>
-                    <span style="background:#222; padding:5px 10px; border-radius:4px; font-size:0.8rem; border:1px solid #333;">Пина-колада</span>
-                </div>
-                <p style="margin-top:20px; color:#666; font-size:0.9rem;">
-                    Special Thanks: Ксюля 💚
-                </p>
-            </section>
+            </div>
 
         </main>
     </div>
 
-    <div id="toast-container"></div>
-    <div id="sparks-container" style="position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999;"></div>
+    <div id="toast-box"></div>
 
     <div class="lightbox" id="lightbox">
         <img src="" id="lightbox-img">
     </div>
 
-    <div id="snake-game">
+    <div id="game-overlay">
         <div class="game-ui">
-            <h2 style="margin:0; font-family:var(--font-decor); font-size:2rem;">Cyber Apple Catch</h2>
-            <p>Score: <span id="score">0</span> | Win at: 10</p>
+            <h2>RENETTE'S GLITCH HARVEST</h2>
+            <p>Catch 10 Golden Apples. Avoid Red Glitches.</p>
+            <p>Score: <span id="score">0</span></p>
         </div>
-        <canvas id="snake-canvas" width="300" height="300"></canvas>
-        <button class="game-close" onclick="closeGame()">CLOSE TERMINAL</button>
+        <canvas id="game-canvas" width="300" height="500"></canvas>
+        <div class="close-game" onclick="closeGame()">[CLOSE SIMULATION]</div>
     </div>
 
     <script>
-        /* --- NAVIGATION --- */
+        // --- 1. CORE NAVIGATION ---
         function switchTab(tabId) {
             // Hide all sections
-            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-
+            document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+            
             // Show target
             document.getElementById(tabId).classList.add('active');
             
-            // Highlight nav
-            const navIndex = ['dashboard','modules','install','guides','contacts'].indexOf(tabId);
-            if(navIndex >= 0) document.querySelectorAll('.nav-item')[navIndex].classList.add('active');
-
-            // Save state
-            localStorage.setItem('renetteTab', tabId);
-        }
-
-        /* --- PROMPT FILTER --- */
-        function filterPrompts(cat) {
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
-
-            const groups = document.querySelectorAll('.prompt-group');
-            groups.forEach(g => {
-                if (cat === 'all' || g.dataset.cat === cat) g.style.display = 'block';
-                else g.style.display = 'none';
+            // Highlight button (find by onclick content)
+            const btns = document.querySelectorAll('.nav-btn');
+            btns.forEach(btn => {
+                if(btn.getAttribute('onclick').includes(tabId)) {
+                    btn.classList.add('active');
+                }
             });
+            
+            // Mobile: Scroll to top
+            window.scrollTo(0,0);
         }
 
-        /* --- COPY LOGIC (Improved) --- */
+        // --- 2. MODULE TOGGLING ---
+        function toggleModule(header) {
+            const body = header.nextElementSibling;
+            header.parentElement.classList.toggle('active-card');
+            if (body.classList.contains('open')) {
+                body.classList.remove('open');
+            } else {
+                body.classList.add('open');
+            }
+        }
+
+        function toggleDetails(btn) {
+            const content = btn.nextElementSibling;
+            content.classList.toggle('show');
+        }
+
+        // --- 3. COPY LOGIC ---
         function copyText(btn) {
-            const container = btn.closest('.prompt-card');
-            const txt = container.querySelector('.prompt-source');
-            if(!txt) return showToast('Error', 'Source not found');
-
-            navigator.clipboard.writeText(txt.value).then(() => {
-                showToast('Success', 'Модуль скопирован в буфер');
-                createSparks(event);
-            });
+            const container = btn.closest('.prompt-option');
+            const textArea = container.querySelector('.source-code');
+            
+            if (textArea) {
+                navigator.clipboard.writeText(textArea.value).then(() => {
+                    showToast('Скопировано!', 'Буфер обмена обновлен');
+                    createSparks(event);
+                });
+            }
         }
 
         function copyBulk(btn) {
             const group = btn.closest('.group-block');
-            const inputs = group.querySelectorAll('.select-input:checked');
+            const checkedInputs = group.querySelectorAll('.select-input:checked');
             
-            if(inputs.length === 0) return showToast('Warning', 'Ничего не выбрано');
-
-            let finalTxt = "";
-            inputs.forEach(inp => {
-                const card = inp.closest('.option-item');
-                const txt = card.querySelector('.prompt-source');
-                if(txt) finalTxt += txt.value + "\n\n";
+            if (checkedInputs.length === 0) {
+                showToast('Ошибка', 'Ничего не выбрано');
+                return;
+            }
+            
+            let bulkText = "";
+            checkedInputs.forEach(input => {
+                const container = input.closest('.prompt-option');
+                const text = container.querySelector('.source-code').value;
+                bulkText += text + "\n\n";
             });
-
-            navigator.clipboard.writeText(finalTxt).then(() => {
-                showToast('System', `Скомпилировано ${inputs.length} модулей`);
+            
+            navigator.clipboard.writeText(bulkText).then(() => {
+                showToast('Успех', `Скопировано модулей: ${checkedInputs.length}`);
                 createSparks(event);
             });
         }
 
-        /* --- TOASTS & SPARKS --- */
         function showToast(title, msg) {
-            const box = document.getElementById('toast-container');
-            const el = document.createElement('div');
-            el.className = 'toast';
-            el.innerHTML = `<div><div style="font-weight:bold; color:var(--primary-mint)">${title}</div><div>${msg}</div></div>`;
-            box.appendChild(el);
-            setTimeout(() => el.classList.add('show'), 10);
-            setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 500); }, 3000);
-        }
-
-        function createSparks(e) {
-            const container = document.getElementById('sparks-container');
-            const x = e.clientX || window.innerWidth/2;
-            const y = e.clientY || window.innerHeight/2;
+            const box = document.getElementById('toast-box');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `<strong>${title}</strong><br>${msg}`;
+            box.appendChild(toast);
             
-            for(let i=0; i<15; i++) {
-                const s = document.createElement('div');
-                s.style.position = 'absolute';
-                s.style.left = x + 'px'; s.style.top = y + 'px';
-                s.style.width = '4px'; s.style.height = '4px';
-                s.style.background = Math.random()>0.5 ? '#69f0ae' : '#e040fb';
-                s.style.borderRadius = '50%';
-                
-                const angle = Math.random() * Math.PI * 2;
-                const dist = Math.random() * 50 + 20;
-                
-                const anim = s.animate([
-                    { transform: 'translate(0,0) scale(1)', opacity: 1 },
-                    { transform: `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px) scale(0)`, opacity: 0 }
-                ], { duration: 600, easing: 'ease-out' });
-                
-                container.appendChild(s);
-                anim.onfinish = () => s.remove();
-            }
+            setTimeout(() => toast.classList.add('show'), 10);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
         }
 
-        /* --- BACKGROUND FX --- */
-        const canvas = document.getElementById('bg-canvas');
+        // --- 4. ANIMATED BACKGROUND (Particles) ---
+        const canvas = document.getElementById('canvas-bg');
         const ctx = canvas.getContext('2d');
-        let w, h;
+        let width, height;
         const particles = [];
 
-        function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
-        window.addEventListener('resize', resize); resize();
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
 
-        class P {
+        class Particle {
             constructor() {
-                this.reset();
-                this.y = Math.random() * h; // Start anywhere
-            }
-            reset() {
-                this.x = Math.random() * w;
-                this.y = -10;
-                this.vy = Math.random() * 2 + 1;
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
                 this.size = Math.random() * 2;
-                this.color = Math.random() > 0.8 ? '#e040fb' : '#69f0ae';
-                this.alpha = Math.random() * 0.5 + 0.1;
+                this.speedY = Math.random() * 0.5 + 0.1;
+                this.color = Math.random() > 0.5 ? '#00ffa3' : '#b388ff';
+                this.alpha = Math.random() * 0.5;
             }
             update() {
-                this.y += this.vy;
-                if(this.y > h) this.reset();
+                this.y -= this.speedY; // Float up
+                if (this.y < 0) this.y = height;
             }
             draw() {
                 ctx.fillStyle = this.color;
                 ctx.globalAlpha = this.alpha;
-                ctx.fillRect(this.x, this.y, this.size, this.size * 3); // Digital rain look
+                ctx.fillRect(this.x, this.y, this.size, this.size); // Pixels
                 ctx.globalAlpha = 1;
             }
         }
-        for(let i=0; i<50; i++) particles.push(new P());
-        function anim() {
-            ctx.clearRect(0,0,w,h);
+
+        for(let i=0; i<60; i++) particles.push(new Particle());
+
+        function animate() {
+            ctx.clearRect(0,0,width,height);
             particles.forEach(p => { p.update(); p.draw(); });
-            requestAnimationFrame(anim);
+            requestAnimationFrame(animate);
         }
-        anim();
+        animate();
 
-        /* --- INIT --- */
-        document.addEventListener('DOMContentLoaded', () => {
-            const saved = localStorage.getItem('renetteTab') || 'dashboard';
-            switchTab(saved);
+        // --- 5. SPARKS EFFECT ---
+        function createSparks(e) {
+            // Simple visual feedback implementation
+            const btn = e.target;
+            const originalColor = btn.style.background;
+            btn.style.background = 'var(--primary-mint)';
+            btn.style.color = '#000';
+            setTimeout(() => {
+                btn.style.background = originalColor;
+                btn.style.color = '';
+            }, 300);
+        }
 
-            // Lightbox logic
-            const lb = document.getElementById('lightbox');
-            document.querySelectorAll('img').forEach(img => {
-                if(!img.classList.contains('nav-icon') && !img.classList.contains('brand-logo')) {
-                    img.style.cursor = 'zoom-in';
-                    img.onclick = () => {
-                        document.getElementById('lightbox-img').src = img.src;
-                        lb.classList.add('active');
-                    }
-                }
-            });
-            lb.onclick = () => lb.classList.remove('active');
-        });
+        // --- 6. EASTER EGG GAME ---
+        let clickCount = 0;
+        let gameActive = false;
+        const gameCanvas = document.getElementById('game-canvas');
+        const gCtx = gameCanvas.getContext('2d');
+        let apples = [];
+        let score = 0;
+        let basketX = 125;
 
-        /* --- EASTER EGG GAME (SNAKE) --- */
-        let clicks = 0;
-        let gameInterval;
-        document.getElementById('logo-trigger').onclick = () => {
-            clicks++;
-            if(clicks === 3) {
-                document.getElementById('snake-game').style.display = 'flex';
-                startSnake();
-                clicks = 0;
+        // Triggers
+        document.getElementById('desktop-logo-trigger').addEventListener('click', eggCheck);
+        document.getElementById('mobile-logo-trigger').addEventListener('click', eggCheck);
+
+        function eggCheck() {
+            clickCount++;
+            if(clickCount === 5) {
+                startGame();
+                clickCount = 0;
             }
-        };
+        }
+
+        function startGame() {
+            document.getElementById('game-overlay').style.display = 'flex';
+            gameActive = true;
+            score = 0;
+            apples = [];
+            gameLoop();
+        }
 
         function closeGame() {
-            document.getElementById('snake-game').style.display = 'none';
-            clearInterval(gameInterval);
+            document.getElementById('game-overlay').style.display = 'none';
+            gameActive = false;
         }
 
-        function startSnake() {
-            const cvs = document.getElementById('snake-canvas');
-            const c = cvs.getContext('2d');
-            let snake = [{x:10, y:10}];
-            let apple = {x:15, y:15};
-            let dx=1, dy=0;
-            let score = 0;
-            const gridSize = 15;
-            const tileCount = 20;
+        gameCanvas.addEventListener('mousemove', (e) => {
+            const rect = gameCanvas.getBoundingClientRect();
+            basketX = e.clientX - rect.left - 25;
+        });
 
-            document.addEventListener('keydown', keyPush);
-            clearInterval(gameInterval);
-            gameInterval = setInterval(gameLoop, 100);
+        // Touch support for mobile
+        gameCanvas.addEventListener('touchmove', (e) => {
+            const rect = gameCanvas.getBoundingClientRect();
+            basketX = e.touches[0].clientX - rect.left - 25;
+        }, {passive: true});
 
-            function gameLoop() {
-                let head = {x: snake[0].x + dx, y: snake[0].y + dy};
+        function gameLoop() {
+            if(!gameActive) return;
 
-                if(head.x < 0) head.x = tileCount-1;
-                if(head.x >= tileCount) head.x = 0;
-                if(head.y < 0) head.y = tileCount-1;
-                if(head.y >= tileCount) head.y = 0;
+            gCtx.fillStyle = '#111';
+            gCtx.fillRect(0, 0, 300, 500);
 
-                snake.unshift(head);
-
-                if(head.x === apple.x && head.y === apple.y) {
-                    score++;
-                    document.getElementById('score').innerText = score;
-                    if(score >= 10) {
-                         alert("SYSTEM UNLOCKED. You fed Renette!");
-                         score = 0; snake = [{x:10, y:10}];
-                    }
-                    apple.x = Math.floor(Math.random()*tileCount);
-                    apple.y = Math.floor(Math.random()*tileCount);
-                } else {
-                    snake.pop();
-                }
-
-                // Draw
-                c.fillStyle = 'black'; c.fillRect(0,0,cvs.width,cvs.height);
-                
-                c.fillStyle = '#ff5252'; // Apple
-                c.fillRect(apple.x*gridSize, apple.y*gridSize, gridSize-2, gridSize-2);
-
-                c.fillStyle = '#69f0ae'; // Snake
-                snake.forEach(part => {
-                    c.fillRect(part.x*gridSize, part.y*gridSize, gridSize-2, gridSize-2);
+            // Spawn apples
+            if(Math.random() < 0.03) {
+                apples.push({
+                    x: Math.random() * 280,
+                    y: 0,
+                    type: Math.random() > 0.8 ? 'bug' : 'apple' // 20% chance of bug
                 });
             }
 
-            function keyPush(evt) {
-                switch(evt.keyCode) {
-                    case 37: dx=-1; dy=0; break;
-                    case 38: dx=0; dy=-1; break;
-                    case 39: dx=1; dy=0; break;
-                    case 40: dx=0; dy=1; break;
+            // Draw Basket
+            gCtx.fillStyle = '#00ffa3';
+            gCtx.fillRect(basketX, 450, 50, 10);
+
+            // Update Apples
+            for(let i = 0; i < apples.length; i++) {
+                let a = apples[i];
+                a.y += 3;
+                
+                // Draw
+                gCtx.beginPath();
+                gCtx.arc(a.x, a.y, 8, 0, Math.PI*2);
+                gCtx.fillStyle = a.type === 'bug' ? '#ff5555' : 'gold';
+                gCtx.fill();
+
+                // Collision
+                if(a.y > 440 && a.y < 460 && a.x > basketX && a.x < basketX + 50) {
+                    if(a.type === 'bug') {
+                        score = Math.max(0, score - 5);
+                        showToast('GLITCH!', 'Данные повреждены (-5)');
+                    } else {
+                        score++;
+                    }
+                    apples.splice(i, 1);
+                    i--;
+                    document.getElementById('score').innerText = score;
+                    
+                    if(score >= 10) {
+                        alert("RENETTE RESTORED! Спасибо за помощь!");
+                        closeGame();
+                    }
+                } else if (a.y > 500) {
+                    apples.splice(i, 1);
+                    i--;
                 }
             }
+            
+            requestAnimationFrame(gameLoop);
         }
+
+        // --- 7. LIGHTBOX LOGIC ---
+        document.querySelectorAll('img').forEach(img => {
+            if(img.closest('.details-content') || img.closest('.module-body')) {
+                img.style.cursor = 'zoom-in';
+                img.onclick = () => {
+                    document.getElementById('lightbox-img').src = img.src;
+                    document.getElementById('lightbox').classList.add('active');
+                }
+            }
+        });
+        document.getElementById('lightbox').onclick = function() {
+            this.classList.remove('active');
+        }
+
+        // Init Radio fix (uncheck)
+        const allRadios = document.querySelectorAll('input[type="radio"]');
+        allRadios.forEach(radio => {
+            radio.addEventListener('mousedown', function() { this.dataset.wasChecked = this.checked; });
+            radio.addEventListener('click', function() { if(this.dataset.wasChecked === "true") { this.checked = false; this.dataset.wasChecked = "false"; } });
+        });
+
     </script>
 </body>
 </html>
