@@ -4,1115 +4,1040 @@
     <meta name="google-site-verification" content="L1aS8txxzlMjDV_Efl0Oi1WDR0J7_DCdyazGjG1zVPk" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Яблочный Пресет // RENETTE_OS</title>
-
-    <!-- Шрифты -->
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="favicon.png">
-
+    <title>Яблочный Пресет | Renette OS</title>
     <style>
-        /* ========================================= */
-        /* CSS VARIABLES & RESET */
-        /* ========================================= */
         :root {
-            /* Palette */
-            --c-bg: #0e0e12;
-            --c-panel: #16161f;
-            --c-primary: #66ffb3; /* Mint */
-            --c-secondary: #ff6b6b; /* Soft Red */
-            --c-accent: #d4b3ff; /* Lilac */
-            --c-text: #e0e0e0;
-            --c-dim: #888899;
-
-            /* Glassmorphism */
-            --glass-bg: rgba(22, 22, 31, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-blur: blur(16px);
-
-            /* Effects */
-            --shadow-glow: 0 0 15px rgba(102, 255, 179, 0.2);
+            --c-mint: #99ff99;
+            --c-red: #ff9a9e;
+            --c-lilac: #c4a7e7;
+            --c-dark: #0f0f13;
+            --c-panel: rgba(20, 20, 25, 0.7);
+            --c-border: rgba(255, 255, 255, 0.08);
+            --glass: blur(16px);
             --font-main: 'Montserrat', sans-serif;
-            --font-tech: 'JetBrains Mono', monospace;
-
-            --nav-width: 80px;
+            --font-code: 'JetBrains Mono', monospace;
+            --easing: cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
 
         body {
             margin: 0;
-            padding: 0;
-            background-color: var(--c-bg);
-            color: var(--c-text);
+            background-color: var(--c-dark);
+            color: #e0e0e0;
             font-family: var(--font-main);
             overflow-x: hidden;
-            display: flex;
             min-height: 100vh;
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--c-bg); }
-        ::-webkit-scrollbar-thumb { background: var(--c-panel); border-radius: 3px; border: 1px solid var(--c-primary); }
-
-        /* ========================================= */
-        /* BACKGROUND & FX */
-        /* ========================================= */
-        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: 0.6; }
-
-        /* Scanline Overlay */
-        .scanlines {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999;
-            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
-            background-size: 100% 4px;
-            opacity: 0.15;
-        }
-
-        /* ========================================= */
-        /* NAVIGATION (SIDEBAR / BOTTOM BAR) */
-        /* ========================================= */
-        .sidebar {
-            width: var(--nav-width);
-            background: var(--glass-bg);
-            backdrop-filter: var(--glass-blur);
-            border-right: 1px solid var(--glass-border);
-            height: 100vh;
-            position: fixed;
-            left: 0; top: 0;
-            z-index: 100;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            padding: 20px 0;
-            transition: width 0.3s ease;
         }
 
-        .brand-logo {
-            width: 50px; height: 50px;
-            margin-bottom: 40px;
-            filter: drop-shadow(0 0 10px var(--c-primary));
-            cursor: pointer;
-            transition: transform 0.3s;
+        /* === ФОН И ЭФФЕКТЫ === */
+        #bg-canvas {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            opacity: 0.4;
         }
-        .brand-logo:hover { transform: rotate(15deg) scale(1.1); }
+        .scanline {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 9000;
+            opacity: 0.3;
+        }
 
-        .nav-items {
-            display: flex; flex-direction: column; gap: 20px; width: 100%; align-items: center;
+        /* === НАВИГАЦИЯ === */
+        .nav-bar {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            display: flex;
+            justify-content: center;
+            background: rgba(10, 10, 12, 0.85);
+            backdrop-filter: var(--glass);
+            -webkit-backdrop-filter: var(--glass);
+            border-bottom: 1px solid var(--c-border);
+            z-index: 1000;
+            padding: 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-inner {
+            display: flex;
+            gap: 10px;
+            max-width: 1200px;
+            width: 100%;
+            padding: 0 20px;
+            justify-content: center;
         }
 
         .nav-btn {
             background: transparent;
-            border: none;
-            color: var(--c-dim);
+            border: 1px solid transparent;
+            color: #888;
+            padding: 10px 20px;
+            border-radius: 8px;
             cursor: pointer;
-            width: 50px; height: 50px;
-            border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
+            font-family: var(--font-code);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            transition: all 0.3s var(--easing);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .nav-btn img { width: 24px; height: 24px; opacity: 0.6; transition: 0.3s; }
-        .nav-btn:hover { background: rgba(255,255,255,0.05); color: var(--c-text); }
-        .nav-btn:hover img { opacity: 1; transform: scale(1.1); }
-
+        .nav-btn:hover { color: #fff; background: rgba(255,255,255,0.05); }
         .nav-btn.active {
-            background: rgba(102, 255, 179, 0.1);
-            box-shadow: 0 0 15px rgba(102, 255, 179, 0.15);
+            color: var(--c-dark);
+            background: var(--c-mint);
+            box-shadow: 0 0 15px rgba(153, 255, 153, 0.4);
+            border-color: var(--c-mint);
         }
-        .nav-btn.active img { opacity: 1; filter: drop-shadow(0 0 5px var(--c-primary)); }
+        .nav-btn img { height: 18px; width: 18px; object-fit: contain; }
 
-        /* Indicator line for active tab */
-        .nav-btn.active::before {
-            content: ''; position: absolute; left: -10px; height: 60%; width: 4px;
-            background: var(--c-primary); border-radius: 2px;
-        }
-
-        /* Tooltip */
-        .nav-btn::after {
-            content: attr(data-tooltip);
-            position: absolute; left: 70px;
-            background: var(--c-panel); border: 1px solid var(--c-primary);
-            color: var(--c-primary); padding: 5px 10px;
-            font-family: var(--font-tech); font-size: 0.8rem;
-            border-radius: 4px; opacity: 0; pointer-events: none;
-            transition: 0.2s; transform: translateX(-10px); white-space: nowrap;
-            z-index: 101;
-        }
-        .sidebar:hover .nav-btn:hover::after { opacity: 1; transform: translateX(0); }
-
-        /* ========================================= */
-        /* MAIN CONTENT AREA */
-        /* ========================================= */
-        .content-wrapper {
-            margin-left: var(--nav-width);
-            flex: 1;
-            padding: 40px;
+        /* === ШАПКА === */
+        .hero-section {
+            margin-top: 80px;
+            padding: 40px 20px;
+            text-align: center;
             position: relative;
-            max-width: 1400px;
+        }
+
+        .renette-avatar {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            border: 2px solid var(--c-mint);
+            padding: 5px;
+            box-shadow: 0 0 30px rgba(153, 255, 153, 0.2);
+            position: relative;
+        }
+        .renette-avatar img {
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            /* Пасхалка триггер */
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .renette-avatar img:active { transform: scale(0.9); }
+
+        h1 {
+            font-family: var(--font-main);
+            font-weight: 800;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin: 0;
+            background: linear-gradient(135deg, #fff, var(--c-mint));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-family: var(--font-code);
+            color: var(--c-lilac);
+            font-size: 0.9rem;
+            margin-top: 10px;
+            opacity: 0.8;
+        }
+        .subtitle span { border-bottom: 1px dashed var(--c-red); }
+
+        /* === КОНТЕЙНЕР === */
+        .main-wrapper {
+            max-width: 1000px;
             width: 100%;
+            margin: 0 auto 100px; /* отступ для мобильного меню */
+            padding: 0 20px;
         }
 
-        /* Header Section */
-        .cyber-header {
-            margin-bottom: 50px;
-            border-bottom: 1px solid var(--glass-border);
-            padding-bottom: 20px;
-            display: flex; justify-content: space-between; align-items: flex-end;
-            position: relative;
-        }
-        .cyber-header::after {
-            content: ''; position: absolute; bottom: -1px; left: 0; width: 100px; height: 3px;
-            background: linear-gradient(90deg, var(--c-primary), transparent);
-        }
-
-        .header-title h1 {
-            font-family: var(--font-tech); font-size: clamp(2rem, 5vw, 3.5rem);
-            margin: 0; line-height: 1;
-            background: linear-gradient(135deg, #fff 40%, var(--c-primary));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-        .header-title p {
-            font-family: var(--font-tech); color: var(--c-secondary);
-            margin: 10px 0 0 0; letter-spacing: 2px; font-size: 0.9rem;
-        }
-        .status-badge {
-            background: rgba(102, 255, 179, 0.1); border: 1px solid var(--c-primary);
-            color: var(--c-primary); padding: 5px 12px;
-            font-family: var(--font-tech); font-size: 0.75rem; border-radius: 4px;
-            display: flex; align-items: center; gap: 8px;
-        }
-        .status-dot { width: 8px; height: 8px; background: var(--c-primary); border-radius: 50%; animation: blink 2s infinite; }
-
-        /* Sections */
+        /* === СЕКЦИИ (TABS) === */
         .tab-section {
             display: none;
-            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.4s var(--easing), transform 0.4s var(--easing);
         }
-        .tab-section.active { display: block; }
+        .tab-section.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-        /* Cards & Panels */
         .glass-panel {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
+            background: var(--c-panel);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--c-border);
+            border-radius: 20px;
             padding: 30px;
             margin-bottom: 30px;
-            position: relative;
-            overflow: hidden;
-        }
-        .glass-panel::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
-            background: linear-gradient(90deg, var(--c-accent), transparent); opacity: 0.5;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
-        h2 {
-            font-family: var(--font-tech); color: var(--c-accent); font-size: 1.8rem;
-            margin-top: 0; display: flex; align-items: center; gap: 15px;
+        .section-title {
+            font-family: var(--font-code);
+            color: var(--c-mint);
+            font-size: 1.5rem;
+            border-bottom: 1px solid rgba(153, 255, 153, 0.2);
+            padding-bottom: 15px;
+            margin-top: 0;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
-        h2 img { height: 32px; }
+        .section-title img { height: 28px; filter: drop-shadow(0 0 5px var(--c-mint)); }
 
-        /* ========================================= */
-        /* PROMPTS GRID SYSTEM */
-        /* ========================================= */
-        .prompts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
+        /* === ЭЛЕМЕНТЫ КОНТЕНТА === */
+        p { line-height: 1.7; color: #ccc; font-weight: 300; }
+        strong { color: #fff; font-weight: 600; }
 
-        .prompt-card {
-            background: rgba(255,255,255,0.02);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            overflow: hidden;
-            transition: all 0.3s;
-        }
-        .prompt-card:hover {
-            border-color: var(--c-primary);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
-        }
-
-        .p-header {
-            padding: 15px 20px;
+        /* CHANGELOG */
+        .changelog-container {
             background: rgba(0,0,0,0.3);
-            border-bottom: 1px solid var(--glass-border);
+            border-radius: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--c-border);
+        }
+        .changelog-item {
+            padding: 20px;
+            border-bottom: 1px solid var(--c-border);
+        }
+        .ver-badge {
+            background: rgba(153, 255, 153, 0.1);
+            color: var(--c-mint);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: var(--font-code);
+            font-size: 0.8rem;
+            border: 1px solid rgba(153, 255, 153, 0.3);
+            margin-right: 10px;
+        }
+        .date { color: #666; font-size: 0.8rem; }
+        .changes-ul { padding-left: 20px; margin-top: 10px; color: #bbb; font-size: 0.9rem; }
+        .changes-ul li { margin-bottom: 5px; }
+
+        /* DOWNLOAD BUTTON */
+        .dl-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(90deg, var(--c-mint), #a8e6cf);
+            color: var(--c-dark);
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.2rem;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 0 20px rgba(153, 255, 153, 0.3);
+        }
+        .dl-btn:hover { transform: scale(1.02); box-shadow: 0 0 40px rgba(153, 255, 153, 0.5); }
+
+        /* === ACCORDION (GUIDES & PROMPTS) === */
+        .accordion-item {
+            border: 1px solid var(--c-border);
+            background: rgba(255,255,255,0.02);
+            margin-bottom: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+        .accordion-item:hover { border-color: rgba(255,255,255,0.15); }
+
+        .accordion-header {
+            padding: 15px 20px;
             cursor: pointer;
-            display: flex; justify-content: space-between; align-items: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
             user-select: none;
         }
-        .p-header span { font-weight: 600; font-family: var(--font-tech); color: var(--c-text); }
-        .p-header .arrow { transition: transform 0.3s; font-size: 0.8rem; color: var(--c-dim); }
-        .p-header.active .arrow { transform: rotate(180deg); color: var(--c-primary); }
-        .p-header.active { background: rgba(102, 255, 179, 0.05); }
+        .accordion-header span:first-child { display: flex; align-items: center; gap: 10px; }
+        .acc-icon { font-size: 1.2rem; }
+        .acc-arrow { transition: transform 0.3s; opacity: 0.5; font-size: 0.8rem; }
 
-        .p-body {
-            max-height: 0; overflow: hidden; transition: max-height 0.5s ease;
+        .accordion-header.active { background: rgba(153, 255, 153, 0.05); color: var(--c-mint); }
+        .accordion-header.active .acc-arrow { transform: rotate(180deg); color: var(--c-mint); opacity: 1; }
+
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s var(--easing);
+            background: rgba(0,0,0,0.2);
         }
-        .p-content { padding: 20px; }
+        .accordion-body.open { max-height: 10000px; } /* Large value for content */
 
-        /* Prompt Items */
-        .item-row {
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px dashed rgba(255,255,255,0.1);
-            display: flex; flex-direction: column; gap: 10px;
+        .acc-content { padding: 20px; }
+
+        /* STEPS (GUIDES) */
+        .step { display: flex; gap: 15px; margin-bottom: 25px; }
+        .step-num {
+            min-width: 30px; height: 30px;
+            background: var(--c-lilac); color: var(--c-dark);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold; font-family: var(--font-code);
         }
-        .item-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .step-info img { width: 100%; border-radius: 8px; border: 1px solid var(--c-border); margin-top: 10px; }
 
-        .item-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
-        .item-title { font-weight: 700; color: var(--c-primary); font-size: 0.95rem; }
+        /* === PROMPTS UI === */
+        .prompt-desc {
+            background: rgba(153, 255, 153, 0.05);
+            border-left: 3px solid var(--c-mint);
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
 
-        /* Inputs */
-        .cyber-checkbox, .cyber-radio {
-            appearance: none; width: 18px; height: 18px;
-            border: 2px solid var(--c-dim); border-radius: 4px;
-            background: transparent; cursor: pointer; position: relative;
+        .module-group { display: flex; flex-direction: column; gap: 10px; }
+
+        .module-row {
+            display: flex;
+            align-items: center;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--c-border);
+            border-radius: 8px;
+            padding: 12px;
+            gap: 15px;
+            transition: background 0.2s;
+        }
+        .module-row:hover { background: rgba(255,255,255,0.06); }
+
+        /* Custom Checkbox/Radio */
+        .cyber-input {
+            appearance: none;
+            width: 20px; height: 20px;
+            border: 2px solid var(--c-lilac);
+            background: transparent;
+            cursor: pointer;
+            position: relative;
             flex-shrink: 0;
         }
-        .cyber-radio { border-radius: 50%; }
-        .cyber-checkbox:checked, .cyber-radio:checked {
-            border-color: var(--c-primary);
-            background: rgba(102, 255, 179, 0.2);
-            box-shadow: 0 0 8px var(--c-primary);
+        .cyber-input[type="radio"] { border-radius: 50%; }
+        .cyber-input[type="checkbox"] { border-radius: 4px; }
+
+        .cyber-input:checked { background: var(--c-lilac); box-shadow: 0 0 10px var(--c-lilac); }
+
+        .module-info { flex: 1; }
+        .module-title { font-weight: 700; display: block; font-size: 0.95rem; }
+
+        /* Details Summary */
+        .module-details summary {
+            color: var(--c-mint); font-size: 0.8rem; cursor: pointer; list-style: none; margin-top: 4px;
         }
-
-        .btn-copy-mini {
-            background: transparent; border: 1px solid var(--c-dim);
-            color: var(--c-dim); font-size: 0.7rem; padding: 4px 8px;
-            border-radius: 4px; cursor: pointer; transition: 0.2s;
-            font-family: var(--font-tech); text-transform: uppercase;
+        .module-details summary:hover { text-decoration: underline; }
+        .module-expanded {
+            margin-top: 10px; padding: 10px; background: rgba(0,0,0,0.4); border-radius: 6px; font-size: 0.85rem;
         }
-        .btn-copy-mini:hover { border-color: var(--c-primary); color: var(--c-primary); }
+        .module-expanded img { width: 100%; border-radius: 4px; margin-top: 5px; }
 
-        .prompt-source { display: none; } /* Hidden textarea */
-
-        /* Details/Summary */
-        details summary { cursor: pointer; color: var(--c-secondary); font-size: 0.8rem; margin-top: 5px; list-style: none; transition: 0.2s;}
-        details summary:hover { color: #fff; text-decoration: underline; }
-        details[open] summary { margin-bottom: 10px; }
-        .details-box {
-            background: rgba(0,0,0,0.4); padding: 10px; border-radius: 6px;
-            font-size: 0.85rem; line-height: 1.5; color: #ccc;
+        .copy-mini-btn {
+            background: transparent;
+            border: 1px solid var(--c-mint);
+            color: var(--c-mint);
+            padding: 6px 12px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: 0.2s;
         }
-        .details-box img { max-width: 100%; border-radius: 4px; margin-top: 10px; border: 1px solid var(--glass-border); }
+        .copy-mini-btn:hover { background: var(--c-mint); color: var(--c-dark); }
 
-        /* Bulk Copy Button */
-        .btn-glitch {
-            width: 100%; padding: 15px; margin-top: 20px;
-            background: var(--c-panel); border: 1px solid var(--c-primary);
-            color: var(--c-primary); font-family: var(--font-tech); font-weight: 700;
-            cursor: pointer; position: relative; overflow: hidden;
-            text-transform: uppercase; letter-spacing: 1px;
+        .bulk-copy {
+            width: 100%; margin-top: 20px; padding: 15px;
+            background: rgba(255,255,255,0.05);
+            border: 1px dashed var(--c-mint);
+            color: var(--c-mint);
+            font-family: var(--font-code);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .bulk-copy:hover { background: var(--c-mint); color: var(--c-dark); border-style: solid; }
+
+        /* Hidden textarea for copying */
+        .source-code { display: none; }
+
+        /* === CONTACTS === */
+        .link-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        .contact-card {
+            display: flex; align-items: center; gap: 10px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--c-border);
+            padding: 15px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #fff;
             transition: 0.3s;
         }
-        .btn-glitch:hover { background: var(--c-primary); color: #000; box-shadow: 0 0 20px var(--c-primary); }
+        .contact-card:hover { border-color: var(--c-lilac); background: rgba(196, 167, 231, 0.1); }
+        .contact-card img { width: 24px; }
 
-        /* ========================================= */
-        /* DOWNLOAD BUTTON */
-        /* ========================================= */
-        .dl-container { text-align: center; margin: 40px 0; }
-        .mega-btn {
-            display: inline-flex; align-items: center; justify-content: center;
-            padding: 20px 40px; font-size: 1.2rem;
-            background: linear-gradient(90deg, var(--c-secondary), var(--c-primary));
-            color: #000; text-decoration: none; font-weight: 800;
-            border-radius: 50px; text-transform: uppercase;
-            box-shadow: 0 0 30px rgba(102, 255, 179, 0.4);
-            transition: transform 0.2s, box-shadow 0.2s;
-            font-family: var(--font-tech);
+        /* === TOAST === */
+        #toast {
+            position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(50px);
+            background: rgba(15,15,19,0.95);
+            border: 1px solid var(--c-mint);
+            color: var(--c-mint);
+            padding: 12px 25px;
+            border-radius: 50px;
+            opacity: 0; pointer-events: none;
+            transition: 0.4s var(--easing);
+            z-index: 9999;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            display: flex; align-items: center; gap: 10px;
         }
-        .mega-btn:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(102, 255, 179, 0.6); }
-        .mega-btn img { height: 24px; margin-right: 15px; }
+        #toast.visible { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-        /* ========================================= */
-        /* CHANGELOG */
-        /* ========================================= */
-        .log-entry {
-            display: flex; gap: 20px; padding-bottom: 25px; margin-bottom: 25px;
-            border-bottom: 1px solid var(--glass-border);
-        }
-        .log-date {
-            min-width: 100px; font-family: var(--font-tech); color: var(--c-dim); font-size: 0.9rem;
-            text-align: right; border-right: 2px solid var(--c-secondary); padding-right: 20px;
-        }
-        .log-content h4 { margin: 0 0 10px 0; color: var(--c-primary); font-size: 1.1rem; }
-        .log-content ul { padding-left: 20px; margin: 0; color: #ccc; font-size: 0.95rem; line-height: 1.6; }
-        .log-content li { margin-bottom: 5px; }
-
-        /* ========================================= */
-        /* GUIDES & FAQ */
-        /* ========================================= */
-        .guide-item { background: rgba(255,255,255,0.03); margin-bottom: 15px; border-radius: 8px; overflow: hidden; }
-        .guide-head {
-            padding: 15px 20px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 10px;
-            transition: background 0.3s;
-        }
-        .guide-head:hover { background: rgba(255,255,255,0.05); }
-        .guide-head.active { color: var(--c-secondary); border-bottom: 1px solid var(--glass-border); }
-        .guide-body { padding: 0 20px; max-height: 0; overflow: hidden; transition: 0.5s ease; opacity: 0; }
-        .guide-head.active + .guide-body { padding: 20px; opacity: 1; }
-
-        .step { display: flex; gap: 15px; margin-bottom: 20px; }
-        .step-num {
-            min-width: 30px; height: 30px; background: var(--c-secondary); color: #000;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;
-        }
-
-        /* ========================================= */
-        /* MOBILE RESPONSIVE */
-        /* ========================================= */
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 100%; height: 60px;
-                bottom: 0; top: auto; left: 0;
-                flex-direction: row; justify-content: space-around;
-                padding: 0; border-right: none; border-top: 1px solid var(--glass-border);
-            }
-            .brand-logo { display: none; } /* Hide main logo on mobile nav */
-            .nav-items { flex-direction: row; gap: 0; justify-content: space-around; width: 100%; }
-            .nav-btn { width: 100%; border-radius: 0; height: 60px; }
-            .nav-btn.active::before { width: 100%; height: 3px; top: 0; left: 0; border-radius: 0; }
-            .nav-btn::after { display: none; } /* No tooltips on mobile */
-
-            .content-wrapper { margin-left: 0; padding: 20px 15px 80px 15px; }
-            .header-title h1 { font-size: 1.8rem; }
-            .prompts-grid { grid-template-columns: 1fr; }
-        }
-
-        /* ========================================= */
-        /* UTILS & TOAST */
-        /* ========================================= */
-        #toast-box {
-            position: fixed; bottom: 20px; right: 20px; z-index: 2000;
-            display: flex; flex-direction: column; gap: 10px; pointer-events: none;
-        }
-        .toast {
-            background: var(--c-panel); border-left: 3px solid var(--c-primary);
-            color: #fff; padding: 15px 20px; border-radius: 6px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            font-family: var(--font-tech); font-size: 0.85rem;
-            transform: translateX(100px); opacity: 0; transition: 0.4s;
-            pointer-events: auto; display: flex; align-items: center; gap: 10px;
-        }
-        .toast.show { transform: translateX(0); opacity: 1; }
-
-        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
-        .contact-btn {
-            background: rgba(255,255,255,0.05); padding: 15px; text-decoration: none; color: #fff;
-            display: flex; align-items: center; gap: 10px; border-radius: 8px; border: 1px solid transparent;
-            transition: 0.3s;
-        }
-        .contact-btn:hover { border-color: var(--c-primary); background: rgba(102, 255, 179, 0.05); }
-
-        /* Easter Egg Game Modal */
-        .game-modal {
+        /* === GAME OVERLAY === */
+        #game-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); z-index: 5000; display: none;
-            justify-content: center; align-items: center; flex-direction: column;
+            background: rgba(0,0,0,0.95);
+            z-index: 10000;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
-        #game-canvas { border: 2px solid var(--c-primary); background: #111; max-width: 100%; }
-        .game-ui { color: var(--c-primary); font-family: var(--font-tech); margin-bottom: 10px; }
-        .close-game { position: absolute; top: 20px; right: 20px; color: #fff; font-size: 2rem; cursor: pointer; }
+        #game-canvas { border: 2px solid var(--c-mint); background: #111; max-width: 90vw; }
+        .game-ui { color: var(--c-mint); font-family: var(--font-code); margin-bottom: 10px; text-align: center; }
+        .close-game {
+            margin-top: 20px; padding: 10px 20px;
+            border: 1px solid var(--c-red); color: var(--c-red);
+            background: transparent; cursor: pointer; font-family: var(--font-code);
+        }
 
-        /* Lightbox */
+        /* === LIGHTBOX === */
         .lightbox {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); z-index: 4000; justify-content: center; align-items: center;
+            background: rgba(0,0,0,0.9); z-index: 9995;
+            justify-content: center; align-items: center;
         }
-        .lightbox img { max-width: 90%; max-height: 90%; border: 1px solid var(--c-primary); box-shadow: 0 0 30px rgba(102, 255, 179, 0.2); }
+        .lightbox img { max-width: 95%; max-height: 90%; border: 2px solid var(--c-lilac); box-shadow: 0 0 30px var(--c-lilac); }
 
-        /* Animations */
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes blink { 50% { opacity: 0.3; } }
+        /* === MOBILE === */
+        @media (max-width: 768px) {
+            .nav-bar { top: auto; bottom: 0; border-top: 1px solid var(--c-border); border-bottom: none; padding: 12px 0; }
+            .nav-btn { flex-direction: column; font-size: 0.7rem; padding: 5px 10px; gap: 5px; border: none; }
+            .nav-btn span { display: block; }
+            .main-wrapper { margin-bottom: 90px; } /* Space for bottom nav */
+            .module-row { flex-direction: column; align-items: flex-start; }
+            .cyber-input { position: absolute; top: 15px; right: 15px; }
+            .copy-mini-btn { width: 100%; text-align: center; margin-top: 10px; }
+            .module-info { width: 100%; padding-right: 30px; }
+            h1 { font-size: 2rem; }
+
+            /* Hide non-essential icons in nav to save space if needed, but flex-direction column handles it */
+        }
     </style>
 </head>
 <body>
 
-    <!-- Canvas Background -->
     <canvas id="bg-canvas"></canvas>
-    <div class="scanlines"></div>
+    <div class="scanline"></div>
+    <div id="toast"><span id="toast-msg">Notification</span></div>
 
-    <!-- Sidebar Navigation -->
-    <nav class="sidebar">
-        <!-- Easter Egg Trigger -->
-        <img src="apple_icon.png" alt="Renette" class="brand-logo" onclick="launchGame()" onerror="this.src='https://cdn-icons-png.flaticon.com/512/732/732205.png'">
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox" onclick="this.style.display='none'">
+        <img id="lightbox-img" src="" alt="Zoom">
+    </div>
 
-        <div class="nav-items">
-            <button class="nav-btn active" onclick="switchTab('home')" data-tooltip="Главная">
-                <img src="icon_clip_red.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/10692/10692823.png'">
+    <!-- GAME -->
+    <div id="game-overlay">
+        <div class="game-ui">
+            <h2>RENETTE'S HARVEST</h2>
+            <p>Catch <span style="color:var(--c-mint)">Data Apples</span>. Avoid <span style="color:var(--c-red)">Glitches</span>.</p>
+            <p>Score: <span id="score">0</span> | Goal: 20</p>
+        </div>
+        <canvas id="game-canvas" width="320" height="400"></canvas>
+        <button class="close-game" onclick="stopGame()">EXIT SIMULATION</button>
+    </div>
+
+    <!-- HEADER -->
+    <header class="hero-section">
+        <div class="renette-avatar" onclick="triggerEasterEgg()">
+            <img src="apple_icon.png" alt="Renette" onerror="this.src='https://cdn-icons-png.flaticon.com/512/415/415733.png'">
+        </div>
+        <h1>Яблочный Пресет</h1>
+        <div class="subtitle"><span>SYSTEM: ONLINE</span> // VER 1.7 // RENETTE OS</div>
+    </header>
+
+    <!-- NAVIGATION -->
+    <nav class="nav-bar">
+        <div class="nav-inner">
+            <button class="nav-btn active" onclick="switchTab('status')">
+                <img src="icon_clip.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/10692/10692823.png'">
+                <span>Статус</span>
             </button>
-            <button class="nav-btn" onclick="switchTab('download')" data-tooltip="Скачать">
+            <button class="nav-btn" onclick="switchTab('files')">
                 <img src="icon_book_open.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2983/2983816.png'">
+                <span>Файлы</span>
             </button>
-            <button class="nav-btn" onclick="switchTab('prompts')" data-tooltip="База Данных">
+            <button class="nav-btn" onclick="switchTab('manuals')">
+                <img src="icon_book_closed.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/10743/10743169.png'">
+                <span>Гайды</span>
+            </button>
+            <button class="nav-btn" onclick="switchTab('modules')">
                 <img src="sheets.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2921/2921222.png'">
+                <span>Модули</span>
             </button>
-            <button class="nav-btn" onclick="switchTab('guides')" data-tooltip="Инструкции">
-                <img src="icon_book_closed_red.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/10743/10743169.png'">
-            </button>
-            <button class="nav-btn" onclick="switchTab('contacts')" data-tooltip="Сеть">
-                <img src="icon_bag_green.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3059/3059446.png'">
+            <button class="nav-btn" onclick="switchTab('net')">
+                <img src="icon_bag.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3059/3059446.png'">
+                <span>Связь</span>
             </button>
         </div>
     </nav>
 
-    <!-- Content Area -->
-    <main class="content-wrapper">
+    <!-- MAIN CONTENT -->
+    <main class="main-wrapper">
 
-        <!-- Header -->
-        <header class="cyber-header">
-            <div class="header-title">
-                <h1 id="type-target"></h1>
-                <p>// SILLEYTAVERN PRESET V1.7 //</p>
-            </div>
-            <div class="status-badge">
-                <div class="status-dot"></div> SYSTEM ONLINE
-            </div>
-        </header>
-
-        <!-- 1. HOME SECTION -->
-        <section id="home" class="tab-section active">
+        <!-- TAB 1: STATUS (ABOUT) -->
+        <section id="status" class="tab-section active">
             <div class="glass-panel">
-                <h2><img src="icon_clip.png"> Информация о системе</h2>
-                <p style="line-height: 1.8; color: #ccc;">
-                    Модульный пресет с огромным количеством тоглов, основанный на ядре Селии. Оптимизирован для создания глубокого погружения и адаптивного повествования.<br><br>
-                    <strong style="color:var(--c-primary)">СОВМЕСТИМОСТЬ:</strong><br>
-                    • Gemini 2.5/3.0 Pro<br>
-                    • Claude Sonnet 3.7, 4.5, Opus<br>
-                    • DeepSeek Chimera R1T2, Terminus, GPT 5.1
+                <h2 class="section-title"><img src="icon_clip_red.png" onerror="this.style.display='none'"> Системная Информация</h2>
+                <p>
+                    <strong>Модульный пресет</strong> на ядре Селии с адаптивной архитектурой.<br>
+                    Поддерживаемые нейро-движки:<br>
+                    <span style="color:var(--c-mint)">✦ Gemini 2.5/3.0 Pro</span><br>
+                    <span style="color:var(--c-lilac)">✦ Claude Sonnet 3.7, Opus 4.5</span><br>
+                    <span style="color:var(--c-red)">✦ DeepSeek R1, GPT-5.1</span>
                 </p>
-            </div>
-
-            <div class="glass-panel">
-                <h2><img src="sheets.png"> Лог Обновлений</h2>
-                <div style="margin-top: 20px;">
-
-                    <div class="log-entry">
-                        <div class="log-date">14.12.2025<br><span style="color:var(--c-primary)">v1.7</span></div>
-                        <div class="log-content">
-                            <h4>Глобальная Оптимизация</h4>
-                            <ul>
-                                <li>Размер файла уменьшен до <60 КБ.</li>
-                                <li>Добавлены 4 магических тогла "Фокусы": Прогресс, Детали, Мысли, Диалоги.</li>
-                                <li>Полный рефакторинг "Улучшалок" и "Жанров" в пользу "Литературных стилей" (4 автора).</li>
-                                <li>Интеграция правил письма (время, POV).</li>
-                                <li>Новый джейлбрейк и фикс HTML промптов (Iris Bloomwave edit).</li>
-                            </ul>
-                        </div>
+                <div class="changelog-container">
+                    <div class="changelog-item">
+                        <span class="ver-badge">v1.7</span> <span class="date">14.12.2025</span>
+                        <ul class="changes-ul">
+                            <li>Оптимизация ядра (<60 КБ).</li>
+                            <li>Новые модули фокусов: ✈️Прогресс, 🧩Детали, 💭Мысли.</li>
+                            <li>Миграция настроек в "Правила Письма".</li>
+                            <li>Внедрение литературных стилей китайских новеллистов.</li>
+                            <li>Обновление Jailbreak протоколов.</li>
+                        </ul>
                     </div>
-
-                    <div class="log-entry">
-                        <div class="log-date">07.12.2025<br><span style="color:var(--c-dim)">v1.61</span></div>
-                        <div class="log-content">
-                            <h4>Стабилизация</h4>
-                            <ul>
-                                <li>Фикс языковых настроек и соблюдения ролей.</li>
-                                <li>Переписана логика "Думалки".</li>
-                                <li>Фикс темпа (Slow Burn больше не пропускает таймскипы).</li>
-                            </ul>
-                        </div>
+                    <div class="changelog-item">
+                        <span class="ver-badge">v1.6</span> <span class="date">06.12.2025</span>
+                        <ul class="changes-ul">
+                            <li>Ренетт переписана (отказ от легаси Селии).</li>
+                            <li>Сегментированная система мышления.</li>
+                        </ul>
                     </div>
-
-                     <div class="log-entry">
-                        <div class="log-date">06.12.2025<br><span style="color:var(--c-dim)">v1.6</span></div>
-                        <div class="log-content">
-                            <h4>Рефакторинг Характера</h4>
-                            <ul>
-                                <li>Изменён характер Ренетт (отход от Селии).</li>
-                                <li>Внедрена система шаблонов.</li>
-                            </ul>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </section>
 
-        <!-- 2. DOWNLOAD SECTION -->
-        <section id="download" class="tab-section">
-            <div class="glass-panel" style="text-align: center; min-height: 60vh; display: flex; flex-direction: column; justify-content: center;">
-                <img src="apple_icon.png" style="width: 100px; margin: 0 auto 30px; filter: drop-shadow(0 0 20px var(--c-primary)); animation: float 4s ease-in-out infinite;">
-                <h2 style="justify-content: center;">Файловый Архив</h2>
-                <p>Загрузите актуальную версию JSON конфигурации для импорта.</p>
-
-                <div class="dl-container">
-                    <a class="mega-btn" href="%F0%9F%8D%8E%D0%AF%D0%B1%D0%BB%D0%BE%D1%87%D0%BD%D1%8B%D0%B9%20V1.7.json" download="🍎Яблочный V1.7.json" onclick="toast('Загрузка...', 'Файл отправлен на ваше устройство')">
-                        <img src="icon_book_open.png"> СКАЧАТЬ v1.7
-                    </a>
-                </div>
-                <p style="font-size: 0.8rem; color: var(--c-dim);">MD5: VALID // INTEGRITY: 100%</p>
+        <!-- TAB 2: FILES (DOWNLOAD) -->
+        <section id="files" class="tab-section">
+            <div class="glass-panel">
+                <h2 class="section-title"><img src="icon_book_open_red.png" onerror="this.style.display='none'"> Загрузка Ядра</h2>
+                <p>Основной JSON файл конфигурации. Инструкции по установке находятся в разделе "Гайды".</p>
+                <br>
+                <a class="dl-btn" href="%F0%9F%8D%8E%D0%AF%D0%B1%D0%BB%D0%BE%D1%87%D0%BD%D1%8B%D0%B9%20V1.7.json" download onclick="showToast('Загрузка началась...')">
+                    СКАЧАТЬ V1.7 [JSON]
+                </a>
             </div>
         </section>
 
-        <!-- 3. PROMPTS DATABASE (THE BIG ONE) -->
-        <section id="prompts" class="tab-section">
+        <!-- TAB 3: MANUALS (GUIDES) -->
+        <section id="manuals" class="tab-section">
             <div class="glass-panel">
-                <h2><img src="sheets.png"> База Данных Модулей</h2>
-                <p>Выберите категорию, настройте параметры и скопируйте код для вставки в SillyTavern.<br>
-                <span style="color: var(--c-secondary);">✧ — Только один вариант</span> |
-                <span style="color: var(--c-primary);">✎ — Можно несколько</span></p>
+                <h2 class="section-title"><img src="icon_book_closed_red.png" onerror="this.style.display='none'"> Протоколы</h2>
 
-                <div class="prompts-grid">
-
-                    <!-- 1. OOC -->
-                    <div class="prompt-card">
-                        <div class="p-header" onclick="toggleCard(this)">
-                            <span>01 // OOC</span> <span class="arrow">▼</span>
-                        </div>
-                        <div class="p-body"><div class="p-content"><p style="color:#666">Нет дополнительных вариантов.</p></div></div>
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAcc(this)">
+                        <span><span class="acc-icon">📥</span> Установка</span>
+                        <span class="acc-arrow">▼</span>
                     </div>
-
-                    <!-- 2. RP / MAIN -->
-                    <div class="prompt-card">
-                        <div class="p-header" onclick="toggleCard(this)">
-                            <span>02 // ОСНОВНОЕ (RP)</span> <span class="arrow">▼</span>
-                        </div>
-                        <div class="p-body">
-                            <div class="p-content">
-                                <!-- Режим Письма -->
-                                <div class="item-row group-block">
-                                    <h4 style="color: var(--c-accent);">🌾 Режим Письма</h4>
-
-                                    <div class="item-top">
-                                        <div style="flex:1">
-                                            <span class="item-title">✧💫Погружение</span>
-                                            <details><summary>Инфо</summary><div class="details-box">Обычный РП. ИИ не пишет за юзера.</div></details>
-                                        </div>
-                                        <button class="btn-copy-mini" onclick="copyOne(this)">Copy</button>
-                                        <textarea class="prompt-source">[placeholder]</textarea>
-                                    </div>
-
-                                    <div class="item-top" style="margin-top:10px;">
-                                        <div style="flex:1">
-                                            <span class="item-title">✧📖ФФ Режим</span>
-                                            <details><summary>Инфо</summary><div class="details-box">ИИ пишет за всех, включая Юзера. Режим соавторства.</div></details>
-                                        </div>
-                                        <button class="btn-copy-mini" onclick="copyOne(this)">Copy</button>
-                                        <textarea class="prompt-source">[placeholder]</textarea>
-                                    </div>
-
-                                    <div class="item-top" style="margin-top:10px;">
-                                        <div style="flex:1">
-                                            <span class="item-title">✧💬Интернет Чат</span>
-                                            <details><summary>Инфо</summary><div class="details-box">Симуляция мессенджера.<br><img src="example_5.jpg"></div></details>
-                                        </div>
-                                        <button class="btn-copy-mini" onclick="copyOne(this)">Copy</button>
-                                        <textarea class="prompt-source">[placeholder]</textarea>
-                                    </div>
+                    <div class="accordion-body">
+                        <div class="acc-content">
+                            <div class="step">
+                                <div class="step-num">1</div>
+                                <div class="step-info">
+                                    <strong>Импорт</strong>
+                                    <p>В SillyTavern откройте вкладку пресетов и импортируйте JSON файл.</p>
+                                    <img src="example6.jpg" alt="step1" onclick="zoomImg(this)">
                                 </div>
-
-                                <!-- Баны -->
-                                <div class="item-row">
-                                    <h4 style="color: var(--c-accent);">❌ Баны</h4>
-                                    <div class="item-top"><span class="item-title">✧🇷🇺 RU Баны</span> <button class="btn-copy-mini" onclick="copyOne(this)">Copy</button><textarea class="prompt-source">[placeholder]</textarea></div>
-                                    <div class="item-top" style="margin-top:5px"><span class="item-title">✧🇺🇦 UA Баны</span> <button class="btn-copy-mini" onclick="copyOne(this)">Copy</button><textarea class="prompt-source">[placeholder]</textarea></div>
-                                    <div class="item-top" style="margin-top:5px"><span class="item-title">✧🇺🇸 EN Баны</span> <button class="btn-copy-mini" onclick="copyOne(this)">Copy</button><textarea class="prompt-source">[placeholder]</textarea></div>
-                                </div>
-
-                                <!-- Стиль -->
-                                <div class="item-row">
-                                    <h4 style="color: var(--c-accent);">📓 Лит. Стиль</h4>
-                                    <div class="item-top"><span class="item-title">✧🪴Лю Чжэньюнь</span> <button class="btn-copy-mini" onclick="copyOne(this)">Copy</button><textarea class="prompt-source">[placeholder]</textarea></div>
-                                    <div class="item-top" style="margin-top:5px"><span class="item-title">✧🪴Мо Ян</span> <button class="btn-copy-mini" onclick="copyOne(this)">Copy</button><textarea class="prompt-source">[placeholder]</textarea></div>
-                                    <div class="item-top" style="margin-top:5px"><span class="item-title">✧🪴Эйлин Чжан</span> <button class="btn-copy-mini" onclick="copyOne(this)">Copy</button><textarea class="prompt-source">[placeholder]</textarea></div>
-                                </div>
-
-                                <!-- Темп -->
-                                 <div class="item-row">
-                                    <h4 style="color: var(--c-accent);">🌱 Темп</h4>
-                                    <div class="item-top"><span class="item-title">✧🌱 Slow Burn</span> <button class="btn-copy-mini" onclick="copyOne(this)">Copy</button><textarea class="prompt-source">[placeholder]</textarea></div>
+                            </div>
+                            <div class="step">
+                                <div class="step-num">2</div>
+                                <div class="step-info">
+                                    <strong>Regex Скрипты</strong>
+                                    <p>Подтвердите импорт скриптов автоматизации.</p>
+                                    <img src="example7.jpg" alt="step2" onclick="zoomImg(this)">
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- 3. RATING -->
-                    <div class="prompt-card">
-                        <div class="p-header" onclick="toggleCard(this)">
-                            <span>03 // РЕЙТИНГ</span> <span class="arrow">▼</span>
-                        </div>
-                        <div class="p-body"><div class="p-content"><p style="color:#666">Нет дополнительных вариантов.</p></div></div>
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAcc(this)">
+                        <span><span class="acc-icon">⚙️</span> Настройка Функций</span>
+                        <span class="acc-arrow">▼</span>
                     </div>
-
-                    <!-- 4. EXTRA / HTML / SHIT -->
-                    <div class="prompt-card" style="grid-column: 1 / -1;">
-                        <div class="p-header" onclick="toggleCard(this)">
-                            <span>04 // ДОПОЛНИТЕЛЬНОЕ (HTML/ШТУКИ)</span> <span class="arrow">▼</span>
+                    <div class="accordion-body">
+                        <div class="acc-content">
+                            <p>Обзор основных переключателей (тоглов).</p>
+                            <img src="screen2.jpg" alt="settings" style="width:100%; border-radius:8px;" onclick="zoomImg(this)">
+                            <p style="margin-top:10px;">🍏 Нарративный Стиль — ядро пресета, не отключать.</p>
                         </div>
-                        <div class="p-body">
-                            <div class="p-content">
+                    </div>
+                </div>
 
-                                <!-- HTML -->
-                                <div class="item-row">
-                                    <h4 style="color: var(--c-accent);">🧃 HTML Стиль</h4>
-                                    <div class="item-top">
-                                        <span class="item-title">✧🧃 Renette HTML (Default)</span>
-                                        <button class="btn-copy-mini" onclick="copyOne(this)">Copy</button>
-                                        <textarea class="prompt-source">[placeholder]</textarea>
-                                    </div>
-                                    <div class="item-top" style="margin-top:10px;">
-                                        <span class="item-title">✧💜 Iris Bloomwave v1.0</span>
-                                        <button class="btn-copy-mini" onclick="copyOne(this)">Copy</button>
-                                        <textarea class="prompt-source">[placeholder]</textarea>
-                                    </div>
+                 <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAcc(this)">
+                        <span><span class="acc-icon">❓</span> FAQ</span>
+                        <span class="acc-arrow">▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="acc-content">
+                            <p><strong>В: Куда вставлять промпты?</strong><br>О: Найдите нужный тогл в SillyTavern, удалите старый текст и вставьте скопированный с этого сайта.</p>
+                            <hr style="border:0; border-top:1px dashed var(--c-border);">
+                            <p><strong>В: HTML не грузится?</strong><br>О: Проверьте "Запрет внешних медиа" в настройках ST.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- TAB 4: MODULES (PROMPTS) -->
+        <section id="modules" class="tab-section">
+            <div class="glass-panel">
+                <h2 class="section-title"><img src="sheets.png" onerror="this.style.display='none'"> База Модулей</h2>
+                <div class="prompt-desc">
+                    Выберите модуль, нажмите <strong>Копировать</strong>, вставьте в тогл пресета.<br>
+                    <span style="color:var(--c-mint)">✧</span> — только один вариант.<br>
+                    <span style="color:var(--c-lilac)">✎</span> — можно несколько.
+                </div>
+
+                <!-- OOC -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAcc(this)">
+                        <span>1. OOC (Личность Системы)</span>
+                        <span class="acc-arrow">▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="acc-content">Нет дополнительных модулей.</div>
+                    </div>
+                </div>
+
+                <!-- MAIN RP -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAcc(this)">
+                        <span>2. Основное (РП)</span>
+                        <span class="acc-arrow">▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="acc-content module-group">
+                            <h4 style="color:var(--c-mint); margin:0;">🌾 Режим Письма</h4>
+
+                            <div class="module-row">
+                                <div class="module-info">
+                                    <span class="module-title">✧💫 Погружение (Default)</span>
+                                    <details class="module-details">
+                                        <summary>Инфо</summary>
+                                        <div class="module-expanded">Обычный РП. ИИ не пишет за юзера.</div>
+                                    </details>
                                 </div>
-
-                                <!-- BULK COPY SECTION: STUFF -->
-                                <div class="item-row group-block" style="border: 1px solid var(--c-primary); padding: 15px; border-radius: 8px;">
-                                    <h4 style="color: var(--c-primary);">✎🧺 ШТУКИ (Мульти-выбор)</h4>
-                                    <p style="font-size:0.8rem; color:#aaa">Отметьте галочками и нажмите кнопку внизу.</p>
-
-                                    <!-- Mixable -->
-                                    <div class="item-top">
-                                        <input type="checkbox" class="cyber-checkbox">
-                                        <div style="flex:1"><span class="item-title">🕰️ Флешбеки</span></div>
-                                        <textarea class="prompt-source">[placeholder]</textarea>
-                                    </div>
-                                    <div class="item-top">
-                                        <input type="checkbox" class="cyber-checkbox">
-                                        <div style="flex:1"><span class="item-title">⏩ Переходы</span></div>
-                                        <textarea class="prompt-source">[placeholder]</textarea>
-                                    </div>
-                                    <div class="item-top">
-                                        <input type="checkbox" class="cyber-checkbox">
-                                        <div style="flex:1"><span class="item-title">🌎 Реальный Мир</span></div>
-                                        <textarea class="prompt-source">[placeholder]</textarea>
-                                    </div>
-                                    <div class="item-top">
-                                        <input type="checkbox" class="cyber-checkbox">
-                                        <div style="flex:1"><span class="item-title">✒️ Стиль веб-главы</span></div>
-                                        <textarea class="prompt-source">[placeholder]</textarea>
-                                    </div>
-                                    <div class="item-top">
-                                        <input type="checkbox" class="cyber-checkbox">
-                                        <div style="flex:1"><span class="item-title">🖼️ MEME</span></div>
-                                        <textarea class="prompt-source">[placeholder]</textarea>
-                                    </div>
-                                    <div class="item-top">
-                                        <input type="checkbox" class="cyber-checkbox">
-                                        <div style="flex:1"><span class="item-title">🔰 Типографика</span></div>
-                                        <textarea class="prompt-source">[placeholder]</textarea>
-                                    </div>
-
-                                    <!-- Hidden Blocks -->
-                                    <h5 style="color: var(--c-secondary); margin: 15px 0 5px;">Скрытые блоки:</h5>
-                                    <div class="item-top">
-                                        <input type="checkbox" class="cyber-checkbox">
-                                        <div style="flex:1"><span class="item-title">👤 Новые Профили</span></div>
-                                        <textarea class="prompt-source">[placeholder]</textarea>
-                                    </div>
-                                    <div class="item-top">
-                                        <input type="checkbox" class="cyber-checkbox">
-                                        <div style="flex:1"><span class="item-title">🗒️ Скрытые Планы</span></div>
-                                        <textarea class="prompt-source">[placeholder]</textarea>
-                                    </div>
-
-                                    <!-- Exclusive Groups (Radios) -->
-                                    <h5 style="color: var(--c-accent); margin: 15px 0 5px;">Инфоблоки (Только один):</h5>
-                                    <div class="item-top">
-                                        <input type="radio" name="infoblock" class="cyber-radio">
-                                        <div style="flex:1"><span class="item-title">✧🍎 Логи Ренетт</span></div>
-                                        <textarea class="prompt-source">[placeholder]</textarea>
-                                    </div>
-                                    <div class="item-top">
-                                        <input type="radio" name="infoblock" class="cyber-radio">
-                                        <div style="flex:1"><span class="item-title">✧🗂️ Мини</span></div>
-                                        <textarea class="prompt-source">[placeholder]</textarea>
-                                    </div>
-                                    <div class="item-top">
-                                        <input type="radio" name="infoblock" class="cyber-radio">
-                                        <div style="flex:1"><span class="item-title">✧💖 Матрица</span></div>
-                                        <textarea class="prompt-source">[placeholder]</textarea>
-                                    </div>
-
-                                    <h5 style="color: var(--c-accent); margin: 15px 0 5px;">Fancy UI (Только один):</h5>
-                                    <div class="item-top">
-                                        <input type="radio" name="fancy" class="cyber-radio">
-                                        <div style="flex:1"><span class="item-title">✧🥂 Full UI</span></div>
-                                        <textarea class="prompt-source">[placeholder]</textarea>
-                                    </div>
-                                    <div class="item-top">
-                                        <input type="radio" name="fancy" class="cyber-radio">
-                                        <div style="flex:1"><span class="item-title">✧🥂 Только Основа</span></div>
-                                        <textarea class="prompt-source">[placeholder]</textarea>
-                                    </div>
-
-                                    <button class="btn-glitch" onclick="copyBulk(this)">>> СКОПИРОВАТЬ ВЫБРАННОЕ <<</button>
-                                </div>
-
+                                <button class="copy-mini-btn" onclick="copyText(this)">Copy</button>
+                                <textarea class="source-code">[placeholder]</textarea>
                             </div>
+
+                            <div class="module-row">
+                                <div class="module-info">
+                                    <span class="module-title">✧📖 ФФ Режим</span>
+                                    <details class="module-details">
+                                        <summary>Инфо</summary>
+                                        <div class="module-expanded">ИИ пишет за всех, включая юзера. Режим соавторства.</div>
+                                    </details>
+                                </div>
+                                <button class="copy-mini-btn" onclick="copyText(this)">Copy</button>
+                                <textarea class="source-code">[placeholder]</textarea>
+                            </div>
+                             <div class="module-row">
+                                <div class="module-info">
+                                    <span class="module-title">✧💬 Интернет Чат</span>
+                                    <details class="module-details">
+                                        <summary>Инфо</summary>
+                                        <div class="module-expanded">Симуляция мессенджера.<img src="example_5.jpg"></div>
+                                    </details>
+                                </div>
+                                <button class="copy-mini-btn" onclick="copyText(this)">Copy</button>
+                                <textarea class="source-code">[placeholder]</textarea>
+                            </div>
+
+                            <h4 style="color:var(--c-mint); margin:15px 0 0;">❌ Баны</h4>
+                            <div class="module-row">
+                                <div class="module-info"><span class="module-title">✧🇷🇺 RU Баны</span></div>
+                                <button class="copy-mini-btn" onclick="copyText(this)">Copy</button>
+                                <textarea class="source-code">[placeholder]</textarea>
+                            </div>
+                            <div class="module-row">
+                                <div class="module-info"><span class="module-title">✧🇺🇸 EN Bans</span></div>
+                                <button class="copy-mini-btn" onclick="copyText(this)">Copy</button>
+                                <textarea class="source-code">[placeholder]</textarea>
+                            </div>
+
+                             <h4 style="color:var(--c-mint); margin:15px 0 0;">📓 Литературный Стиль</h4>
+                             <div class="module-row">
+                                <div class="module-info"><span class="module-title">✧🪴 Лю Чжэньюнь</span></div>
+                                <button class="copy-mini-btn" onclick="copyText(this)">Copy</button>
+                                <textarea class="source-code">[placeholder]</textarea>
+                            </div>
+                            <div class="module-row">
+                                <div class="module-info"><span class="module-title">✧🪴 Мо Ян</span></div>
+                                <button class="copy-mini-btn" onclick="copyText(this)">Copy</button>
+                                <textarea class="source-code">[placeholder]</textarea>
+                            </div>
+
                         </div>
                     </div>
-
-                    <!-- 5 & 6 -->
-                    <div class="prompt-card">
-                        <div class="p-header" onclick="toggleCard(this)"><span>05 // ДУМАЛКА</span> <span class="arrow">▼</span></div>
-                        <div class="p-body"><div class="p-content"><p style="color:#666">Нет дополнительных вариантов.</p></div></div>
-                    </div>
-                    <div class="prompt-card">
-                        <div class="p-header" onclick="toggleCard(this)"><span>06 // PREFILL</span> <span class="arrow">▼</span></div>
-                        <div class="p-body"><div class="p-content"><p style="color:#666">Нет дополнительных вариантов.</p></div></div>
-                    </div>
-
                 </div>
+
+                <!-- EXTRA -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAcc(this)">
+                        <span>4. Дополнительно (HTML/UI)</span>
+                        <span class="acc-arrow">▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="acc-content module-group">
+
+                            <h4 style="color:var(--c-mint); margin:0;">✎🧺 Штуки (Мульти-выбор)</h4>
+
+                            <div class="group-block">
+                                <div class="module-row">
+                                    <input type="checkbox" class="cyber-input">
+                                    <div class="module-info">
+                                        <span class="module-title">🕰️ Флешбеки</span>
+                                        <details class="module-details">
+                                            <summary>Инфо</summary>
+                                            <div class="module-expanded">Оформление воспоминаний.<img src="example1.jpg"></div>
+                                        </details>
+                                    </div>
+                                    <button class="copy-mini-btn" onclick="copyText(this)">Copy</button>
+                                    <textarea class="source-code">[placeholder]</textarea>
+                                </div>
+
+                                <div class="module-row">
+                                    <input type="checkbox" class="cyber-input">
+                                    <div class="module-info">
+                                        <span class="module-title">🔰 Типографика</span>
+                                        <details class="module-details">
+                                            <summary>Инфо</summary>
+                                            <div class="module-expanded">Визуальное оформление писем/записок.<img src="example2.jpg"></div>
+                                        </details>
+                                    </div>
+                                    <button class="copy-mini-btn" onclick="copyText(this)">Copy</button>
+                                    <textarea class="source-code">[placeholder]</textarea>
+                                </div>
+
+                                <div class="module-row">
+                                    <input type="checkbox" class="cyber-input">
+                                    <div class="module-info">
+                                        <span class="module-title">🖼️ MEME Генератор</span>
+                                    </div>
+                                    <button class="copy-mini-btn" onclick="copyText(this)">Copy</button>
+                                    <textarea class="source-code">[placeholder]</textarea>
+                                </div>
+
+                                <button class="bulk-copy" onclick="copyBulk(this)">СКОПИРОВАТЬ ОТМЕЧЕННОЕ</button>
+                            </div>
+
+                            <h4 style="color:var(--c-lilac); margin:15px 0 0;">✧ Инфоблоки (Один вариант)</h4>
+                            <div class="group-block">
+                                <div class="module-row">
+                                    <input type="radio" name="infoblock" class="cyber-input">
+                                    <div class="module-info"><span class="module-title">✧🍎 Логи Ренетт (Light)</span></div>
+                                    <button class="copy-mini-btn" onclick="copyText(this)">Copy</button>
+                                    <textarea class="source-code">[placeholder]</textarea>
+                                </div>
+                                <div class="module-row">
+                                    <input type="radio" name="infoblock" class="cyber-input">
+                                    <div class="module-info"><span class="module-title">✧📝 Основной Блок</span></div>
+                                    <button class="copy-mini-btn" onclick="copyText(this)">Copy</button>
+                                    <textarea class="source-code">[placeholder]</textarea>
+                                </div>
+                                <div class="module-row">
+                                    <input type="radio" name="infoblock" class="cyber-input">
+                                    <div class="module-info"><span class="module-title">✧💖 Матрица Отношений</span></div>
+                                    <button class="copy-mini-btn" onclick="copyText(this)">Copy</button>
+                                    <textarea class="source-code">[placeholder]</textarea>
+                                </div>
+                                <button class="bulk-copy" onclick="copyBulk(this)">СКОПИРОВАТЬ ВЫБРАННЫЙ</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- THINKING -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAcc(this)">
+                        <span>5. Думалка (CoT)</span>
+                        <span class="acc-arrow">▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="acc-content">Нет дополнительных вариантов.</div>
+                    </div>
+                </div>
+
             </div>
         </section>
 
-        <!-- 4. GUIDES -->
-        <section id="guides" class="tab-section">
+        <!-- TAB 5: CONTACTS -->
+        <section id="net" class="tab-section">
             <div class="glass-panel">
-                <h2><img src="icon_book_closed.png"> Руководство Оператора</h2>
-
-                <div class="guide-item">
-                    <div class="guide-head" onclick="toggleGuide(this)">📥 Протокол Установки</div>
-                    <div class="guide-body">
-                        <div class="step"><div class="step-num">1</div><div>Скачайте JSON файл из раздела "Скачать".</div></div>
-                        <div class="step"><div class="step-num">2</div><div>В SillyTavern откройте меню пресетов и импортируйте файл.<br><img src="example6.jpg" class="img-responsive" style="max-width:300px; border-radius:8px; margin-top:5px;"></div></div>
-                        <div class="step"><div class="step-num">3</div><div>Подтвердите импорт RegEx скриптов.<br><img src="example7.jpg" style="max-width:300px; border-radius:8px;"></div></div>
-                        <div class="step"><div class="step-num">4</div><div>Настройте форматирование мыслей согласно скриншоту.<br><img src="example8.jpg" style="max-width:300px; border-radius:8px;"></div></div>
-                    </div>
-                </div>
-
-                <div class="guide-item">
-                    <div class="guide-head" onclick="toggleGuide(this)">⚙️ Функционал</div>
-                    <div class="guide-body">
-                         <p><strong>ООС:</strong> Настройки "голоса" Ренетт. Можно отключить или включить комментарии.</p>
-                         <p><strong>Карты:</strong> Не отключайте основные карты (Персона, Мир). Синтез Знаний помогает ИИ додумывать лор.</p>
-                         <p><strong>Патчи:</strong> Анти-повторения (борьба с эхо) и Баны (запрет слов).</p>
-                    </div>
-                </div>
-
-                <div class="guide-item">
-                    <div class="guide-head" onclick="toggleGuide(this)">❓ FAQ</div>
-                    <div class="guide-body">
-                        <p><strong>Q: Куда вставлять промпты?</strong><br>A: В настройки пресета SillyTavern. Найдите тогл (например, "Штуки"), удалите содержимое и вставьте скопированное.</p>
-                        <p><strong>Q: Картинки не грузятся?</strong><br>A: Проверьте доступ к pollination.ai и отключите блокировку внешних медиа в настройках ST.</p>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- 5. CONTACTS & CREDITS -->
-        <section id="contacts" class="tab-section">
-            <div class="glass-panel">
-                <h2><img src="icon_bag.png"> Сеть & Авторы</h2>
-
-                <div class="contact-grid">
-                    <a href="https://t.me/YablochnyAI" target="_blank" class="contact-btn">
-                        <img src="icon_tg_green.png" style="width:24px;"> Канал Телеграм
+                <h2 class="section-title"><img src="icon_bag_green.png" onerror="this.style.display='none'"> Нейросеть Сообщества</h2>
+                <div class="link-grid">
+                    <a href="https://t.me/YablochnyAI" target="_blank" class="contact-card">
+                        <img src="icon_tg_green.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2111/2111646.png'">
+                        <span>Канал (TG)</span>
                     </a>
-                    <a href="https://t.me/YablochnyChat" target="_blank" class="contact-btn">
-                        <img src="icon_tg.png" style="width:24px;"> Чат Сообщества
+                    <a href="https://t.me/YablochnyChat" target="_blank" class="contact-card">
+                        <img src="icon_tg.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2111/2111646.png'">
+                        <span>Чат (TG)</span>
                     </a>
                 </div>
 
-                <h3 style="margin-top:40px; color: var(--c-primary); border-bottom: 1px dashed var(--glass-border); padding-bottom:10px;">Авторы Промптов</h3>
-                <div class="contact-grid">
-                    <div class="contact-btn">Шино</div>
-                    <div class="contact-btn">Настенька</div>
-                    <div class="contact-btn">Leafcanfly</div>
-                    <div class="contact-btn">Пина-колада</div>
-                </div>
-
-                <h3 style="margin-top:40px; color: var(--c-secondary); border-bottom: 1px dashed var(--glass-border); padding-bottom:10px;">Благодарности</h3>
-                <div style="line-height: 1.6; color: #bbb;">
-                    <p><span style="color:var(--c-primary)">💚</span> <strong>Ксюля</strong> — Хранительница тепла, главный тестировщик и эстет.</p>
-                    <p><span style="color:var(--c-primary)">💚</span> <strong>Винишко, Владочка, Калий</strong></p>
-                    <p><span style="color:var(--c-primary)">💚</span> <strong>Мэри Харт & Логик</strong> (Краштест цензуры)</p>
+                <h3 style="color:var(--c-lilac); margin-top:30px;">Благодарности</h3>
+                <div class="link-grid">
+                    <div class="contact-card"><span>💚 Ксюля</span></div>
+                    <div class="contact-card"><span>💚 Винишко</span></div>
+                    <div class="contact-card"><span>💚 Настенька</span></div>
+                    <div class="contact-card"><span>💚 Логик</span></div>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <!-- TOAST NOTIFICATIONS -->
-    <div id="toast-box"></div>
-
-    <!-- LIGHTBOX -->
-    <div class="lightbox" id="lightbox">
-        <img src="" id="lightbox-img">
-    </div>
-
-    <!-- EASTER EGG GAME: APPLE CORE DEFENSE -->
-    <div class="game-modal" id="game-modal">
-        <div class="close-game" onclick="closeGame()">×</div>
-        <div class="game-ui">
-            SCORE: <span id="g-score">0</span> | LIVES: <span id="g-lives">3</span>
-        </div>
-        <canvas id="game-canvas" width="320" height="480"></canvas>
-        <p style="color:#fff; margin-top:10px; font-family:var(--font-tech);">Click/Tap Green Apples to Collect. Avoid RED glitches.</p>
-        <button class="btn-glitch" id="start-btn" onclick="startGame()" style="width:200px;">START SYSTEM</button>
-    </div>
-
     <script>
-        // =========================================
-        // 1. NAVIGATION LOGIC
-        // =========================================
-        function switchTab(tabId) {
-            // Hide all sections
+        // === CANVAS BACKGROUND (Digital Rain/Leaves) ===
+        const cvs = document.getElementById('bg-canvas');
+        const ctx = cvs.getContext('2d');
+        let w, h;
+        const chars = "10APPLERENETTE";
+        const drops = [];
+
+        function resize() {
+            w = cvs.width = window.innerWidth;
+            h = cvs.height = window.innerHeight;
+            // Initialize drops
+            const columns = Math.floor(w / 20);
+            for(let i=0; i<columns; i++) drops[i] = Math.random() * -100;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        function draw() {
+            ctx.fillStyle = 'rgba(15, 15, 19, 0.1)'; // Fade effect
+            ctx.fillRect(0, 0, w, h);
+
+            ctx.fillStyle = '#0f0'; // Minty Green
+            ctx.font = '15px monospace';
+
+            for(let i=0; i<drops.length; i++) {
+                const text = chars[Math.floor(Math.random()*chars.length)];
+                // Random color variation
+                ctx.fillStyle = Math.random() > 0.9 ? '#ff9a9e' : '#99ff99';
+
+                ctx.fillText(text, i*20, drops[i]*20);
+
+                if(drops[i]*20 > h && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+            requestAnimationFrame(draw);
+        }
+        draw();
+
+        // === TABS LOGIC ===
+        function switchTab(id) {
+            // Hide all
             document.querySelectorAll('.tab-section').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
 
-            // Show selected
-            document.getElementById(tabId).classList.add('active');
+            // Show target
+            document.getElementById(id).classList.add('active');
 
-            // Highlight nav button (simple lookup based on onclick attr is hacky but works for this scale)
-            // Better: assign IDs to buttons
+            // Highlight button (find by onclick attr for simplicity)
             const btns = document.querySelectorAll('.nav-btn');
-            // Mapping index: 0=home, 1=dl, 2=prompts, 3=guides, 4=contacts
-            const map = { 'home':0, 'download':1, 'prompts':2, 'guides':3, 'contacts':4 };
-            if(btns[map[tabId]]) btns[map[tabId]].classList.add('active');
+            btns.forEach(btn => {
+                if(btn.getAttribute('onclick').includes(id)) btn.classList.add('active');
+            });
 
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        // =========================================
-        // 2. TYPING EFFECT
-        // =========================================
-        const text = "Яблочный Пресет";
-        const target = document.getElementById('type-target');
-        let i = 0;
-        function typeWriter() {
-            if (i < text.length) {
-                target.innerHTML += text.charAt(i);
-                i++;
-                setTimeout(typeWriter, 100);
-            }
-        }
-        window.onload = typeWriter;
-
-        // =========================================
-        // 3. UI INTERACTIONS (Accordions)
-        // =========================================
-        function toggleCard(header) {
+        // === ACCORDION ===
+        function toggleAcc(header) {
             header.classList.toggle('active');
             const body = header.nextElementSibling;
             if (header.classList.contains('active')) {
                 body.style.maxHeight = body.scrollHeight + "px";
+                setTimeout(() => body.style.maxHeight = "none", 500); // Allow expansion
             } else {
-                body.style.maxHeight = 0;
+                body.style.maxHeight = body.scrollHeight + "px"; // Fix height for transition
+                setTimeout(() => body.style.maxHeight = "0", 10);
             }
         }
 
-        function toggleGuide(header) {
-            header.classList.toggle('active');
-            const body = header.nextElementSibling;
-            // Guide logic handled via CSS + class toggle mostly, but lets ensure smooth height
-            // CSS handles opacity/padding, height needs JS for smooth slide
-            if (header.classList.contains('active')) {
-                body.style.maxHeight = body.scrollHeight + 40 + "px"; // +padding
-            } else {
-                body.style.maxHeight = 0;
-            }
+        // === COPY LOGIC ===
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            document.getElementById('toast-msg').innerText = msg;
+            t.classList.add('visible');
+            setTimeout(() => t.classList.remove('visible'), 2000);
         }
 
-        // =========================================
-        // 4. COPY FUNCTIONS
-        // =========================================
-        function toast(title, msg) {
-            const box = document.getElementById('toast-box');
-            const el = document.createElement('div');
-            el.className = 'toast';
-            el.innerHTML = `<div><strong>${title}</strong><br>${msg}</div>`;
-            box.appendChild(el);
-            setTimeout(() => el.classList.add('show'), 10);
-            setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 400); }, 3000);
-        }
-
-        function copyOne(btn) {
-            const txt = btn.parentElement.querySelector('.prompt-source').value;
+        function copyText(btn) {
+            const txt = btn.parentElement.querySelector('.source-code').value;
             navigator.clipboard.writeText(txt).then(() => {
-                toast('Скопировано!', 'Промпт в буфере обмена.');
-                const old = btn.innerText;
+                showToast('Скопировано в буфер!');
+                const oldText = btn.innerText;
                 btn.innerText = 'OK';
-                setTimeout(() => btn.innerText = old, 1000);
+                setTimeout(() => btn.innerText = oldText, 1000);
             });
         }
 
         function copyBulk(btn) {
-            const container = btn.closest('.group-block');
-            const checks = container.querySelectorAll('input:checked');
-            if (checks.length === 0) return toast('Ошибка', 'Ничего не выбрано.');
+            const group = btn.closest('.group-block');
+            const checked = group.querySelectorAll('.cyber-input:checked');
+            if (checked.length === 0) return showToast('Ничего не выбрано!');
 
-            let finalTxt = "";
-            checks.forEach(c => {
-                const row = c.closest('.item-top');
-                const txt = row.querySelector('.prompt-source').value;
-                finalTxt += txt + "\n\n";
+            let res = "";
+            checked.forEach(input => {
+                const row = input.closest('.module-row');
+                res += row.querySelector('.source-code').value + "\n\n";
             });
 
-            navigator.clipboard.writeText(finalTxt).then(() => {
-                toast('Успех', `Скопировано ${checks.length} элементов.`);
-            });
+            navigator.clipboard.writeText(res).then(() => showToast(`Скопировано ${checked.length} модулей!`));
         }
 
-        // =========================================
-        // 5. LIGHTBOX
-        // =========================================
-        const lb = document.getElementById('lightbox');
-        const lbImg = document.getElementById('lightbox-img');
-
-        document.addEventListener('click', e => {
-            if (e.target.tagName === 'IMG' && e.target.closest('.details-box, .guide-body')) {
-                lbImg.src = e.target.src;
-                lb.style.display = 'flex';
-            }
-        });
-        lb.onclick = () => lb.style.display = 'none';
-
-        // =========================================
-        // 6. BACKGROUND ANIMATION (Digital Rain/Petals)
-        // =========================================
-        const canvas = document.getElementById('bg-canvas');
-        const ctx = canvas.getContext('2d');
-        let w, h, particles = [];
-
-        function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
-        window.addEventListener('resize', resize);
-        resize();
-
-        class P {
-            constructor() {
-                this.reset();
-                this.y = Math.random() * h; // Initial spread
-            }
-            reset() {
-                this.x = Math.random() * w;
-                this.y = -10;
-                this.speed = Math.random() * 2 + 0.5;
-                this.size = Math.random() * 2;
-                this.color = Math.random() > 0.5 ? '#66ffb3' : '#ff6b6b';
-            }
-            update() {
-                this.y += this.speed;
-                if(this.y > h) this.reset();
-            }
-            draw() {
-                ctx.fillStyle = this.color;
-                ctx.globalAlpha = 0.4;
-                ctx.fillRect(this.x, this.y, this.size, this.size * 4); // Digital strip look
-            }
+        // === LIGHTBOX ===
+        function zoomImg(img) {
+            document.getElementById('lightbox-img').src = img.src;
+            document.getElementById('lightbox').style.display = 'flex';
         }
-        for(let k=0; k<60; k++) particles.push(new P());
-        function anim() {
-            ctx.clearRect(0,0,w,h);
-            particles.forEach(p => { p.update(); p.draw(); });
-            requestAnimationFrame(anim);
-        }
-        anim();
 
-        // =========================================
-        // 7. EASTER EGG GAME: APPLE CORE DEFENSE
-        // =========================================
-        const gModal = document.getElementById('game-modal');
-        const gCanvas = document.getElementById('game-canvas');
-        const gCtx = gCanvas.getContext('2d');
-        let gLoop, gApples = [], gScore = 0, gLives = 3, gActive = false;
+        // === EASTER EGG GAME: Renette's Harvest ===
+        let eggClicks = 0;
+        let gameRunning = false;
+        let score = 0;
+        let gameLoop;
+        const gCvs = document.getElementById('game-canvas');
+        const gCtx = gCvs.getContext('2d');
+        let player = {x: 140, y: 360, w: 40, h: 40};
+        let objects = [];
 
-        function launchGame() {
-            gModal.style.display = 'flex';
-        }
-        function closeGame() {
-            gModal.style.display = 'none';
-            gActive = false;
-            cancelAnimationFrame(gLoop);
+        function triggerEasterEgg() {
+            eggClicks++;
+            if (eggClicks >= 5) {
+                document.getElementById('game-overlay').style.display = 'flex';
+                startGame();
+                eggClicks = 0;
+            }
         }
 
         function startGame() {
-            document.getElementById('start-btn').style.display = 'none';
-            gScore = 0; gLives = 3; gApples = []; gActive = true;
-            updateUI();
-            gameLoop();
-            spawnApple();
+            if(gameRunning) return;
+            gameRunning = true;
+            score = 0;
+            objects = [];
+            player.x = gCvs.width/2 - 20;
+            document.getElementById('score').innerText = score;
+
+            // Controls
+            gCvs.addEventListener('mousemove', movePlayer);
+            gCvs.addEventListener('touchmove', movePlayerTouch);
+
+            gameLoop = setInterval(updateGame, 20);
         }
 
-        function updateUI() {
-            document.getElementById('g-score').innerText = gScore;
-            document.getElementById('g-lives').innerText = gLives;
+        function stopGame() {
+            gameRunning = false;
+            clearInterval(gameLoop);
+            document.getElementById('game-overlay').style.display = 'none';
+            gCvs.removeEventListener('mousemove', movePlayer);
         }
 
-        function spawnApple() {
-            if(!gActive) return;
-            const type = Math.random() > 0.7 ? 'bad' : 'good';
-            gApples.push({
-                x: Math.random() * (gCanvas.width - 30),
-                y: -30,
-                type: type,
-                speed: Math.random() * 2 + 1 + (gScore * 0.1) // Get faster
-            });
-            setTimeout(spawnApple, Math.max(500, 1500 - (gScore * 50)));
+        function movePlayer(e) {
+            const rect = gCvs.getBoundingClientRect();
+            player.x = e.clientX - rect.left - player.w/2;
+        }
+        function movePlayerTouch(e) {
+            e.preventDefault();
+            const rect = gCvs.getBoundingClientRect();
+            player.x = e.touches[0].clientX - rect.left - player.w/2;
         }
 
-        function gameLoop() {
-            if(!gActive) return;
-            gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
+        function updateGame() {
+            // Clear
+            gCtx.fillStyle = '#111';
+            gCtx.fillRect(0,0, gCvs.width, gCvs.height);
 
-            // Draw Apples
-            for (let i = gApples.length - 1; i >= 0; i--) {
-                let a = gApples[i];
-                a.y += a.speed;
-
-                gCtx.beginPath();
-                gCtx.arc(a.x + 15, a.y + 15, 12, 0, Math.PI*2);
-                gCtx.fillStyle = a.type === 'good' ? '#66ffb3' : '#ff6b6b';
-                gCtx.fill();
-                // Glitch effect for bad ones
-                if(a.type === 'bad') {
-                    gCtx.fillStyle = '#fff';
-                    gCtx.fillRect(a.x, a.y+10, 30, 2);
-                }
-
-                if(a.y > gCanvas.height) {
-                    gApples.splice(i, 1);
-                    if(a.type === 'good') {
-                        gLives--;
-                        updateUI();
-                        if(gLives <= 0) gameOver();
-                    }
-                }
+            // Spawn
+            if(Math.random() < 0.05) {
+                objects.push({
+                    x: Math.random() * (gCvs.width - 20),
+                    y: -20,
+                    type: Math.random() > 0.3 ? 'apple' : 'glitch',
+                    speed: 2 + Math.random() * 3
+                });
             }
-            gLoop = requestAnimationFrame(gameLoop);
-        }
 
-        // Click handler
-        gCanvas.addEventListener('mousedown', (e) => {
-            if(!gActive) return;
-            const rect = gCanvas.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+            // Draw Player (Basket)
+            gCtx.fillStyle = '#c4a7e7';
+            gCtx.fillRect(player.x, player.y, player.w, player.h);
 
-            for (let i = gApples.length - 1; i >= 0; i--) {
-                let a = gApples[i];
-                let dist = Math.hypot(x - (a.x+15), y - (a.y+15));
-                if(dist < 20) {
-                    if(a.type === 'good') {
-                        gScore++;
-                        gApples.splice(i, 1);
-                        if(gScore >= 20) gameWin();
+            // Update Objects
+            for(let i=0; i<objects.length; i++) {
+                let o = objects[i];
+                o.y += o.speed;
+
+                // Draw
+                if(o.type === 'apple') {
+                    gCtx.fillStyle = '#99ff99';
+                    gCtx.beginPath(); gCtx.arc(o.x+10, o.y+10, 10, 0, Math.PI*2); gCtx.fill();
+                } else {
+                    gCtx.fillStyle = '#ff9a9e'; // Red square glitch
+                    gCtx.fillRect(o.x, o.y, 20, 20);
+                }
+
+                // Collision
+                if(o.x < player.x + player.w && o.x + 20 > player.x &&
+                   o.y < player.y + player.h && o.y + 20 > player.y) {
+
+                    if(o.type === 'apple') {
+                        score++;
+                        document.getElementById('score').innerText = score;
+                        if(score >= 20) {
+                            alert("RENETTE: Спасибо за урожай! Система стабильна.");
+                            stopGame();
+                        }
                     } else {
-                        gLives--;
-                        gApples.splice(i, 1);
-                        if(gLives <= 0) gameOver();
+                        alert("СИСТЕМНЫЙ СБОЙ! Попробуй снова.");
+                        stopGame();
                     }
-                    updateUI();
+                    objects.splice(i, 1);
+                    i--;
                 }
+
+                if(o.y > gCvs.height) { objects.splice(i, 1); i--; }
             }
-        });
-
-        function gameOver() {
-            gActive = false;
-            alert("SYSTEM FAILURE. TRY AGAIN.");
-            document.getElementById('start-btn').style.display = 'block';
         }
-        function gameWin() {
-            gActive = false;
-            alert("SYSTEM RESTORED! RENETTE IS HAPPY.");
-            closeGame();
-        }
-
     </script>
 </body>
 </html>
