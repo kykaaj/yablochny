@@ -2,907 +2,336 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Яблочный Пресет | Project Renette</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&family=Bad+Script&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="favicon.png">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ренетт | Цифровой Сад</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --c-bg: #09090b;
-            --c-panel: rgba(20, 20, 25, 0.7);
-            --c-mint: #00ff9d;
-            --c-red: #ff2a6d;
-            --c-lilac: #d300c5;
-            --c-text: #e0e0e0;
-            --c-dim: #6b7280;
-            --font-tech: 'Orbitron', sans-serif;
-            --font-ui: 'Rajdhani', sans-serif;
-            --font-hand: 'Bad Script', cursive;
-            --glow-mint: 0 0 15px rgba(0, 255, 157, 0.3);
-            --glow-red: 0 0 15px rgba(255, 42, 109, 0.4);
-            --border-glass: 1px solid rgba(255, 255, 255, 0.08);
+            --mint: #00ffcc;
+            --apple-red: #ff3366;
+            --cyber-purple: #bc13fe;
+            --bg-dark: #0a0b1e; /* Темно-синий, не черный */
+            --glass: rgba(18, 20, 50, 0.7);
+            --border: rgba(0, 255, 204, 0.2);
+            --neon-shadow: 0 0 15px rgba(0, 255, 204, 0.3);
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
-            margin: 0; padding: 0;
-            background-color: var(--c-bg);
-            color: var(--c-text);
-            font-family: var(--font-ui);
+            background: var(--bg-dark);
+            color: #e0e0ff;
+            font-family: 'Montserrat', sans-serif;
             overflow-x: hidden;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
+            min-height: 100vh;
+            line-height: 1.6;
         }
 
-        /* --- BACKGROUND FX --- */
-        #bg-canvas {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -2; pointer-events: none;
-        }
-        .scanlines {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
-            background-size: 100% 4px;
-            z-index: 1000; pointer-events: none; opacity: 0.3;
-        }
-        .vignette {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, transparent 50%, black 120%);
-            z-index: -1; pointer-events: none;
-        }
-
-        /* --- LAYOUT --- */
-        .app-container {
-            display: flex;
-            height: 100%;
-            width: 100%;
-            max-width: 1600px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* --- SIDEBAR (PC) --- */
-        .sidebar {
-            width: 280px;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid rgba(255,255,255,0.05);
-            background: rgba(5, 5, 5, 0.6);
-            backdrop-filter: blur(20px);
-            transition: transform 0.3s;
-        }
-
-        .logo-area {
-            margin-bottom: 40px;
-            cursor: pointer;
-            position: relative;
-        }
-        .logo-area h1 {
-            font-family: var(--font-tech);
-            font-size: 1.8rem;
-            margin: 0;
-            background: linear-gradient(90deg, var(--c-mint), var(--c-lilac));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        .logo-sub {
-            font-family: var(--font-hand);
-            color: var(--c-red);
-            font-size: 1.1rem;
-            margin-top: 5px;
-            transform: rotate(-3deg);
-            display: inline-block;
-        }
-
-        .nav-menu {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .nav-btn {
-            background: transparent;
-            border: var(--border-glass);
-            color: var(--c-dim);
-            padding: 15px 20px;
-            text-align: left;
-            font-family: var(--font-tech);
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: 0.3s;
-            position: relative;
-            overflow: hidden;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .nav-btn::before {
-            content: ''; position: absolute; top:0; left:0; width: 2px; height: 100%;
-            background: var(--c-mint); transform: scaleY(0); transition: 0.3s;
-        }
-
-        .nav-btn:hover, .nav-btn.active {
-            background: rgba(0, 255, 157, 0.05);
-            color: var(--c-mint);
-            border-color: rgba(0, 255, 157, 0.3);
-            text-shadow: 0 0 8px rgba(0,255,157,0.4);
-        }
-        .nav-btn.active::before { transform: scaleY(1); }
-        .nav-btn svg { width: 20px; height: 20px; fill: currentColor; }
-
-        /* --- MAIN CONTENT --- */
-        .content-area {
-            flex: 1;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .scroll-wrapper {
-            height: 100%;
-            overflow-y: auto;
-            padding: 40px;
-            scroll-behavior: smooth;
-        }
-        .scroll-wrapper::-webkit-scrollbar { width: 4px; }
-        .scroll-wrapper::-webkit-scrollbar-thumb { background: var(--c-mint); border-radius: 2px;}
-
-        .section {
-            display: none;
-            animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            max-width: 1000px;
-            margin: 0 auto;
-            padding-bottom: 100px;
-        }
-        .section.active { display: block; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px) scale(0.98); filter: blur(5px); }
-            to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
-        }
-
-        /* --- TYPOGRAPHY & ELEMENTS --- */
-        h2 {
-            font-family: var(--font-tech);
-            font-size: 2.5rem;
-            color: #fff;
-            margin-bottom: 30px;
-            border-bottom: 1px solid var(--c-lilac);
-            padding-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        h2::before {
-            content: '>';
-            color: var(--c-red);
-            animation: blink 1s infinite;
-        }
-
-        .card {
-            background: var(--c-panel);
-            border: var(--border-glass);
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 25px;
-            position: relative;
-            overflow: hidden;
-        }
-        .card::after {
-            content: ''; position: absolute; top:0; left:0; right:0; height: 2px;
-            background: linear-gradient(90deg, var(--c-lilac), var(--c-mint));
-            opacity: 0.5;
-        }
-
-        /* --- PROMPTS SYSTEM --- */
-        .prompt-module {
-            border: 1px solid rgba(255,255,255,0.1);
-            background: rgba(0,0,0,0.3);
-            margin-bottom: 15px;
-            border-radius: 8px;
-            transition: 0.3s;
-        }
-        .prompt-module:hover { border-color: var(--c-mint); }
-
-        .module-header {
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            font-weight: 700;
-            background: rgba(255,255,255,0.02);
-        }
-        .module-header .tag {
-            font-family: var(--font-tech);
-            color: var(--c-mint);
-            font-size: 0.8em;
-            margin-right: 10px;
-            border: 1px solid var(--c-mint);
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-        .module-body {
-            max-height: 0; overflow: hidden;
-            transition: max-height 0.4s ease;
-            background: rgba(0,0,0,0.2);
-        }
-        .prompt-module.open .module-body { max-height: 2000px; border-top: 1px dashed rgba(255,255,255,0.1); }
-        .prompt-module.open .arrow { transform: rotate(180deg); color: var(--c-mint); }
-
-        .option-row {
-            display: flex;
-            align-items: center;
-            padding: 15px 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            gap: 15px;
-        }
-        .option-row:last-child { border-bottom: none; }
-
-        /* Custom Checkbox */
-        .cyber-check {
-            appearance: none;
-            width: 20px; height: 20px;
-            border: 2px solid var(--c-dim);
-            background: transparent;
-            cursor: pointer;
-            position: relative;
-            flex-shrink: 0;
-            transition: 0.2s;
-        }
-        .cyber-check:checked {
-            border-color: var(--c-mint);
-            background: rgba(0,255,157,0.2);
-            box-shadow: 0 0 10px var(--c-mint);
-        }
-        .cyber-check[type="radio"] { border-radius: 50%; }
-
-        .copy-mini {
-            background: transparent;
-            border: 1px solid var(--c-lilac);
-            color: var(--c-lilac);
-            padding: 5px 10px;
-            font-size: 0.75rem;
-            cursor: pointer;
-            font-family: var(--font-tech);
-            transition: 0.2s;
-        }
-        .copy-mini:hover { background: var(--c-lilac); color: #000; box-shadow: 0 0 10px var(--c-lilac); }
-
-        /* --- DOWNLOAD BUTTON --- */
-        .dl-core {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 200px;
-            position: relative;
-        }
-        .dl-btn {
-            width: 120px; height: 120px;
-            border-radius: 50%;
-            background: radial-gradient(circle, #222, #000);
-            border: 2px solid var(--c-mint);
-            color: var(--c-mint);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-decoration: none;
-            font-family: var(--font-tech);
-            font-weight: 900;
-            box-shadow: 0 0 30px rgba(0,255,157,0.1);
-            transition: 0.3s;
-            position: relative;
-            z-index: 2;
-        }
-        .dl-btn span { font-size: 0.8rem; margin-top: 5px; color: var(--c-dim); }
-        .dl-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 50px var(--c-mint);
-            text-shadow: 0 0 10px var(--c-mint);
-            background: var(--c-mint);
-            color: #000;
-        }
-        .dl-btn:hover span { color: #000; }
-
-        .pulse-ring {
-            position: absolute;
-            width: 120px; height: 120px;
-            border-radius: 50%;
-            border: 1px solid var(--c-mint);
-            animation: pulse 2s infinite;
-        }
-
-        /* --- MOBILE NAV (BOTTOM) --- */
-        .mobile-nav {
-            display: none;
+        /* Анимированный фон: Кибер-лес */
+        #cyber-forest {
             position: fixed;
-            bottom: 20px;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at center, #1a1c3d 0%, var(--bg-dark) 100%);
+        }
+
+        .pixel-leaf {
+            position: absolute;
+            width: 4px; height: 4px;
+            background: var(--mint);
+            box-shadow: 0 0 10px var(--mint);
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(100vh) rotate(360deg); }
+        }
+
+        /* Шапка с Ренетт */
+        header {
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            text-align: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .renette-avatar {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: url('https://via.placeholder.com/200?text=Renette') center/cover; /* Замени на свою обложку */
+            border: 4px solid var(--mint);
+            box-shadow: 0 0 30px var(--mint), inset 0 0 20px var(--cyber-purple);
+            margin-bottom: 20px;
+            animation: float 4s ease-in-out infinite;
+            position: relative;
+        }
+
+        .renette-avatar::after {
+            content: 'ONLINE';
+            position: absolute;
+            bottom: -10px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(10,10,10,0.8);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px;
-            padding: 10px 20px;
-            z-index: 5000;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            background: var(--mint);
+            color: #000;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 2px 10px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            background: linear-gradient(to right, var(--mint), var(--cyber-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px rgba(0,255,204,0.5));
+        }
+
+        /* Контентная зона */
+        .container {
+            max-width: 1000px;
+            margin: -50px auto 50px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .terminal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
         }
 
-        @media (max-width: 900px) {
-            .sidebar { display: none; }
-            .mobile-nav { display: flex; }
-            .scroll-wrapper { padding: 20px 15px 120px 15px; } /* Padding bottom for nav */
-            .app-container { flex-direction: column; }
-            h2 { font-size: 1.8rem; }
-            .logo-mobile {
-                display: block; text-align: center; padding: 20px 0;
-                font-family: var(--font-tech); font-size: 1.5rem; color: var(--c-mint);
-            }
-        }
-        @media (min-width: 901px) { .logo-mobile { display: none; } }
-
-        .mob-icon {
-            font-size: 1.5rem; color: var(--c-dim); transition: 0.3s; cursor: pointer;
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 30px;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
-        }
-        .mob-icon.active { color: var(--c-mint); transform: translateY(-5px); }
-        .mob-icon.active::after {
-            content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
-            width: 4px; height: 4px; background: var(--c-mint); border-radius: 50%;
-            box-shadow: 0 0 5px var(--c-mint);
+            overflow: hidden;
         }
 
-        /* --- TOAST --- */
-        .toast {
-            position: fixed; top: 20px; right: 20px;
-            background: rgba(0,0,0,0.9);
-            border-left: 3px solid var(--c-mint);
-            padding: 15px 25px;
-            color: #fff;
-            font-family: var(--font-tech);
-            transform: translateX(200%);
-            transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            z-index: 6000;
-            display: flex; align-items: center; gap: 10px;
-            box-shadow: 0 5px 15px rgba(0,255,157,0.2);
-        }
-        .toast.show { transform: translateX(0); }
-
-        /* --- EASTER EGG GAME --- */
-        #game-overlay {
-            position: fixed; top:0; left:0; width:100%; height:100%;
-            background: rgba(0,0,0,0.95); z-index: 9999;
-            display: none; justify-content: center; align-items: center;
-            flex-direction: column;
-        }
-        #game-canvas { border: 2px solid var(--c-red); box-shadow: 0 0 20px var(--c-red); }
-        .game-ui { color: var(--c-mint); font-family: var(--font-tech); margin-bottom: 10px; text-align: center; }
-        .game-btn {
-            margin-top: 10px; padding: 10px 30px; background: var(--c-mint); color: #000;
-            border: none; font-family: var(--font-tech); font-weight: bold; cursor: pointer;
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--mint);
+            box-shadow: 0 10px 30px rgba(0, 255, 204, 0.2);
         }
 
-        /* --- UTILS --- */
-        .glitch { position: relative; }
-        .glitch:hover { animation: glitch-anim 0.3s infinite; }
-        @keyframes glitch-anim {
-            0% { transform: translate(0) }
-            20% { transform: translate(-2px, 2px) }
-            40% { transform: translate(-2px, -2px) }
-            60% { transform: translate(2px, 2px) }
-            80% { transform: translate(2px, -2px) }
-            100% { transform: translate(0) }
+        .card h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--mint);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        @keyframes blink { 50% { opacity: 0; } }
-        @keyframes pulse { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(1.5); opacity: 0; } }
 
-        .hidden-source { display: none; }
-
-        .bulk-btn {
-            width: 100%; padding: 15px; margin-top: 15px;
-            background: linear-gradient(45deg, rgba(0,255,157,0.1), rgba(211,0,197,0.1));
-            border: 1px solid var(--c-mint);
-            color: var(--c-mint);
-            font-family: var(--font-tech);
+        /* Кнопки */
+        .cyber-button {
+            display: inline-block;
+            width: 100%;
+            padding: 15px;
+            background: transparent;
+            border: 2px solid var(--apple-red);
+            color: var(--apple-red);
             text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 2px;
+            border-radius: 12px;
             cursor: pointer;
             transition: 0.3s;
+            text-decoration: none;
+            text-align: center;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
         }
-        .bulk-btn:hover { background: var(--c-mint); color: #000; box-shadow: 0 0 20px var(--c-mint); }
 
-        /* Details Summary styling */
-        details summary { color: var(--c-dim); cursor: pointer; font-size: 0.85em; list-style: none; margin-top: 5px; }
-        details summary:hover { color: var(--c-lilac); }
-        .preview-content { padding: 10px; background: rgba(0,0,0,0.4); margin-top: 5px; border-left: 2px solid var(--c-lilac); font-size: 0.9em; line-height: 1.5; }
-        .preview-content img { max-width: 100%; border: 1px solid #333; margin-top: 5px; }
+        .cyber-button:hover {
+            background: var(--apple-red);
+            color: #fff;
+            box-shadow: 0 0 20px var(--apple-red);
+        }
 
+        /* Мини-игра (Пасхалка) */
+        #game-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(10, 11, 30, 0.95);
+            z-index: 9999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #game-canvas {
+            border: 2px solid var(--mint);
+            background: #000;
+            max-width: 90vw;
+            max-height: 70vh;
+        }
+
+        /* Скрытая кнопка входа в систему */
+        .footer-secret {
+            margin: 50px 0;
+            opacity: 0.3;
+            transition: 0.3s;
+            cursor: pointer;
+            font-size: 12px;
+            font-family: monospace;
+        }
+
+        .footer-secret:hover { opacity: 1; color: var(--apple-red); }
+
+        /* Анимации */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.5rem; }
+            .renette-avatar { width: 120px; height: 120px; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="scanlines"></div>
-    <div class="vignette"></div>
-    <canvas id="bg-canvas"></canvas>
+    <div id="cyber-forest"></div>
 
-    <!-- MOBILE LOGO -->
-    <div class="logo-mobile glitch" id="mobLogo">PROJECT: RENETTE</div>
+    <header>
+        <div class="renette-avatar"></div>
+        <h1>Renette_v2.0</h1>
+        <p style="color: var(--cyber-purple); font-weight: bold;">[ Digital Spirit of the Apple Tree ]</p>
+    </header>
 
-    <div class="app-container">
-        <!-- SIDEBAR -->
-        <aside class="sidebar">
-            <div class="logo-area" id="pcLogo" onclick="triggerEasterEgg()">
-                <h1 class="glitch">Яблочный<br>Пресет</h1>
-                <span class="logo-sub">Digital Spirit V1.7</span>
+    <div class="container">
+        <div class="terminal-grid">
+            <div class="card">
+                <h3><span style="color: var(--apple-red)">🍎</span> CORE_DATA</h3>
+                <p>Основной пресет для SillyTavern. Оптимизирован под "умные" ответы и глубокое погружение в роль.</p>
+                <a href="#" class="cyber-button">DOWNLOAD_PRESET</a>
             </div>
 
-            <nav class="nav-menu">
-                <button class="nav-btn active" onclick="nav('desc')">
-                    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                    Система
-                </button>
-                <button class="nav-btn" onclick="nav('prompts')">
-                    <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-                    Модули (Промпты)
-                </button>
-                <button class="nav-btn" onclick="nav('guides')">
-                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                    База Знаний
-                </button>
-                <button class="nav-btn" onclick="nav('download')">
-                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                    Загрузка ядра
-                </button>
-                <button class="nav-btn" onclick="nav('contact')">
-                    <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                    Связь
-                </button>
-            </nav>
-        </aside>
-
-        <!-- CONTENT -->
-        <main class="content-area">
-            <div class="scroll-wrapper">
-
-                <!-- SECTION: DESCRIPTION -->
-                <div id="desc" class="section active">
-                    <h2>// SYSTEM_STATUS</h2>
-                    <div class="card">
-                        <p style="font-size: 1.1rem; line-height: 1.6;">
-                            <span style="color:var(--c-mint)">[ИНИЦИАЛИЗАЦИЯ...]</span><br>
-                            Модульный пресет с адаптивным ядром Селии. Интегрирован с цифровой сущностью "Ренетт".
-                            <br><br>
-                            <strong style="color:var(--c-lilac)">Поддерживаемые архитектуры:</strong>
-                        </p>
-                        <ul style="list-style: none; padding: 0; line-height: 2;">
-                            <li>✅ <span style="color:var(--c-mint)">Gemini 2.5/3.0 Pro</span> (Optimized)</li>
-                            <li>✅ <span style="color:var(--c-mint)">Claude Sonnet 3.5/3.7, Opus 4.5</span> (High Logic)</li>
-                            <li>⚠️ <span style="color:var(--c-red)">DeepSeek R1T2, GPT 5.1</span> (Experimental)</li>
-                        </ul>
-                    </div>
-
-                    <h3>// CHANGELOG_HISTORY</h3>
-                    <div class="card" style="font-family: monospace; font-size: 0.9em; color: var(--c-dim);">
-                        <div style="border-left: 2px solid var(--c-mint); padding-left: 15px; margin-bottom: 20px;">
-                            <span style="color:var(--c-mint)">[v1.7] 14.12.2025</span><br>
-                            > Оптимизация веса ядра (<60KB).<br>
-                            > Внедрены "Фокусы" (Магические тоглы: Прогресс, Детали, Мысли).<br>
-                            > Интеграция стилей китайских новеллистов.<br>
-                            > Обновление протоколов безопасности (Jailbreak).
-                        </div>
-                        <div style="border-left: 2px solid var(--c-dim); padding-left: 15px;">
-                            <span>[v1.6] 06.12.2025</span><br>
-                            > Рефакторинг личности Ренетт.<br>
-                            > Сегментированная система мышления.<br>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SECTION: PROMPTS -->
-                <div id="prompts" class="section">
-                    <h2>// MODULE_LIBRARY</h2>
-                    <p style="color: var(--c-dim); margin-bottom: 20px;">Выберите модули для инъекции в пресет. <span style="color:var(--c-red)">Внимание:</span> ✧ = Одиночный выбор, ✎ = Мультивыбор.</p>
-
-                    <!-- Category: Main -->
-                    <div class="prompt-module" id="mod-rp">
-                        <div class="module-header" onclick="toggleModule('mod-rp')">
-                            <span><span class="tag">CORE</span> 01. Режим Письма</span>
-                            <span class="arrow">▼</span>
-                        </div>
-                        <div class="module-body">
-                            <!-- Items -->
-                            <div class="option-row">
-                                <input type="radio" name="rp_mode" class="cyber-check select-input">
-                                <div style="flex:1">
-                                    <div style="color:var(--c-text); font-weight:bold;">✧💫 Погружение (Default)</div>
-                                    <details><summary>INFO</summary><div class="preview-content">Классический РП. ИИ не пишет за юзера.</div></details>
-                                    <textarea class="hidden-source">Промпт Погружения...</textarea>
-                                </div>
-                                <button class="copy-mini" onclick="copyText(this)">CPY</button>
-                            </div>
-                            <div class="option-row">
-                                <input type="radio" name="rp_mode" class="cyber-check select-input">
-                                <div style="flex:1">
-                                    <div style="color:var(--c-text); font-weight:bold;">✧📖 ФФ Режим</div>
-                                    <details><summary>INFO</summary><div class="preview-content">ИИ пишет книгу, управляет юзером.</div></details>
-                                    <textarea class="hidden-source">Промпт ФФ...</textarea>
-                                </div>
-                                <button class="copy-mini" onclick="copyText(this)">CPY</button>
-                            </div>
-                            <button class="bulk-btn" onclick="copyBulk(this)">СКОПИРОВАТЬ ВЫБРАННОЕ</button>
-                        </div>
-                    </div>
-
-                     <!-- Category: Visuals -->
-                     <div class="prompt-module" id="mod-vis">
-                        <div class="module-header" onclick="toggleModule('mod-vis')">
-                            <span><span class="tag">VISUAL</span> 02. Визуал и Штуки</span>
-                            <span class="arrow">▼</span>
-                        </div>
-                        <div class="module-body">
-                            <!-- Items -->
-                            <div class="option-row">
-                                <input type="checkbox" class="cyber-check select-input">
-                                <div style="flex:1">
-                                    <div style="color:var(--c-text); font-weight:bold;">✎🕰️ Флешбеки</div>
-                                    <textarea class="hidden-source">Flashback Prompt Code...</textarea>
-                                </div>
-                                <button class="copy-mini" onclick="copyText(this)">CPY</button>
-                            </div>
-                            <div class="option-row">
-                                <input type="checkbox" class="cyber-check select-input">
-                                <div style="flex:1">
-                                    <div style="color:var(--c-text); font-weight:bold;">✎🖼️ MEME Generator</div>
-                                    <details><summary>INFO</summary><div class="preview-content">Генерирует мем в начале сообщения.</div></details>
-                                    <textarea class="hidden-source">Meme Prompt Code...</textarea>
-                                </div>
-                                <button class="copy-mini" onclick="copyText(this)">CPY</button>
-                            </div>
-                            <div class="option-row">
-                                <input type="checkbox" class="cyber-check select-input">
-                                <div style="flex:1">
-                                    <div style="color:var(--c-text); font-weight:bold;">✎🧃 Renette HTML</div>
-                                    <details><summary>INFO</summary><div class="preview-content">Красивое оформление блоков.</div></details>
-                                    <textarea class="hidden-source">HTML Style Prompt...</textarea>
-                                </div>
-                                <button class="copy-mini" onclick="copyText(this)">CPY</button>
-                            </div>
-                            <button class="bulk-btn" onclick="copyBulk(this)">СКОПИРОВАТЬ ВЫБРАННОЕ</button>
-                        </div>
-                    </div>
-
-                    <!-- Category: Literary Styles -->
-                    <div class="prompt-module" id="mod-lit">
-                        <div class="module-header" onclick="toggleModule('mod-lit')">
-                            <span><span class="tag">STYLE</span> 03. Стиль Автора</span>
-                            <span class="arrow">▼</span>
-                        </div>
-                        <div class="module-body">
-                            <div class="option-row">
-                                <input type="radio" name="lit_style" class="cyber-check select-input">
-                                <div style="flex:1">
-                                    <div style="color:var(--c-text); font-weight:bold;">✧🪴 Лю Чжэньюнь</div>
-                                    <details><summary>INFO</summary><div class="preview-content">Сухой, неприукрашенный, абсурд повседневности.</div></details>
-                                    <textarea class="hidden-source">Liu Zhenyun Style...</textarea>
-                                </div>
-                                <button class="copy-mini" onclick="copyText(this)">CPY</button>
-                            </div>
-                            <div class="option-row">
-                                <input type="radio" name="lit_style" class="cyber-check select-input">
-                                <div style="flex:1">
-                                    <div style="color:var(--c-text); font-weight:bold;">✧🪴 Мо Ян</div>
-                                    <details><summary>INFO</summary><div class="preview-content">Сенсорно насыщенный, сырой, галлюцинаторный реализм.</div></details>
-                                    <textarea class="hidden-source">Mo Yan Style...</textarea>
-                                </div>
-                                <button class="copy-mini" onclick="copyText(this)">CPY</button>
-                            </div>
-                            <button class="bulk-btn" onclick="copyBulk(this)">СКОПИРОВАТЬ ВЫБРАННОЕ</button>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- SECTION: GUIDES -->
-                <div id="guides" class="section">
-                    <h2>// KNOWLEDGE_BASE</h2>
-
-                    <div class="card">
-                        <h3 style="color:var(--c-mint); margin-top:0;">⚡ Быстрый старт</h3>
-                        <ol style="line-height: 1.8; padding-left: 20px;">
-                            <li>Скачайте <strong>JSON</strong> файл из раздела загрузки.</li>
-                            <li>В SillyTavern откройте меню пресетов (иконка списка).</li>
-                            <li>Импортируйте файл. Подтвердите импорт <strong>RegEx</strong> скриптов.</li>
-                            <li>В настройках форматирования (Format) включите <strong>"Thinking Styles"</strong> как на скриншотах в канале.</li>
-                        </ol>
-                    </div>
-
-                    <div class="card">
-                        <h3 style="color:var(--c-lilac);">❓ FAQ</h3>
-                        <details style="margin-bottom: 10px;">
-                            <summary style="font-size:1.1em; color:#fff;">Не грузятся картинки в HTML?</summary>
-                            <p style="color:var(--c-dim); margin-top:5px;">Проверьте доступ к <code>pollinations.ai</code> и отключите "Запрет внешних медиа" в настройках пользователя ST.</p>
-                        </details>
-                        <details>
-                            <summary style="font-size:1.1em; color:#fff;">Как сменить язык?</summary>
-                            <p style="color:var(--c-dim); margin-top:5px;">В разделе Промпты скопируйте модуль "Язык" (RU/EN/UA) и вставьте в тогл <code>[Main Checks]</code>.</p>
-                        </details>
-                    </div>
-                </div>
-
-                <!-- SECTION: DOWNLOAD -->
-                <div id="download" class="section">
-                    <h2>// CORE_DOWNLOAD</h2>
-                    <p style="text-align: center; color: var(--c-dim);">Версия ядра: <span style="color:var(--c-mint)">1.7 STABLE</span></p>
-
-                    <div class="dl-core">
-                        <div class="pulse-ring"></div>
-                        <div class="pulse-ring" style="animation-delay: 0.5s"></div>
-                        <a href="%F0%9F%8D%8E%D0%AF%D0%B1%D0%BB%D0%BE%D1%87%D0%BD%D1%8B%D0%B9%20V1.7.json" class="dl-btn" download onclick="showToast('Загрузка', 'Скачивание ядра начато...')">
-                            V1.7
-                            <span>.JSON</span>
-                        </a>
-                    </div>
-
-                    <div style="text-align: center; margin-top: 20px;">
-                        <p style="font-size: 0.8em; color: var(--c-red);">SHA-256: VALIDATED</p>
-                    </div>
-                </div>
-
-                <!-- SECTION: CONTACT -->
-                <div id="contact" class="section">
-                    <h2>// UPLINK</h2>
-                    <div class="card" style="text-align: center;">
-                        <p>Присоединяйтесь к сети для обновлений и саппорта.</p>
-                        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-                            <a href="https://t.me/YablochnyAI" target="_blank" class="nav-btn" style="border-color: var(--c-mint); color: var(--c-mint);">Telegram Channel</a>
-                            <a href="https://t.me/YablochnyChat" target="_blank" class="nav-btn" style="border-color: var(--c-lilac); color: var(--c-lilac);">Discussion Group</a>
-                        </div>
-                    </div>
-                    <div style="margin-top: 40px; text-align: center; opacity: 0.5; font-size: 0.8rem;">
-                        CREDITS: kykaaj, Minty, Leafcanfly, Shino.<br>
-                        Special thanks to Ksyulya 💚
-                    </div>
-                </div>
-
+            <div class="card">
+                <h3><span style="color: var(--cyber-purple)">⚡</span> LOGIC_PLUGINS</h3>
+                <p>Набор инструкций, чтобы сделать нейронку более человечной и эмоциональной.</p>
+                <a href="#" class="cyber-button" style="border-color: var(--cyber-purple); color: var(--cyber-purple);">VIEW_LOGS</a>
             </div>
-        </main>
+        </div>
+
+        <div class="footer-secret" onclick="startGame()">SYSTEM_ROOT_ACCESS: [CLICK_TO_BOOT]</div>
     </div>
 
-    <!-- MOBILE NAVIGATION BOTTOM -->
-    <div class="mobile-nav">
-        <div class="mob-icon active" onclick="nav('desc', this)">⚡</div>
-        <div class="mob-icon" onclick="nav('prompts', this)">💾</div>
-        <div class="mob-icon" onclick="nav('guides', this)">📚</div>
-        <div class="mob-icon" onclick="nav('download', this)">📥</div>
-        <div class="mob-icon" onclick="nav('contact', this)">📡</div>
-    </div>
-
-    <!-- TOAST CONTAINER -->
-    <div id="toast-container"></div>
-
-    <!-- GAME OVERLAY -->
     <div id="game-overlay">
-        <h2 style="color:var(--c-mint); text-shadow: 0 0 10px var(--c-mint);">CYBER HARVEST</h2>
-        <div class="game-ui">SCORE: <span id="g-score">0</span> | INTEGRITY: <span id="g-hp">100</span>%</div>
-        <canvas id="game-canvas" width="300" height="400"></canvas>
-        <button class="game-btn" onclick="closeGame()">EXIT SIMULATION</button>
-        <div id="win-msg" style="display:none; color: gold; margin-top: 10px;">CODE: APPLE_CORE_777</div>
+        <h2 style="color: var(--mint); margin-bottom: 10px;">APPLE_HARVEST.exe</h2>
+        <p style="margin-bottom: 20px;">Собери 10 цифровых яблок, чтобы очистить кэш!</p>
+        <canvas id="game-canvas"></canvas>
+        <button class="cyber-button" onclick="closeGame()" style="width: auto; padding: 10px 40px;">EXIT</button>
     </div>
 
     <script>
-        // --- NAVIGATION ---
-        function nav(id, mobEl) {
-            // Hide all sections
-            document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
-            // Show selected
-            document.getElementById(id).classList.add('active');
-
-            // Update PC Nav
-            document.querySelectorAll('.sidebar .nav-btn').forEach(btn => btn.classList.remove('active'));
-            // Very simple match for PC
-            // In real app, bind IDs properly
-
-            // Update Mobile Nav
-            if(mobEl) {
-                document.querySelectorAll('.mob-icon').forEach(i => i.classList.remove('active'));
-                mobEl.classList.add('active');
+        // Создание падающих пикселей на фоне
+        function createLeaves() {
+            const forest = document.getElementById('cyber-forest');
+            for(let i=0; i<30; i++) {
+                const leaf = document.createElement('div');
+                leaf.className = 'pixel-leaf';
+                leaf.style.left = Math.random() * 100 + 'vw';
+                leaf.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                leaf.style.opacity = Math.random();
+                forest.appendChild(leaf);
             }
         }
+        createLeaves();
 
-        // --- PROMPTS LOGIC ---
-        function toggleModule(id) {
-            const el = document.getElementById(id);
-            el.classList.toggle('open');
-        }
-
-        function showToast(title, msg) {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.innerHTML = `<div><b>${title}</b><br>${msg}</div>`;
-            container.appendChild(toast);
-            setTimeout(() => toast.classList.add('show'), 10);
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => toast.remove(), 400);
-            }, 3000);
-        }
-
-        function copyText(btn) {
-            const txt = btn.parentElement.querySelector('.hidden-source').value;
-            navigator.clipboard.writeText(txt).then(() => {
-                showToast('COPIED', 'Module data extracted to clipboard.');
-            });
-        }
-
-        function copyBulk(btn) {
-            const module = btn.closest('.prompt-module');
-            const inputs = module.querySelectorAll('.select-input:checked');
-            if (inputs.length === 0) { showToast('ERROR', 'No modules selected.'); return; }
-
-            let finalTxt = "";
-            inputs.forEach(input => {
-                const row = input.closest('.option-row');
-                finalTxt += row.querySelector('.hidden-source').value + "\n\n";
-            });
-
-            navigator.clipboard.writeText(finalTxt).then(() => {
-                showToast('BULK COPY', `${inputs.length} modules extracted.`);
-            });
-        }
-
-        // --- BACKGROUND ANIMATION (Matrix Apples) ---
-        const canvas = document.getElementById('bg-canvas');
+        // Логика игры "Apple Harvest"
+        const canvas = document.getElementById('game-canvas');
         const ctx = canvas.getContext('2d');
-        let w, h;
-        const chars = "10";
-        const drops = [];
-
-        function resize() {
-            w = canvas.width = window.innerWidth;
-            h = canvas.height = window.innerHeight;
-            const columns = Math.floor(w / 20);
-            for(let i=0; i<columns; i++) drops[i] = Math.random() * -100;
-        }
-        window.addEventListener('resize', resize);
-        resize();
-
-        function drawBg() {
-            ctx.fillStyle = 'rgba(9, 9, 11, 0.1)';
-            ctx.fillRect(0, 0, w, h);
-
-            ctx.fillStyle = '#0f0';
-            ctx.font = '15px monospace';
-
-            for(let i=0; i<drops.length; i++) {
-                const text = chars[Math.floor(Math.random() * chars.length)];
-                const color = Math.random() > 0.9 ? '#ff2a6d' : '#00ff9d'; // Occasional red glitch
-                ctx.fillStyle = color;
-                ctx.fillText(text, i*20, drops[i]*20);
-
-                if(drops[i]*20 > h && Math.random() > 0.975) drops[i] = 0;
-                drops[i]++;
-            }
-            requestAnimationFrame(drawBg);
-        }
-        drawBg();
-
-        // --- EASTER EGG GAME: CYBER HARVEST ---
-        let eggClicks = 0;
-        let gameLoopId;
+        let score = 0;
         let gameActive = false;
+        let basket = { x: 175, y: 350, w: 50, h: 20 };
+        let apples = [];
 
-        function triggerEasterEgg() {
-            eggClicks++;
-            if(eggClicks === 5) {
-                document.getElementById('game-overlay').style.display = 'flex';
-                startGame();
-                eggClicks = 0;
-            }
+        function startGame() {
+            document.getElementById('game-overlay').style.display = 'flex';
+            canvas.width = 400;
+            canvas.height = 400;
+            score = 0;
+            apples = [];
+            gameActive = true;
+            requestAnimationFrame(gameLoop);
         }
 
         function closeGame() {
-            document.getElementById('game-overlay').style.display = 'none';
             gameActive = false;
-            cancelAnimationFrame(gameLoopId);
+            document.getElementById('game-overlay').style.display = 'none';
         }
 
-        const gCanvas = document.getElementById('game-canvas');
-        const gCtx = gCanvas.getContext('2d');
-        let score = 0;
-        let hp = 100;
-        let targets = [];
+        // Управление (мышь/тач)
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            basket.x = e.clientX - rect.left - basket.w/2;
+        });
 
-        function startGame() {
-            gameActive = true;
-            score = 0;
-            hp = 100;
-            targets = [];
-            document.getElementById('win-msg').style.display = 'none';
-            updateUI();
-            gameLoop();
-        }
+        canvas.addEventListener('touchmove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            basket.x = e.touches[0].clientX - rect.left - basket.w/2;
+            e.preventDefault();
+        }, {passive: false});
 
         function gameLoop() {
             if(!gameActive) return;
-            gCtx.clearRect(0,0,300,400);
+            ctx.clearRect(0,0,400,400);
 
-            // Spawn
-            if(Math.random() < 0.03) {
-                targets.push({
-                    x: Math.random() * 280 + 10,
-                    y: -20,
-                    speed: Math.random() * 2 + 1,
-                    type: Math.random() > 0.8 ? 'bug' : 'apple' // bug = bad, apple = good
-                });
-            }
+            // Корзина (Мятный блок)
+            ctx.fillStyle = '#00ffcc';
+            ctx.fillRect(basket.x, basket.y, basket.w, basket.h);
 
-            // Draw & Update
-            for(let i=0; i<targets.length; i++) {
-                let t = targets[i];
-                t.y += t.speed;
+            // Генерация яблок (Красные пиксели)
+            if(Math.random() < 0.05) apples.push({x: Math.random()*380, y: 0});
 
-                gCtx.font = "20px Arial";
-                gCtx.fillText(t.type === 'bug' ? '👾' : '🍎', t.x, t.y);
+            apples.forEach((apple, index) => {
+                apple.y += 3;
+                ctx.fillStyle = '#ff3366';
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = '#ff3366';
+                ctx.fillRect(apple.x, apple.y, 10, 10);
+                ctx.shadowBlur = 0;
 
-                // Hit bottom
-                if(t.y > 400) {
-                    if(t.type === 'bug') { hp -= 10; showToast('ALERT', 'System Breach!'); } // Bug got through = Bad
-                    // Apple got through = missed opportunity but no dmg
-                    targets.splice(i, 1);
-                    i--;
-                    updateUI();
+                // Проверка столкновения
+                if(apple.y > basket.y && apple.x > basket.x && apple.x < basket.x + basket.w) {
+                    apples.splice(index, 1);
+                    score++;
                 }
-            }
 
-            if(hp <= 0) {
-                gameActive = false;
-                alert("SYSTEM FAILURE. TRY AGAIN.");
+                if(apple.y > 400) apples.splice(index, 1);
+            });
+
+            ctx.fillStyle = '#fff';
+            ctx.fillText(`HARVESTED: ${score}/10`, 10, 20);
+
+            if(score >= 10) {
+                alert("СИСТЕМА ОЧИЩЕНА. Ренетт довольна! ✨");
                 closeGame();
-            } else {
-                gameLoopId = requestAnimationFrame(gameLoop);
+                return;
             }
+
+            requestAnimationFrame(gameLoop);
         }
-
-        gCanvas.addEventListener('mousedown', (e) => {
-            if(!gameActive) return;
-            const rect = gCanvas.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            for(let i=0; i<targets.length; i++) {
-                let t = targets[i];
-                // Simple hitbox
-                if(Math.abs(x - t.x) < 20 && Math.abs(y - t.y) < 20) {
-                    if(t.type === 'bug') {
-                        score += 50;
-                    } else {
-                        score += 10;
-                    }
-                    targets.splice(i, 1);
-                    i--;
-                    updateUI();
-                }
-            }
-        });
-
-        function updateUI() {
-            document.getElementById('g-score').innerText = score;
-            document.getElementById('g-hp').innerText = hp;
-            if(score > 500) {
-                document.getElementById('win-msg').style.display = 'block';
-            }
-        }
-
     </script>
 </body>
 </html>
