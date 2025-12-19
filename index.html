@@ -3,864 +3,765 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Яблочный Пресет | Project Renette</title>
-
-    <!-- Шрифты: Технологичный (Rajdhani) и Элегантный (Cormorant) -->
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500;700&family=Cormorant+Garamond:ital,wght@1,300;1,600&display=swap" rel="stylesheet">
-
+    <title>RENETTE // PROJECT APPLE</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Montserrat:wght@300;500;800&family=Orbitron:wght@500;900&display=swap" rel="stylesheet">
     <style>
-        /* ========================================= */
-        /* НАСТРОЙКИ И ПЕРЕМЕННЫЕ */
-        /* ========================================= */
         :root {
-            --c-mint: #66ffcc;
-            --c-mint-dim: rgba(102, 255, 204, 0.1);
-            --c-red: #ff6b6b;
-            --c-lilac: #a29bfe;
-            --c-dark: #0a0b10;
-            --c-panel: rgba(20, 22, 30, 0.7);
-            --c-border: rgba(255, 255, 255, 0.08);
-
-            --font-tech: 'Rajdhani', sans-serif;
-            --font-bio: 'Cormorant Garamond', serif;
-
-            --shadow-neon: 0 0 10px var(--c-mint), 0 0 20px var(--c-mint-dim);
-            --shadow-glitch: 2px 0 var(--c-red), -2px 0 var(--c-lilac);
+            --c-bg: #0b0812; /* Глубокий темный */
+            --c-mint: #00ff9d; /* Кибер-мята */
+            --c-red: #ff2a6d; /* Глитч-красный */
+            --c-lilac: #d65db1; /* Неоновая сирень */
+            --c-glass: rgba(18, 16, 26, 0.7);
+            --c-border: rgba(255, 255, 255, 0.1);
+            --font-tech: 'Orbitron', sans-serif;
+            --font-code: 'JetBrains Mono', monospace;
+            --font-body: 'Montserrat', sans-serif;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
             margin: 0;
-            padding: 0;
-            background-color: var(--c-dark);
+            background-color: var(--c-bg);
             color: #eee;
-            font-family: var(--font-tech);
+            font-family: var(--font-body);
             overflow-x: hidden;
             min-height: 100vh;
         }
 
-        /* СКРОЛЛБАР */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--c-dark); }
-        ::-webkit-scrollbar-thumb { background: var(--c-lilac); border-radius: 3px; }
-
-        /* ========================================= */
-        /* ФОН (CANVAS) */
-        /* ========================================= */
-        #bio-digital-canvas {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
+        /* --- CRT OVERLAY EFFECT --- */
+        .scanlines {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 999;
             opacity: 0.6;
         }
 
-        .scanline {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.3) 50%);
-            background-size: 100% 4px;
+        /* --- BACKGROUND ANIMATION --- */
+        #digital-rain {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
-            pointer-events: none;
         }
 
-        /* ========================================= */
-        /* UI КОМПОНЕНТЫ */
-        /* ========================================= */
-        .container {
+        /* --- LAYOUT --- */
+        .app-container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            padding-bottom: 100px; /* Space for nav */
             position: relative;
-            z-index: 10;
+            z-index: 1;
         }
 
-        /* Кнопки */
-        .btn-glitch {
-            position: relative;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--c-mint);
-            color: var(--c-mint);
-            padding: 15px 30px;
-            font-family: var(--font-tech);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            cursor: pointer;
-            overflow: hidden;
-            transition: 0.3s;
-            clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
             justify-content: center;
-        }
-
-        .btn-glitch:hover {
-            background: var(--c-mint);
-            color: var(--c-dark);
-            box-shadow: var(--shadow-neon);
-            text-shadow: none;
-        }
-
-        /* Эффект текста */
-        .bio-text {
-            font-family: var(--font-bio);
-            font-style: italic;
-            color: var(--c-lilac);
-        }
-
-        /* ========================================= */
-        /* ШАПКА */
-        /* ========================================= */
-        header {
+            align-items: center;
             text-align: center;
-            padding: 60px 0 40px;
             position: relative;
         }
 
-        .logo-container {
+        .glitch-wrapper {
             position: relative;
-            display: inline-block;
-            cursor: pointer; /* Для пасхалки */
         }
 
-        .logo-img {
-            width: 100px;
-            filter: drop-shadow(0 0 15px var(--c-red));
-            animation: float 4s ease-in-out infinite;
-            transition: transform 0.2s;
-        }
-
-        .logo-img:active { transform: scale(0.9); }
-
-        h1 {
-            font-size: 3.5rem;
-            margin: 10px 0;
+        h1.glitch {
+            font-family: var(--font-tech);
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            line-height: 1;
+            color: #fff;
             text-transform: uppercase;
-            letter-spacing: 4px;
+            letter-spacing: 5px;
+            margin: 0;
             position: relative;
-            display: inline-block;
         }
 
-        h1::before, h1::after {
+        h1.glitch::before, h1.glitch::after {
             content: attr(data-text);
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--c-dark);
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
         }
-        h1::before {
-            left: 2px; text-shadow: -1px 0 var(--c-red);
-            clip: rect(24px, 550px, 90px, 0);
+
+        h1.glitch::before {
+            left: 2px; text-shadow: -1px 0 var(--c-red); clip: rect(24px, 550px, 90px, 0);
             animation: glitch-anim 3s infinite linear alternate-reverse;
         }
-        h1::after {
-            left: -2px; text-shadow: -1px 0 var(--c-mint);
-            clip: rect(85px, 550px, 140px, 0);
+        h1.glitch::after {
+            left: -2px; text-shadow: -1px 0 var(--c-mint); clip: rect(85px, 550px, 140px, 0);
             animation: glitch-anim 2.5s infinite linear alternate-reverse;
         }
 
-        .subtitle {
-            font-size: 1.2rem;
-            color: #888;
-            max-width: 600px;
-            margin: 0 auto;
+        .hero-subtitle {
+            font-family: var(--font-code);
+            color: var(--c-mint);
+            margin-top: 20px;
+            font-size: 1.1rem;
+            background: rgba(0, 255, 157, 0.1);
+            padding: 5px 15px;
+            border-left: 3px solid var(--c-mint);
         }
 
-        /* ========================================= */
-        /* НАВИГАЦИЯ */
-        /* ========================================= */
+        /* --- NAVIGATION (DOCK STYLE) --- */
         .nav-dock {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--c-border);
+            border-radius: 24px;
+            padding: 10px 20px;
             display: flex;
-            justify-content: center;
             gap: 15px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-            position: sticky;
-            top: 20px;
-            z-index: 100;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
         }
 
         .nav-item {
-            background: var(--c-panel);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--c-border);
-            padding: 12px 24px;
-            border-radius: 8px;
-            color: #ccc;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.9rem;
             position: relative;
-            overflow: hidden;
+            padding: 10px 15px;
+            color: #888;
+            cursor: pointer;
+            font-family: var(--font-tech);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .nav-item:hover, .nav-item.active {
-            color: var(--c-dark);
-            background: var(--c-lilac);
-            border-color: var(--c-lilac);
-            box-shadow: 0 0 15px rgba(162, 155, 254, 0.4);
-            transform: translateY(-2px);
+            color: #fff;
+            text-shadow: 0 0 10px var(--c-mint);
         }
 
-        .nav-item::after {
+        .nav-item.active::after {
             content: '';
             position: absolute;
-            top: 0; left: -100%;
-            width: 50%; height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
-            transform: skewX(-25deg);
-            transition: 0.5s;
+            bottom: -5px;
+            width: 4px; height: 4px;
+            background: var(--c-mint);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--c-mint);
         }
-        .nav-item:hover::after { left: 150%; }
 
-        /* ========================================= */
-        /* КОНТЕНТ БЛОКИ */
-        /* ========================================= */
+        /* --- SECTIONS --- */
         .content-section {
             display: none;
-            animation: fadeUp 0.5s ease forwards;
-            margin-bottom: 50px;
-        }
-        .content-section.active { display: block; }
-
-        .glass-panel {
-            background: var(--c-panel);
-            backdrop-filter: blur(16px);
-            border: 1px solid var(--c-border);
-            border-radius: 16px;
-            padding: 40px;
-            position: relative;
-            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s, transform 0.5s;
+            padding-top: 50px;
         }
 
-        /* Декоративная линия сверху */
-        .glass-panel::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 2px;
-            background: linear-gradient(90deg, var(--c-red), var(--c-lilac), var(--c-mint));
+        .content-section.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        h2 {
-            font-size: 2rem;
-            color: var(--c-mint);
-            margin-top: 0;
+        .section-title {
+            font-family: var(--font-tech);
+            font-size: 2.5rem;
+            color: var(--c-lilac);
+            margin-bottom: 30px;
             display: flex;
             align-items: center;
             gap: 15px;
         }
-        h2 span { font-family: var(--font-bio); color: #fff; font-weight: 300; font-size: 1.5rem; }
 
-        /* --- Секция описания --- */
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-top: 20px;
-        }
+        .section-title span { color: var(--c-mint); font-size: 1.5rem; }
 
-        .feature-card {
-            background: rgba(255,255,255,0.03);
-            padding: 20px;
-            border-left: 3px solid var(--c-lilac);
-        }
-
-        .changelog-terminal {
-            background: #000;
-            border: 1px solid #333;
-            padding: 20px;
-            font-family: monospace;
-            height: 300px;
-            overflow-y: auto;
-            color: #0f0;
-            font-size: 0.9rem;
-        }
-        .log-entry { margin-bottom: 10px; border-bottom: 1px dashed #333; padding-bottom: 5px; }
-        .log-date { color: var(--c-red); margin-right: 10px; }
-
-        /* --- Секция промптов (Accordion) --- */
-        .prompt-accordion-item {
+        /* --- GLASS CARDS --- */
+        .card {
+            background: var(--c-glass);
             border: 1px solid var(--c-border);
-            background: rgba(0,0,0,0.3);
-            margin-bottom: 10px;
-            border-radius: 4px;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s;
         }
 
-        .prompt-header {
+        .card:hover {
+            border-color: var(--c-lilac);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute; top: 0; left: 0; width: 2px; height: 100%;
+            background: linear-gradient(to bottom, var(--c-mint), var(--c-lilac));
+        }
+
+        /* --- PROMPTS MODULES --- */
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-family: var(--font-tech);
+            color: var(--c-mint);
+        }
+
+        .module-desc {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .code-snippet {
+            display: none; /* Скрыто, копируем из value */
+        }
+
+        .btn-copy {
+            background: transparent;
+            border: 1px solid var(--c-mint);
+            color: var(--c-mint);
+            padding: 10px 20px;
+            font-family: var(--font-code);
+            text-transform: uppercase;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+            font-weight: bold;
+        }
+
+        .btn-copy:hover {
+            background: var(--c-mint);
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 255, 157, 0.4);
+        }
+
+        /* --- DOWNLOAD BUTTON --- */
+        .dl-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .mega-button {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--c-red), var(--c-lilac));
+            padding: 20px 60px;
+            font-family: var(--font-tech);
+            font-size: 1.5rem;
+            color: #fff;
+            text-decoration: none;
+            clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
+            transition: transform 0.2s, filter 0.2s;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .mega-button:hover {
+            transform: scale(1.05);
+            filter: hue-rotate(20deg);
+        }
+
+        .mega-button::after {
+            content: 'V1.7 STABLE';
+            position: absolute;
+            bottom: -25px;
+            right: 0;
+            font-family: var(--font-code);
+            font-size: 0.8rem;
+            color: var(--c-red);
+        }
+
+        /* --- ACCORDION (GUIDES) --- */
+        .guide-item {
+            background: rgba(255,255,255,0.03);
+            margin-bottom: 10px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .guide-head {
             padding: 15px 20px;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: background 0.3s;
+            font-weight: 700;
         }
-        .prompt-header:hover { background: rgba(255,255,255,0.05); }
-        .prompt-header.active { background: linear-gradient(90deg, rgba(102, 255, 204, 0.1), transparent); border-left: 4px solid var(--c-mint); }
-
-        .prompt-content {
+        .guide-head:hover { background: rgba(255,255,255,0.05); color: var(--c-mint); }
+        .guide-body {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.4s cubic-bezier(0, 1, 0, 1);
+            transition: max-height 0.4s ease;
+            background: rgba(0,0,0,0.2);
+            padding: 0 20px;
         }
-        .prompt-content.open { max-height: 2000px; transition: max-height 0.8s ease-in-out; }
+        .guide-body.open { padding: 20px; max-height: 1000px; }
 
-        .prompt-inner { padding: 20px; }
-
-        .copy-block {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            background: #050505;
-            padding: 15px;
-            border: 1px dashed var(--c-border);
-            margin-top: 10px;
-        }
-
-        .hidden-source {
-            position: absolute; left: -9999px;
-        }
-
-        .btn-copy {
-            align-self: flex-end;
-            background: transparent;
-            border: 1px solid var(--c-lilac);
-            color: var(--c-lilac);
-            padding: 5px 15px;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .btn-copy:hover { background: var(--c-lilac); color: #000; }
-
-        /* --- Гайды (Grid) --- */
-        .guides-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-        }
-        .guide-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid var(--c-border);
-            padding: 20px;
-            cursor: pointer;
-            transition: 0.3s;
-            position: relative;
-        }
-        .guide-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--c-mint);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
-        }
-        .guide-icon { font-size: 2rem; margin-bottom: 10px; display: block; }
-
-        /* ========================================= */
-        /* ПАСХАЛКА (ИГРА) */
-        /* ========================================= */
-        #game-modal {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 9999;
+        /* --- GAME OVERLAY --- */
+        #game-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000;
+            z-index: 2000;
             display: none;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
         }
 
         #game-canvas {
             border: 2px solid var(--c-mint);
-            box-shadow: 0 0 30px var(--c-mint);
-            background: #000;
+            background: radial-gradient(circle, #1a1a1a 0%, #000 100%);
+            max-width: 100%;
         }
 
         .game-ui {
+            font-family: var(--font-tech);
             color: var(--c-mint);
-            font-family: monospace;
             margin-bottom: 10px;
-            text-align: center;
+            font-size: 1.2rem;
         }
 
-        .close-game {
+        #close-game {
             margin-top: 20px;
-            color: #fff;
-            text-decoration: underline;
+            color: #555;
             cursor: pointer;
+            font-family: var(--font-code);
         }
 
-        /* ========================================= */
-        /* АНИМАЦИИ */
-        /* ========================================= */
-        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes glitch-anim {
-            0% { clip: rect(40px, 9999px, 80px, 0); }
-            20% { clip: rect(120px, 9999px, 10px, 0); }
-            40% { clip: rect(20px, 9999px, 90px, 0); }
-            60% { clip: rect(85px, 9999px, 140px, 0); }
-            80% { clip: rect(10px, 9999px, 60px, 0); }
-            100% { clip: rect(60px, 9999px, 110px, 0); }
-        }
-
-        /* ========================================= */
-        /* MOBILE */
-        /* ========================================= */
-        @media (max-width: 768px) {
-            h1 { font-size: 2rem; }
-            .info-grid { grid-template-columns: 1fr; }
-            .nav-dock {
-                position: fixed;
-                bottom: 0; top: auto;
-                width: 100%;
-                background: rgba(10,11,16,0.95);
-                margin: 0;
-                padding: 10px;
-                justify-content: space-around;
-                border-top: 1px solid var(--c-border);
-            }
-            .nav-item { font-size: 0.7rem; padding: 10px; flex: 1; text-align: center; }
-            .container { padding-bottom: 80px; }
-            .btn-glitch { width: 100%; }
-        }
-
-        /* TOAST */
-        #toast {
-            visibility: hidden;
-            min-width: 250px;
-            background-color: var(--c-dark);
-            border-left: 4px solid var(--c-mint);
-            color: #fff;
+        /* --- EASTER EGG TRIGGER --- */
+        .footer-egg {
             text-align: center;
-            border-radius: 2px;
-            padding: 16px;
-            position: fixed;
-            z-index: 1000;
-            bottom: 30px;
-            right: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            font-size: 1rem;
+            margin-top: 80px;
+            padding: 20px;
+            opacity: 0.3;
+            transition: opacity 0.3s;
         }
-        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
-        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
-        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+        .footer-egg:hover { opacity: 1; }
+        .egg-icon { font-size: 24px; cursor: pointer; animation: float 3s infinite ease-in-out; display: inline-block; }
+
+        /* --- ANIMATIONS --- */
+        @keyframes glitch-anim {
+            0% { clip: rect(42px, 9999px, 44px, 0); transform: skew(0.95deg); }
+            5% { clip: rect(12px, 9999px, 5px, 0); transform: skew(0.05deg); }
+            10% { clip: rect(80px, 9999px, 20px, 0); transform: skew(0.5deg); }
+            100% { clip: rect(10px, 9999px, 90px, 0); transform: skew(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* --- MOBILE TWEAKS --- */
+        @media (max-width: 768px) {
+            h1.glitch { font-size: 3rem; }
+            .nav-dock { width: 90%; justify-content: space-around; padding: 10px; bottom: 15px; }
+            .nav-text { display: none; }
+            .nav-icon { font-size: 1.4rem; display: block; }
+            .module-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (min-width: 769px) {
+            .nav-icon { display: none; }
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed; top: 20px; right: 20px;
+            background: var(--c-bg);
+            border: 1px solid var(--c-mint);
+            color: var(--c-mint);
+            padding: 15px 25px;
+            font-family: var(--font-code);
+            z-index: 3000;
+            transform: translateX(200%);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .toast.show { transform: translateX(0); }
+
     </style>
 </head>
 <body>
 
-    <!-- ФОНОВЫЕ ЭФФЕКТЫ -->
-    <canvas id="bio-digital-canvas"></canvas>
-    <div class="scanline"></div>
+    <!-- CRT Overlay -->
+    <div class="scanlines"></div>
+    <canvas id="digital-rain"></canvas>
 
-    <!-- UI -->
-    <div class="container">
-        <header>
-            <div class="logo-container" id="logo-trigger" title="???">
-                <img src="apple_icon.png" alt="Apple" class="logo-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/10692/10692823.png'">
+    <!-- Navigation -->
+    <nav class="nav-dock">
+        <div class="nav-item active" onclick="switchTab('home')">
+            <span class="nav-text">System</span>
+            <span class="nav-icon">🏠</span>
+        </div>
+        <div class="nav-item" onclick="switchTab('download')">
+            <span class="nav-text">Download</span>
+            <span class="nav-icon">💾</span>
+        </div>
+        <div class="nav-item" onclick="switchTab('guides')">
+            <span class="nav-text">Database</span>
+            <span class="nav-icon">📚</span>
+        </div>
+        <div class="nav-item" onclick="switchTab('prompts')">
+            <span class="nav-text">Modules</span>
+            <span class="nav-icon">🧩</span>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="app-container">
+
+        <!-- HOME SECTION -->
+        <section id="home" class="content-section active hero">
+            <div class="glitch-wrapper">
+                <h1 class="glitch" data-text="ЯБЛОЧНЫЙ">ЯБЛОЧНЫЙ</h1>
             </div>
-            <br>
-            <h1 data-text="Яблочный Пресет">Яблочный Пресет</h1>
-            <p class="subtitle">Project <span class="bio-text">Renette</span> // v1.7 System Core</p>
-        </header>
+            <div class="hero-subtitle">
+                < PRESET V1.7 :: RENETTE_CORE_INITIATED >
+            </div>
+            <p style="max-width: 600px; margin-top: 30px; line-height: 1.6; color: #ccc;">
+                Модульный пресет с ядром цифрового духа.
+                Адаптация для Claude, Gemini и DeepSeek.
+                <br>Органическая структура. Цифровая душа.
+            </p>
+        </section>
 
-        <nav class="nav-dock">
-            <div class="nav-item active" onclick="openTab('about')">О Системе</div>
-            <div class="nav-item" onclick="openTab('prompts')">Модули</div>
-            <div class="nav-item" onclick="openTab('guides')">База Знаний</div>
-            <div class="nav-item" onclick="openTab('download')">Загрузка</div>
-        </nav>
+        <!-- DOWNLOAD SECTION -->
+        <section id="download" class="content-section">
+            <h2 class="section-title"><span>//</span> ЗАГРУЗКА ФАЙЛОВ</h2>
+            <div class="card">
+                <h3 style="color: var(--c-mint); font-family: var(--font-tech);">ПОСЛЕДНИЙ БИЛД</h3>
+                <p>Версия 1.7. Оптимизированный вес (60kb). Улучшенная логика Ренетт.</p>
+                <div class="dl-container">
+                    <a href="%F0%9F%8D%8E%D0%AF%D0%B1%D0%BB%D0%BE%D1%87%D0%BD%D1%8B%D0%B9%20V1.7.json" class="mega-button" download>
+                        СКАЧАТЬ .JSON
+                    </a>
+                </div>
+            </div>
 
-        <main>
-            <!-- 1. О ПРЕСЕТЕ -->
-            <section id="about" class="content-section active">
-                <div class="glass-panel">
-                    <h2>О Пресете <span>// System Overview</span></h2>
-                    <p style="font-size: 1.1rem; line-height: 1.8;">
-                        Модульный пресет с огромным количеством тоглов, основанный на ядре <span class="bio-text" style="color:var(--c-mint)">Renette</span>.
-                        Синтез органического повествования и цифровой точности.
-                    </p>
-
-                    <div class="info-grid">
-                        <div>
-                            <h3 style="color: var(--c-red)">Поддерживаемые Архитектуры</h3>
-                            <ul style="list-style: none; padding: 0; line-height: 2;">
-                                <li>✦ Gemini 2.5/3.0 Pro</li>
-                                <li>✦ Claude Sonnet 3.7, Opus 4.5</li>
-                                <li>✦ DeepSeek Chimera R1T2</li>
-                                <li>✦ GPT 5.1 (Experimental)</li>
-                            </ul>
-                        </div>
-                        <div class="feature-card">
-                            <strong style="color: var(--c-lilac)">Последнее обновление v1.7:</strong>
-                            <p>— Оптимизация ядра (< 60kb)<br>— Магические фокусы (Мысли, Диалоги)<br>— Новые литературные стили (Китайские новеллисты)<br>— Улучшенный Джейлбрейк</p>
-                        </div>
-                    </div>
-
-                    <h3 style="margin-top: 30px; border-bottom: 1px solid var(--c-border); padding-bottom: 10px;">> System Logs</h3>
-                    <div class="changelog-terminal">
-                        <div class="log-entry"><span class="log-date">[14.12.2025]</span> v1.7: Core optimized. Added Magic Focus modules. New CSS injection.</div>
-                        <div class="log-entry"><span class="log-date">[08.12.2025]</span> Info: FF Mode updated. Recommended Temp: 0.95 (Claude).</div>
-                        <div class="log-entry"><span class="log-date">[07.12.2025]</span> v1.61: Language fix module installed. Narrative engine patched.</div>
-                        <div class="log-entry"><span class="log-date">[06.12.2025]</span> v1.6: Renette personality re-compile. Thinking segmentation logic added.</div>
-                        <div class="log-entry"><span class="log-date">[30.11.2025]</span> v1.59: Massive bloat purge. Web integration protocols active.</div>
-                        <div class="log-entry">... Initializing history sequence ...</div>
+            <div class="module-grid">
+                <div class="card">
+                    <h4>Changelog v1.7</h4>
+                    <ul style="font-size: 0.85rem; padding-left: 20px; color: #aaa;">
+                        <li>Вес уменьшен до <60 КБ</li>
+                        <li>Новые "Магические фокусы"</li>
+                        <li>Литературные стили (Лю Чжэньюнь и др.)</li>
+                        <li>Улучшен Jailbreak</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>Совместимость</h4>
+                    <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:10px;">
+                        <span style="background:rgba(255,255,255,0.1); padding:5px 10px; font-size:0.8rem;">Claude Sonnet 3.5+</span>
+                        <span style="background:rgba(255,255,255,0.1); padding:5px 10px; font-size:0.8rem;">Gemini 1.5 Pro</span>
+                        <span style="background:rgba(255,255,255,0.1); padding:5px 10px; font-size:0.8rem;">GPT-4o</span>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <!-- 2. ПРОМПТЫ -->
-            <section id="prompts" class="content-section">
-                <div class="glass-panel">
-                    <h2>Модули <span>// Prompt Injection</span></h2>
-                    <p>Выберите модуль, скопируйте код и внедрите в SillyTavern.</p>
+        <!-- GUIDES SECTION -->
+        <section id="guides" class="content-section">
+            <h2 class="section-title"><span>//</span> БАЗА ЗНАНИЙ</h2>
 
-                    <!-- Категория 1 -->
-                    <div class="prompt-accordion-item">
-                        <div class="prompt-header" onclick="togglePrompt(this)">
-                            <strong>01. Режим Письма (Основное)</strong>
-                            <span>▼</span>
-                        </div>
-                        <div class="prompt-content">
-                            <div class="prompt-inner">
-                                <div class="copy-block">
-                                    <div style="color:var(--c-mint)">✧💫 Погружение (Default)</div>
-                                    <div style="font-size:0.8rem; color:#888;">Классический РП. ИИ не пишет за юзера.</div>
-                                    <textarea class="hidden-source">Промпт для Погружения...</textarea>
-                                    <button class="btn-copy" onclick="copyToClipboard(this)">COPY_DATA</button>
-                                </div>
-                                <div class="copy-block">
-                                    <div style="color:var(--c-red)">✧📖 ФФ Режим</div>
-                                    <div style="font-size:0.8rem; color:#888;">ИИ пишет историю целиком, управляя и юзером.</div>
-                                    <textarea class="hidden-source">Промпт для ФФ Режима...</textarea>
-                                    <button class="btn-copy" onclick="copyToClipboard(this)">COPY_DATA</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Категория 2 -->
-                    <div class="prompt-accordion-item">
-                        <div class="prompt-header" onclick="togglePrompt(this)">
-                            <strong>02. Языковые Пакеты</strong>
-                            <span>▼</span>
-                        </div>
-                        <div class="prompt-content">
-                            <div class="prompt-inner">
-                                <div class="copy-block">
-                                    <div>✧🇷🇺 Russian Core</div>
-                                    <textarea class="hidden-source">Russian language prompts...</textarea>
-                                    <button class="btn-copy" onclick="copyToClipboard(this)">COPY_DATA</button>
-                                </div>
-                                <div class="copy-block">
-                                    <div>✧🇺🇸 English Core</div>
-                                    <textarea class="hidden-source">English language prompts...</textarea>
-                                    <button class="btn-copy" onclick="copyToClipboard(this)">COPY_DATA</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                     <!-- Категория 3 -->
-                     <div class="prompt-accordion-item">
-                        <div class="prompt-header" onclick="togglePrompt(this)">
-                            <strong>03. HTML & Visuals</strong>
-                            <span>▼</span>
-                        </div>
-                        <div class="prompt-content">
-                            <div class="prompt-inner">
-                                <div class="copy-block">
-                                    <div style="color:var(--c-lilac)">✧🧃 Renette HTML (Default)</div>
-                                    <textarea class="hidden-source">Renette HTML Code...</textarea>
-                                    <button class="btn-copy" onclick="copyToClipboard(this)">COPY_DATA</button>
-                                </div>
-                                <div class="copy-block">
-                                    <div style="color:var(--c-lilac)">✧💜 Iris Bloomwave CSS</div>
-                                    <textarea class="hidden-source">Iris Bloomwave Code...</textarea>
-                                    <button class="btn-copy" onclick="copyToClipboard(this)">COPY_DATA</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+            <div class="guide-item">
+                <div class="guide-head" onclick="toggleGuide(this)">01. УСТАНОВКА <span style="color:var(--c-mint)">+</span></div>
+                <div class="guide-body">
+                    <p>1. Скачайте JSON файл.<br>2. Импортируйте в SillyTavern.<br>3. Убедитесь, что RegEx скрипты активированы.<br>4. В настройках Prompt Order переместите 'Jailbreak' вниз.</p>
                 </div>
-            </section>
+            </div>
 
-            <!-- 3. ГАЙДЫ -->
-            <section id="guides" class="content-section">
-                <div class="glass-panel">
-                    <h2>База Знаний <span>// Manuals</span></h2>
-
-                    <div class="guides-grid">
-                        <div class="guide-card" onclick="alert('Раздел гайдов открывается как модальное окно (в полной версии)')">
-                            <span class="guide-icon">📥</span>
-                            <strong>Протокол Установки</strong>
-                            <p style="font-size:0.8rem; color:#aaa;">Импорт JSON, настройка RegEx и подключение API.</p>
-                        </div>
-                        <div class="guide-card" onclick="alert('Описывает OOC, Нарратив, Темп...')">
-                            <span class="guide-icon">⚙️</span>
-                            <strong>Настройка Функций</strong>
-                            <p style="font-size:0.8rem; color:#aaa;">Детальный разбор каждого тогла и переключателя.</p>
-                        </div>
-                        <div class="guide-card" onclick="alert('Баны, Анти-эхо, HTML темы...')">
-                            <span class="guide-icon">🧩</span>
-                            <strong>Патчи и Дополнения</strong>
-                            <p style="font-size:0.8rem; color:#aaa;">Как исправить повторения и включить красивый UI.</p>
-                        </div>
-                        <div class="guide-card" onclick="alert('Здесь хранятся ответы на вопросы')">
-                            <span class="guide-icon">❓</span>
-                            <strong>F.A.Q.</strong>
-                            <p style="font-size:0.8rem; color:#aaa;">Частые ошибки и методы их устранения.</p>
-                        </div>
-                    </div>
+            <div class="guide-item">
+                <div class="guide-head" onclick="toggleGuide(this)">02. НАСТРОЙКА ООС <span style="color:var(--c-mint)">+</span></div>
+                <div class="guide-body">
+                    <p>Тогл <b>✧🍎Ренетт ООС</b> добавляет комментарии от лица Ренетт. Если вам нужен чистый РП без "духа системы", используйте <b>✧⚙️Отключить ООС</b>.</p>
                 </div>
-            </section>
+            </div>
 
-            <!-- 4. СКАЧАТЬ -->
-            <section id="download" class="content-section">
-                <div class="glass-panel" style="text-align: center;">
-                    <div style="max-width: 600px; margin: 0 auto;">
-                        <img src="icon_book_open_red.png" style="width: 60px; filter: drop-shadow(0 0 10px var(--c-mint));" onerror="this.style.display='none'">
-                        <h2 style="justify-content: center;">Загрузка Ядра</h2>
-                        <p>Версия 1.7 (Stable). JSON формат. Требуется SillyTavern версии 1.12+.</p>
-                        <br>
-                        <a href="%F0%9F%8D%8E%D0%AF%D0%B1%D0%BB%D0%BE%D1%87%D0%BD%D1%8B%D0%B9%20V1.7.json" download="ApplePreset_v1.7.json" class="btn-glitch" onclick="downloadAnim()">
-                            ИНИЦИАЛИЗИРОВАТЬ ЗАГРУЗКУ
-                        </a>
-                        <br><br>
-                        <div style="font-size: 0.8rem; color: #666;">
-                            MD5: a4f5...e21 | Size: 58kb <br>
-                            Secure Connection Established
-                        </div>
-
-                        <div style="margin-top: 50px; border-top: 1px dashed #333; padding-top: 20px;">
-                            <h3 class="bio-text">Сообщество</h3>
-                            <a href="https://t.me/YablochnyAI" style="color: var(--c-mint); text-decoration: none; margin: 0 10px;">[Telegram Channel]</a>
-                            <a href="https://t.me/YablochnyChat" style="color: var(--c-lilac); text-decoration: none; margin: 0 10px;">[Global Chat]</a>
-                        </div>
-                    </div>
+            <div class="guide-item">
+                <div class="guide-head" onclick="toggleGuide(this)">03. HTML & СТИЛИ <span style="color:var(--c-mint)">+</span></div>
+                <div class="guide-body">
+                    <p>Для корректного отображения "телефонных" сообщений и красивых статусов, включите модуль HTML в пресете. Работает лучше всего на Claude Sonnet.</p>
                 </div>
-            </section>
-        </main>
+            </div>
+        </section>
+
+        <!-- PROMPTS SECTION -->
+        <section id="prompts" class="content-section">
+            <h2 class="section-title"><span>//</span> МОДУЛИ КОДА</h2>
+            <p style="margin-bottom: 30px; color: #888;">Выберите модуль, скопируйте код и вставьте в пустой слот (Тогл) в SillyTavern.</p>
+
+            <div class="module-grid">
+                <!-- Module 1 -->
+                <div class="card">
+                    <div class="module-header">
+                        <span>OOC: RENETTE</span>
+                        <span style="font-size:0.8em; border:1px solid var(--c-mint); padding:2px 6px;">CORE</span>
+                    </div>
+                    <div class="module-desc">Базовая личность Ренетт. Комментирует действия, дает советы, иногда подшучивает.</div>
+                    <textarea class="code-snippet" id="p1">[OOC: System Renette active. Monitoring narrative integrity...]</textarea>
+                    <button class="btn-copy" onclick="copyToClipboard('p1')">СКОПИРОВАТЬ КОД</button>
+                </div>
+
+                <!-- Module 2 -->
+                <div class="card">
+                    <div class="module-header">
+                        <span>STYLE: IMMERSION</span>
+                        <span style="color:var(--c-lilac)">NARRATIVE</span>
+                    </div>
+                    <div class="module-desc">Глубокое погружение. ИИ не пишет за пользователя. Акцент на чувствах и атмосфере.</div>
+                    <textarea class="code-snippet" id="p2">[Narrative Mode: Immersive. Do not act as User.]</textarea>
+                    <button class="btn-copy" onclick="copyToClipboard('p2')">СКОПИРОВАТЬ КОД</button>
+                </div>
+
+                <!-- Module 3 -->
+                <div class="card">
+                    <div class="module-header">
+                        <span>BAN: RUSSIAN</span>
+                        <span style="color:var(--c-red)">SECURITY</span>
+                    </div>
+                    <div class="module-desc">Набор анти-клише и запрещенных слов для русского языка.</div>
+                    <textarea class="code-snippet" id="p3">Avoid: "member", "fold", "shiver". Use descriptive Russian lexicon.</textarea>
+                    <button class="btn-copy" onclick="copyToClipboard('p3')">СКОПИРОВАТЬ КОД</button>
+                </div>
+
+                <!-- Module 4 -->
+                <div class="card">
+                    <div class="module-header">
+                        <span>EXTRA: HTML CHAT</span>
+                        <span style="color:var(--c-mint)">VISUAL</span>
+                    </div>
+                    <div class="module-desc">Превращает диалоги в визуальный интерфейс мессенджера.</div>
+                    <textarea class="code-snippet" id="p4">Wrap SMS in <div class="message">...</div> style.</textarea>
+                    <button class="btn-copy" onclick="copyToClipboard('p4')">СКОПИРОВАТЬ КОД</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER / EASTER EGG -->
+        <div class="footer-egg">
+            <span class="egg-icon" onclick="startGame()">🍎</span>
+            <div style="font-size: 0.7rem; margin-top: 10px; font-family: var(--font-code);">
+                SYSTEM STATUS: STABLE<br>
+                DESIGNED BY KYKAAJ
+            </div>
+        </div>
+
     </div>
 
-    <!-- TOAST NOTIFICATION -->
-    <div id="toast">Data copied to clipboard.</div>
+    <!-- TOAST -->
+    <div id="toast" class="toast">DATA COPIED TO BUFFER</div>
 
-    <!-- ПАСХАЛКА (ИГРА) -->
-    <div id="game-modal">
-        <div class="game-ui">
-            <h3>CYBER HARVEST PROTOCOL</h3>
-            <p>Catch the Golden Data. Avoid the Glitches.</p>
-            <div id="score">SCORE: 0</div>
-        </div>
+    <!-- GAME OVERLAY -->
+    <div id="game-overlay">
+        <div class="game-ui">SCORE: <span id="score">0</span> | TARGET: 10</div>
         <canvas id="game-canvas" width="320" height="480"></canvas>
-        <div class="close-game" onclick="closeGame()">[TERMINATE SESSION]</div>
+        <div id="close-game" onclick="closeGame()">[ ABORT PROTOCOL ]</div>
     </div>
 
     <script>
-        // =========================================
-        // 1. АНИМАЦИЯ ФОНА (BIO-DIGITAL RAIN)
-        // =========================================
-        const canvas = document.getElementById('bio-digital-canvas');
-        const ctx = canvas.getContext('2d');
+        // --- TABS LOGIC ---
+        function switchTab(tabId) {
+            // Hide all
+            document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
 
-        let w, h;
-        const particles = [];
+            // Show target
+            document.getElementById(tabId).classList.add('active');
+
+            // Update nav state
+            // Find index to highlight
+            const index = ['home', 'download', 'guides', 'prompts'].indexOf(tabId);
+            document.querySelectorAll('.nav-item')[index].classList.add('active');
+        }
+
+        // --- ACCORDION LOGIC ---
+        function toggleGuide(header) {
+            const body = header.nextElementSibling;
+            const span = header.querySelector('span');
+
+            if (body.classList.contains('open')) {
+                body.classList.remove('open');
+                span.innerText = '+';
+                header.style.color = '#eee';
+            } else {
+                body.classList.add('open');
+                span.innerText = '-';
+                header.style.color = 'var(--c-mint)';
+            }
+        }
+
+        // --- COPY LOGIC ---
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).value;
+            navigator.clipboard.writeText(text).then(() => {
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 2000);
+            });
+        }
+
+        // --- BACKGROUND MATRIX/LEAVES ANIMATION ---
+        const canvas = document.getElementById('digital-rain');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+
+        let drops = [];
+        const chars = "10APPLERENETTE";
 
         function resize() {
-            w = canvas.width = window.innerWidth;
-            h = canvas.height = window.innerHeight;
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
         }
         window.addEventListener('resize', resize);
         resize();
 
-        class BioParticle {
+        class Drop {
             constructor() {
-                this.x = Math.random() * w;
-                this.y = Math.random() * h;
-                this.speed = Math.random() * 1 + 0.5;
-                this.size = Math.random() * 2;
-                // Цвета: Мятный (цифра) или Розовый (лепесток)
-                this.isDigital = Math.random() > 0.5;
-                this.color = this.isDigital ? '102, 255, 204' : '255, 107, 107';
-                this.char = this.isDigital ? (Math.random() > 0.5 ? '1' : '0') : '❀';
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.speed = Math.random() * 2 + 0.5;
+                this.text = chars[Math.floor(Math.random() * chars.length)];
+                this.color = Math.random() > 0.8 ? '#ff2a6d' : '#00ff9d';
+                this.size = Math.random() * 14 + 10;
             }
             update() {
                 this.y += this.speed;
-                if (this.y > h) {
-                    this.y = 0;
-                    this.x = Math.random() * w;
+                if (this.y > height) {
+                    this.y = -20;
+                    this.x = Math.random() * width;
                 }
             }
             draw() {
-                ctx.fillStyle = `rgba(${this.color}, 0.5)`;
-                ctx.font = this.isDigital ? '10px monospace' : '12px serif';
-                ctx.fillText(this.char, this.x, this.y);
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = 0.3;
+                ctx.font = this.size + "px 'JetBrains Mono'";
+                ctx.fillText(this.text, this.x, this.y);
             }
         }
 
-        for (let i = 0; i < 100; i++) particles.push(new BioParticle());
+        for(let i=0; i<50; i++) drops.push(new Drop());
 
         function animate() {
-            ctx.clearRect(0, 0, w, h);
-            particles.forEach(p => { p.update(); p.draw(); });
+            ctx.clearRect(0, 0, width, height);
+            drops.forEach(d => { d.update(); d.draw(); });
             requestAnimationFrame(animate);
         }
         animate();
 
-        // =========================================
-        // 2. ЛОГИКА ВКЛАДОК
-        // =========================================
-        function openTab(tabId) {
-            // Скрыть все секции
-            document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
-            // Убрать активный класс с кнопок
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-
-            // Показать нужное
-            document.getElementById(tabId).classList.add('active');
-
-            // Найти кнопку, соответствующую табу (простой хак)
-            const navs = document.querySelectorAll('.nav-item');
-            if(tabId === 'about') navs[0].classList.add('active');
-            if(tabId === 'prompts') navs[1].classList.add('active');
-            if(tabId === 'guides') navs[2].classList.add('active');
-            if(tabId === 'download') navs[3].classList.add('active');
-        }
-
-        // =========================================
-        // 3. АККОРДЕОН ПРОМПТОВ
-        // =========================================
-        function togglePrompt(header) {
-            header.classList.toggle('active');
-            const content = header.nextElementSibling;
-            if (content.classList.contains('open')) {
-                content.classList.remove('open');
-            } else {
-                content.classList.add('open');
-            }
-        }
-
-        // =========================================
-        // 4. КОПИРОВАНИЕ
-        // =========================================
-        function copyToClipboard(btn) {
-            const text = btn.previousElementSibling.value;
-            navigator.clipboard.writeText(text).then(() => {
-                showToast("System: Data Injected to Clipboard");
-            });
-        }
-
-        function showToast(msg) {
-            const x = document.getElementById("toast");
-            x.innerText = msg;
-            x.className = "show";
-            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-        }
-
-        function downloadAnim() {
-            showToast("Initializing Download Sequence...");
-        }
-
-        // =========================================
-        // 5. ПАСХАЛКА (ИГРА CYBER HARVEST)
-        // =========================================
-        let clickCount = 0;
-        const trigger = document.getElementById('logo-trigger');
-        let gameLoopId;
-
-        trigger.addEventListener('click', () => {
-            clickCount++;
-            if (clickCount === 5) {
-                startGame();
-                clickCount = 0;
-            }
-            setTimeout(() => clickCount = 0, 2000); // Сброс если не успел
-        });
-
-        function closeGame() {
-            document.getElementById('game-modal').style.display = 'none';
-            cancelAnimationFrame(gameLoopId);
-        }
-
-        // Простая игра: лови желтые квадраты, избегай красных
+        // --- MINI GAME: RENETTE'S PROTOCOL ---
+        // Catch green apples, avoid glitches
+        const gameOverlay = document.getElementById('game-overlay');
         const gCanvas = document.getElementById('game-canvas');
         const gCtx = gCanvas.getContext('2d');
-        let playerX = 160;
+        let gameLoop;
         let score = 0;
-        let items = [];
-        let gameActive = false;
+        let playerX = 160;
+        let gameObjects = [];
+        let isGameRunning = false;
 
         function startGame() {
-            document.getElementById('game-modal').style.display = 'flex';
+            gameOverlay.style.display = 'flex';
             score = 0;
-            items = [];
-            gameActive = true;
-            updateGame();
+            gameObjects = [];
+            document.getElementById('score').innerText = score;
+            isGameRunning = true;
+            loop();
 
-            // Управление мышкой/тачем
-            gCanvas.addEventListener('mousemove', (e) => {
-                const rect = gCanvas.getBoundingClientRect();
-                playerX = e.clientX - rect.left;
-            });
+            // Mobile touch controls
             gCanvas.addEventListener('touchmove', (e) => {
                 const rect = gCanvas.getBoundingClientRect();
                 playerX = e.touches[0].clientX - rect.left;
             });
+            // PC Mouse controls
+            gCanvas.addEventListener('mousemove', (e) => {
+                const rect = gCanvas.getBoundingClientRect();
+                playerX = e.clientX - rect.left;
+            });
         }
 
-        function updateGame() {
-            if (!gameActive) return;
+        function closeGame() {
+            isGameRunning = false;
+            gameOverlay.style.display = 'none';
+            cancelAnimationFrame(gameLoop);
+        }
 
-            gCtx.fillStyle = '#000';
+        function loop() {
+            if (!isGameRunning) return;
+
+            // Clear
+            gCtx.fillStyle = 'rgba(0, 0, 0, 0.2)'; // Trails effect
             gCtx.fillRect(0, 0, 320, 480);
 
-            // Спавн предметов
+            // Spawn objects
             if (Math.random() < 0.05) {
-                items.push({
+                gameObjects.push({
                     x: Math.random() * 300,
-                    y: 0,
-                    type: Math.random() > 0.3 ? 'gold' : 'bad'
+                    y: -20,
+                    type: Math.random() > 0.3 ? 'apple' : 'glitch',
+                    speed: Math.random() * 3 + 2
                 });
             }
 
-            // Игрок (Корзина)
-            gCtx.fillStyle = '#66ffcc';
-            gCtx.fillRect(playerX - 25, 450, 50, 10);
+            // Draw Player
+            gCtx.fillStyle = '#00ff9d';
+            gCtx.fillRect(playerX - 20, 440, 40, 10); // Paddle
 
-            // Предметы
-            for (let i = 0; i < items.length; i++) {
-                let item = items[i];
-                item.y += 3;
+            // Update Objects
+            for (let i = 0; i < gameObjects.length; i++) {
+                let obj = gameObjects[i];
+                obj.y += obj.speed;
 
-                // Рисуем
-                gCtx.fillStyle = item.type === 'gold' ? '#ffd700' : '#ff6b6b';
-                gCtx.beginPath();
-                gCtx.arc(item.x, item.y, 10, 0, Math.PI*2);
-                gCtx.fill();
+                // Draw
+                if (obj.type === 'apple') {
+                    gCtx.font = "20px Arial";
+                    gCtx.fillText("🍎", obj.x, obj.y);
+                } else {
+                    gCtx.fillStyle = '#ff2a6d';
+                    gCtx.font = "20px Courier";
+                    gCtx.fillText("ERR", obj.x, obj.y);
+                }
 
-                // Коллизия
-                if (item.y > 440 && item.y < 460 && item.x > playerX - 30 && item.x < playerX + 30) {
-                    if (item.type === 'gold') {
-                        score += 10;
+                // Collision
+                if (obj.y > 430 && obj.y < 450 && obj.x > playerX - 25 && obj.x < playerX + 25) {
+                    if (obj.type === 'apple') {
+                        score++;
+                        document.getElementById('score').innerText = score;
+                        if(score >= 10) {
+                            alert("ACCESS GRANTED: RENETTE LOVES YOU 💚");
+                            closeGame();
+                        }
                     } else {
-                        score -= 20;
-                        gCtx.fillStyle = 'red';
-                        gCtx.fillRect(0,0,320,480); // Flash
+                        score = Math.max(0, score - 2); // Penalty
+                        gCanvas.style.borderColor = 'red';
+                        setTimeout(()=>gCanvas.style.borderColor='#00ff9d', 200);
+                        document.getElementById('score').innerText = score;
                     }
-                    items.splice(i, 1);
+                    gameObjects.splice(i, 1);
                     i--;
                 }
-                // Удаление если упало
-                else if (item.y > 480) {
-                    items.splice(i, 1);
+
+                // Remove out of bounds
+                if (obj.y > 480) {
+                    gameObjects.splice(i, 1);
                     i--;
                 }
             }
 
-            document.getElementById('score').innerText = "DATA HARVESTED: " + score;
-            gameLoopId = requestAnimationFrame(updateGame);
+            gameLoop = requestAnimationFrame(loop);
         }
 
     </script>
