@@ -2,336 +2,679 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ренетт | Цифровой Сад</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Renette OS v1.7 | Яблочный Пресет</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
+        /* --- 1. CORE VARIABLES & RESET --- */
         :root {
-            --mint: #00ffcc;
-            --apple-red: #ff3366;
-            --cyber-purple: #bc13fe;
-            --bg-dark: #0a0b1e; /* Темно-синий, не черный */
-            --glass: rgba(18, 20, 50, 0.7);
-            --border: rgba(0, 255, 204, 0.2);
-            --neon-shadow: 0 0 15px rgba(0, 255, 204, 0.3);
+            --c-bg: #0f0c15; /* Глубокий темный */
+            --c-bg-light: #1a1625;
+            --c-mint: #5affb0; /* Мята */
+            --c-red: #ff4d6d; /* Мягкий неон красный */
+            --c-lilac: #d6bcfa; /* Сиреневый */
+            --c-glass: rgba(26, 22, 37, 0.6);
+            --c-glass-border: rgba(255, 255, 255, 0.08);
+            --c-shadow: 0 10px 40px -10px rgba(0,0,0,0.8);
+            
+            --f-tech: 'Rajdhani', sans-serif;
+            --f-code: 'JetBrains Mono', monospace;
+            --f-body: 'Montserrat', sans-serif;
+
+            --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: var(--c-bg); color: var(--c-lilac); font-family: var(--f-body); overflow: hidden; }
+        
+        /* --- 2. BACKGROUND FX --- */
+        #canvas-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: 0.6; }
+        .vignette { position: fixed; inset: 0; background: radial-gradient(circle at center, transparent 0%, var(--c-bg) 90%); pointer-events: none; z-index: -1; }
 
-        body {
-            background: var(--bg-dark);
-            color: #e0e0ff;
-            font-family: 'Montserrat', sans-serif;
-            overflow-x: hidden;
-            min-height: 100vh;
-            line-height: 1.6;
+        /* --- 3. UI LAYOUT (GRID) --- */
+        .app-container {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            grid-template-rows: 1fr;
+            height: 100vh;
+            max-width: 1600px;
+            margin: 0 auto;
+            opacity: 0;
+            animation: bootUp 1.5s var(--ease-out) forwards 0.5s;
         }
 
-        /* Анимированный фон: Кибер-лес */
-        #cyber-forest {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            background: radial-gradient(circle at center, #1a1c3d 0%, var(--bg-dark) 100%);
-        }
-
-        .pixel-leaf {
-            position: absolute;
-            width: 4px; height: 4px;
-            background: var(--mint);
-            box-shadow: 0 0 10px var(--mint);
-            animation: fall linear infinite;
-        }
-
-        @keyframes fall {
-            to { transform: translateY(100vh) rotate(360deg); }
-        }
-
-        /* Шапка с Ренетт */
-        header {
-            height: 60vh;
+        /* --- 4. SIDEBAR NAV --- */
+        .sidebar {
+            background: rgba(15, 12, 21, 0.8);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid var(--c-glass-border);
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
+            padding: 30px 0;
+            z-index: 100;
+        }
+        
+        .brand-logo {
+            width: 50px; height: 50px;
+            background: linear-gradient(135deg, var(--c-red), var(--c-mint));
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 0 20px rgba(90, 255, 176, 0.3);
             position: relative;
-            text-align: center;
-            padding: 20px;
-            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .brand-logo:hover { transform: scale(1.1) rotate(5deg); }
+        .brand-logo::after { content: 'R'; position: absolute; inset:0; display:flex; justify-content:center; align-items:center; font-family: var(--f-tech); font-weight: 800; font-size: 30px; color: #000; }
+
+        .nav-btn {
+            width: 50px; height: 50px;
+            margin: 10px 0;
+            border-radius: 14px;
+            border: 1px solid transparent;
+            background: transparent;
+            color: rgba(255,255,255,0.4);
+            cursor: pointer;
+            transition: all 0.3s var(--ease-out);
+            display: flex; justify-content: center; align-items: center;
+            font-size: 20px;
+            position: relative;
+        }
+        
+        .nav-btn:hover { background: rgba(255,255,255,0.05); color: #fff; }
+        .nav-btn.active { 
+            background: rgba(90, 255, 176, 0.1); 
+            color: var(--c-mint); 
+            border-color: rgba(90, 255, 176, 0.3);
+            box-shadow: 0 0 15px rgba(90, 255, 176, 0.1);
+        }
+        /* Tooltip for nav */
+        .nav-btn::before {
+            content: attr(data-tooltip);
+            position: absolute; left: 60px; 
+            background: var(--c-mint); color: #000;
+            padding: 4px 8px; border-radius: 4px;
+            font-family: var(--f-tech); font-weight: 700; font-size: 12px;
+            opacity: 0; pointer-events: none; transform: translateX(-10px);
+            transition: all 0.3s; white-space: nowrap;
+        }
+        .nav-btn:hover::before { opacity: 1; transform: translateX(0); }
+
+        /* --- 5. MAIN CONTENT AREA --- */
+        .main-viewport {
+            position: relative;
+            overflow: hidden; /* Scroll inside sections */
+            perspective: 1000px;
         }
 
-        .renette-avatar {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            background: url('https://via.placeholder.com/200?text=Renette') center/cover; /* Замени на свою обложку */
-            border: 4px solid var(--mint);
-            box-shadow: 0 0 30px var(--mint), inset 0 0 20px var(--cyber-purple);
-            margin-bottom: 20px;
-            animation: float 4s ease-in-out infinite;
-            position: relative;
-        }
-
-        .renette-avatar::after {
-            content: 'ONLINE';
+        .section-view {
             position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--mint);
-            color: #000;
-            font-size: 10px;
-            font-weight: bold;
-            padding: 2px 10px;
-            border-radius: 10px;
+            top: 0; left: 0; width: 100%; height: 100%;
+            padding: 40px 60px;
+            overflow-y: auto;
+            opacity: 0;
+            transform: translateY(20px) scale(0.98);
+            pointer-events: none;
+            transition: all 0.5s var(--ease-out);
+            display: flex; flex-direction: column;
+            scrollbar-width: thin;
+            scrollbar-color: var(--c-mint) transparent;
         }
 
-        h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            background: linear-gradient(to right, var(--mint), var(--cyber-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 10px rgba(0,255,204,0.5));
-        }
-
-        /* Контентная зона */
-        .container {
-            max-width: 1000px;
-            margin: -50px auto 50px;
-            padding: 0 20px;
-            position: relative;
+        .section-view.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: all;
             z-index: 10;
         }
 
-        .terminal-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+        /* Titles with Glitch Effect */
+        h1, h2 { font-family: var(--f-tech); text-transform: uppercase; margin: 0; }
+        .glitch-title {
+            font-size: 4rem;
+            font-weight: 800;
+            color: #fff;
+            position: relative;
+            text-shadow: 2px 2px var(--c-red), -2px -2px var(--c-mint);
+            animation: textFlicker 3s infinite alternate;
+            margin-bottom: 10px;
         }
+        .subtitle { font-family: var(--f-code); color: var(--c-mint); font-size: 1rem; letter-spacing: 2px; margin-bottom: 40px; }
 
-        .card {
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--border);
+        /* --- 6. COMPONENTS --- */
+        
+        /* Cards */
+        .glass-card {
+            background: var(--c-glass);
+            border: 1px solid var(--c-glass-border);
             border-radius: 20px;
             padding: 30px;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
+            backdrop-filter: blur(10px);
+            margin-bottom: 20px;
+            box-shadow: var(--c-shadow);
         }
 
-        .card:hover {
-            transform: translateY(-10px);
-            border-color: var(--mint);
-            box-shadow: 0 10px 30px rgba(0, 255, 204, 0.2);
-        }
-
-        .card h3 {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--mint);
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        /* Кнопки */
-        .cyber-button {
-            display: inline-block;
-            width: 100%;
-            padding: 15px;
-            background: transparent;
-            border: 2px solid var(--apple-red);
-            color: var(--apple-red);
-            text-transform: uppercase;
-            font-weight: bold;
-            letter-spacing: 2px;
+        /* Prompt Chips (Interactive) */
+        .chip-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; margin-top: 15px; }
+        .prompt-chip {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 12px;
+            padding: 15px;
             cursor: pointer;
             transition: 0.3s;
-            text-decoration: none;
-            text-align: center;
-            margin-top: 20px;
             position: relative;
             overflow: hidden;
+            display: flex; flex-direction: column; gap: 5px;
+        }
+        .prompt-chip:hover { border-color: var(--c-mint); background: rgba(90, 255, 176, 0.05); }
+        
+        /* Selected State for Chips */
+        .prompt-chip.selected {
+            background: linear-gradient(135deg, rgba(90, 255, 176, 0.1), rgba(255, 77, 109, 0.1));
+            border-color: var(--c-mint);
+            box-shadow: 0 0 15px rgba(90, 255, 176, 0.2);
+        }
+        .prompt-chip.selected::after {
+            content: 'SELECTED';
+            position: absolute; top: 5px; right: 5px;
+            font-size: 9px; font-family: var(--f-code);
+            background: var(--c-mint); color: #000; padding: 2px 4px; border-radius: 4px;
         }
 
-        .cyber-button:hover {
-            background: var(--apple-red);
-            color: #fff;
-            box-shadow: 0 0 20px var(--apple-red);
-        }
+        .chip-title { font-family: var(--f-tech); font-weight: 700; font-size: 1.1em; color: #fff; }
+        .chip-desc { font-size: 0.85em; color: #aaa; line-height: 1.4; }
+        /* Hidden textarea for logic */
+        .source-code { display: none; }
 
-        /* Мини-игра (Пасхалка) */
-        #game-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(10, 11, 30, 0.95);
-            z-index: 9999;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #game-canvas {
-            border: 2px solid var(--mint);
-            background: #000;
-            max-width: 90vw;
-            max-height: 70vh;
-        }
-
-        /* Скрытая кнопка входа в систему */
-        .footer-secret {
-            margin: 50px 0;
-            opacity: 0.3;
-            transition: 0.3s;
+        /* Buttons */
+        .btn-action {
+            background: var(--c-mint);
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            font-family: var(--f-tech);
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 12px;
-            font-family: monospace;
+            transition: 0.3s;
+            display: inline-flex; align-items: center; gap: 10px;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+        }
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px var(--c-mint);
+        }
+        .btn-action.secondary { background: transparent; border: 1px solid var(--c-red); color: var(--c-red); }
+        .btn-action.secondary:hover { background: var(--c-red); color: #000; box-shadow: 0 0 30px var(--c-red); }
+
+        /* --- 7. EASTER EGG GAME --- */
+        #game-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 12, 21, 0.95);
+            z-index: 999;
+            display: none; /* Flex when active */
+            flex-direction: column;
+            justify-content: center; align-items: center;
+        }
+        #game-canvas { border: 2px solid var(--c-mint); box-shadow: 0 0 30px var(--c-mint); border-radius: 10px; background: #000; }
+        .game-ui { margin-top: 20px; font-family: var(--f-tech); color: #fff; text-align: center; }
+        .close-game { margin-top: 20px; cursor: pointer; color: var(--c-red); text-decoration: underline; }
+
+        /* --- 8. MOBILE ADAPTATION --- */
+        @media (max-width: 900px) {
+            .app-container { grid-template-columns: 1fr; grid-template-rows: 1fr 70px; }
+            .sidebar { 
+                flex-direction: row; justify-content: space-around; 
+                grid-row: 2; padding: 0 10px; border-right: none; border-top: 1px solid var(--c-glass-border);
+            }
+            .brand-logo { display: none; } /* Hide logo on mobile bar */
+            .nav-btn::before { display: none; } /* No tooltips on mobile */
+            .main-viewport { grid-row: 1; }
+            .section-view { padding: 20px; }
+            .glitch-title { font-size: 2.5rem; }
         }
 
-        .footer-secret:hover { opacity: 1; color: var(--apple-red); }
-
-        /* Анимации */
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+        /* --- 9. UTILS --- */
+        .toast {
+            position: fixed; bottom: 30px; right: 30px;
+            background: #111; border-left: 4px solid var(--c-mint);
+            color: #fff; padding: 15px 25px;
+            font-family: var(--f-code);
+            transform: translateY(100px); opacity: 0;
+            transition: 0.4s var(--ease-out);
+            z-index: 200;
         }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        
+        .hidden { display: none; }
 
-        @media (max-width: 600px) {
-            h1 { font-size: 1.5rem; }
-            .renette-avatar { width: 120px; height: 120px; }
+        /* Scrollbar custom */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0f0c15; }
+        ::-webkit-scrollbar-thumb { background: var(--c-lilac); border-radius: 3px; }
+
+        /* Animations */
+        @keyframes bootUp { from { opacity: 0; transform: scale(0.95); filter: blur(10px); } to { opacity: 1; transform: scale(1); filter: blur(0); } }
+        @keyframes textFlicker { 
+            0% { opacity: 1; transform: translateX(0); } 
+            3% { opacity: 0.8; transform: translateX(2px); }
+            5% { opacity: 1; transform: translateX(0); }
+            95% { text-shadow: 2px 2px var(--c-red); }
+            98% { text-shadow: -2px 0 var(--c-mint); transform: translateX(-2px); }
+            100% { text-shadow: 2px 2px var(--c-red); }
         }
     </style>
 </head>
 <body>
 
-    <div id="cyber-forest"></div>
+    <canvas id="canvas-bg"></canvas>
+    <div class="vignette"></div>
 
-    <header>
-        <div class="renette-avatar"></div>
-        <h1>Renette_v2.0</h1>
-        <p style="color: var(--cyber-purple); font-weight: bold;">[ Digital Spirit of the Apple Tree ]</p>
-    </header>
+    <div class="app-container">
+        
+        <nav class="sidebar">
+            <div class="brand-logo" onclick="unlockEasterEgg()" title="Renette OS Core"></div>
+            
+            <button class="nav-btn active" onclick="nav('home')" data-tooltip="Главная">🏠</button>
+            <button class="nav-btn" onclick="nav('prompts')" data-tooltip="Промпты">💾</button>
+            <button class="nav-btn" onclick="nav('guides')" data-tooltip="Мануалы">📚</button>
+            <button class="nav-btn" onclick="nav('download')" data-tooltip="Скачать">📥</button>
+            <button class="nav-btn" onclick="nav('info')" data-tooltip="О системе">ℹ️</button>
+        </nav>
 
-    <div class="container">
-        <div class="terminal-grid">
-            <div class="card">
-                <h3><span style="color: var(--apple-red)">🍎</span> CORE_DATA</h3>
-                <p>Основной пресет для SillyTavern. Оптимизирован под "умные" ответы и глубокое погружение в роль.</p>
-                <a href="#" class="cyber-button">DOWNLOAD_PRESET</a>
-            </div>
+        <main class="main-viewport">
+            
+            <section id="home" class="section-view active">
+                <div style="margin-top: auto; margin-bottom: auto; text-align: left;">
+                    <div class="subtitle">// DIGITAL SPIRIT CONNECTION ESTABLISHED</div>
+                    <h1 class="glitch-title">ЯБЛОЧНЫЙ<br>ПРЕСЕТ v1.7</h1>
+                    <p style="max-width: 600px; font-size: 1.2rem; line-height: 1.6; color: #ccc;">
+                        Модульная система для SillyTavern на ядре Renette.
+                        Оптимизировано для <span style="color:var(--c-mint)">Gemini</span> и <span style="color:var(--c-red)">Claude</span>.
+                        <br><br>
+                        Кибернетическая органика ваших ролевых игр.
+                    </p>
+                    <div style="margin-top: 40px; display: flex; gap: 20px; flex-wrap: wrap;">
+                        <button class="btn-action" onclick="nav('download')">СКАЧАТЬ v1.7</button>
+                        <button class="btn-action secondary" onclick="nav('prompts')">КОНСТРУКТОР</button>
+                    </div>
+                </div>
+            </section>
 
-            <div class="card">
-                <h3><span style="color: var(--cyber-purple)">⚡</span> LOGIC_PLUGINS</h3>
-                <p>Набор инструкций, чтобы сделать нейронку более человечной и эмоциональной.</p>
-                <a href="#" class="cyber-button" style="border-color: var(--cyber-purple); color: var(--cyber-purple);">VIEW_LOGS</a>
-            </div>
+            <section id="prompts" class="section-view">
+                <h2>Конструктор Модулей</h2>
+                <div class="subtitle">// SELECT & SYNC</div>
+                
+                <p>Кликните на модуль, чтобы выбрать. Нажмите "Скопировать выбранное" внизу.</p>
+
+                <div class="glass-card">
+                    <h3 style="color: var(--c-mint);">📂 1. Стиль Нарратива (Выберите один)</h3>
+                    <div class="chip-grid" id="group-style">
+                        <div class="prompt-chip" onclick="toggleChip(this, 'style')">
+                            <span class="chip-title">✧💫 Погружение</span>
+                            <span class="chip-desc">Классический РП. ИИ не пишет за юзера.</span>
+                            <textarea class="source-code">PROMPT_IMMERSION_CODE_HERE</textarea>
+                        </div>
+                        <div class="prompt-chip" onclick="toggleChip(this, 'style')">
+                            <span class="chip-title">✧📖 ФФ Режим</span>
+                            <span class="chip-desc">ИИ - автор книги. Пишет за всех.</span>
+                            <textarea class="source-code">PROMPT_FANFIC_CODE_HERE</textarea>
+                        </div>
+                        <div class="prompt-chip" onclick="toggleChip(this, 'style')">
+                            <span class="chip-title">✧💬 Интернет Чат</span>
+                            <span class="chip-desc">Симуляция переписки в мессенджере.</span>
+                            <textarea class="source-code">PROMPT_CHAT_CODE_HERE</textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <h3 style="color: var(--c-red);">📂 2. Дополнения (Мультивыбор)</h3>
+                    <div class="chip-grid">
+                        <div class="prompt-chip" onclick="toggleChip(this, 'multi')">
+                            <span class="chip-title">🕰️ Флешбеки</span>
+                            <span class="chip-desc">Вставки воспоминаний в скобках.</span>
+                            <textarea class="source-code">PROMPT_FLASHBACKS</textarea>
+                        </div>
+                        <div class="prompt-chip" onclick="toggleChip(this, 'multi')">
+                            <span class="chip-title">🖼️ MEME Generator</span>
+                            <span class="chip-desc">Генерирует описание мема в начале поста.</span>
+                            <textarea class="source-code">PROMPT_MEME</textarea>
+                        </div>
+                        <div class="prompt-chip" onclick="toggleChip(this, 'multi')">
+                            <span class="chip-title">👤 Скрытые Профили</span>
+                            <span class="chip-desc">Авто-генерация досье на новых NPC.</span>
+                            <textarea class="source-code">PROMPT_HIDDEN_PROFILES</textarea>
+                        </div>
+                        <div class="prompt-chip" onclick="toggleChip(this, 'multi')">
+                            <span class="chip-title">📢 Интервью</span>
+                            <span class="chip-desc">Ломание четвертой стены с "актерами".</span>
+                            <textarea class="source-code">PROMPT_INTERVIEW</textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card" style="position: sticky; bottom: 20px; border-color: var(--c-mint); background: rgba(0,0,0,0.8);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                        <span style="font-family: var(--f-code); color: #fff;">Выбрано модулей: <span id="count-display" style="color: var(--c-mint);">0</span></span>
+                        <button class="btn-action" onclick="copySelected()">СКОПИРОВАТЬ В БУФЕР</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="guides" class="section-view">
+                <h2>База Знаний</h2>
+                <div class="subtitle">// MANUAL_OVERRIDE</div>
+
+                <div class="glass-card">
+                    <details>
+                        <summary style="cursor: pointer; font-weight: 700; font-size: 1.2rem; padding: 10px 0;">📥 Гайд по установке</summary>
+                        <div style="padding-top: 15px; border-top: 1px dashed rgba(255,255,255,0.1);">
+                            <ol style="line-height: 1.8;">
+                                <li>Скачайте JSON файл из раздела "Скачать".</li>
+                                <li>В SillyTavern откройте меню пресетов (иконка слайдеров).</li>
+                                <li>Импортируйте файл.</li>
+                                <li><strong>Важно:</strong> Включите Regex скрипты, если спросит.</li>
+                            </ol>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="glass-card">
+                    <details>
+                        <summary style="cursor: pointer; font-weight: 700; font-size: 1.2rem; padding: 10px 0;">❓ FAQ (Частые вопросы)</summary>
+                        <div style="padding-top: 15px; border-top: 1px dashed rgba(255,255,255,0.1);">
+                            <p><strong style="color:var(--c-mint)">В: Картинки не грузятся.</strong><br>
+                            О: Проверьте "Запрет внешних медиа" в настройках ST. Нужен доступ к pollination.ai.</p>
+                            
+                            <p><strong style="color:var(--c-red)">В: Можно включить два стиля одновременно?</strong><br>
+                            О: Нет. Модули с пометкой ✧ конфликтуют. Выбирайте один.</p>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <section id="download" class="section-view">
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+                    <div style="width: 120px; height: 120px; background: var(--c-mint); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 50px var(--c-mint); margin-bottom: 40px; animation: float 3s infinite ease-in-out;">
+                        <span style="font-size: 50px;">💾</span>
+                    </div>
+                    <h2>SYSTEM CORE V1.7</h2>
+                    <p style="text-align: center; margin-bottom: 30px;">
+                        Размер: <span style="font-family: var(--f-code); color: var(--c-mint);">&lt;60 KB</span><br>
+                        Дата сборки: <span style="font-family: var(--f-code);">14.12.2025</span>
+                    </p>
+                    <a href="#" class="btn-action" onclick="showToast('Загрузка началась...', 'Файл: Renette_v1.7.json'); return false;">СКАЧАТЬ JSON</a>
+                    <br>
+                    <small style="color: #666;">MD5: 8f4j9g84j9g8j498gj94</small>
+                </div>
+            </section>
+
+            <section id="info" class="section-view">
+                <h2>Логи Обновлений</h2>
+                <div class="subtitle">// CHANGELOG_HISTORY</div>
+
+                <div style="border-left: 2px solid var(--c-mint); padding-left: 30px; margin-left: 10px;">
+                    <div style="margin-bottom: 40px; position: relative;">
+                        <span style="position: absolute; left: -39px; top: 0; background: var(--c-bg); border: 2px solid var(--c-mint); width: 16px; height: 16px; border-radius: 50%;"></span>
+                        <h3 style="color: var(--c-mint);">v1.7 [CURRENT]</h3>
+                        <ul style="list-style: none; padding: 0; color: #ccc;">
+                            <li>+ Добавлены "Фокусы" (Прогресс, Детали, Мысли).</li>
+                            <li>+ Оптимизация веса (<60KB).</li>
+                            <li>+ Новые стили писателей (Лю Чжэньюнь и др.).</li>
+                            <li>- Удален мусор из старых версий.</li>
+                        </ul>
+                    </div>
+                    <div style="margin-bottom: 40px; position: relative;">
+                         <span style="position: absolute; left: -39px; top: 0; background: var(--c-bg); border: 2px solid #555; width: 16px; height: 16px; border-radius: 50%;"></span>
+                        <h3 style="color: #777;">v1.6</h3>
+                        <p style="color: #777;">Смена характера Ренетт. Сегментированная думалка.</p>
+                    </div>
+                </div>
+
+                <h3>Контакты</h3>
+                <div style="display: flex; gap: 15px;">
+                    <a href="https://t.me/YablochnyAI" target="_blank" class="btn-action secondary" style="font-size: 0.9rem;">TELEGRAM CHANNEL</a>
+                    <a href="https://t.me/YablochnyChat" target="_blank" class="btn-action secondary" style="font-size: 0.9rem;">CHAT</a>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <div id="game-modal">
+        <h2 style="color: var(--c-mint); text-shadow: 0 0 10px var(--c-mint);">CYBER ORCHARD</h2>
+        <div class="subtitle">CATCH THE DATA APPLES. AVOID BUGS.</div>
+        <canvas id="game-canvas" width="400" height="500"></canvas>
+        <div class="game-ui">
+            Score: <span id="game-score" style="color: var(--c-mint); font-weight: bold;">0</span> | 
+            Lives: <span id="game-lives" style="color: var(--c-red); font-weight: bold;">3</span>
         </div>
-
-        <div class="footer-secret" onclick="startGame()">SYSTEM_ROOT_ACCESS: [CLICK_TO_BOOT]</div>
+        <div class="close-game" onclick="closeGame()">[ CLOSE SIMULATION ]</div>
     </div>
 
-    <div id="game-overlay">
-        <h2 style="color: var(--mint); margin-bottom: 10px;">APPLE_HARVEST.exe</h2>
-        <p style="margin-bottom: 20px;">Собери 10 цифровых яблок, чтобы очистить кэш!</p>
-        <canvas id="game-canvas"></canvas>
-        <button class="cyber-button" onclick="closeGame()" style="width: auto; padding: 10px 40px;">EXIT</button>
-    </div>
+    <div id="toast-container"></div>
 
     <script>
-        // Создание падающих пикселей на фоне
-        function createLeaves() {
-            const forest = document.getElementById('cyber-forest');
-            for(let i=0; i<30; i++) {
-                const leaf = document.createElement('div');
-                leaf.className = 'pixel-leaf';
-                leaf.style.left = Math.random() * 100 + 'vw';
-                leaf.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                leaf.style.opacity = Math.random();
-                forest.appendChild(leaf);
+        // --- 1. NAVIGATION LOGIC ---
+        function nav(sectionId) {
+            // Update Menu
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            const activeBtn = document.querySelector(`.nav-btn[onclick="nav('${sectionId}')"]`);
+            if(activeBtn) activeBtn.classList.add('active');
+
+            // Update View
+            document.querySelectorAll('.section-view').forEach(sec => sec.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        // --- 2. PROMPT CHIP LOGIC ---
+        function toggleChip(element, type) {
+            if (type === 'style') {
+                // Radio behavior (one per group)
+                const parent = element.parentElement;
+                parent.querySelectorAll('.prompt-chip').forEach(el => el.classList.remove('selected'));
+                element.classList.add('selected');
+            } else {
+                // Checkbox behavior
+                element.classList.toggle('selected');
             }
-        }
-        createLeaves();
-
-        // Логика игры "Apple Harvest"
-        const canvas = document.getElementById('game-canvas');
-        const ctx = canvas.getContext('2d');
-        let score = 0;
-        let gameActive = false;
-        let basket = { x: 175, y: 350, w: 50, h: 20 };
-        let apples = [];
-
-        function startGame() {
-            document.getElementById('game-overlay').style.display = 'flex';
-            canvas.width = 400;
-            canvas.height = 400;
-            score = 0;
-            apples = [];
-            gameActive = true;
-            requestAnimationFrame(gameLoop);
+            updateCount();
         }
 
-        function closeGame() {
-            gameActive = false;
-            document.getElementById('game-overlay').style.display = 'none';
+        function updateCount() {
+            const count = document.querySelectorAll('.prompt-chip.selected').length;
+            document.getElementById('count-display').innerText = count;
         }
 
-        // Управление (мышь/тач)
-        canvas.addEventListener('mousemove', (e) => {
-            const rect = canvas.getBoundingClientRect();
-            basket.x = e.clientX - rect.left - basket.w/2;
-        });
-
-        canvas.addEventListener('touchmove', (e) => {
-            const rect = canvas.getBoundingClientRect();
-            basket.x = e.touches[0].clientX - rect.left - basket.w/2;
-            e.preventDefault();
-        }, {passive: false});
-
-        function gameLoop() {
-            if(!gameActive) return;
-            ctx.clearRect(0,0,400,400);
-
-            // Корзина (Мятный блок)
-            ctx.fillStyle = '#00ffcc';
-            ctx.fillRect(basket.x, basket.y, basket.w, basket.h);
-
-            // Генерация яблок (Красные пиксели)
-            if(Math.random() < 0.05) apples.push({x: Math.random()*380, y: 0});
-
-            apples.forEach((apple, index) => {
-                apple.y += 3;
-                ctx.fillStyle = '#ff3366';
-                ctx.shadowBlur = 10;
-                ctx.shadowColor = '#ff3366';
-                ctx.fillRect(apple.x, apple.y, 10, 10);
-                ctx.shadowBlur = 0;
-
-                // Проверка столкновения
-                if(apple.y > basket.y && apple.x > basket.x && apple.x < basket.x + basket.w) {
-                    apples.splice(index, 1);
-                    score++;
-                }
-
-                if(apple.y > 400) apples.splice(index, 1);
-            });
-
-            ctx.fillStyle = '#fff';
-            ctx.fillText(`HARVESTED: ${score}/10`, 10, 20);
-
-            if(score >= 10) {
-                alert("СИСТЕМА ОЧИЩЕНА. Ренетт довольна! ✨");
-                closeGame();
+        function copySelected() {
+            const selected = document.querySelectorAll('.prompt-chip.selected');
+            if (selected.length === 0) {
+                showToast('Ошибка', 'Ничего не выбрано!');
                 return;
             }
 
-            requestAnimationFrame(gameLoop);
+            let text = "";
+            selected.forEach(chip => {
+                const code = chip.querySelector('.source-code').value;
+                text += code + "\n\n";
+            });
+
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Успех', `${selected.length} модулей скопировано!`);
+            });
         }
+
+        // --- 3. TOAST SYSTEM ---
+        function showToast(title, msg) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `<strong style="color:var(--c-mint)">${title}</strong><br>${msg}`;
+            container.appendChild(toast);
+            
+            setTimeout(() => toast.classList.add('show'), 10);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 400);
+            }, 3000);
+        }
+
+        // --- 4. BACKGROUND PARTICLES (Matrix Leaves) ---
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.speed = Math.random() * 1 + 0.5;
+                this.size = Math.random() * 2 + 1;
+                this.char = Math.random() > 0.5 ? '1' : '0';
+                this.color = Math.random() > 0.8 ? '#ff4d6d' : '#5affb0';
+            }
+            update() {
+                this.y += this.speed;
+                if (this.y > height) this.y = 0;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.font = `${this.size * 5}px monospace`;
+                ctx.fillText(this.char, this.x, this.y);
+            }
+        }
+
+        for(let i=0; i<100; i++) particles.push(new Particle());
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // --- 5. EASTER EGG GAME: CYBER ORCHARD ---
+        let gameActive = false;
+        let eggClicks = 0;
+        let gameLoopId;
+        
+        function unlockEasterEgg() {
+            eggClicks++;
+            if(eggClicks === 5) {
+                document.getElementById('game-modal').style.display = 'flex';
+                initGame();
+                eggClicks = 0;
+            }
+        }
+
+        function closeGame() {
+            document.getElementById('game-modal').style.display = 'none';
+            gameActive = false;
+            cancelAnimationFrame(gameLoopId);
+        }
+
+        function initGame() {
+            const gCanvas = document.getElementById('game-canvas');
+            const gCtx = gCanvas.getContext('2d');
+            let score = 0;
+            let lives = 3;
+            let items = [];
+            let basket = { x: 175, y: 450, w: 50, h: 10 };
+            gameActive = true;
+
+            // Controls
+            gCanvas.addEventListener('mousemove', (e) => {
+                const rect = gCanvas.getBoundingClientRect();
+                basket.x = e.clientX - rect.left - basket.w/2;
+            });
+            // Touch controls
+            gCanvas.addEventListener('touchmove', (e) => {
+                const rect = gCanvas.getBoundingClientRect();
+                basket.x = e.touches[0].clientX - rect.left - basket.w/2;
+            });
+
+            function spawnItem() {
+                if(Math.random() < 0.03) {
+                    items.push({
+                        x: Math.random() * 380,
+                        y: 0,
+                        type: Math.random() > 0.3 ? 'apple' : 'bug', // 70% apples, 30% bugs
+                        speed: Math.random() * 2 + 2
+                    });
+                }
+            }
+
+            function gameLoop() {
+                if(!gameActive) return;
+
+                // Clear
+                gCtx.fillStyle = '#000';
+                gCtx.fillRect(0,0, 400, 500);
+
+                // Basket
+                gCtx.fillStyle = '#5affb0';
+                gCtx.fillRect(basket.x, basket.y, basket.w, basket.h);
+
+                // Items
+                spawnItem();
+                
+                for (let i = 0; i < items.length; i++) {
+                    let item = items[i];
+                    item.y += item.speed;
+
+                    // Draw
+                    gCtx.font = "20px Arial";
+                    gCtx.fillText(item.type === 'apple' ? '🍎' : '👾', item.x, item.y);
+
+                    // Collision
+                    if (item.y > basket.y && item.y < basket.y + basket.h &&
+                        item.x > basket.x && item.x < basket.x + basket.w) {
+                        
+                        if (item.type === 'apple') score++;
+                        else lives--;
+                        
+                        items.splice(i, 1);
+                        i--;
+                        // Updates
+                        document.getElementById('game-score').innerText = score;
+                        document.getElementById('game-lives').innerText = lives;
+
+                        if (lives <= 0) {
+                            alert("GAME OVER. System Rebooting...");
+                            closeGame();
+                            return;
+                        }
+                        if (score >= 10 && !document.winFlag) {
+                            // Secret WIN condition
+                            showToast("SECRET UNLOCKED", "Code: RENETTE_LOVES_YOU");
+                            document.winFlag = true;
+                        }
+                    } 
+                    // Missed apple
+                    else if (item.y > 500) {
+                        items.splice(i, 1);
+                        i--;
+                    }
+                }
+
+                gameLoopId = requestAnimationFrame(gameLoop);
+            }
+            gameLoop();
+        }
+
     </script>
 </body>
 </html>
