@@ -1,390 +1,415 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta name="google-site-verification" content="L1aS8txxzlMjDV_Efl0Oi1WDR0J7_DCdyazGjG1zVPk" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="google-site-verification" content="L1aS8txxzlMjDV_Efl0Oi1WDR0J7_DCdyazGjG1zVPk" />
+    <title>Яблочный Пресет | Renette System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700;800&family=Rajdhani:wght@500;700&family=Pacifico&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="favicon.png">
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Manrope:wght@300;500;800&family=Press+Start+2P&display=swap" rel="stylesheet">
-
-    <title>RENETTE // Яблочный Пресет</title>
-
     <style>
+        /* =========================================
+           CORE VARIABLES & RESET
+           ========================================= */
         :root {
-            --c-bg: #0f0c15;
-            --c-surface: rgba(30, 25, 40, 0.6);
-            --c-surface-border: rgba(255, 255, 255, 0.08);
+            --primary: #99ff99;       /* Digital Leaf */
+            --primary-glow: rgba(153, 255, 153, 0.4);
+            --secondary: #ff9a9e;     /* Soft Apple */
+            --secondary-glow: rgba(255, 154, 158, 0.4);
+            --accent: #a18cd1;        /* Cyber Spirit */
+            --bg-dark: #0b0c10;
+            --bg-panel: #141619;
+            --glass-bg: rgba(20, 22, 25, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --text-main: #e0e6ed;
+            --text-muted: #94a3b8;
 
-            --c-mint: #69f0ae;
-            --c-mint-glow: rgba(105, 240, 174, 0.4);
+            --font-tech: 'Rajdhani', sans-serif;
+            --font-body: 'Montserrat', sans-serif;
+            --font-hand: 'Pacifico', cursive;
 
-            --c-red: #ff5252;
-            --c-red-glow: rgba(255, 82, 82, 0.4);
-
-            --c-lilac: #c471ed;
-            --c-text-main: #e0e0e0;
-            --c-text-dim: #9ca3af;
-
-            --font-tech: 'JetBrains Mono', monospace;
-            --font-body: 'Manrope', sans-serif;
-            --font-pixel: 'Press Start 2P', cursive;
-
-            --glass: blur(16px) saturate(180%);
-            --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+            --ease: cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
 
         body {
-            background-color: var(--c-bg);
-            background-image:
-                radial-gradient(circle at 15% 50%, rgba(196, 113, 237, 0.08), transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(105, 240, 174, 0.08), transparent 25%);
-            color: var(--c-text-main);
-            font-family: var(--font-body);
             margin: 0;
             padding: 0;
-            min-height: 100vh;
+            background-color: var(--bg-dark);
+            font-family: var(--font-body);
+            color: var(--text-main);
             overflow-x: hidden;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
-        /* --- BACKGROUND FX --- */
-        #bg-canvas {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            pointer-events: none;
+        /* SCROLLBAR */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
+
+        /* BACKGROUND FX */
+        #canvas-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2; pointer-events: none; opacity: 0.6;
+        }
+        .vignette {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, transparent 0%, var(--bg-dark) 90%);
+            z-index: -1; pointer-events: none;
         }
 
-        .scanline {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
-            background-size: 100% 4px;
-            z-index: 9000;
-            pointer-events: none;
-            opacity: 0.3;
-        }
-
-        /* --- SCROLLBAR --- */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--c-bg); }
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(to bottom, var(--c-lilac), var(--c-mint));
-            border-radius: 4px;
-        }
-
-        /* --- LAYOUT GRID --- */
-        .app-layout {
+        /* =========================================
+           LAYOUT GRID
+           ========================================= */
+        .app-container {
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: 260px 1fr;
             min-height: 100vh;
-            padding-bottom: 80px; /* Space for mobile nav */
-        }
-
-        @media (min-width: 900px) {
-            .app-layout {
-                grid-template-columns: 100px 1fr;
-                padding-bottom: 0;
-            }
-        }
-
-        /* --- NAVIGATION (DOCK STYLE) --- */
-        .nav-dock {
-            position: fixed;
-            z-index: 1000;
-            background: rgba(15, 12, 21, 0.85);
-            backdrop-filter: var(--glass);
-            border: 1px solid var(--c-surface-border);
-            transition: all 0.3s var(--ease-out);
-        }
-
-        /* Mobile Bottom Nav */
-        @media (max-width: 899px) {
-            .nav-dock {
-                bottom: 20px;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 90%;
-                max-width: 400px;
-                height: 65px;
-                border-radius: 24px;
-                display: flex;
-                justify-content: space-around;
-                align-items: center;
-                padding: 0 10px;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            }
-        }
-
-        /* Desktop Side Dock */
-        @media (min-width: 900px) {
-            .nav-dock {
-                top: 50%;
-                left: 20px;
-                transform: translateY(-50%);
-                width: 70px;
-                height: auto;
-                border-radius: 35px;
-                display: flex;
-                flex-direction: column;
-                gap: 20px;
-                padding: 30px 0;
-                align-items: center;
-            }
-        }
-
-        .nav-btn {
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-        }
-
-        .nav-btn img {
-            width: 24px;
-            height: 24px;
-            filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));
-            transition: transform 0.2s;
-        }
-
-        .nav-btn:hover {
-            background: rgba(255,255,255,0.1);
-            transform: scale(1.1);
-        }
-
-        .nav-btn.active {
-            background: var(--c-mint-glow);
-            box-shadow: 0 0 15px var(--c-mint-glow);
-        }
-
-        .nav-btn.active img {
-            transform: scale(1.1) rotate(-10deg);
-        }
-
-        /* Tooltip for Desktop */
-        .nav-btn::after {
-            content: attr(data-label);
-            position: absolute;
-            left: 70px;
-            background: var(--c-mint);
-            color: #000;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-family: var(--font-tech);
-            font-weight: bold;
-            opacity: 0;
-            pointer-events: none;
-            transform: translateX(-10px);
-            transition: 0.2s;
-            white-space: nowrap;
-        }
-        @media (min-width: 900px) {
-            .nav-btn:hover::after {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        @media (max-width: 899px) {
-            .nav-btn::after { display: none; }
-        }
-
-        /* --- MAIN AREA --- */
-        .content-area {
-            grid-column: 1 / -1;
-            padding: 20px;
-            max-width: 1200px;
+            max-width: 1600px;
             margin: 0 auto;
             width: 100%;
         }
-        @media (min-width: 900px) {
-            .content-area {
-                grid-column: 2;
-                padding: 40px 60px;
-            }
+
+        /* =========================================
+           SIDEBAR (NAVIGATION)
+           ========================================= */
+        .sidebar {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            padding: 30px 20px;
+            background: rgba(11, 12, 16, 0.8);
+            backdrop-filter: blur(15px);
+            border-right: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
         }
 
-        /* --- HERO HEADER --- */
-        .hero {
-            text-align: center;
-            margin-bottom: 50px;
-            position: relative;
-            padding: 40px 0;
-        }
-
-        .hero-apple {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 0 20px var(--c-mint-glow));
-            animation: float 4s ease-in-out infinite;
-            cursor: pointer;
-            transition: transform 0.1s;
-        }
-        .hero-apple:active { transform: scale(0.9); }
-
-        h1 {
-            font-family: var(--font-tech);
-            font-size: clamp(2rem, 5vw, 4rem);
-            margin: 0;
-            text-transform: uppercase;
-            letter-spacing: -2px;
-            background: linear-gradient(90deg, #fff, var(--c-mint), #fff);
-            background-size: 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shine 5s linear infinite;
-        }
-
-        .subtitle {
-            font-family: var(--font-tech);
-            color: var(--c-mint);
-            font-size: 0.9rem;
-            margin-top: 10px;
-            opacity: 0.8;
-        }
-
-        .cursor {
-            display: inline-block;
-            width: 8px;
-            height: 1em;
-            background: var(--c-red);
-            animation: blink 1s step-end infinite;
-            vertical-align: middle;
-        }
-
-        /* --- SECTIONS (Tabs) --- */
-        .tab-section {
-            display: none;
-            animation: slideUp 0.5s var(--ease-out);
-        }
-        .tab-section.active { display: block; }
-
-        .glass-panel {
-            background: var(--c-surface);
-            backdrop-filter: var(--glass);
-            border: 1px solid var(--c-surface-border);
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 30px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
-
-        .glass-panel::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 2px;
-            background: linear-gradient(90deg, transparent, var(--c-mint), transparent);
-        }
-
-        h2 {
-            font-family: var(--font-tech);
-            color: var(--c-mint);
-            font-size: 1.8rem;
-            margin-top: 0;
-            border-bottom: 1px dashed rgba(255,255,255,0.1);
-            padding-bottom: 15px;
+        .brand {
             display: flex;
             align-items: center;
             gap: 15px;
+            margin-bottom: 50px;
+            cursor: pointer;
+            user-select: none;
         }
 
-        h2 img { height: 32px; filter: drop-shadow(0 0 5px var(--c-mint)); }
-
-        /* --- CHANGELOG TERMINAL --- */
-        .terminal {
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid var(--c-surface-border);
-            border-radius: 12px;
-            font-family: var(--font-tech);
-            padding: 0;
-            margin-top: 20px;
-            max-height: 400px;
-            overflow-y: auto;
+        .brand-logo {
+            width: 45px; height: 45px;
+            filter: drop-shadow(0 0 10px var(--secondary-glow));
+            transition: transform 0.3s var(--ease);
         }
-        .term-header {
-            background: #1a1a1a;
-            padding: 10px 15px;
-            border-bottom: 1px solid #333;
-            display: flex;
-            gap: 8px;
-            position: sticky;
-            top: 0;
-        }
-        .term-dot { width: 10px; height: 10px; border-radius: 50%; }
-        .bg-r { background: #ff5f56; }
-        .bg-y { background: #ffbd2e; }
-        .bg-g { background: #27c93f; }
+        .brand-logo:active { transform: scale(0.9); }
 
-        .term-body { padding: 20px; font-size: 0.85rem; color: #ccc; }
-        .version-tag { color: var(--c-mint); font-weight: bold; }
-        .update-date { color: #666; float: right; }
-        .update-list { list-style: none; padding-left: 15px; margin-top: 10px; border-left: 2px solid #333; }
-        .update-list li { margin-bottom: 8px; position: relative; }
-        .update-list li::before { content: '>'; color: var(--c-red); position: absolute; left: -20px; }
-
-        /* --- DOWNLOAD BUTTON --- */
-        .dl-btn-container { text-align: center; margin: 40px 0; }
-
-        .cyber-button {
-            position: relative;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
+        .brand-text h1 {
             font-family: var(--font-tech);
             font-weight: 700;
-            text-decoration: none;
-            color: #000;
-            background: var(--c-mint);
-            padding: 20px 40px;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
+            margin: 0;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             text-transform: uppercase;
-            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
-            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+        .brand-text span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 14px 18px;
+            border-radius: 12px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s var(--ease);
+            border: 1px solid transparent;
             cursor: pointer;
-            box-shadow: 0 0 20px var(--c-mint-glow);
+            font-family: var(--font-tech);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.1rem;
         }
 
-        .cyber-button:hover {
-            transform: translateY(-2px);
-            background: #fff;
-            box-shadow: 0 0 40px var(--c-mint-glow);
+        .nav-item img {
+            width: 22px; margin-right: 15px;
+            opacity: 0.7; transition: 0.3s;
         }
 
-        .cyber-button img { height: 24px; margin-right: 10px; }
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.03);
+            color: #fff;
+            transform: translateX(5px);
+        }
+        .nav-item:hover img { opacity: 1; transform: scale(1.1); }
 
-        /* --- ACCORDION (PROMPTS & GUIDES) --- */
+        .nav-item.active {
+            background: linear-gradient(90deg, rgba(153, 255, 153, 0.1), transparent);
+            border-left: 3px solid var(--primary);
+            color: var(--primary);
+            text-shadow: 0 0 15px var(--primary-glow);
+        }
+        .nav-item.active img { opacity: 1; filter: drop-shadow(0 0 5px var(--primary)); }
+
+        .sidebar-footer {
+            margin-top: auto;
+            font-size: 0.8rem;
+            color: #555;
+            text-align: center;
+            border-top: 1px solid var(--glass-border);
+            padding-top: 20px;
+        }
+
+        /* =========================================
+           MAIN CONTENT AREA
+           ========================================= */
+        .content-area {
+            padding: 40px 60px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* Hero Banner inside Content */
+        .hero-banner {
+            background: linear-gradient(135deg, rgba(20,20,20,0.8), rgba(10,10,10,0.9)), url('header5.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 24px;
+            padding: 60px 40px;
+            margin-bottom: 40px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .hero-banner::after {
+            content: ''; position: absolute; top:0; left:0; width:100%; height:100%;
+            background: linear-gradient(to right, rgba(0,0,0,0.8) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .hero-text {
+            position: relative; z-index: 2; max-width: 600px;
+        }
+
+        .glitch-wrapper { position: relative; display: inline-block; }
+        .hero-title {
+            font-family: var(--font-tech);
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1;
+            margin: 0 0 15px 0;
+            color: #fff;
+            text-shadow: 2px 2px 0px var(--secondary);
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--primary);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .cursor {
+            display: inline-block; width: 8px; height: 18px;
+            background: var(--primary); animation: blink 1s infinite;
+        }
+
+        /* SECTIONS */
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s var(--ease);
+        }
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h2.section-title {
+            font-family: var(--font-tech);
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #fff;
+        }
+        h2.section-title img { height: 40px; }
+
+        .glass-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        /* =========================================
+           MOBILE ADAPTATION
+           ========================================= */
+        @media (max-width: 900px) {
+            .app-container {
+                grid-template-columns: 1fr;
+                padding-bottom: 80px; /* Space for bottom nav */
+            }
+            .sidebar {
+                display: none; /* Hide sidebar on mobile */
+            }
+            .content-area {
+                padding: 20px;
+            }
+            .hero-banner {
+                padding: 30px 20px;
+                flex-direction: column;
+                text-align: center;
+                background-position: center;
+            }
+            .hero-text { text-align: left; }
+            .hero-title { font-size: 2.2rem; }
+
+            /* Mobile Bottom Nav */
+            .mobile-nav {
+                display: flex;
+                position: fixed;
+                bottom: 0; left: 0; width: 100%;
+                background: rgba(15, 18, 22, 0.95);
+                backdrop-filter: blur(20px);
+                border-top: 1px solid var(--glass-border);
+                z-index: 999;
+                padding-bottom: env(safe-area-inset-bottom);
+                justify-content: space-around;
+            }
+
+            .m-nav-item {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 10px 0;
+                color: #777;
+                font-size: 0.7rem;
+                font-weight: 600;
+                transition: 0.3s;
+            }
+            .m-nav-item img { width: 24px; margin-bottom: 4px; filter: grayscale(1); }
+            .m-nav-item.active { color: var(--primary); }
+            .m-nav-item.active img { filter: grayscale(0) drop-shadow(0 0 5px var(--primary)); }
+
+            /* Mobile Header */
+            .mobile-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 15px 20px;
+                background: rgba(11, 12, 16, 0.9);
+                position: sticky; top: 0; z-index: 99;
+                border-bottom: 1px solid var(--glass-border);
+            }
+            .mh-logo { width: 35px; }
+            .mh-title { font-family: var(--font-tech); color: #fff; font-size: 1.2rem; text-transform: uppercase; }
+        }
+
+        @media (min-width: 901px) {
+            .mobile-nav, .mobile-header { display: none; }
+        }
+
+        /* =========================================
+           SPECIFIC COMPONENTS (Refined from original)
+           ========================================= */
+
+        /* Changelog */
+        .changelog-box {
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--glass-border);
+        }
+        .changelog-header {
+            position: sticky; top: 0;
+            background: rgba(20, 20, 20, 0.95);
+            padding: 15px;
+            border-bottom: 1px solid var(--glass-border);
+            color: var(--primary);
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .changelog-entry { padding: 20px; border-bottom: 1px dashed rgba(255,255,255,0.1); }
+        .version-tag {
+            background: rgba(153, 255, 153, 0.1);
+            color: var(--primary);
+            padding: 3px 8px; border-radius: 4px;
+            font-family: monospace; font-weight: bold;
+        }
+
+        /* Buttons */
+        .btn-main {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 18px;
+            margin-top: 15px;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            color: #000;
+            font-weight: 800;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 20px rgba(153, 255, 153, 0.3);
+        }
+        .btn-main:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(153, 255, 153, 0.5); }
+        .btn-main img { width: 24px; margin-right: 10px; }
+
+        .btn-secondary {
+            display: flex; align-items: center; width: 100%; padding: 15px;
+            background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border);
+            color: #ccc; text-decoration: none; border-radius: 10px;
+            transition: 0.3s; margin-bottom: 10px;
+        }
+        .btn-secondary:hover { background: var(--glass-border); color: #fff; border-color: var(--primary); }
+        .btn-secondary img { width: 20px; margin-right: 15px; }
+
+        /* Prompts & Guides (Accordion Style) */
         .accordion-item {
+            border: 1px solid var(--glass-border);
             background: rgba(255,255,255,0.02);
-            border: 1px solid var(--c-surface-border);
             margin-bottom: 10px;
-            border-radius: 8px;
+            border-radius: 12px;
             overflow: hidden;
             transition: all 0.3s;
         }
-
-        .accordion-item:hover { border-color: var(--c-mint); }
-        .accordion-item.active { border-color: var(--c-mint); background: rgba(105, 240, 174, 0.05); }
-
         .accordion-header {
             padding: 15px 20px;
             cursor: pointer;
@@ -392,891 +417,707 @@
             align-items: center;
             justify-content: space-between;
             font-weight: 600;
-            user-select: none;
+            transition: background 0.2s;
         }
-
-        .acc-title { display: flex; align-items: center; gap: 10px; }
-        .acc-num { color: var(--c-mint); font-family: var(--font-tech); font-weight: bold; }
-        .acc-icon { transition: transform 0.3s; opacity: 0.7; }
-        .accordion-item.active .acc-icon { transform: rotate(180deg); color: var(--c-mint); opacity: 1; }
-
+        .accordion-header:hover { background: rgba(255,255,255,0.05); }
+        .accordion-header.active {
+            background: linear-gradient(90deg, rgba(153, 255, 153, 0.1), transparent);
+            color: var(--primary);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .accordion-header.active .arrow { transform: rotate(180deg); }
         .accordion-body {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s cubic-bezier(0,1,0,1);
-            padding: 0 20px;
+            max-height: 0; overflow: hidden; transition: max-height 0.5s ease;
         }
+        .accordion-content { padding: 20px; }
 
-        .accordion-item.active .accordion-body {
-            padding: 0 20px 20px 20px;
-            max-height: 10000px; /* Big enough */
-            transition: max-height 1s ease-in-out;
-        }
-
-        /* --- PROMPT OPTIONS --- */
-        .prompt-option {
+        /* Prompt Options */
+        .option-card {
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--glass-border);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
             display: flex;
             flex-direction: column;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.05);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            gap: 15px;
+            gap: 10px;
+        }
+        @media(min-width: 768px) {
+            .option-card { flex-direction: row; align-items: center; justify-content: space-between; }
         }
 
-        @media (min-width: 600px) {
-            .prompt-option { flex-direction: row; align-items: center; justify-content: space-between; }
+        .copy-btn {
+            background: transparent; border: 1px solid var(--primary);
+            color: var(--primary); padding: 8px 16px; border-radius: 6px;
+            cursor: pointer; font-weight: 600; transition: 0.2s;
+            white-space: nowrap;
         }
-
-        .prompt-info { flex: 1; text-align: left; }
-        .prompt-title { color: #fff; font-weight: bold; font-size: 0.95rem; display: block; margin-bottom: 5px; }
-
-        /* Styled Checkbox/Radio */
-        .custom-input {
-            appearance: none;
-            width: 20px; height: 20px;
-            border: 2px solid var(--c-mint);
-            background: transparent;
-            cursor: pointer;
-            display: grid;
-            place-content: center;
-            margin-right: 10px;
-            flex-shrink: 0;
-        }
-        .custom-input[type="radio"] { border-radius: 50%; }
-        .custom-input[type="checkbox"] { border-radius: 4px; }
-
-        .custom-input::before {
-            content: "";
-            width: 10px; height: 10px;
-            transform: scale(0);
-            transition: 120ms transform ease-in-out;
-            box-shadow: inset 1em 1em var(--c-mint);
-        }
-        .custom-input[type="radio"]::before { border-radius: 50%; }
-        .custom-input[type="checkbox"]::before { transform-origin: center; clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%); box-shadow: inset 1em 1em var(--c-mint); }
-        .custom-input:checked::before { transform: scale(1); }
-
-        /* Copy Button */
-        .btn-copy {
-            background: transparent;
-            border: 1px solid var(--c-mint);
-            color: var(--c-mint);
-            font-family: var(--font-tech);
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            transition: all 0.2s;
-        }
-        .btn-copy:hover { background: var(--c-mint); color: #000; }
+        .copy-btn:hover { background: var(--primary); color: #000; }
 
         .bulk-btn {
-            width: 100%;
-            background: linear-gradient(45deg, rgba(105, 240, 174, 0.1), transparent);
-            border: 1px solid var(--c-mint);
-            color: var(--c-mint);
-            padding: 15px;
-            font-family: var(--font-tech);
-            font-weight: bold;
-            margin-top: 15px;
-            cursor: pointer;
-            text-transform: uppercase;
+            width: 100%; padding: 15px; margin-top: 15px;
+            background: rgba(153, 255, 153, 0.1);
+            border: 1px solid var(--primary); color: var(--primary);
+            border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase;
             transition: 0.3s;
         }
-        .bulk-btn:hover { background: var(--c-mint); color: #000; letter-spacing: 2px; }
+        .bulk-btn:hover { background: var(--primary); color: #000; }
 
-        /* Hidden Source */
-        .source-text { display: none; }
+        textarea.source { display: none; }
 
-        /* Details/Summary styling */
-        details summary {
-            color: var(--c-text-dim);
-            font-size: 0.85rem;
-            cursor: pointer;
-            list-style: none;
-            transition: color 0.2s;
-            margin-top: 5px;
-        }
-        details summary:hover { color: var(--c-lilac); }
-        details summary::marker { display: none; }
-
-        .preview-box {
-            margin-top: 10px;
-            background: rgba(0,0,0,0.4);
-            padding: 10px;
-            border-radius: 6px;
-            border-left: 2px solid var(--c-lilac);
-        }
-        .preview-box img { width: 100%; border-radius: 4px; margin-top: 10px; cursor: zoom-in; }
-
-        /* --- LIGHTBOX --- */
-        .lightbox {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 9999;
-            display: flex; justify-content: center; align-items: center;
-            opacity: 0; pointer-events: none;
-            transition: opacity 0.3s;
-        }
-        .lightbox.open { opacity: 1; pointer-events: auto; }
-        .lightbox img { max-width: 95%; max-height: 95%; box-shadow: 0 0 50px rgba(105, 240, 174, 0.2); border: 1px solid var(--c-mint); }
-        .lb-close { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 3rem; cursor: pointer; }
-
-        /* --- CONTACT CARDS --- */
-        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
-        .contact-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid var(--c-surface-border);
-            padding: 20px;
-            text-align: center;
-            text-decoration: none;
-            color: #fff;
-            border-radius: 12px;
-            transition: 0.3s;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-        }
-        .contact-card:hover {
-            background: rgba(105, 240, 174, 0.1);
-            border-color: var(--c-mint);
-            transform: translateY(-5px);
-        }
-        .contact-card img { width: 32px; height: 32px; margin-bottom: 10px; }
-
-        /* --- TOAST --- */
-        #toast-box {
-            position: fixed; bottom: 100px; right: 20px;
-            display: flex; flex-direction: column; gap: 10px; z-index: 9998;
-        }
-        @media(min-width:900px) { #toast-box { bottom: 30px; } }
-
+        /* TOAST */
+        #toast-container { position: fixed; bottom: 80px; right: 20px; z-index: 2000; display: flex; flex-direction: column; gap: 10px; }
         .toast {
-            background: rgba(15, 12, 21, 0.95);
-            border-left: 4px solid var(--c-mint);
-            color: #fff;
-            padding: 15px 25px;
-            border-radius: 4px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            font-family: var(--font-tech);
-            font-size: 0.85rem;
-            transform: translateX(100%);
-            animation: slideIn 0.3s forwards;
+            background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(10px);
+            border-left: 4px solid var(--primary); color: #fff;
+            padding: 15px 20px; border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: flex; align-items: center; gap: 10px;
         }
-        .toast.error { border-color: var(--c-red); }
+        .toast.show { transform: translateX(0); }
 
-        /* --- GAME OVERLAY (EASTER EGG) --- */
+        /* EASTER EGG GAME OVERLAY */
         #game-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 10000;
-            display: none; justify-content: center; align-items: center; flex-direction: column;
+            background: rgba(0,0,0,0.9); z-index: 10000;
+            display: none; align-items: center; justify-content: center; flex-direction: column;
         }
-        #game-canvas { border: 2px solid var(--c-mint); background: #0f0c15; box-shadow: 0 0 30px var(--c-mint-glow); }
-        .game-ui { color: var(--c-mint); font-family: var(--font-pixel); margin-bottom: 20px; text-align: center; }
-        .game-btn { background: var(--c-red); color: #fff; border: none; padding: 10px 20px; font-family: var(--font-pixel); cursor: pointer; margin-top: 10px; }
+        #game-canvas { border: 2px solid var(--primary); box-shadow: 0 0 20px var(--primary-glow); background: #111; }
+        .game-ui { position: absolute; top: 20px; color: #fff; font-family: var(--font-tech); font-size: 1.5rem; text-align: center; width: 100%; pointer-events: none; }
+        .close-game { position: absolute; top: 20px; right: 20px; color: #fff; cursor: pointer; font-size: 2rem; z-index: 10001;}
 
-        /* --- ANIMATIONS --- */
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        @keyframes shine { 0% { background-position: 200% center; } 100% { background-position: 0% center; } }
+        /* ANIMATIONS */
         @keyframes blink { 50% { opacity: 0; } }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes slideIn { to { transform: translateX(0); } }
 
+        /* Lightbox */
+        .lightbox {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); z-index: 5000;
+            justify-content: center; align-items: center;
+        }
+        .lightbox img { max-width: 90%; max-height: 90%; border-radius: 8px; border: 1px solid var(--primary); }
     </style>
 </head>
 <body>
 
-    <!-- DIGITAL NOISE BG -->
-    <canvas id="bg-canvas"></canvas>
-    <div class="scanline"></div>
+    <!-- BACKGROUND CANVAS -->
+    <canvas id="canvas-bg"></canvas>
+    <div class="vignette"></div>
 
-    <!-- NAVIGATION DOCK -->
-    <nav class="nav-dock">
-        <button class="nav-btn active" onclick="switchTab('tab-about')" data-label="О Пресете">
-            <img src="icon_clip_red.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/10692/10692823.png'" alt="Info">
-        </button>
-        <button class="nav-btn" onclick="switchTab('tab-dl')" data-label="Скачать">
-            <img src="icon_book_open.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2983/2983816.png'" alt="DL">
-        </button>
-        <button class="nav-btn" onclick="switchTab('tab-prompts')" data-label="Промпты">
-            <img src="sheets.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2921/2921222.png'" alt="Prompts">
-        </button>
-        <button class="nav-btn" onclick="switchTab('tab-guides')" data-label="Гайды">
-            <img src="icon_book_closed_red.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/10743/10743169.png'" alt="Guides">
-        </button>
-        <button class="nav-btn" onclick="switchTab('tab-contacts')" data-label="Связь">
-            <img src="icon_bag_green.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3059/3059446.png'" alt="Contacts">
-        </button>
-    </nav>
+    <!-- MOBILE HEADER -->
+    <div class="mobile-header">
+        <div class="brand" onclick="triggerEasterEgg()">
+            <img src="apple_icon.png" alt="Logo" class="mh-logo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/732/732217.png'">
+            <div class="mh-title">Renette OS</div>
+        </div>
+    </div>
 
-    <div class="app-layout">
-        <!-- Content Area -->
+    <!-- APP CONTAINER -->
+    <div class="app-container">
+
+        <!-- SIDEBAR (DESKTOP) -->
+        <aside class="sidebar">
+            <div class="brand" onclick="triggerEasterEgg()">
+                <img src="apple_icon.png" alt="Apple" class="brand-logo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/732/732217.png'">
+                <div class="brand-text">
+                    <h1>Яблочный</h1>
+                    <span>PRESET V1.7</span>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <a class="nav-item active" onclick="navTo('Description')">
+                    <img src="icon_clip_red.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/10692/10692823.png'"> Инфо
+                </a>
+                <a class="nav-item" onclick="navTo('Download')">
+                    <img src="icon_book_open.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2983/2983816.png'"> Файлы
+                </a>
+                <a class="nav-item" onclick="navTo('Guides')">
+                    <img src="icon_book_closed_red.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/10743/10743169.png'"> Гайды
+                </a>
+                <a class="nav-item" onclick="navTo('Prompts')">
+                    <img src="sheets.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2921/2921222.png'"> Промпты
+                </a>
+                <a class="nav-item" onclick="navTo('Contacts')">
+                    <img src="icon_bag_green.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3059/3059446.png'"> Связь
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                © 2025 kykaaj | SillyTavern
+            </div>
+        </aside>
+
+        <!-- CONTENT AREA -->
         <main class="content-area">
 
-            <header class="hero">
-                <!-- EASTER EGG TRIGGER: CLICK 5 TIMES -->
-                <img src="apple_icon.png" class="hero-apple" id="egg-trigger" alt="Apple" onerror="this.style.display='none'">
-                <h1>Renette <span style="font-size:0.4em; vertical-align: super; color:var(--c-mint);">v1.7</span></h1>
-                <div class="subtitle">
-                    <span id="typing-text"></span><span class="cursor"></span>
+            <div class="hero-banner">
+                <div class="hero-text">
+                    <div class="glitch-wrapper">
+                        <h1 class="hero-title">Яблочный Пресет</h1>
+                    </div>
+                    <div class="hero-subtitle">
+                         <span id="typing-text"></span><span class="cursor"></span>
+                    </div>
                 </div>
-            </header>
+            </div>
 
-            <!-- 1. ABOUT SECTION -->
-            <section id="tab-about" class="tab-section active">
-                <div class="glass-panel">
-                    <h2><img src="icon_clip.png" onerror="this.style.display='none'"> Система: О Пресете</h2>
+            <!-- TAB: DESCRIPTION -->
+            <div id="Description" class="tab-content active">
+                <div class="glass-card">
+                    <h2 class="section-title"><img src="icon_clip.png" onerror="this.style.display='none'"> О Пресете</h2>
                     <p style="line-height: 1.8; color: #ccc;">
-                        Модульный пресет с огромным количеством тоглов, основанный на ядре Селии, но переписанный под цифровую эпоху.
-                        <br><br>
-                        <strong style="color:var(--c-mint)">ПОДДЕРЖИВАЕМЫЕ МОДЕЛИ:</strong>
-                        <br>
-                        <span style="display:block; margin-top:10px; font-family: var(--font-tech); font-size: 0.9em;">
-                            > Gemini 2.5/3.0 Pro<br>
-                            > Claude Sonnet 3.7, 4.5, Opus<br>
-                            > DeepSeek Chimera R1T2 (Experimental)
-                        </span>
+                        Модульный пресет с огромным количеством тоглов, основанный на ядре Селии. Интегрирован в цифровую среду Renette OS.
                     </p>
+                    <div style="margin-top: 20px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; border-left: 3px solid var(--primary);">
+                        <strong style="color:var(--primary); text-transform:uppercase;">Поддерживаемые модели:</strong><br>
+                        <ul style="list-style: none; padding: 0; margin-top: 10px; color: #aaa;">
+                            <li>🍃 Gemini 2.5/3.0 pro</li>
+                            <li>🍃 Claude Sonnet 3.7, 4, 4.5, Opus 4.1</li>
+                            <li>🍃 DeepSeek Chimera R1T2, Terminus, GPT 5.1</li>
+                        </ul>
+                    </div>
+                </div>
 
-                    <div class="terminal">
-                        <div class="term-header">
-                            <div class="term-dot bg-r"></div>
-                            <div class="term-dot bg-y"></div>
-                            <div class="term-dot bg-g"></div>
-                            <span style="margin-left:10px; color:#666;">changelog.log</span>
+                <div class="glass-card">
+                    <h3 style="color:var(--secondary); font-family: var(--font-tech); text-transform: uppercase;">История Обновлений</h3>
+                    <div class="changelog-box">
+                        <div class="changelog-header">Change Log</div>
+                        <!-- Changelog content copied from original -->
+                        <div class="changelog-entry">
+                            <div><span class="version-tag">v1.7</span> <span style="color:#666; font-size:0.9em; float:right;">14.12.2025</span></div>
+                            <ul style="padding-left: 20px; margin-top: 10px; color: #bbb;">
+                                <li>Пресет оптимизирован до <60 КБ.</li>
+                                <li>Добавлены магические фокусы: ✧✈️Прогресс, ✧🧩Детали, ✧💭Мысли, ✧💬Диалоги.</li>
+                                <li>Обновлен раздел ✏️Правила Письма.</li>
+                                <li>Замена "Улучшалок" на "Стили Авторов" (Китайские новеллисты).</li>
+                                <li>Улучшен джейлбрейк и HTML промпты.</li>
+                            </ul>
                         </div>
-                        <div class="term-body">
-                            <!-- Update 1.7 -->
-                            <div style="margin-bottom: 20px;">
-                                <span class="version-tag">[v1.7]</span> <span class="update-date">14.12.2025</span>
-                                <ul class="update-list">
-                                    <li>Пресет похудел до <60 КБ. Оптимизация ядра.</li>
-                                    <li>Добавлены "Магические Фокусы": ✧✈️Прогресс, ✧🧩Детали, ✧💭Мысли, ✧💬Диалоги.</li>
-                                    <li>Новые "Правила Письма" (Time/POV перемещены).</li>
-                                    <li>Удален балласт улучшалок. Внедрены стили авторов (Лю Чжэньюнь и др.).</li>
-                                    <li>Улучшен Jailbreak.</li>
-                                    <li>Обновлен HTML промпт от Минти.</li>
-                                </ul>
-                            </div>
-                            <!-- Older Updates can go here -->
-                             <div style="margin-bottom: 20px;">
-                                <span class="version-tag">[v1.61]</span> <span class="update-date">07.12.2025</span>
-                                <ul class="update-list">
-                                    <li>Фикс языков и ролей.</li>
-                                    <li>Переписана "Думалка".</li>
-                                    <li>Фикс темпа (Slowburn).</li>
-                                </ul>
-                            </div>
+                         <div class="changelog-entry">
+                            <div><span class="version-tag">v1.61</span> <span style="color:#666; font-size:0.9em; float:right;">07.12.2025</span></div>
+                            <ul style="padding-left: 20px; margin-top: 10px; color: #bbb;">
+                                <li>Фикс языков и ролей.</li>
+                                <li>Переписана думалка.</li>
+                                <li>Фикс темпа (Slow Burn).</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
 
-            <!-- 2. DOWNLOAD SECTION -->
-            <section id="tab-dl" class="tab-section">
-                <div class="glass-panel" style="text-align: center;">
-                    <h2><img src="icon_book_open_red.png" onerror="this.style.display='none'"> Файловая Система</h2>
-                    <p>Загрузите актуальную конфигурацию JSON.</p>
+            <!-- TAB: DOWNLOAD -->
+            <div id="Download" class="tab-content">
+                <div class="glass-card" style="text-align: center;">
+                    <h2 class="section-title" style="justify-content: center;"><img src="icon_book_open_red.png" onerror="this.style.display='none'"> Загрузка</h2>
+                    <p style="margin-bottom: 30px;">Актуальная версия конфигурационного файла JSON.</p>
 
-                    <div class="dl-btn-container">
-                        <a href="%F0%9F%8D%8E%D0%AF%D0%B1%D0%BB%D0%BE%D1%87%D0%BD%D1%8B%D0%B9%20V1.7.json" download="🍎Яблочный V1.7.json" class="cyber-button" onclick="showToast('Загрузка...', 'Скачивание файла началось')">
-                            <img src="icon_button_green.png" onerror="this.style.display='none'">
-                            СКАЧАТЬ v1.7
-                        </a>
-                    </div>
-
-                    <p style="font-size: 0.8em; color: var(--c-text-dim);">
-                        *Для установки следуйте инструкциям в разделе "Гайды".
-                    </p>
+                    <a href="%F0%9F%8D%8E%D0%AF%D0%B1%D0%BB%D0%BE%D1%87%D0%BD%D1%8B%D0%B9%20V1.7.json" download="🍎Яблочный V1.7.json" class="btn-main" onclick="showToast('Система', 'Начало загрузки пакета V1.7...')">
+                        <img src="icon_button_green.png" onerror="this.style.display='none'"> СКАЧАТЬ V1.7
+                    </a>
                 </div>
-            </section>
+            </div>
 
-            <!-- 3. PROMPTS SECTION (The Complex One) -->
-            <section id="tab-prompts" class="tab-section">
-                <div class="glass-panel">
-                    <h2><img src="sheets.png" onerror="this.style.display='none'"> База Данных Промптов</h2>
-                    <p style="background: rgba(105, 240, 174, 0.1); border-left: 3px solid var(--c-mint); padding: 10px;">
-                        <strong>Инструкция:</strong> Разверните категорию, выберите модуль, скопируйте и вставьте в SillyTavern.<br>
-                        ✧ = Только один вариант.<br>
-                        ✎ = Можно несколько.
-                    </p>
+            <!-- TAB: GUIDES -->
+            <div id="Guides" class="tab-content">
+                <h2 class="section-title">Инструкции</h2>
 
-                    <!-- CATEGORY 1: OOC -->
-                    <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAcc(this)">
-                            <div class="acc-title"><span class="acc-num">01.</span> ⸻(OOC)⸻</div>
-                            <span class="acc-icon">▼</span>
-                        </div>
-                        <div class="accordion-body">
-                            <p style="color:#777;">Нет дополнительных вариантов.</p>
-                        </div>
+                <!-- Guide Item 1 -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>📥 Установка</span> <span class="arrow">▼</span>
                     </div>
-
-                    <!-- CATEGORY 2: MAIN RP -->
-                    <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAcc(this)">
-                            <div class="acc-title"><span class="acc-num">02.</span> ⸻(Основное)⸻</div>
-                            <span class="acc-icon">▼</span>
-                        </div>
-                        <div class="accordion-body">
-
-                            <h4 style="color:var(--c-mint)">🌾 Режим Письма</h4>
-
-                            <!-- Option 1 -->
-                            <div class="prompt-option">
-                                <div class="prompt-info">
-                                    <span class="prompt-title">✧💫Погружение (Дефолт)</span>
-                                    <details><summary>Инфо</summary><div class="preview-box"><p>Обычный РП. ИИ не пишет за юзера.</p></div></details>
-                                </div>
-                                <button class="btn-copy" onclick="copyText(this)">Копировать</button>
-                                <textarea class="source-text">[placeholder]</textarea>
-                            </div>
-
-                            <!-- Option 2 -->
-                            <div class="prompt-option">
-                                <div class="prompt-info">
-                                    <span class="prompt-title">✧📖ФФ Режим</span>
-                                    <details><summary>Инфо</summary><div class="preview-box"><p>ИИ пишет историю за всех, включая юзера.</p></div></details>
-                                </div>
-                                <button class="btn-copy" onclick="copyText(this)">Копировать</button>
-                                <textarea class="source-text">[placeholder]</textarea>
-                            </div>
-
-                             <!-- Option 3 -->
-                             <div class="prompt-option">
-                                <div class="prompt-info">
-                                    <span class="prompt-title">✧💬Интернет Чат</span>
-                                    <details><summary>Инфо</summary><div class="preview-box"><p>Реалистичный чат мессенджера.<img src="example_5.jpg" alt="Ex"></p></div></details>
-                                </div>
-                                <button class="btn-copy" onclick="copyText(this)">Копировать</button>
-                                <textarea class="source-text">[placeholder]</textarea>
-                            </div>
-
-                            <h4 style="color:var(--c-mint)">❌ Баны</h4>
-                            <div class="prompt-option">
-                                <div class="prompt-info"><span class="prompt-title">✧🇷🇺 Русские Баны</span></div>
-                                <button class="btn-copy" onclick="copyText(this)">Копировать</button>
-                                <textarea class="source-text">[placeholder]</textarea>
-                            </div>
-                            <div class="prompt-option">
-                                <div class="prompt-info"><span class="prompt-title">✧🇺🇦 Украинские Баны</span></div>
-                                <button class="btn-copy" onclick="copyText(this)">Копировать</button>
-                                <textarea class="source-text">[placeholder]</textarea>
-                            </div>
-                             <div class="prompt-option">
-                                <div class="prompt-info"><span class="prompt-title">✧🇺🇸 English Bans</span></div>
-                                <button class="btn-copy" onclick="copyText(this)">Копировать</button>
-                                <textarea class="source-text">[placeholder]</textarea>
-                            </div>
-
-                            <h4 style="color:var(--c-mint)">📓 Лит. Стиль</h4>
-                            <!-- Example styles -->
-                             <div class="prompt-option">
-                                <div class="prompt-info"><span class="prompt-title">🪴 Лю Чжэньюнь (Дефолт)</span></div>
-                                <button class="btn-copy" onclick="copyText(this)">Копировать</button>
-                                <textarea class="source-text">[placeholder]</textarea>
-                            </div>
-                             <div class="prompt-option">
-                                <div class="prompt-info"><span class="prompt-title">🪴 Мо Ян</span></div>
-                                <button class="btn-copy" onclick="copyText(this)">Копировать</button>
-                                <textarea class="source-text">[placeholder]</textarea>
-                            </div>
-                            <!-- Add other authors similarly -->
-                            <div class="prompt-option"><div class="prompt-info"><span class="prompt-title">🪴Эйлин Чжан</span></div><button class="btn-copy" onclick="copyText(this)">Копировать</button><textarea class="source-text">[placeholder]</textarea></div>
-                            <div class="prompt-option"><div class="prompt-info"><span class="prompt-title">🪴Юй Хуа</span></div><button class="btn-copy" onclick="copyText(this)">Копировать</button><textarea class="source-text">[placeholder]</textarea></div>
-                            <div class="prompt-option"><div class="prompt-info"><span class="prompt-title">🪴Шуи Цян Чэн</span></div><button class="btn-copy" onclick="copyText(this)">Копировать</button><textarea class="source-text">[placeholder]</textarea></div>
-                            <div class="prompt-option"><div class="prompt-info"><span class="prompt-title">🪴Фредрик Бакман</span></div><button class="btn-copy" onclick="copyText(this)">Копировать</button><textarea class="source-text">[placeholder]</textarea></div>
-
-                            <h4 style="color:var(--c-mint)">🌱 Темп & Длина</h4>
-                             <div class="prompt-option">
-                                <div class="prompt-info"><span class="prompt-title">✧🌱 Slow Burn</span></div>
-                                <button class="btn-copy" onclick="copyText(this)">Копировать</button>
-                                <textarea class="source-text">[placeholder]</textarea>
-                            </div>
-                            <div class="prompt-option">
-                                <div class="prompt-info"><span class="prompt-title">✧📝 Длина: Средняя</span></div>
-                                <button class="btn-copy" onclick="copyText(this)">Копировать</button>
-                                <textarea class="source-text">[placeholder]</textarea>
-                            </div>
-                             <div class="prompt-option"><div class="prompt-info"><span class="prompt-title">✧✏️ Маленькая</span></div><button class="btn-copy" onclick="copyText(this)">Копировать</button><textarea class="source-text">[placeholder]</textarea></div>
-                             <div class="prompt-option"><div class="prompt-info"><span class="prompt-title">✧📚 Большая</span></div><button class="btn-copy" onclick="copyText(this)">Копировать</button><textarea class="source-text">[placeholder]</textarea></div>
-                             <div class="prompt-option"><div class="prompt-info"><span class="prompt-title">✧🔄 Адаптивная</span></div><button class="btn-copy" onclick="copyText(this)">Копировать</button><textarea class="source-text">[placeholder]</textarea></div>
-                             <div class="prompt-option">
-                                <div class="prompt-info"><span class="prompt-title">✧📝 Слова (Лимит)</span>
-                                <details><summary>Инфо</summary><div class="preview-box"><img src="screen111.jpg"></div></details>
-                                </div>
-                                <button class="btn-copy" onclick="copyText(this)">Копировать</button><textarea class="source-text">[placeholder]</textarea>
-                             </div>
-
-                        </div>
-                    </div>
-
-                    <!-- CATEGORY 4: EXTRA / HTML (Bulk copy needed here) -->
-                    <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAcc(this)">
-                            <div class="acc-title"><span class="acc-num">04.</span> ⸻(Доп / HTML)⸻</div>
-                            <span class="acc-icon">▼</span>
-                        </div>
-                        <div class="accordion-body">
-
-                            <h4 style="color:var(--c-mint)">🧃HTML Стили</h4>
-                             <div class="prompt-option">
-                                <div class="prompt-info"><span class="prompt-title">✧🧃 Renette HTML</span></div>
-                                <button class="btn-copy" onclick="copyText(this)">Копировать</button>
-                                <textarea class="source-text">[placeholder]</textarea>
-                            </div>
-                             <div class="prompt-option">
-                                <div class="prompt-info"><span class="prompt-title">✧💜 Iris Bloomwave</span></div>
-                                <button class="btn-copy" onclick="copyText(this)">Копировать</button>
-                                <textarea class="source-text">[placeholder]</textarea>
-                            </div>
-
-                            <h4 style="color:var(--c-mint)">✎🧺 Штуки (Мульти-выбор)</h4>
-                            <div class="group-block">
-                                <!-- Checkbox items -->
-                                <div class="prompt-option">
-                                    <input type="checkbox" class="custom-input">
-                                    <div class="prompt-info"><span class="prompt-title">🕰️ Флешбеки</span><details><summary>Инфо</summary><div class="preview-box"><img src="example1.jpg"></div></details></div>
-                                    <textarea class="source-text">[placeholder]</textarea>
-                                </div>
-                                <div class="prompt-option">
-                                    <input type="checkbox" class="custom-input">
-                                    <div class="prompt-info"><span class="prompt-title">⏩ Переходы</span><details><summary>Инфо</summary><div class="preview-box"><img src="example22.jpg"></div></details></div>
-                                    <textarea class="source-text">[placeholder]</textarea>
-                                </div>
-                                <!-- Add other checkboxes (Real world, web chapter, etc) -->
-                                <div class="prompt-option"><input type="checkbox" class="custom-input"><div class="prompt-info"><span class="prompt-title">🌎 Реальный Мир</span></div><textarea class="source-text">[placeholder]</textarea></div>
-                                <div class="prompt-option"><input type="checkbox" class="custom-input"><div class="prompt-info"><span class="prompt-title">✒️ Стиль веб-главы</span><details><summary>Инфо</summary><div class="preview-box"><img src="example29.jpg"></div></details></div><textarea class="source-text">[placeholder]</textarea></div>
-                                <div class="prompt-option"><input type="checkbox" class="custom-input"><div class="prompt-info"><span class="prompt-title">📢 Интервью с Актерами</span><details><summary>Инфо</summary><div class="preview-box"><img src="example30.jpg"></div></details></div><textarea class="source-text">[placeholder]</textarea></div>
-                                <div class="prompt-option"><input type="checkbox" class="custom-input"><div class="prompt-info"><span class="prompt-title">🖼️ MEME</span></div><textarea class="source-text">[placeholder]</textarea></div>
-                                <div class="prompt-option"><input type="checkbox" class="custom-input"><div class="prompt-info"><span class="prompt-title">🔰 Типографика</span><details><summary>Инфо</summary><div class="preview-box"><img src="example2.jpg"></div></details></div><textarea class="source-text">[placeholder]</textarea></div>
-                                <div class="prompt-option"><input type="checkbox" class="custom-input"><div class="prompt-info"><span class="prompt-title">🎙️ Музыкальные Субтитры</span><details><summary>Инфо</summary><div class="preview-box"><img src="example31.jpg"></div></details></div><textarea class="source-text">[placeholder]</textarea></div>
-
-                                <hr style="border:0; border-top:1px dashed #444; margin:15px 0;">
-                                <h5 style="color:var(--c-lilac)">Инфоблоки (Один на выбор)</h5>
-                                <!-- Radio group Infoblocks -->
-                                <div class="prompt-option">
-                                    <input type="radio" name="infoblock" class="custom-input">
-                                    <div class="prompt-info"><span class="prompt-title">✧🍎 Логи Ренетт</span><details><summary>Инфо</summary><div class="preview-box"><img src="example24.jpg"></div></details></div>
-                                    <textarea class="source-text">[placeholder]</textarea>
-                                </div>
-                                <div class="prompt-option">
-                                    <input type="radio" name="infoblock" class="custom-input">
-                                    <div class="prompt-info"><span class="prompt-title">✧🗂️ Мини-Инфоблок</span><details><summary>Инфо</summary><div class="preview-box"><img src="example25.jpg"></div></details></div>
-                                    <textarea class="source-text">[placeholder]</textarea>
-                                </div>
-                                 <div class="prompt-option"><input type="radio" name="infoblock" class="custom-input"><div class="prompt-info"><span class="prompt-title">✧📝 Основной Инфоблок</span><details><summary>Инфо</summary><div class="preview-box"><img src="example26.jpg"></div></details></div><textarea class="source-text">[placeholder]</textarea></div>
-                                 <div class="prompt-option"><input type="radio" name="infoblock" class="custom-input"><div class="prompt-info"><span class="prompt-title">✧💖 +Матрица отношений</span><details><summary>Инфо</summary><div class="preview-box"><img src="example27.jpg"></div></details></div><textarea class="source-text">[placeholder]</textarea></div>
-                                 <div class="prompt-option"><input type="radio" name="infoblock" class="custom-input"><div class="prompt-info"><span class="prompt-title">✧💭 +МатрОтн + Мысли</span><details><summary>Инфо</summary><div class="preview-box"><img src="example28.jpg"></div></details></div><textarea class="source-text">[placeholder]</textarea></div>
-
-                                <hr style="border:0; border-top:1px dashed #444; margin:15px 0;">
-                                <h5 style="color:var(--c-lilac)">CYOA & Fancy UI</h5>
-                                <!-- Rest of radios -->
-                                 <div class="prompt-option"><input type="radio" name="gm" class="custom-input"><div class="prompt-info"><span class="prompt-title">✧🎭 Claude GM Режим</span><details><summary>Инфо</summary><div class="preview-box"><img src="example33.jpg"></div></details></div><textarea class="source-text">[placeholder]</textarea></div>
-                                 <div class="prompt-option"><input type="radio" name="gm" class="custom-input"><div class="prompt-info"><span class="prompt-title">✧🛠️ Gemini GM Режим</span><details><summary>Инфо</summary><div class="preview-box"><img src="example32.jpg"></div></details></div><textarea class="source-text">[placeholder]</textarea></div>
-
-                                 <div class="prompt-option"><input type="radio" name="cyoa" class="custom-input"><div class="prompt-info"><span class="prompt-title">✧🎲 CYOA - R-Macro</span><details><summary>Инфо</summary><div class="preview-box"><img src="example34.jpg"></div></details></div><textarea class="source-text">[placeholder]</textarea></div>
-                                 <div class="prompt-option"><input type="radio" name="cyoa" class="custom-input"><div class="prompt-info"><span class="prompt-title">✧🕹️ CYOA - No R-Macro</span><details><summary>Инфо</summary><div class="preview-box"><img src="example35.jpg"></div></details></div><textarea class="source-text">[placeholder]</textarea></div>
-
-                                 <!-- Hidden blocks checkboxes -->
-                                 <div class="prompt-option"><input type="checkbox" class="custom-input"><div class="prompt-info"><span class="prompt-title">👤 Скрытые Новые Профили</span><details><summary>Инфо</summary><div class="preview-box"><img src="example36.jpg"></div></details></div><textarea class="source-text">[placeholder]</textarea></div>
-                                 <div class="prompt-option"><input type="checkbox" class="custom-input"><div class="prompt-info"><span class="prompt-title">📍 Скрытые Закадровые События</span><details><summary>Инфо</summary><div class="preview-box"><img src="example37.jpg"></div></details></div><textarea class="source-text">[placeholder]</textarea></div>
-                                 <div class="prompt-option"><input type="checkbox" class="custom-input"><div class="prompt-info"><span class="prompt-title">🗒️ Скрытые Планы</span><details><summary>Инфо</summary><div class="preview-box"><img src="example38.jpg"></div></details></div><textarea class="source-text">[placeholder]</textarea></div>
-                                 <div class="prompt-option"><input type="checkbox" class="custom-input"><div class="prompt-info"><span class="prompt-title">💌 Скрытый DatingSim</span><details><summary>Инфо</summary><div class="preview-box"><img src="example39.jpg"></div></details></div><textarea class="source-text">[placeholder]</textarea></div>
-
-                                 <!-- Fancy UI radios -->
-                                 <div class="prompt-option"><input type="radio" name="ui" class="custom-input"><div class="prompt-info"><span class="prompt-title">✧🥂 Fancy UI (Full)</span><details><summary>Инфо</summary><div class="preview-box"><img src="example40.jpg"></div></details></div><textarea class="source-text">[placeholder]</textarea></div>
-                                 <div class="prompt-option"><input type="radio" name="ui" class="custom-input"><div class="prompt-info"><span class="prompt-title">✧🥂 Только Основа</span></div><textarea class="source-text">[placeholder]</textarea></div>
-                                 <div class="prompt-option"><input type="radio" name="ui" class="custom-input"><div class="prompt-info"><span class="prompt-title">✧🥂 Только Мысли</span></div><textarea class="source-text">[placeholder]</textarea></div>
-
-                                 <!-- Comments radios -->
-                                 <div class="prompt-option"><input type="radio" name="comm" class="custom-input"><div class="prompt-info"><span class="prompt-title">✧💬 Комменты V1</span><details><summary>Инфо</summary><div class="preview-box"><img src="example42.jpg"></div></details></div><textarea class="source-text">[placeholder]</textarea></div>
-                                 <div class="prompt-option"><input type="radio" name="comm" class="custom-input"><div class="prompt-info"><span class="prompt-title">✧💬 Комменты V2</span><details><summary>Инфо</summary><div class="preview-box"><img src="example43.jpg"></div></details></div><textarea class="source-text">[placeholder]</textarea></div>
-                                 <div class="prompt-option"><input type="radio" name="comm" class="custom-input"><div class="prompt-info"><span class="prompt-title">✧💬 Комменты V3</span><details><summary>Инфо</summary><div class="preview-box"><img src="example44.jpg"></div></details></div><textarea class="source-text">[placeholder]</textarea></div>
-
-                                 <!-- Chronicles -->
-                                 <div class="prompt-option"><input type="radio" name="chron" class="custom-input"><div class="prompt-info"><span class="prompt-title">✧📜⬜️ Хроники (Свет)</span><details><summary>Инфо</summary><div class="preview-box"><img src="example45.jpg"></div></details></div><textarea class="source-text">[placeholder]</textarea></div>
-                                 <div class="prompt-option"><input type="radio" name="chron" class="custom-input"><div class="prompt-info"><span class="prompt-title">✧📜⬛️ Хроники (Темн)</span><details><summary>Инфо</summary><div class="preview-box"><img src="example46.jpg"></div></details></div><textarea class="source-text">[placeholder]</textarea></div>
-
-                                <button class="bulk-btn" onclick="copyBulk(this)">Собрать Пакет Данных</button>
-                            </div>
-
-                            <h4 style="color:var(--c-mint)">🌗 Тема HTML</h4>
-                            <div class="prompt-option"><div class="prompt-info"><span class="prompt-title">✧⬛️ Тёмная</span></div><button class="btn-copy" onclick="copyText(this)">Копировать</button><textarea class="source-text">[placeholder]</textarea></div>
-                            <div class="prompt-option"><div class="prompt-info"><span class="prompt-title">✧⬜️ Светлая</span></div><button class="btn-copy" onclick="copyText(this)">Копировать</button><textarea class="source-text">[placeholder]</textarea></div>
-                        </div>
-                    </div>
-
-                    <!-- OTHER CATEGORIES (Empty placeholders) -->
-                    <div class="accordion-item"><div class="accordion-header" onclick="toggleAcc(this)"><div class="acc-title"><span class="acc-num">03.</span> ⸻(Рейтинг)⸻</div><span class="acc-icon">▼</span></div><div class="accordion-body"><p>Нет вариантов.</p></div></div>
-                    <div class="accordion-item"><div class="accordion-header" onclick="toggleAcc(this)"><div class="acc-title"><span class="acc-num">05.</span> ⸻(Думалка)⸻</div><span class="acc-icon">▼</span></div><div class="accordion-body"><p>Нет вариантов.</p></div></div>
-                    <div class="accordion-item"><div class="accordion-header" onclick="toggleAcc(this)"><div class="acc-title"><span class="acc-num">06.</span> ⸻(Prefill)⸻</div><span class="acc-icon">▼</span></div><div class="accordion-body"><p>Нет вариантов.</p></div></div>
-
+                    <div class="accordion-body"><div class="accordion-content">
+                        <p>1. Скачайте JSON файл.<br>2. Импортируйте в SillyTavern (API: Chat Completion).<br>3. Подтвердите импорт RegEx скриптов.</p>
+                        <img src="example6.jpg" style="width:100%; border-radius:8px; margin-top:10px; cursor:zoom-in;" onclick="openLightbox(this.src)">
+                    </div></div>
                 </div>
-            </section>
 
-            <!-- 4. GUIDES SECTION -->
-            <section id="tab-guides" class="tab-section">
-                <div class="glass-panel">
-                    <h2><img src="icon_book_closed.png" onerror="this.style.display='none'"> База Знаний</h2>
-
-                    <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAcc(this)">
-                            <div class="acc-title"><span class="acc-icon">📥</span> Гайд по установке</div>
-                            <span class="acc-icon">▼</span>
-                        </div>
-                        <div class="accordion-body">
-                            <p>1. Скачайте JSON файл.<br>2. Импорт в SillyTavern.<br>3. Активация Regex.</p>
-                            <img src="example6.jpg" style="max-width:100%; border-radius:8px;" alt="Install">
-                            <img src="example7.jpg" style="max-width:100%; border-radius:8px; margin-top:10px;" alt="Regex">
-                            <p>4. Форматирование размышлений:</p>
-                            <img src="example8.jpg" style="max-width:100%; border-radius:8px;" alt="Thinking">
-                        </div>
+                <!-- Guide Item 2 -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>⚙️ Настройка Функций</span> <span class="arrow">▼</span>
                     </div>
+                    <div class="accordion-body"><div class="accordion-content">
+                        <strong style="color:var(--primary)">ООС:</strong> Ренетт комментирует действия.<br>
+                        <strong style="color:var(--primary)">Основное:</strong> Нарративный стиль всегда включен.<br>
+                        <strong style="color:var(--primary)">Карты:</strong> Не отключайте Карту Персоны и Мир.<br>
+                        <img src="screen1.jpg" style="width:100%; border-radius:8px; margin-top:10px; cursor:zoom-in;" onclick="openLightbox(this.src)">
+                    </div></div>
+                </div>
 
-                    <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAcc(this)">
-                            <div class="acc-title"><span class="acc-icon">⚙️</span> Гайд по функциям</div>
-                            <span class="acc-icon">▼</span>
-                        </div>
-                        <div class="accordion-body">
-                            <p>ООС: Ренетт комментирует.<br>Карты: Не отключать основные.<br>Жанры: Используйте шаблоны.</p>
-                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                                <img src="screen1.jpg" style="width:100%; border-radius:6px;">
-                                <img src="screen2.jpg" style="width:100%; border-radius:6px;">
-                                <img src="screen3.jpg" style="width:100%; border-radius:6px;">
-                                <img src="screen4.jpg" style="width:100%; border-radius:6px;">
+                <!-- Guide Item 3 -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>❓ FAQ</span> <span class="arrow">▼</span>
+                    </div>
+                    <div class="accordion-body"><div class="accordion-content">
+                        <p><strong>Куда вставлять промпты?</strong><br>В настройки пресета, в соответствующие тоглы. "Шаблоны" изначально пустые.</p>
+                        <p><strong>HTML не грузится?</strong><br>Проверьте доступ к image.pollinations.ai и настройки "Внешние медиа".</p>
+                    </div></div>
+                </div>
+            </div>
+
+            <!-- TAB: PROMPTS -->
+            <div id="Prompts" class="tab-content">
+                <h2 class="section-title">Библиотека Модулей</h2>
+                <p style="margin-bottom: 20px; color:#aaa; font-size: 0.9em;">
+                    <span style="color:var(--primary)">✧</span> — только один вариант.<br>
+                    <span style="color:var(--secondary)">✎</span> — можно несколько.
+                </p>
+
+                <!-- Category 1 -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>01. OOC (Системное)</span> <span class="arrow">▼</span>
+                    </div>
+                    <div class="accordion-body"><div class="accordion-content">
+                        <p style="color:#777;">Нет дополнительных модулей.</p>
+                    </div></div>
+                </div>
+
+                <!-- Category 2: Main RP -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>02. Основное (РП)</span> <span class="arrow">▼</span>
+                    </div>
+                    <div class="accordion-body"><div class="accordion-content">
+
+                        <h4 style="color:var(--primary)">🌾 Режим Письма</h4>
+
+                        <!-- Option -->
+                        <div class="option-card">
+                            <div>
+                                <div style="font-weight:bold; color:#fff;">✧💫 Погружение (Default)</div>
+                                <div style="font-size:0.8em; color:#888;">ИИ НЕ пишет за юзера. Классический РП.</div>
+                            </div>
+                            <div>
+                                <button class="copy-btn" onclick="copyText(this)">Копировать</button>
+                                <textarea class="source">[placeholder]</textarea>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- FAQ -->
-                    <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAcc(this)">
-                            <div class="acc-title"><span class="acc-icon">❓</span> FAQ</div>
-                            <span class="acc-icon">▼</span>
+                        <div class="option-card">
+                            <div>
+                                <div style="font-weight:bold; color:#fff;">✧📖 ФФ Режим</div>
+                                <div style="font-size:0.8em; color:#888;">ИИ пишет историю целиком (включая действия Юзера).</div>
+                            </div>
+                            <div>
+                                <button class="copy-btn" onclick="copyText(this)">Копировать</button>
+                                <textarea class="source">[placeholder]</textarea>
+                            </div>
                         </div>
-                        <div class="accordion-body">
-                            <p><strong>Куда вставлять?</strong> В поля тоглов, удаляя старое.<br><strong>Два инфоблока?</strong> Нельзя.<br><strong>Картинки не грузятся?</strong> Проверьте image.pollinations.ai.</p>
-                        </div>
-                    </div>
 
+                        <div class="option-card">
+                            <div>
+                                <div style="font-weight:bold; color:#fff;">✧💬 Интернет Чат</div>
+                                <div style="font-size:0.8em; color:#888;">Симуляция мессенджера.</div>
+                            </div>
+                            <div>
+                                <button class="copy-btn" onclick="copyText(this)">Копировать</button>
+                                <textarea class="source">[placeholder]</textarea>
+                            </div>
+                        </div>
+
+                        <h4 style="color:var(--primary); margin-top:20px;">🌐 Языковые Пакеты</h4>
+                        <div class="option-card">
+                            <div><span style="font-weight:bold;">🇷🇺 Русский</span></div>
+                            <div><button class="copy-btn" onclick="copyText(this)">Копировать</button><textarea class="source">[placeholder]</textarea></div>
+                        </div>
+                         <div class="option-card">
+                            <div><span style="font-weight:bold;">🇺🇸 English</span></div>
+                            <div><button class="copy-btn" onclick="copyText(this)">Копировать</button><textarea class="source">[placeholder]</textarea></div>
+                        </div>
+
+                    </div></div>
                 </div>
-            </section>
 
-            <!-- 5. CONTACTS SECTION -->
-            <section id="tab-contacts" class="tab-section">
-                <div class="glass-panel">
-                    <h2><img src="icon_bag.png" onerror="this.style.display='none'"> Протоколы Связи</h2>
-                    <div class="contact-grid">
-                        <a href="https://t.me/YablochnyAI" target="_blank" class="contact-card">
-                            <img src="icon_tg_green.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2111/2111646.png'" alt="TG">
-                            <span>Канал</span>
-                        </a>
-                        <a href="https://t.me/YablochnyChat" target="_blank" class="contact-card">
-                            <img src="icon_tg.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2111/2111646.png'" alt="Chat">
-                            <span>Чат</span>
-                        </a>
+                <!-- Category 3 -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>03. Рейтинг</span> <span class="arrow">▼</span>
                     </div>
+                    <div class="accordion-body"><div class="accordion-content">
+                         <p style="color:#777;">Нет дополнительных модулей.</p>
+                    </div></div>
+                </div>
 
-                    <h3 style="margin-top:30px; font-family:var(--font-tech); color:var(--c-mint);">Авторы & Благодарности</h3>
-                    <div class="contact-grid">
-                         <div class="contact-card"><span>Ксюля 💚</span></div>
-                         <div class="contact-card"><span>Шино</span></div>
-                         <div class="contact-card"><span>Leafcanfly</span></div>
-                         <div class="contact-card"><span>Пина-колада</span></div>
-                         <div class="contact-card"><span>Настенька</span></div>
+                <!-- Category 4: Extra / HTML -->
+                 <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>04. Дополнительно & HTML</span> <span class="arrow">▼</span>
+                    </div>
+                    <div class="accordion-body"><div class="accordion-content">
+
+                        <h4 style="color:var(--primary)">✎🧺 Штуки (Шаблон)</h4>
+                        <p style="font-size:0.8em; margin-bottom:10px;">Выберите нужные модули и нажмите "Скопировать всё" внизу.</p>
+
+                        <div class="bulk-group">
+                            <label class="option-card" style="cursor:pointer;">
+                                <div style="display:flex; align-items:center;">
+                                    <input type="checkbox" class="bulk-check" style="margin-right:15px; width:20px; height:20px; accent-color:var(--primary);">
+                                    <div>
+                                        <div style="font-weight:bold;">🕰️ Флешбеки</div>
+                                        <div style="font-size:0.8em; color:#888;">Вставки воспоминаний.</div>
+                                    </div>
+                                </div>
+                                <textarea class="source">[placeholder]</textarea>
+                            </label>
+
+                            <label class="option-card" style="cursor:pointer;">
+                                <div style="display:flex; align-items:center;">
+                                    <input type="checkbox" class="bulk-check" style="margin-right:15px; width:20px; height:20px; accent-color:var(--primary);">
+                                    <div>
+                                        <div style="font-weight:bold;">⏩ Переходы</div>
+                                        <div style="font-size:0.8em; color:#888;">Сценарные разделители (∆).</div>
+                                    </div>
+                                </div>
+                                <textarea class="source">[placeholder]</textarea>
+                            </label>
+
+                             <label class="option-card" style="cursor:pointer;">
+                                <div style="display:flex; align-items:center;">
+                                    <input type="checkbox" class="bulk-check" style="margin-right:15px; width:20px; height:20px; accent-color:var(--primary);">
+                                    <div>
+                                        <div style="font-weight:bold;">🖼️ MEME Generator</div>
+                                        <div style="font-size:0.8em; color:#888;">Генерирует мем в начале сообщения.</div>
+                                    </div>
+                                </div>
+                                <textarea class="source">[placeholder]</textarea>
+                            </label>
+
+                            <button class="bulk-btn" onclick="copyBulk(this)">Собрать и Скопировать</button>
+                        </div>
+
+                        <h4 style="color:var(--primary); margin-top:20px;">Инфоблоки (Только один)</h4>
+                         <div class="option-card">
+                            <div><span style="font-weight:bold;">✧🍎 Логи Ренетт</span> (Light)</div>
+                            <div><button class="copy-btn" onclick="copyText(this)">Копировать</button><textarea class="source">[placeholder]</textarea></div>
+                        </div>
+                        <div class="option-card">
+                            <div><span style="font-weight:bold;">✧📝 Основной Инфоблок</span> (Heavy)</div>
+                            <div><button class="copy-btn" onclick="copyText(this)">Копировать</button><textarea class="source">[placeholder]</textarea></div>
+                        </div>
+
+                    </div></div>
+                </div>
+
+                 <!-- Category 5 -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>05. Думалка (CoT)</span> <span class="arrow">▼</span>
+                    </div>
+                    <div class="accordion-body"><div class="accordion-content">
+                         <p style="color:#777;">Нет дополнительных модулей.</p>
+                    </div></div>
+                </div>
+
+            </div>
+
+            <!-- TAB: CONTACTS -->
+            <div id="Contacts" class="tab-content">
+                <div class="glass-card" style="text-align: center;">
+                    <h2 class="section-title" style="justify-content: center;">Связь</h2>
+                    <p>Присоединяйтесь к сообществу Renette System.</p>
+                    <a href="https://t.me/YablochnyAI" target="_blank" class="btn-secondary">
+                        <img src="icon_tg_green.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2111/2111646.png'"> Телеграм Канал
+                    </a>
+                    <a href="https://t.me/YablochnyChat" target="_blank" class="btn-secondary">
+                        <img src="icon_tg.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2111/2111646.png'"> Чат сообщества
+                    </a>
+
+                    <hr style="border: 0; border-top: 1px dashed var(--glass-border); margin: 30px 0;">
+
+                    <h3 style="font-family: var(--font-hand); color: var(--secondary);">Благодарности</h3>
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+                        <span class="version-tag">Ксюля 💚</span>
+                        <span class="version-tag">Шино</span>
+                        <span class="version-tag">Leafcanfly</span>
+                        <span class="version-tag">Пина-колада</span>
                     </div>
                 </div>
-            </section>
+            </div>
 
         </main>
     </div>
 
-    <!-- UTILITIES -->
-    <div id="toast-box"></div>
+    <!-- MOBILE BOTTOM NAV -->
+    <nav class="mobile-nav">
+        <div class="m-nav-item active" onclick="navTo('Description')"><img src="icon_clip_red.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/10692/10692823.png'">Инфо</div>
+        <div class="m-nav-item" onclick="navTo('Download')"><img src="icon_book_open.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2983/2983816.png'">Файл</div>
+        <div class="m-nav-item" onclick="navTo('Guides')"><img src="icon_book_closed_red.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/10743/10743169.png'">Гайды</div>
+        <div class="m-nav-item" onclick="navTo('Prompts')"><img src="sheets.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2921/2921222.png'">Модули</div>
+        <div class="m-nav-item" onclick="navTo('Contacts')"><img src="icon_bag_green.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3059/3059446.png'">Связь</div>
+    </nav>
 
-    <div class="lightbox" id="lightbox">
-        <span class="lb-close">×</span>
-        <img src="" id="lb-img">
+    <!-- TOASTS -->
+    <div id="toast-container"></div>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox" onclick="this.style.display='none'">
+        <img id="lightbox-img" src="">
     </div>
 
     <!-- EASTER EGG GAME -->
     <div id="game-overlay">
-        <div class="game-ui">
-            <h2>CYBER HARVEST</h2>
-            <p>Лови 🍏 (данные), избегай 🟥 (баги)!</p>
-            <p>Счет: <span id="score">0</span> | Рекорд: <span id="highscore">0</span></p>
-            <button class="game-btn" id="start-btn">ЗАПУСК СИСТЕМЫ</button>
-            <button class="game-btn" onclick="closeGame()" style="background:#333; margin-left:10px;">ВЫХОД</button>
-        </div>
-        <canvas id="game-canvas" width="320" height="480"></canvas>
+        <div class="close-game" onclick="closeGame()">×</div>
+        <div class="game-ui">🍎: <span id="score">0</span> / 10</div>
+        <canvas id="game-canvas"></canvas>
     </div>
 
     <script>
-        // --- 1. ТАБЫ И НАВИГАЦИЯ ---
-        function switchTab(tabId) {
-            // Hide all tabs
-            document.querySelectorAll('.tab-section').forEach(el => {
-                el.classList.remove('active');
-            });
-            // Deactivate nav buttons
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-
-            // Show target
-            document.getElementById(tabId).classList.add('active');
-
-            // Find button that links to this tab (simple heuristic)
-            const btns = document.querySelectorAll('.nav-btn');
-            if(tabId === 'tab-about') btns[0].classList.add('active');
-            if(tabId === 'tab-dl') btns[1].classList.add('active');
-            if(tabId === 'tab-prompts') btns[2].classList.add('active');
-            if(tabId === 'tab-guides') btns[3].classList.add('active');
-            if(tabId === 'tab-contacts') btns[4].classList.add('active');
-
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // --- 2. ЭФФЕКТ ПЕЧАТНОЙ МАШИНКИ ---
-        const textToType = "by kykaaj | SillyTavern Preset";
-        let typeIdx = 0;
+        // === TYPING EFFECT ===
+        const text = "digital nature spirit | by kykaaj";
+        let index = 0;
         function typeWriter() {
-            if (typeIdx < textToType.length) {
-                document.getElementById("typing-text").innerHTML += textToType.charAt(typeIdx);
-                typeIdx++;
+            if (index < text.length) {
+                document.getElementById("typing-text").innerHTML += text.charAt(index);
+                index++;
                 setTimeout(typeWriter, 50);
             }
         }
-        document.addEventListener('DOMContentLoaded', typeWriter);
+        window.onload = function() {
+            typeWriter();
+            // Start background
+            initBg();
+        };
 
-        // --- 3. АККОРДЕОН ---
-        function toggleAcc(header) {
-            const item = header.parentElement;
-            item.classList.toggle('active');
+        // === NAVIGATION LOGIC ===
+        function navTo(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.remove('active');
+                setTimeout(() => { if(!el.classList.contains('active')) el.style.display = 'none'; }, 500);
+            });
+
+            // Show target
+            const target = document.getElementById(tabId);
+            target.style.display = 'block';
+            setTimeout(() => target.classList.add('active'), 10);
+
+            // Update Nav States
+            document.querySelectorAll('.nav-item, .m-nav-item').forEach(el => el.classList.remove('active'));
+
+            // Add active class based on onclick content matching
+            document.querySelectorAll('.nav-item').forEach(el => {
+                if(el.getAttribute('onclick').includes(tabId)) el.classList.add('active');
+            });
+            document.querySelectorAll('.m-nav-item').forEach(el => {
+                if(el.getAttribute('onclick').includes(tabId)) el.classList.add('active');
+            });
+
+            window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        // --- 4. КОПИРОВАНИЕ ---
-        function showToast(title, msg, isError = false) {
-            const box = document.getElementById('toast-box');
-            const toast = document.createElement('div');
-            toast.className = `toast ${isError ? 'error' : ''}`;
-            toast.innerHTML = `<div><strong>${title}</strong><br>${msg}</div>`;
-            box.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
+        // === ACCORDION ===
+        function toggleAccordion(header) {
+            header.classList.toggle('active');
+            const body = header.nextElementSibling;
+            if (header.classList.contains('active')) {
+                body.style.maxHeight = body.scrollHeight + "px";
+            } else {
+                body.style.maxHeight = 0;
+            }
         }
 
+        // === COPY LOGIC ===
         function copyText(btn) {
-            const txt = btn.parentElement.querySelector('.source-text').value;
-            navigator.clipboard.writeText(txt).then(() => {
-                showToast('УСПЕХ', 'Код скопирован в буфер');
-                const originalText = btn.innerText;
-                btn.innerText = "OK";
-                setTimeout(() => btn.innerText = originalText, 1000);
-            }).catch(() => showToast('ОШИБКА', 'Нет доступа к буферу', true));
+            const container = btn.closest('.option-card') || btn.parentNode;
+            const text = container.querySelector('.source').value;
+
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("Успех", "Модуль скопирован в буфер");
+                const original = btn.innerText;
+                btn.innerText = "✓";
+                setTimeout(() => btn.innerText = original, 2000);
+            });
         }
 
         function copyBulk(btn) {
-            const group = btn.parentElement;
-            const checked = group.querySelectorAll('input:checked');
-            if (checked.length === 0) {
-                showToast('ПУСТО', 'Выберите элементы галочками', true);
-                return;
-            }
+            const group = btn.closest('.bulk-group');
+            const checks = group.querySelectorAll('.bulk-check:checked');
+            if(checks.length === 0) return showToast("Ошибка", "Ничего не выбрано");
 
-            let bulk = "";
-            checked.forEach(input => {
-                const row = input.parentElement;
-                const txt = row.querySelector('.source-text').value;
-                bulk += txt + "\n\n";
+            let text = "";
+            checks.forEach(chk => {
+                const row = chk.closest('label');
+                text += row.querySelector('.source').value + "\n\n";
             });
 
-            navigator.clipboard.writeText(bulk).then(() => {
-                showToast('СБОРКА ЗАВЕРШЕНА', `Скопировано ${checked.length} модулей`);
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("Система", `Скопировано ${checks.length} модулей`);
             });
         }
 
-        // --- 5. ЛАЙТБОКС (Картинки) ---
-        const lb = document.getElementById('lightbox');
-        const lbImg = document.getElementById('lb-img');
-
-        document.addEventListener('click', (e) => {
-            if (e.target.tagName === 'IMG' && e.target.closest('.preview-box, .accordion-body')) {
-                lbImg.src = e.target.src;
-                lb.classList.add('open');
-            }
-        });
-
-        document.querySelector('.lb-close').onclick = () => lb.classList.remove('open');
-        lb.onclick = (e) => { if(e.target === lb) lb.classList.remove('open'); };
-
-        // --- 6. ФОНОВЫЕ ЧАСТИЦЫ ---
-        const cvs = document.getElementById('bg-canvas');
-        const ctx = cvs.getContext('2d');
-        let w, h, particles = [];
-
-        function resize() { w = cvs.width = window.innerWidth; h = cvs.height = window.innerHeight; }
-        window.onresize = resize; resize();
-
-        class P {
-            constructor() { this.reset(); }
-            reset() {
-                this.x = Math.random() * w;
-                this.y = Math.random() * h;
-                this.size = Math.random() * 2;
-                this.speedY = Math.random() * 0.5 + 0.1;
-                this.op = Math.random() * 0.5;
-                this.col = Math.random() > 0.5 ? '#69f0ae' : '#c471ed';
-            }
-            update() {
-                this.y -= this.speedY;
-                if (this.y < 0) this.reset();
-            }
-            draw() {
-                ctx.fillStyle = this.col;
-                ctx.globalAlpha = this.op;
-                ctx.fillRect(this.x, this.y, this.size, this.size);
-            }
+        // === TOAST ===
+        function showToast(title, msg) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `<div><strong style="color:var(--primary)">${title}</strong><br><span style="font-size:0.9em">${msg}</span></div>`;
+            container.appendChild(toast);
+            setTimeout(() => toast.classList.add('show'), 10);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 400);
+            }, 3000);
         }
-        for(let i=0; i<50; i++) particles.push(new P());
 
-        function loop() {
-            ctx.clearRect(0,0,w,h);
-            particles.forEach(p => { p.update(); p.draw(); });
-            requestAnimationFrame(loop);
+        // === LIGHTBOX ===
+        function openLightbox(src) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox').style.display = 'flex';
         }
-        loop();
 
-        // --- 7. ПАСХАЛКА: ИГРА ---
-        let clicks = 0;
-        let gameTimer;
-        const trigger = document.getElementById('egg-trigger');
-        const gameOverlay = document.getElementById('game-overlay');
-        const gCvs = document.getElementById('game-canvas');
-        const gCtx = gCvs.getContext('2d');
+        // === BACKGROUND ANIMATION (DIGITAL ORCHARD) ===
+        function initBg() {
+            const canvas = document.getElementById('canvas-bg');
+            const ctx = canvas.getContext('2d');
+            let w, h;
+            let particles = [];
 
-        trigger.addEventListener('click', () => {
-            clicks++;
-            trigger.style.transform = `scale(${1 + clicks*0.1})`;
-            clearTimeout(gameTimer);
-            gameTimer = setTimeout(() => { clicks = 0; trigger.style.transform = 'scale(1)'; }, 500);
-
-            if (clicks >= 5) {
-                gameOverlay.style.display = 'flex';
-                clicks = 0;
-                showToast('СИСТЕМА ВЗЛОМАНА', 'Запуск скрытого протокола...');
+            function resize() {
+                w = canvas.width = window.innerWidth;
+                h = canvas.height = window.innerHeight;
             }
-        });
+            window.addEventListener('resize', resize);
+            resize();
 
-        // Game Logic
-        let player = { x: 160, w: 40, h: 40 };
-        let objects = [];
+            class Particle {
+                constructor() {
+                    this.reset();
+                }
+                reset() {
+                    this.x = Math.random() * w;
+                    this.y = Math.random() * h;
+                    this.size = Math.random() * 2;
+                    this.speedY = Math.random() * 0.5 + 0.1;
+                    this.life = Math.random();
+                    this.color = Math.random() > 0.8 ? '#ff9a9e' : '#99ff99';
+                }
+                update() {
+                    this.y -= this.speedY;
+                    this.life -= 0.005;
+                    if (this.y < 0 || this.life < 0) this.reset();
+                    this.y = (this.y + h) % h; // wrap around
+                }
+                draw() {
+                    ctx.globalAlpha = this.life * 0.5;
+                    ctx.fillStyle = this.color;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            for(let i=0; i<60; i++) particles.push(new Particle());
+
+            function animate() {
+                ctx.clearRect(0, 0, w, h);
+                particles.forEach(p => { p.update(); p.draw(); });
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+
+        // === EASTER EGG GAME: APPLE CATCHER ===
+        let eggClicks = 0;
+        let gameActive = false;
         let score = 0;
-        let isPlaying = false;
-        let animationId;
+        let apples = [];
+        let playerX = 0;
+        const gCanvas = document.getElementById('game-canvas');
+        const gCtx = gCanvas.getContext('2d');
 
-        document.getElementById('start-btn').onclick = startGame;
-
-        function closeGame() {
-            gameOverlay.style.display = 'none';
-            isPlaying = false;
-            cancelAnimationFrame(animationId);
+        function triggerEasterEgg() {
+            eggClicks++;
+            if(eggClicks === 5) {
+                eggClicks = 0;
+                startGame();
+            }
         }
 
         function startGame() {
+            document.getElementById('game-overlay').style.display = 'flex';
+            gCanvas.width = Math.min(window.innerWidth * 0.9, 400);
+            gCanvas.height = Math.min(window.innerHeight * 0.8, 600);
+            playerX = gCanvas.width / 2;
             score = 0;
-            objects = [];
-            isPlaying = true;
-            document.getElementById('score').innerText = 0;
-            document.getElementById('start-btn').style.display = 'none';
+            apples = [];
+            gameActive = true;
+            document.getElementById('score').innerText = score;
+
+            // Controls
+            gCanvas.addEventListener('mousemove', (e) => {
+                const rect = gCanvas.getBoundingClientRect();
+                playerX = e.clientX - rect.left;
+            });
+            gCanvas.addEventListener('touchmove', (e) => {
+                const rect = gCanvas.getBoundingClientRect();
+                playerX = e.touches[0].clientX - rect.left;
+            });
+
             gameLoop();
         }
 
-        gCvs.addEventListener('mousemove', (e) => {
-            const rect = gCvs.getBoundingClientRect();
-            player.x = e.clientX - rect.left - player.w/2;
-        });
-
-        // Touch support for game
-        gCvs.addEventListener('touchmove', (e) => {
-            e.preventDefault();
-            const rect = gCvs.getBoundingClientRect();
-            player.x = e.touches[0].clientX - rect.left - player.w/2;
-        }, {passive: false});
+        function closeGame() {
+            gameActive = false;
+            document.getElementById('game-overlay').style.display = 'none';
+        }
 
         function gameLoop() {
-            if (!isPlaying) return;
+            if (!gameActive) return;
 
-            // Update
+            gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
+
+            // Spawn apples
             if (Math.random() < 0.03) {
-                objects.push({
-                    x: Math.random() * (320 - 20),
+                apples.push({
+                    x: Math.random() * (gCanvas.width - 20),
                     y: -20,
-                    type: Math.random() > 0.3 ? 'apple' : 'bug', // 70% apples
-                    speed: 2 + Math.random() * 2
+                    speed: 2 + Math.random() * 3,
+                    type: Math.random() > 0.8 ? 'bug' : 'apple'
                 });
             }
 
-            objects.forEach(o => o.y += o.speed);
-
-            // Collision & Cleanup
-            for (let i = objects.length - 1; i >= 0; i--) {
-                let o = objects[i];
-
-                // Hit Player
-                if (o.y + 20 > 440 && o.y < 480 && o.x < player.x + player.w && o.x + 20 > player.x) {
-                    if (o.type === 'apple') {
-                        score += 10;
-                        document.getElementById('score').innerText = score;
-                    } else {
-                        endGame();
-                        return;
-                    }
-                    objects.splice(i, 1);
-                    continue;
-                }
-
-                // Off screen
-                if (o.y > 480) objects.splice(i, 1);
-            }
-
-            // Draw
-            gCtx.fillStyle = '#0f0c15';
-            gCtx.fillRect(0, 0, 320, 480);
-
             // Player (Basket)
-            gCtx.fillStyle = '#c471ed';
-            gCtx.fillRect(player.x, 440, player.w, player.h/2);
+            gCtx.fillStyle = '#a18cd1';
+            gCtx.fillRect(playerX - 25, gCanvas.height - 20, 50, 10);
 
-            // Objects
-            objects.forEach(o => {
-                if (o.type === 'apple') {
-                    gCtx.fillStyle = '#69f0ae';
-                    gCtx.beginPath(); gCtx.arc(o.x+10, o.y+10, 8, 0, Math.PI*2); gCtx.fill();
-                } else {
-                    gCtx.fillStyle = '#ff5252';
-                    gCtx.fillRect(o.x, o.y, 20, 20);
-                    gCtx.font = "10px monospace"; gCtx.fillStyle="white"; gCtx.fillText("ERR", o.x, o.y+12);
+            // Logic
+            for (let i = 0; i < apples.length; i++) {
+                let a = apples[i];
+                a.y += a.speed;
+
+                // Draw
+                gCtx.font = "20px Arial";
+                gCtx.fillText(a.type === 'apple' ? '🍎' : '👾', a.x, a.y);
+
+                // Collision
+                if (a.y > gCanvas.height - 30 && a.y < gCanvas.height &&
+                    a.x > playerX - 30 && a.x < playerX + 30) {
+
+                    if(a.type === 'apple') {
+                        score++;
+                        document.getElementById('score').innerText = score;
+                        if(score >= 10) {
+                            alert("Renette: Спасибо за яблочки! Система синхронизирована. 💚");
+                            closeGame();
+                        }
+                    } else {
+                        score = Math.max(0, score - 1);
+                        document.getElementById('score').innerText = score;
+                    }
+                    apples.splice(i, 1);
+                    i--;
+                } else if (a.y > gCanvas.height) {
+                    apples.splice(i, 1);
+                    i--;
                 }
-            });
-
-            animationId = requestAnimationFrame(gameLoop);
-        }
-
-        function endGame() {
-            isPlaying = false;
-            document.getElementById('start-btn').style.display = 'inline-block';
-            document.getElementById('start-btn').innerText = 'RETRY';
-            let hs = localStorage.getItem('renette_hs') || 0;
-            if (score > hs) {
-                hs = score;
-                localStorage.setItem('renette_hs', hs);
             }
-            document.getElementById('highscore').innerText = hs;
-            showToast('GAME OVER', `Счет: ${score}`);
+
+            requestAnimationFrame(gameLoop);
         }
 
     </script>
