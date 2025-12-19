@@ -1,769 +1,1118 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <meta name="google-site-verification" content="L1aS8txxzlMjDV_Efl0Oi1WDR0J7_DCdyazGjG1zVPk" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="SillyTavern Preset by Renette - Digital Spirit Edition">
-    <title>Renette: Cyber-Orchard Preset</title>
+    <title>Яблочный Пресет // RENETTE_OS</title>
 
-    <!-- Подключаем современные шрифты -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Quicksand:wght@400;600&family=Fira+Code:wght@400&display=swap" rel="stylesheet">
+    <!-- Шрифты -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="favicon.png">
 
     <style>
+        /* ========================================= */
+        /* CSS VARIABLES & RESET */
+        /* ========================================= */
         :root {
-            /* Цветовая палитра: Мятный, Красный, Сиреневый, Темная база */
-            --bg-dark: #120f1a;
-            --bg-panel: #1e1b29;
-            --mint: #00f0a8;
-            --mint-glow: rgba(0, 240, 168, 0.4);
-            --red: #ff4d6d;
-            --lilac: #c7a4ff;
-            --text-main: #e0e0e0;
-            --text-muted: #8f8ca8;
-            --glass: rgba(30, 27, 41, 0.7);
-            --border: 1px solid rgba(199, 164, 255, 0.1);
+            /* Palette */
+            --c-bg: #0e0e12;
+            --c-panel: #16161f;
+            --c-primary: #66ffb3; /* Mint */
+            --c-secondary: #ff6b6b; /* Soft Red */
+            --c-accent: #d4b3ff; /* Lilac */
+            --c-text: #e0e0e0;
+            --c-dim: #888899;
 
-            --font-tech: 'Rajdhani', sans-serif;
-            --font-body: 'Quicksand', sans-serif;
-            --font-code: 'Fira Code', monospace;
+            /* Glassmorphism */
+            --glass-bg: rgba(22, 22, 31, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-blur: blur(16px);
+
+            /* Effects */
+            --shadow-glow: 0 0 15px rgba(102, 255, 179, 0.2);
+            --font-main: 'Montserrat', sans-serif;
+            --font-tech: 'JetBrains Mono', monospace;
+
+            --nav-width: 80px;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            scrollbar-width: thin;
-            scrollbar-color: var(--mint) var(--bg-dark);
-        }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
 
         body {
-            background-color: var(--bg-dark);
-            background-image:
-                radial-gradient(circle at 10% 20%, rgba(199, 164, 255, 0.05) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(0, 240, 168, 0.05) 0%, transparent 20%);
-            color: var(--text-main);
-            font-family: var(--font-body);
-            height: 100vh;
-            overflow: hidden; /* Скроллим только контент */
+            margin: 0;
+            padding: 0;
+            background-color: var(--c-bg);
+            color: var(--c-text);
+            font-family: var(--font-main);
+            overflow-x: hidden;
             display: flex;
+            min-height: 100vh;
         }
 
-        /* --- UI Элементы --- */
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--c-bg); }
+        ::-webkit-scrollbar-thumb { background: var(--c-panel); border-radius: 3px; border: 1px solid var(--c-primary); }
 
-        /* Боковая навигация (Glassmorphism) */
+        /* ========================================= */
+        /* BACKGROUND & FX */
+        /* ========================================= */
+        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: 0.6; }
+
+        /* Scanline Overlay */
+        .scanlines {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+            background-size: 100% 4px;
+            opacity: 0.15;
+        }
+
+        /* ========================================= */
+        /* NAVIGATION (SIDEBAR / BOTTOM BAR) */
+        /* ========================================= */
         .sidebar {
-            width: 80px;
-            height: 100%;
-            background: var(--glass);
-            backdrop-filter: blur(12px);
-            border-right: var(--border);
+            width: var(--nav-width);
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            border-right: 1px solid var(--glass-border);
+            height: 100vh;
+            position: fixed;
+            left: 0; top: 0;
+            z-index: 100;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 2rem 0;
-            z-index: 100;
+            padding: 20px 0;
             transition: width 0.3s ease;
         }
 
-        .nav-btn {
-            width: 50px;
-            height: 50px;
-            margin-bottom: 1.5rem;
-            border-radius: 12px;
-            border: none;
-            background: transparent;
+        .brand-logo {
+            width: 50px; height: 50px;
+            margin-bottom: 40px;
+            filter: drop-shadow(0 0 10px var(--c-primary));
             cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .brand-logo:hover { transform: rotate(15deg) scale(1.1); }
+
+        .nav-items {
+            display: flex; flex-direction: column; gap: 20px; width: 100%; align-items: center;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: none;
+            color: var(--c-dim);
+            cursor: pointer;
+            width: 50px; height: 50px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
-            transition: all 0.3s ease;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
 
-        /* Иконки (используем img теги как просили) */
-        .nav-btn img {
-            width: 28px;
-            height: 28px;
-            filter: drop-shadow(0 0 2px var(--lilac));
-            transition: 0.3s;
-        }
-
-        .nav-btn:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
+        .nav-btn img { width: 24px; height: 24px; opacity: 0.6; transition: 0.3s; }
+        .nav-btn:hover { background: rgba(255,255,255,0.05); color: var(--c-text); }
+        .nav-btn:hover img { opacity: 1; transform: scale(1.1); }
 
         .nav-btn.active {
-            background: rgba(0, 240, 168, 0.1);
-            box-shadow: 0 0 15px var(--mint-glow);
+            background: rgba(102, 255, 179, 0.1);
+            box-shadow: 0 0 15px rgba(102, 255, 179, 0.15);
+        }
+        .nav-btn.active img { opacity: 1; filter: drop-shadow(0 0 5px var(--c-primary)); }
+
+        /* Indicator line for active tab */
+        .nav-btn.active::before {
+            content: ''; position: absolute; left: -10px; height: 60%; width: 4px;
+            background: var(--c-primary); border-radius: 2px;
         }
 
-        .nav-btn.active img {
-            filter: drop-shadow(0 0 5px var(--mint));
+        /* Tooltip */
+        .nav-btn::after {
+            content: attr(data-tooltip);
+            position: absolute; left: 70px;
+            background: var(--c-panel); border: 1px solid var(--c-primary);
+            color: var(--c-primary); padding: 5px 10px;
+            font-family: var(--font-tech); font-size: 0.8rem;
+            border-radius: 4px; opacity: 0; pointer-events: none;
+            transition: 0.2s; transform: translateX(-10px); white-space: nowrap;
+            z-index: 101;
         }
+        .sidebar:hover .nav-btn:hover::after { opacity: 1; transform: translateX(0); }
 
-        /* Основной контент */
-        .content-area {
+        /* ========================================= */
+        /* MAIN CONTENT AREA */
+        /* ========================================= */
+        .content-wrapper {
+            margin-left: var(--nav-width);
             flex: 1;
-            overflow-y: auto;
-            padding: 2rem 4rem;
+            padding: 40px;
             position: relative;
-            scroll-behavior: smooth;
+            max-width: 1400px;
+            width: 100%;
         }
 
-        h1, h2, h3 {
-            font-family: var(--font-tech);
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        /* Header Section */
+        .cyber-header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+            display: flex; justify-content: space-between; align-items: flex-end;
+            position: relative;
+        }
+        .cyber-header::after {
+            content: ''; position: absolute; bottom: -1px; left: 0; width: 100px; height: 3px;
+            background: linear-gradient(90deg, var(--c-primary), transparent);
         }
 
-        h1 {
-            font-size: 3rem;
-            background: linear-gradient(90deg, var(--mint), var(--lilac));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 0.5rem;
+        .header-title h1 {
+            font-family: var(--font-tech); font-size: clamp(2rem, 5vw, 3.5rem);
+            margin: 0; line-height: 1;
+            background: linear-gradient(135deg, #fff 40%, var(--c-primary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
+        .header-title p {
+            font-family: var(--font-tech); color: var(--c-secondary);
+            margin: 10px 0 0 0; letter-spacing: 2px; font-size: 0.9rem;
+        }
+        .status-badge {
+            background: rgba(102, 255, 179, 0.1); border: 1px solid var(--c-primary);
+            color: var(--c-primary); padding: 5px 12px;
+            font-family: var(--font-tech); font-size: 0.75rem; border-radius: 4px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .status-dot { width: 8px; height: 8px; background: var(--c-primary); border-radius: 50%; animation: blink 2s infinite; }
 
-        /* Секции */
-        section {
+        /* Sections */
+        .tab-section {
             display: none;
-            animation: fadeIn 0.5s ease;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding-bottom: 100px;
+            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
+        .tab-section.active { display: block; }
 
-        section.active-section {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- HOME: Renette Intro --- */
-        .hero-card {
-            display: grid;
-            grid-template-columns: 1fr 1.5fr;
-            gap: 2rem;
-            background: linear-gradient(135deg, rgba(30,27,41,0.8), rgba(20,18,25,0.9));
-            border: var(--border);
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        /* Cards & Panels */
+        .glass-panel {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
             position: relative;
             overflow: hidden;
         }
-
-        .hero-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 4px;
-            background: linear-gradient(90deg, var(--mint), var(--red), var(--lilac));
+        .glass-panel::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, var(--c-accent), transparent); opacity: 0.5;
         }
 
-        .mascot-img {
-            width: 100%;
-            height: auto;
-            border-radius: 15px;
-            border: 2px solid var(--lilac);
-            box-shadow: 0 0 20px rgba(199, 164, 255, 0.2);
-            /* Эффект глитча при наведении */
-            transition: transform 0.3s;
+        h2 {
+            font-family: var(--font-tech); color: var(--c-accent); font-size: 1.8rem;
+            margin-top: 0; display: flex; align-items: center; gap: 15px;
         }
+        h2 img { height: 32px; }
 
-        .mascot-img:hover {
-            transform: scale(1.02);
-        }
-
-        .hero-text h2 { color: var(--mint); }
-        .hero-text p { margin-top: 1rem; line-height: 1.6; color: var(--text-muted); }
-
-        /* --- PROMPTS GRID SYSTEM --- */
+        /* ========================================= */
+        /* PROMPTS GRID SYSTEM */
+        /* ========================================= */
         .prompts-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
         }
 
-        .prompt-block {
-            background: var(--bg-panel);
-            border: var(--border);
+        .prompt-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--glass-border);
             border-radius: 12px;
-            padding: 1.5rem;
-            position: relative;
-            transition: 0.3s;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        .prompt-card:hover {
+            border-color: var(--c-primary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
         }
 
-        .prompt-block:hover {
-            border-color: var(--mint);
-            box-shadow: 0 5px 15px rgba(0, 240, 168, 0.1);
-        }
-
-        .block-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 0.5rem;
-        }
-
-        .block-title {
-            color: var(--red);
-            font-family: var(--font-tech);
-            font-weight: 700;
-        }
-
-        /* Стилизация блока с кодом/текстом */
-        .code-container {
+        .p-header {
+            padding: 15px 20px;
             background: rgba(0,0,0,0.3);
-            padding: 1rem;
-            border-radius: 8px;
-            font-family: var(--font-code);
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            max-height: 150px;
-            overflow-y: auto;
-            margin-bottom: 1rem;
-            border: 1px solid transparent;
-        }
-
-        .code-container.empty {
-            font-style: italic;
-            color: #555;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .copy-btn {
-            width: 100%;
-            padding: 0.8rem;
-            background: linear-gradient(45deg, rgba(0, 240, 168, 0.1), transparent);
-            border: 1px solid var(--mint);
-            color: var(--mint);
-            font-family: var(--font-tech);
-            font-weight: bold;
-            text-transform: uppercase;
+            border-bottom: 1px solid var(--glass-border);
             cursor: pointer;
-            border-radius: 6px;
+            display: flex; justify-content: space-between; align-items: center;
+            user-select: none;
+        }
+        .p-header span { font-weight: 600; font-family: var(--font-tech); color: var(--c-text); }
+        .p-header .arrow { transition: transform 0.3s; font-size: 0.8rem; color: var(--c-dim); }
+        .p-header.active .arrow { transform: rotate(180deg); color: var(--c-primary); }
+        .p-header.active { background: rgba(102, 255, 179, 0.05); }
+
+        .p-body {
+            max-height: 0; overflow: hidden; transition: max-height 0.5s ease;
+        }
+        .p-content { padding: 20px; }
+
+        /* Prompt Items */
+        .item-row {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed rgba(255,255,255,0.1);
+            display: flex; flex-direction: column; gap: 10px;
+        }
+        .item-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+        .item-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+        .item-title { font-weight: 700; color: var(--c-primary); font-size: 0.95rem; }
+
+        /* Inputs */
+        .cyber-checkbox, .cyber-radio {
+            appearance: none; width: 18px; height: 18px;
+            border: 2px solid var(--c-dim); border-radius: 4px;
+            background: transparent; cursor: pointer; position: relative;
+            flex-shrink: 0;
+        }
+        .cyber-radio { border-radius: 50%; }
+        .cyber-checkbox:checked, .cyber-radio:checked {
+            border-color: var(--c-primary);
+            background: rgba(102, 255, 179, 0.2);
+            box-shadow: 0 0 8px var(--c-primary);
+        }
+
+        .btn-copy-mini {
+            background: transparent; border: 1px solid var(--c-dim);
+            color: var(--c-dim); font-size: 0.7rem; padding: 4px 8px;
+            border-radius: 4px; cursor: pointer; transition: 0.2s;
+            font-family: var(--font-tech); text-transform: uppercase;
+        }
+        .btn-copy-mini:hover { border-color: var(--c-primary); color: var(--c-primary); }
+
+        .prompt-source { display: none; } /* Hidden textarea */
+
+        /* Details/Summary */
+        details summary { cursor: pointer; color: var(--c-secondary); font-size: 0.8rem; margin-top: 5px; list-style: none; transition: 0.2s;}
+        details summary:hover { color: #fff; text-decoration: underline; }
+        details[open] summary { margin-bottom: 10px; }
+        .details-box {
+            background: rgba(0,0,0,0.4); padding: 10px; border-radius: 6px;
+            font-size: 0.85rem; line-height: 1.5; color: #ccc;
+        }
+        .details-box img { max-width: 100%; border-radius: 4px; margin-top: 10px; border: 1px solid var(--glass-border); }
+
+        /* Bulk Copy Button */
+        .btn-glitch {
+            width: 100%; padding: 15px; margin-top: 20px;
+            background: var(--c-panel); border: 1px solid var(--c-primary);
+            color: var(--c-primary); font-family: var(--font-tech); font-weight: 700;
+            cursor: pointer; position: relative; overflow: hidden;
+            text-transform: uppercase; letter-spacing: 1px;
             transition: 0.3s;
         }
+        .btn-glitch:hover { background: var(--c-primary); color: #000; box-shadow: 0 0 20px var(--c-primary); }
 
-        .copy-btn:hover {
-            background: var(--mint);
-            color: var(--bg-dark);
-            box-shadow: 0 0 10px var(--mint-glow);
+        /* ========================================= */
+        /* DOWNLOAD BUTTON */
+        /* ========================================= */
+        .dl-container { text-align: center; margin: 40px 0; }
+        .mega-btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 20px 40px; font-size: 1.2rem;
+            background: linear-gradient(90deg, var(--c-secondary), var(--c-primary));
+            color: #000; text-decoration: none; font-weight: 800;
+            border-radius: 50px; text-transform: uppercase;
+            box-shadow: 0 0 30px rgba(102, 255, 179, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-family: var(--font-tech);
         }
+        .mega-btn:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(102, 255, 179, 0.6); }
+        .mega-btn img { height: 24px; margin-right: 15px; }
 
-        /* --- GUIDE & CHANGELOG --- */
-        .doc-container {
-            background: var(--bg-panel);
-            padding: 2rem;
-            border-radius: 15px;
-            margin-bottom: 2rem;
-        }
-
-        .guide-img {
-            max-width: 100%;
-            border-radius: 8px;
-            border: 1px solid var(--lilac);
-            margin: 1rem 0;
-        }
-
+        /* ========================================= */
+        /* CHANGELOG */
+        /* ========================================= */
         .log-entry {
-            border-left: 2px solid var(--red);
-            padding-left: 1.5rem;
-            margin-bottom: 2rem;
-            position: relative;
+            display: flex; gap: 20px; padding-bottom: 25px; margin-bottom: 25px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .log-date {
+            min-width: 100px; font-family: var(--font-tech); color: var(--c-dim); font-size: 0.9rem;
+            text-align: right; border-right: 2px solid var(--c-secondary); padding-right: 20px;
+        }
+        .log-content h4 { margin: 0 0 10px 0; color: var(--c-primary); font-size: 1.1rem; }
+        .log-content ul { padding-left: 20px; margin: 0; color: #ccc; font-size: 0.95rem; line-height: 1.6; }
+        .log-content li { margin-bottom: 5px; }
+
+        /* ========================================= */
+        /* GUIDES & FAQ */
+        /* ========================================= */
+        .guide-item { background: rgba(255,255,255,0.03); margin-bottom: 15px; border-radius: 8px; overflow: hidden; }
+        .guide-head {
+            padding: 15px 20px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 10px;
+            transition: background 0.3s;
+        }
+        .guide-head:hover { background: rgba(255,255,255,0.05); }
+        .guide-head.active { color: var(--c-secondary); border-bottom: 1px solid var(--glass-border); }
+        .guide-body { padding: 0 20px; max-height: 0; overflow: hidden; transition: 0.5s ease; opacity: 0; }
+        .guide-head.active + .guide-body { padding: 20px; opacity: 1; }
+
+        .step { display: flex; gap: 15px; margin-bottom: 20px; }
+        .step-num {
+            min-width: 30px; height: 30px; background: var(--c-secondary); color: #000;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;
         }
 
-        .log-entry::before {
-            content: '●';
-            color: var(--red);
-            position: absolute;
-            left: -6px;
-            top: 0;
-        }
-
-        .log-date { color: var(--mint); font-family: var(--font-code); font-size: 0.9rem; }
-
-        /* --- TOAST NOTIFICATION --- */
-        #toast {
-            visibility: hidden;
-            min-width: 250px;
-            background-color: var(--mint);
-            color: var(--bg-dark);
-            text-align: center;
-            border-radius: 50px;
-            padding: 16px;
-            position: fixed;
-            z-index: 1000;
-            bottom: 30px;
-            right: 30px;
-            font-family: var(--font-tech);
-            font-weight: bold;
-            box-shadow: 0 0 20px var(--mint-glow);
-            opacity: 0;
-            transition: opacity 0.3s, bottom 0.3s;
-        }
-
-        #toast.show {
-            visibility: visible;
-            opacity: 1;
-            bottom: 50px;
-        }
-
-        /* --- GAME OVERLAY (EASTER EGG) --- */
-        #game-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(18, 15, 26, 0.95);
-            z-index: 2000;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #game-canvas {
-            border: 2px solid var(--red);
-            box-shadow: 0 0 30px rgba(255, 77, 109, 0.2);
-            background: #000;
-        }
-
-        .game-ui {
-            color: var(--mint);
-            font-family: var(--font-tech);
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-
-        .close-game {
-            margin-top: 1rem;
-            background: transparent;
-            border: 1px solid var(--text-muted);
-            color: var(--text-muted);
-            padding: 5px 15px;
-            cursor: pointer;
-        }
-
-        /* Easter Egg Trigger */
-        .easter-egg-btn {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            font-size: 10px;
-            opacity: 0.3;
-            cursor: pointer;
-            transition: 0.3s;
-            color: var(--red);
-        }
-        .easter-egg-btn:hover { opacity: 1; text-shadow: 0 0 5px var(--red); }
-
-        /* --- MOBILE ADAPTATION --- */
+        /* ========================================= */
+        /* MOBILE RESPONSIVE */
+        /* ========================================= */
         @media (max-width: 768px) {
-            body { flex-direction: column; }
-
             .sidebar {
-                width: 100%;
-                height: 70px;
-                flex-direction: row;
-                justify-content: space-around;
-                border-right: none;
-                border-top: var(--border);
-                position: fixed;
-                bottom: 0;
-                padding: 0;
-                background: rgba(30, 27, 41, 0.95);
+                width: 100%; height: 60px;
+                bottom: 0; top: auto; left: 0;
+                flex-direction: row; justify-content: space-around;
+                padding: 0; border-right: none; border-top: 1px solid var(--glass-border);
             }
+            .brand-logo { display: none; } /* Hide main logo on mobile nav */
+            .nav-items { flex-direction: row; gap: 0; justify-content: space-around; width: 100%; }
+            .nav-btn { width: 100%; border-radius: 0; height: 60px; }
+            .nav-btn.active::before { width: 100%; height: 3px; top: 0; left: 0; border-radius: 0; }
+            .nav-btn::after { display: none; } /* No tooltips on mobile */
 
-            .content-area {
-                padding: 1rem;
-                padding-bottom: 90px; /* Место под меню */
-            }
-
-            .nav-btn { margin-bottom: 0; width: 40px; height: 40px; }
-            .hero-card { grid-template-columns: 1fr; }
-
-            h1 { font-size: 2rem; }
+            .content-wrapper { margin-left: 0; padding: 20px 15px 80px 15px; }
+            .header-title h1 { font-size: 1.8rem; }
+            .prompts-grid { grid-template-columns: 1fr; }
         }
+
+        /* ========================================= */
+        /* UTILS & TOAST */
+        /* ========================================= */
+        #toast-box {
+            position: fixed; bottom: 20px; right: 20px; z-index: 2000;
+            display: flex; flex-direction: column; gap: 10px; pointer-events: none;
+        }
+        .toast {
+            background: var(--c-panel); border-left: 3px solid var(--c-primary);
+            color: #fff; padding: 15px 20px; border-radius: 6px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            font-family: var(--font-tech); font-size: 0.85rem;
+            transform: translateX(100px); opacity: 0; transition: 0.4s;
+            pointer-events: auto; display: flex; align-items: center; gap: 10px;
+        }
+        .toast.show { transform: translateX(0); opacity: 1; }
+
+        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        .contact-btn {
+            background: rgba(255,255,255,0.05); padding: 15px; text-decoration: none; color: #fff;
+            display: flex; align-items: center; gap: 10px; border-radius: 8px; border: 1px solid transparent;
+            transition: 0.3s;
+        }
+        .contact-btn:hover { border-color: var(--c-primary); background: rgba(102, 255, 179, 0.05); }
+
+        /* Easter Egg Game Modal */
+        .game-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 5000; display: none;
+            justify-content: center; align-items: center; flex-direction: column;
+        }
+        #game-canvas { border: 2px solid var(--c-primary); background: #111; max-width: 100%; }
+        .game-ui { color: var(--c-primary); font-family: var(--font-tech); margin-bottom: 10px; }
+        .close-game { position: absolute; top: 20px; right: 20px; color: #fff; font-size: 2rem; cursor: pointer; }
+
+        /* Lightbox */
+        .lightbox {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); z-index: 4000; justify-content: center; align-items: center;
+        }
+        .lightbox img { max-width: 90%; max-height: 90%; border: 1px solid var(--c-primary); box-shadow: 0 0 30px rgba(102, 255, 179, 0.2); }
+
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes blink { 50% { opacity: 0.3; } }
     </style>
 </head>
 <body>
 
-    <!-- Навигация -->
+    <!-- Canvas Background -->
+    <canvas id="bg-canvas"></canvas>
+    <div class="scanlines"></div>
+
+    <!-- Sidebar Navigation -->
     <nav class="sidebar">
-        <!-- Вставь пути к своим иконкам в src -->
-        <button class="nav-btn active" onclick="switchTab('home')" title="Главная">
-            <img src="icon_home.png" alt="Home"> <!-- Замени файл -->
-        </button>
-        <button class="nav-btn" onclick="switchTab('prompts')" title="Промпты">
-            <img src="icon_prompts.png" alt="Prompts"> <!-- Замени файл -->
-        </button>
-        <button class="nav-btn" onclick="switchTab('guide')" title="Гайд">
-            <img src="icon_guide.png" alt="Guide"> <!-- Замени файл -->
-        </button>
-        <button class="nav-btn" onclick="switchTab('changelog')" title="Ченджлог">
-            <img src="icon_log.png" alt="Log"> <!-- Замени файл -->
-        </button>
-        <!-- Можно добавить еще одну кнопку если нужно -->
+        <!-- Easter Egg Trigger -->
+        <img src="apple_icon.png" alt="Renette" class="brand-logo" onclick="launchGame()" onerror="this.src='https://cdn-icons-png.flaticon.com/512/732/732205.png'">
+
+        <div class="nav-items">
+            <button class="nav-btn active" onclick="switchTab('home')" data-tooltip="Главная">
+                <img src="icon_clip_red.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/10692/10692823.png'">
+            </button>
+            <button class="nav-btn" onclick="switchTab('download')" data-tooltip="Скачать">
+                <img src="icon_book_open.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2983/2983816.png'">
+            </button>
+            <button class="nav-btn" onclick="switchTab('prompts')" data-tooltip="База Данных">
+                <img src="sheets.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2921/2921222.png'">
+            </button>
+            <button class="nav-btn" onclick="switchTab('guides')" data-tooltip="Инструкции">
+                <img src="icon_book_closed_red.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/10743/10743169.png'">
+            </button>
+            <button class="nav-btn" onclick="switchTab('contacts')" data-tooltip="Сеть">
+                <img src="icon_bag_green.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3059/3059446.png'">
+            </button>
+        </div>
     </nav>
 
-    <main class="content-area">
+    <!-- Content Area -->
+    <main class="content-wrapper">
 
-        <!-- Секция: Главная -->
-        <section id="home" class="active-section">
-            <div class="hero-card">
-                <div>
-                    <!-- Сюда картинку Ренетт -->
-                    <img src="renette_main.png" alt="Renette Digital Spirit" class="mascot-img">
-                </div>
-                <div class="hero-text">
-                    <h1>RENETTE SYSTEM</h1>
-                    <h3>[Digital Orchard Spirit]</h3>
-                    <p>
-                        Добро пожаловать в цифровую рощу. Я — Ренетт, дух, переместившийся из корней старой яблони в корневую папку сервера. <br><br>
-                        Этот пресет создан для максимального погружения. Структура обновлена, данные оптимизированы. Выберите нужный модуль в меню.
-                    </p>
-                    <div style="margin-top: 2rem; display: flex; gap: 1rem;">
-                        <div style="background: rgba(0, 240, 168, 0.1); padding: 10px; border-radius: 8px; border: 1px solid var(--mint);">
-                            <small style="color:var(--mint)">VERSION</small><br>
-                            <b>3.0 Digital</b>
-                        </div>
-                        <div style="background: rgba(255, 77, 109, 0.1); padding: 10px; border-radius: 8px; border: 1px solid var(--red);">
-                            <small style="color:var(--red)">STATUS</small><br>
-                            <b>Online</b>
-                        </div>
-                    </div>
-                </div>
+        <!-- Header -->
+        <header class="cyber-header">
+            <div class="header-title">
+                <h1 id="type-target"></h1>
+                <p>// SILLEYTAVERN PRESET V1.7 //</p>
             </div>
-        </section>
-
-        <!-- Секция: Промпты (6 блоков) -->
-        <section id="prompts">
-            <h2><span style="color:var(--mint)">//</span> MODULES: PROMPTS</h2>
-            <p style="color:var(--text-muted); margin-bottom: 2rem;">Скопируйте необходимые данные в настройки SillyTavern.</p>
-
-            <div class="prompts-grid">
-
-                <!-- БЛОК 1 -->
-                <div class="prompt-block">
-                    <div class="block-header">
-                        <span class="block-title">01. MAIN PROMPT</span>
-                        <img src="icon_file.png" width="20" alt="">
-                    </div>
-                    <!-- СЮДА ВСТАВЛЯЕШЬ ТЕКСТ ПРОМПТА -->
-                    <div class="code-container" id="p1">
-                        [PLACEHOLDER] Сюда вставь свой Main Prompt.
-                        System instruction...
-                        Context definition...
-                    </div>
-                    <button class="copy-btn" onclick="copyText('p1')">Copy Data</button>
-                </div>
-
-                <!-- БЛОК 2 -->
-                <div class="prompt-block">
-                    <div class="block-header">
-                        <span class="block-title">02. JAILBREAK / NSFW</span>
-                        <img src="icon_lock.png" width="20" alt="">
-                    </div>
-                    <div class="code-container" id="p2">
-                        [PLACEHOLDER] Сюда вставь Jailbreak.
-                    </div>
-                    <button class="copy-btn" onclick="copyText('p2')">Copy Data</button>
-                </div>
-
-                <!-- БЛОК 3 -->
-                <div class="prompt-block">
-                    <div class="block-header">
-                        <span class="block-title">03. IMPERSONATION</span>
-                        <img src="icon_user.png" width="20" alt="">
-                    </div>
-                    <div class="code-container" id="p3">
-                        [PLACEHOLDER] Текст для Impersonation.
-                    </div>
-                    <button class="copy-btn" onclick="copyText('p3')">Copy Data</button>
-                </div>
-
-                <!-- БЛОК 4 -->
-                <div class="prompt-block">
-                    <div class="block-header">
-                        <span class="block-title">04. LOREBOOK SETTINGS</span>
-                        <img src="icon_book.png" width="20" alt="">
-                    </div>
-                    <!-- ПРИМЕР ПУСТОГО БЛОКА -->
-                    <div class="code-container empty" id="p4">
-                        // Нет дополнительных вариантов //
-                    </div>
-                    <button class="copy-btn" onclick="copyText('p4')">Copy Data</button>
-                </div>
-
-                <!-- БЛОК 5 -->
-                <div class="prompt-block">
-                    <div class="block-header">
-                        <span class="block-title">05. AUTHORS NOTE</span>
-                        <img src="icon_note.png" width="20" alt="">
-                    </div>
-                    <div class="code-container" id="p5">
-                         [PLACEHOLDER] Author's Note content.
-                    </div>
-                    <button class="copy-btn" onclick="copyText('p5')">Copy Data</button>
-                </div>
-
-                <!-- БЛОК 6 -->
-                <div class="prompt-block">
-                    <div class="block-header">
-                        <span class="block-title">06. SYSTEM APPENDIX</span>
-                        <img src="icon_gear.png" width="20" alt="">
-                    </div>
-                    <div class="code-container empty" id="p6">
-                        // Нет дополнительных вариантов //
-                    </div>
-                    <button class="copy-btn" onclick="copyText('p6')">Copy Data</button>
-                </div>
-
+            <div class="status-badge">
+                <div class="status-dot"></div> SYSTEM ONLINE
             </div>
-        </section>
+        </header>
 
-        <!-- Секция: Гайд -->
-        <section id="guide">
-            <h2><span style="color:var(--lilac)">//</span> MANUAL & GUIDE</h2>
-            <div class="doc-container">
-                <h3>Как использовать пресет</h3>
-                <p style="margin: 1rem 0; color: var(--text-muted);">
-                    <!-- ТЕКСТ ГАЙДА СЮДА -->
-                    [PLACEHOLDER] Здесь находится подробное описание того, как установить пресет.
-                    Текст, который ты писала ранее. Ренетт рекомендует использовать определенные настройки температуры...
+        <!-- 1. HOME SECTION -->
+        <section id="home" class="tab-section active">
+            <div class="glass-panel">
+                <h2><img src="icon_clip.png"> Информация о системе</h2>
+                <p style="line-height: 1.8; color: #ccc;">
+                    Модульный пресет с огромным количеством тоглов, основанный на ядре Селии. Оптимизирован для создания глубокого погружения и адаптивного повествования.<br><br>
+                    <strong style="color:var(--c-primary)">СОВМЕСТИМОСТЬ:</strong><br>
+                    • Gemini 2.5/3.0 Pro<br>
+                    • Claude Sonnet 3.7, 4.5, Opus<br>
+                    • DeepSeek Chimera R1T2, Terminus, GPT 5.1
                 </p>
-                <!-- ИЗОБРАЖЕНИЕ ГАЙДА -->
-                <img src="guide_screenshot_1.jpg" alt="Settings Screenshot" class="guide-img">
+            </div>
 
-                <h3 style="margin-top: 2rem;">Настройка контекста</h3>
-                <p style="margin: 1rem 0; color: var(--text-muted);">
-                    [PLACEHOLDER] Дополнительная информация по контексту.
-                </p>
-                <img src="guide_screenshot_2.jpg" alt="Context Screenshot" class="guide-img">
+            <div class="glass-panel">
+                <h2><img src="sheets.png"> Лог Обновлений</h2>
+                <div style="margin-top: 20px;">
+
+                    <div class="log-entry">
+                        <div class="log-date">14.12.2025<br><span style="color:var(--c-primary)">v1.7</span></div>
+                        <div class="log-content">
+                            <h4>Глобальная Оптимизация</h4>
+                            <ul>
+                                <li>Размер файла уменьшен до <60 КБ.</li>
+                                <li>Добавлены 4 магических тогла "Фокусы": Прогресс, Детали, Мысли, Диалоги.</li>
+                                <li>Полный рефакторинг "Улучшалок" и "Жанров" в пользу "Литературных стилей" (4 автора).</li>
+                                <li>Интеграция правил письма (время, POV).</li>
+                                <li>Новый джейлбрейк и фикс HTML промптов (Iris Bloomwave edit).</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="log-entry">
+                        <div class="log-date">07.12.2025<br><span style="color:var(--c-dim)">v1.61</span></div>
+                        <div class="log-content">
+                            <h4>Стабилизация</h4>
+                            <ul>
+                                <li>Фикс языковых настроек и соблюдения ролей.</li>
+                                <li>Переписана логика "Думалки".</li>
+                                <li>Фикс темпа (Slow Burn больше не пропускает таймскипы).</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                     <div class="log-entry">
+                        <div class="log-date">06.12.2025<br><span style="color:var(--c-dim)">v1.6</span></div>
+                        <div class="log-content">
+                            <h4>Рефакторинг Характера</h4>
+                            <ul>
+                                <li>Изменён характер Ренетт (отход от Селии).</li>
+                                <li>Внедрена система шаблонов.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </section>
 
-        <!-- Секция: Ченджлог -->
-        <section id="changelog">
-            <h2><span style="color:var(--red)">//</span> SYSTEM LOGS</h2>
+        <!-- 2. DOWNLOAD SECTION -->
+        <section id="download" class="tab-section">
+            <div class="glass-panel" style="text-align: center; min-height: 60vh; display: flex; flex-direction: column; justify-content: center;">
+                <img src="apple_icon.png" style="width: 100px; margin: 0 auto 30px; filter: drop-shadow(0 0 20px var(--c-primary)); animation: float 4s ease-in-out infinite;">
+                <h2 style="justify-content: center;">Файловый Архив</h2>
+                <p>Загрузите актуальную версию JSON конфигурации для импорта.</p>
 
-            <div class="doc-container">
+                <div class="dl-container">
+                    <a class="mega-btn" href="%F0%9F%8D%8E%D0%AF%D0%B1%D0%BB%D0%BE%D1%87%D0%BD%D1%8B%D0%B9%20V1.7.json" download="🍎Яблочный V1.7.json" onclick="toast('Загрузка...', 'Файл отправлен на ваше устройство')">
+                        <img src="icon_book_open.png"> СКАЧАТЬ v1.7
+                    </a>
+                </div>
+                <p style="font-size: 0.8rem; color: var(--c-dim);">MD5: VALID // INTEGRITY: 100%</p>
+            </div>
+        </section>
 
-                <div class="log-entry">
-                    <div class="log-date">2023.10.25</div>
-                    <h3>Update v3.0 (Digital Spirit)</h3>
-                    <p style="color:var(--text-muted);">
-                        - Полный редизайн интерфейса (Спасибо Ренетт)<br>
-                        - Оптимизация токенов<br>
-                        - Добавлены новые триггеры для NSFW
-                    </p>
+        <!-- 3. PROMPTS DATABASE (THE BIG ONE) -->
+        <section id="prompts" class="tab-section">
+            <div class="glass-panel">
+                <h2><img src="sheets.png"> База Данных Модулей</h2>
+                <p>Выберите категорию, настройте параметры и скопируйте код для вставки в SillyTavern.<br>
+                <span style="color: var(--c-secondary);">✧ — Только один вариант</span> |
+                <span style="color: var(--c-primary);">✎ — Можно несколько</span></p>
+
+                <div class="prompts-grid">
+
+                    <!-- 1. OOC -->
+                    <div class="prompt-card">
+                        <div class="p-header" onclick="toggleCard(this)">
+                            <span>01 // OOC</span> <span class="arrow">▼</span>
+                        </div>
+                        <div class="p-body"><div class="p-content"><p style="color:#666">Нет дополнительных вариантов.</p></div></div>
+                    </div>
+
+                    <!-- 2. RP / MAIN -->
+                    <div class="prompt-card">
+                        <div class="p-header" onclick="toggleCard(this)">
+                            <span>02 // ОСНОВНОЕ (RP)</span> <span class="arrow">▼</span>
+                        </div>
+                        <div class="p-body">
+                            <div class="p-content">
+                                <!-- Режим Письма -->
+                                <div class="item-row group-block">
+                                    <h4 style="color: var(--c-accent);">🌾 Режим Письма</h4>
+
+                                    <div class="item-top">
+                                        <div style="flex:1">
+                                            <span class="item-title">✧💫Погружение</span>
+                                            <details><summary>Инфо</summary><div class="details-box">Обычный РП. ИИ не пишет за юзера.</div></details>
+                                        </div>
+                                        <button class="btn-copy-mini" onclick="copyOne(this)">Copy</button>
+                                        <textarea class="prompt-source">[placeholder]</textarea>
+                                    </div>
+
+                                    <div class="item-top" style="margin-top:10px;">
+                                        <div style="flex:1">
+                                            <span class="item-title">✧📖ФФ Режим</span>
+                                            <details><summary>Инфо</summary><div class="details-box">ИИ пишет за всех, включая Юзера. Режим соавторства.</div></details>
+                                        </div>
+                                        <button class="btn-copy-mini" onclick="copyOne(this)">Copy</button>
+                                        <textarea class="prompt-source">[placeholder]</textarea>
+                                    </div>
+
+                                    <div class="item-top" style="margin-top:10px;">
+                                        <div style="flex:1">
+                                            <span class="item-title">✧💬Интернет Чат</span>
+                                            <details><summary>Инфо</summary><div class="details-box">Симуляция мессенджера.<br><img src="example_5.jpg"></div></details>
+                                        </div>
+                                        <button class="btn-copy-mini" onclick="copyOne(this)">Copy</button>
+                                        <textarea class="prompt-source">[placeholder]</textarea>
+                                    </div>
+                                </div>
+
+                                <!-- Баны -->
+                                <div class="item-row">
+                                    <h4 style="color: var(--c-accent);">❌ Баны</h4>
+                                    <div class="item-top"><span class="item-title">✧🇷🇺 RU Баны</span> <button class="btn-copy-mini" onclick="copyOne(this)">Copy</button><textarea class="prompt-source">[placeholder]</textarea></div>
+                                    <div class="item-top" style="margin-top:5px"><span class="item-title">✧🇺🇦 UA Баны</span> <button class="btn-copy-mini" onclick="copyOne(this)">Copy</button><textarea class="prompt-source">[placeholder]</textarea></div>
+                                    <div class="item-top" style="margin-top:5px"><span class="item-title">✧🇺🇸 EN Баны</span> <button class="btn-copy-mini" onclick="copyOne(this)">Copy</button><textarea class="prompt-source">[placeholder]</textarea></div>
+                                </div>
+
+                                <!-- Стиль -->
+                                <div class="item-row">
+                                    <h4 style="color: var(--c-accent);">📓 Лит. Стиль</h4>
+                                    <div class="item-top"><span class="item-title">✧🪴Лю Чжэньюнь</span> <button class="btn-copy-mini" onclick="copyOne(this)">Copy</button><textarea class="prompt-source">[placeholder]</textarea></div>
+                                    <div class="item-top" style="margin-top:5px"><span class="item-title">✧🪴Мо Ян</span> <button class="btn-copy-mini" onclick="copyOne(this)">Copy</button><textarea class="prompt-source">[placeholder]</textarea></div>
+                                    <div class="item-top" style="margin-top:5px"><span class="item-title">✧🪴Эйлин Чжан</span> <button class="btn-copy-mini" onclick="copyOne(this)">Copy</button><textarea class="prompt-source">[placeholder]</textarea></div>
+                                </div>
+
+                                <!-- Темп -->
+                                 <div class="item-row">
+                                    <h4 style="color: var(--c-accent);">🌱 Темп</h4>
+                                    <div class="item-top"><span class="item-title">✧🌱 Slow Burn</span> <button class="btn-copy-mini" onclick="copyOne(this)">Copy</button><textarea class="prompt-source">[placeholder]</textarea></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. RATING -->
+                    <div class="prompt-card">
+                        <div class="p-header" onclick="toggleCard(this)">
+                            <span>03 // РЕЙТИНГ</span> <span class="arrow">▼</span>
+                        </div>
+                        <div class="p-body"><div class="p-content"><p style="color:#666">Нет дополнительных вариантов.</p></div></div>
+                    </div>
+
+                    <!-- 4. EXTRA / HTML / SHIT -->
+                    <div class="prompt-card" style="grid-column: 1 / -1;">
+                        <div class="p-header" onclick="toggleCard(this)">
+                            <span>04 // ДОПОЛНИТЕЛЬНОЕ (HTML/ШТУКИ)</span> <span class="arrow">▼</span>
+                        </div>
+                        <div class="p-body">
+                            <div class="p-content">
+
+                                <!-- HTML -->
+                                <div class="item-row">
+                                    <h4 style="color: var(--c-accent);">🧃 HTML Стиль</h4>
+                                    <div class="item-top">
+                                        <span class="item-title">✧🧃 Renette HTML (Default)</span>
+                                        <button class="btn-copy-mini" onclick="copyOne(this)">Copy</button>
+                                        <textarea class="prompt-source">[placeholder]</textarea>
+                                    </div>
+                                    <div class="item-top" style="margin-top:10px;">
+                                        <span class="item-title">✧💜 Iris Bloomwave v1.0</span>
+                                        <button class="btn-copy-mini" onclick="copyOne(this)">Copy</button>
+                                        <textarea class="prompt-source">[placeholder]</textarea>
+                                    </div>
+                                </div>
+
+                                <!-- BULK COPY SECTION: STUFF -->
+                                <div class="item-row group-block" style="border: 1px solid var(--c-primary); padding: 15px; border-radius: 8px;">
+                                    <h4 style="color: var(--c-primary);">✎🧺 ШТУКИ (Мульти-выбор)</h4>
+                                    <p style="font-size:0.8rem; color:#aaa">Отметьте галочками и нажмите кнопку внизу.</p>
+
+                                    <!-- Mixable -->
+                                    <div class="item-top">
+                                        <input type="checkbox" class="cyber-checkbox">
+                                        <div style="flex:1"><span class="item-title">🕰️ Флешбеки</span></div>
+                                        <textarea class="prompt-source">[placeholder]</textarea>
+                                    </div>
+                                    <div class="item-top">
+                                        <input type="checkbox" class="cyber-checkbox">
+                                        <div style="flex:1"><span class="item-title">⏩ Переходы</span></div>
+                                        <textarea class="prompt-source">[placeholder]</textarea>
+                                    </div>
+                                    <div class="item-top">
+                                        <input type="checkbox" class="cyber-checkbox">
+                                        <div style="flex:1"><span class="item-title">🌎 Реальный Мир</span></div>
+                                        <textarea class="prompt-source">[placeholder]</textarea>
+                                    </div>
+                                    <div class="item-top">
+                                        <input type="checkbox" class="cyber-checkbox">
+                                        <div style="flex:1"><span class="item-title">✒️ Стиль веб-главы</span></div>
+                                        <textarea class="prompt-source">[placeholder]</textarea>
+                                    </div>
+                                    <div class="item-top">
+                                        <input type="checkbox" class="cyber-checkbox">
+                                        <div style="flex:1"><span class="item-title">🖼️ MEME</span></div>
+                                        <textarea class="prompt-source">[placeholder]</textarea>
+                                    </div>
+                                    <div class="item-top">
+                                        <input type="checkbox" class="cyber-checkbox">
+                                        <div style="flex:1"><span class="item-title">🔰 Типографика</span></div>
+                                        <textarea class="prompt-source">[placeholder]</textarea>
+                                    </div>
+
+                                    <!-- Hidden Blocks -->
+                                    <h5 style="color: var(--c-secondary); margin: 15px 0 5px;">Скрытые блоки:</h5>
+                                    <div class="item-top">
+                                        <input type="checkbox" class="cyber-checkbox">
+                                        <div style="flex:1"><span class="item-title">👤 Новые Профили</span></div>
+                                        <textarea class="prompt-source">[placeholder]</textarea>
+                                    </div>
+                                    <div class="item-top">
+                                        <input type="checkbox" class="cyber-checkbox">
+                                        <div style="flex:1"><span class="item-title">🗒️ Скрытые Планы</span></div>
+                                        <textarea class="prompt-source">[placeholder]</textarea>
+                                    </div>
+
+                                    <!-- Exclusive Groups (Radios) -->
+                                    <h5 style="color: var(--c-accent); margin: 15px 0 5px;">Инфоблоки (Только один):</h5>
+                                    <div class="item-top">
+                                        <input type="radio" name="infoblock" class="cyber-radio">
+                                        <div style="flex:1"><span class="item-title">✧🍎 Логи Ренетт</span></div>
+                                        <textarea class="prompt-source">[placeholder]</textarea>
+                                    </div>
+                                    <div class="item-top">
+                                        <input type="radio" name="infoblock" class="cyber-radio">
+                                        <div style="flex:1"><span class="item-title">✧🗂️ Мини</span></div>
+                                        <textarea class="prompt-source">[placeholder]</textarea>
+                                    </div>
+                                    <div class="item-top">
+                                        <input type="radio" name="infoblock" class="cyber-radio">
+                                        <div style="flex:1"><span class="item-title">✧💖 Матрица</span></div>
+                                        <textarea class="prompt-source">[placeholder]</textarea>
+                                    </div>
+
+                                    <h5 style="color: var(--c-accent); margin: 15px 0 5px;">Fancy UI (Только один):</h5>
+                                    <div class="item-top">
+                                        <input type="radio" name="fancy" class="cyber-radio">
+                                        <div style="flex:1"><span class="item-title">✧🥂 Full UI</span></div>
+                                        <textarea class="prompt-source">[placeholder]</textarea>
+                                    </div>
+                                    <div class="item-top">
+                                        <input type="radio" name="fancy" class="cyber-radio">
+                                        <div style="flex:1"><span class="item-title">✧🥂 Только Основа</span></div>
+                                        <textarea class="prompt-source">[placeholder]</textarea>
+                                    </div>
+
+                                    <button class="btn-glitch" onclick="copyBulk(this)">>> СКОПИРОВАТЬ ВЫБРАННОЕ <<</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5 & 6 -->
+                    <div class="prompt-card">
+                        <div class="p-header" onclick="toggleCard(this)"><span>05 // ДУМАЛКА</span> <span class="arrow">▼</span></div>
+                        <div class="p-body"><div class="p-content"><p style="color:#666">Нет дополнительных вариантов.</p></div></div>
+                    </div>
+                    <div class="prompt-card">
+                        <div class="p-header" onclick="toggleCard(this)"><span>06 // PREFILL</span> <span class="arrow">▼</span></div>
+                        <div class="p-body"><div class="p-content"><p style="color:#666">Нет дополнительных вариантов.</p></div></div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. GUIDES -->
+        <section id="guides" class="tab-section">
+            <div class="glass-panel">
+                <h2><img src="icon_book_closed.png"> Руководство Оператора</h2>
+
+                <div class="guide-item">
+                    <div class="guide-head" onclick="toggleGuide(this)">📥 Протокол Установки</div>
+                    <div class="guide-body">
+                        <div class="step"><div class="step-num">1</div><div>Скачайте JSON файл из раздела "Скачать".</div></div>
+                        <div class="step"><div class="step-num">2</div><div>В SillyTavern откройте меню пресетов и импортируйте файл.<br><img src="example6.jpg" class="img-responsive" style="max-width:300px; border-radius:8px; margin-top:5px;"></div></div>
+                        <div class="step"><div class="step-num">3</div><div>Подтвердите импорт RegEx скриптов.<br><img src="example7.jpg" style="max-width:300px; border-radius:8px;"></div></div>
+                        <div class="step"><div class="step-num">4</div><div>Настройте форматирование мыслей согласно скриншоту.<br><img src="example8.jpg" style="max-width:300px; border-radius:8px;"></div></div>
+                    </div>
                 </div>
 
-                <div class="log-entry">
-                    <div class="log-date">2023.09.01</div>
-                    <h3>Update v2.1</h3>
-                    <p style="color:var(--text-muted);">
-                        - Исправлена логика Jailbreak<br>
-                        - Мелкие правки текста
-                    </p>
+                <div class="guide-item">
+                    <div class="guide-head" onclick="toggleGuide(this)">⚙️ Функционал</div>
+                    <div class="guide-body">
+                         <p><strong>ООС:</strong> Настройки "голоса" Ренетт. Можно отключить или включить комментарии.</p>
+                         <p><strong>Карты:</strong> Не отключайте основные карты (Персона, Мир). Синтез Знаний помогает ИИ додумывать лор.</p>
+                         <p><strong>Патчи:</strong> Анти-повторения (борьба с эхо) и Баны (запрет слов).</p>
+                    </div>
                 </div>
 
-                <div class="log-entry">
-                    <div class="log-date">2023.08.15</div>
-                    <h3>Initial Release</h3>
-                    <p style="color:var(--text-muted);">
-                        - Загрузка в сеть.
-                    </p>
+                <div class="guide-item">
+                    <div class="guide-head" onclick="toggleGuide(this)">❓ FAQ</div>
+                    <div class="guide-body">
+                        <p><strong>Q: Куда вставлять промпты?</strong><br>A: В настройки пресета SillyTavern. Найдите тогл (например, "Штуки"), удалите содержимое и вставьте скопированное.</p>
+                        <p><strong>Q: Картинки не грузятся?</strong><br>A: Проверьте доступ к pollination.ai и отключите блокировку внешних медиа в настройках ST.</p>
+                    </div>
                 </div>
 
             </div>
         </section>
 
-        <!-- Пасхалка триггер -->
-        <div class="easter-egg-btn" onclick="startGame()"> sys_root</div>
+        <!-- 5. CONTACTS & CREDITS -->
+        <section id="contacts" class="tab-section">
+            <div class="glass-panel">
+                <h2><img src="icon_bag.png"> Сеть & Авторы</h2>
+
+                <div class="contact-grid">
+                    <a href="https://t.me/YablochnyAI" target="_blank" class="contact-btn">
+                        <img src="icon_tg_green.png" style="width:24px;"> Канал Телеграм
+                    </a>
+                    <a href="https://t.me/YablochnyChat" target="_blank" class="contact-btn">
+                        <img src="icon_tg.png" style="width:24px;"> Чат Сообщества
+                    </a>
+                </div>
+
+                <h3 style="margin-top:40px; color: var(--c-primary); border-bottom: 1px dashed var(--glass-border); padding-bottom:10px;">Авторы Промптов</h3>
+                <div class="contact-grid">
+                    <div class="contact-btn">Шино</div>
+                    <div class="contact-btn">Настенька</div>
+                    <div class="contact-btn">Leafcanfly</div>
+                    <div class="contact-btn">Пина-колада</div>
+                </div>
+
+                <h3 style="margin-top:40px; color: var(--c-secondary); border-bottom: 1px dashed var(--glass-border); padding-bottom:10px;">Благодарности</h3>
+                <div style="line-height: 1.6; color: #bbb;">
+                    <p><span style="color:var(--c-primary)">💚</span> <strong>Ксюля</strong> — Хранительница тепла, главный тестировщик и эстет.</p>
+                    <p><span style="color:var(--c-primary)">💚</span> <strong>Винишко, Владочка, Калий</strong></p>
+                    <p><span style="color:var(--c-primary)">💚</span> <strong>Мэри Харт & Логик</strong> (Краштест цензуры)</p>
+                </div>
+            </div>
+        </section>
 
     </main>
 
-    <!-- Уведомление о копировании -->
-    <div id="toast">DATA COPIED TO CLIPBOARD</div>
+    <!-- TOAST NOTIFICATIONS -->
+    <div id="toast-box"></div>
 
-    <!-- Игровой Модал -->
-    <div id="game-modal">
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox">
+        <img src="" id="lightbox-img">
+    </div>
+
+    <!-- EASTER EGG GAME: APPLE CORE DEFENSE -->
+    <div class="game-modal" id="game-modal">
+        <div class="close-game" onclick="closeGame()">×</div>
         <div class="game-ui">
-            <h2>BIT-HARVEST PROTOCOL</h2>
-            <p>Собери 10 целых яблок (зеленые). Не трогай битые (красные).</p>
-            <p>Score: <span id="score">0</span> | Integrity: <span id="hp">100%</span></p>
+            SCORE: <span id="g-score">0</span> | LIVES: <span id="g-lives">3</span>
         </div>
-        <canvas id="game-canvas" width="320" height="400"></canvas>
-        <button class="close-game" onclick="closeGame()">[ CLOSE CONNECTION ]</button>
+        <canvas id="game-canvas" width="320" height="480"></canvas>
+        <p style="color:#fff; margin-top:10px; font-family:var(--font-tech);">Click/Tap Green Apples to Collect. Avoid RED glitches.</p>
+        <button class="btn-glitch" id="start-btn" onclick="startGame()" style="width:200px;">START SYSTEM</button>
     </div>
 
     <script>
-        // --- 1. Логика переключения вкладок ---
+        // =========================================
+        // 1. NAVIGATION LOGIC
+        // =========================================
         function switchTab(tabId) {
-            // Скрыть все секции
-            document.querySelectorAll('section').forEach(sec => sec.classList.remove('active-section'));
-            // Убрать активность кнопок
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            // Hide all sections
+            document.querySelectorAll('.tab-section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
 
-            // Показать нужную
-            document.getElementById(tabId).classList.add('active-section');
+            // Show selected
+            document.getElementById(tabId).classList.add('active');
 
-            // Найти кнопку, которая вызвала это (костыль для демо, в идеале по ID кнопки)
-            // Но мы просто подсветим ту, у которой onclick соответствует
+            // Highlight nav button (simple lookup based on onclick attr is hacky but works for this scale)
+            // Better: assign IDs to buttons
             const btns = document.querySelectorAll('.nav-btn');
-            if(tabId === 'home') btns[0].classList.add('active');
-            if(tabId === 'prompts') btns[1].classList.add('active');
-            if(tabId === 'guide') btns[2].classList.add('active');
-            if(tabId === 'changelog') btns[3].classList.add('active');
+            // Mapping index: 0=home, 1=dl, 2=prompts, 3=guides, 4=contacts
+            const map = { 'home':0, 'download':1, 'prompts':2, 'guides':3, 'contacts':4 };
+            if(btns[map[tabId]]) btns[map[tabId]].classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // --- 2. Логика копирования ---
-        function copyText(elementId) {
-            const text = document.getElementById(elementId).innerText;
-            if(text.includes('// Нет дополнительных вариантов //')) {
-                showToast("EMPTY DATA BLOCK");
-                return;
+        // =========================================
+        // 2. TYPING EFFECT
+        // =========================================
+        const text = "Яблочный Пресет";
+        const target = document.getElementById('type-target');
+        let i = 0;
+        function typeWriter() {
+            if (i < text.length) {
+                target.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
             }
+        }
+        window.onload = typeWriter;
 
-            navigator.clipboard.writeText(text).then(() => {
-                showToast("DATA COPIED SUCCESSFULLY");
-            }).catch(err => {
-                showToast("ERROR: COPY FAILED");
+        // =========================================
+        // 3. UI INTERACTIONS (Accordions)
+        // =========================================
+        function toggleCard(header) {
+            header.classList.toggle('active');
+            const body = header.nextElementSibling;
+            if (header.classList.contains('active')) {
+                body.style.maxHeight = body.scrollHeight + "px";
+            } else {
+                body.style.maxHeight = 0;
+            }
+        }
+
+        function toggleGuide(header) {
+            header.classList.toggle('active');
+            const body = header.nextElementSibling;
+            // Guide logic handled via CSS + class toggle mostly, but lets ensure smooth height
+            // CSS handles opacity/padding, height needs JS for smooth slide
+            if (header.classList.contains('active')) {
+                body.style.maxHeight = body.scrollHeight + 40 + "px"; // +padding
+            } else {
+                body.style.maxHeight = 0;
+            }
+        }
+
+        // =========================================
+        // 4. COPY FUNCTIONS
+        // =========================================
+        function toast(title, msg) {
+            const box = document.getElementById('toast-box');
+            const el = document.createElement('div');
+            el.className = 'toast';
+            el.innerHTML = `<div><strong>${title}</strong><br>${msg}</div>`;
+            box.appendChild(el);
+            setTimeout(() => el.classList.add('show'), 10);
+            setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 400); }, 3000);
+        }
+
+        function copyOne(btn) {
+            const txt = btn.parentElement.querySelector('.prompt-source').value;
+            navigator.clipboard.writeText(txt).then(() => {
+                toast('Скопировано!', 'Промпт в буфере обмена.');
+                const old = btn.innerText;
+                btn.innerText = 'OK';
+                setTimeout(() => btn.innerText = old, 1000);
             });
         }
 
-        function showToast(msg) {
-            const toast = document.getElementById("toast");
-            toast.innerText = msg;
-            toast.className = "show";
-            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+        function copyBulk(btn) {
+            const container = btn.closest('.group-block');
+            const checks = container.querySelectorAll('input:checked');
+            if (checks.length === 0) return toast('Ошибка', 'Ничего не выбрано.');
+
+            let finalTxt = "";
+            checks.forEach(c => {
+                const row = c.closest('.item-top');
+                const txt = row.querySelector('.prompt-source').value;
+                finalTxt += txt + "\n\n";
+            });
+
+            navigator.clipboard.writeText(finalTxt).then(() => {
+                toast('Успех', `Скопировано ${checks.length} элементов.`);
+            });
         }
 
-        // --- 3. ИГРА (ПАСХАЛКА) ---
-        let gameLoop;
-        let canvas, ctx;
-        let apples = [];
-        let score = 0;
-        let hp = 100;
-        let isPlaying = false;
+        // =========================================
+        // 5. LIGHTBOX
+        // =========================================
+        const lb = document.getElementById('lightbox');
+        const lbImg = document.getElementById('lightbox-img');
+
+        document.addEventListener('click', e => {
+            if (e.target.tagName === 'IMG' && e.target.closest('.details-box, .guide-body')) {
+                lbImg.src = e.target.src;
+                lb.style.display = 'flex';
+            }
+        });
+        lb.onclick = () => lb.style.display = 'none';
+
+        // =========================================
+        // 6. BACKGROUND ANIMATION (Digital Rain/Petals)
+        // =========================================
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let w, h, particles = [];
+
+        function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class P {
+            constructor() {
+                this.reset();
+                this.y = Math.random() * h; // Initial spread
+            }
+            reset() {
+                this.x = Math.random() * w;
+                this.y = -10;
+                this.speed = Math.random() * 2 + 0.5;
+                this.size = Math.random() * 2;
+                this.color = Math.random() > 0.5 ? '#66ffb3' : '#ff6b6b';
+            }
+            update() {
+                this.y += this.speed;
+                if(this.y > h) this.reset();
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = 0.4;
+                ctx.fillRect(this.x, this.y, this.size, this.size * 4); // Digital strip look
+            }
+        }
+        for(let k=0; k<60; k++) particles.push(new P());
+        function anim() {
+            ctx.clearRect(0,0,w,h);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(anim);
+        }
+        anim();
+
+        // =========================================
+        // 7. EASTER EGG GAME: APPLE CORE DEFENSE
+        // =========================================
+        const gModal = document.getElementById('game-modal');
+        const gCanvas = document.getElementById('game-canvas');
+        const gCtx = gCanvas.getContext('2d');
+        let gLoop, gApples = [], gScore = 0, gLives = 3, gActive = false;
+
+        function launchGame() {
+            gModal.style.display = 'flex';
+        }
+        function closeGame() {
+            gModal.style.display = 'none';
+            gActive = false;
+            cancelAnimationFrame(gLoop);
+        }
 
         function startGame() {
-            document.getElementById('game-modal').style.display = 'flex';
-            canvas = document.getElementById('game-canvas');
-            ctx = canvas.getContext('2d');
-            score = 0;
-            hp = 100;
-            apples = [];
-            isPlaying = true;
+            document.getElementById('start-btn').style.display = 'none';
+            gScore = 0; gLives = 3; gApples = []; gActive = true;
             updateUI();
-            loop();
-        }
-
-        function closeGame() {
-            document.getElementById('game-modal').style.display = 'none';
-            isPlaying = false;
+            gameLoop();
+            spawnApple();
         }
 
         function updateUI() {
-            document.getElementById('score').innerText = score;
-            document.getElementById('hp').innerText = hp + "%";
+            document.getElementById('g-score').innerText = gScore;
+            document.getElementById('g-lives').innerText = gLives;
         }
 
-        function loop() {
-            if(!isPlaying) return;
+        function spawnApple() {
+            if(!gActive) return;
+            const type = Math.random() > 0.7 ? 'bad' : 'good';
+            gApples.push({
+                x: Math.random() * (gCanvas.width - 30),
+                y: -30,
+                type: type,
+                speed: Math.random() * 2 + 1 + (gScore * 0.1) // Get faster
+            });
+            setTimeout(spawnApple, Math.max(500, 1500 - (gScore * 50)));
+        }
 
-            // Очистка
-            ctx.fillStyle = '#000';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        function gameLoop() {
+            if(!gActive) return;
+            gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
 
-            // Спавн яблок (шанс)
-            if(Math.random() < 0.03) {
-                apples.push({
-                    x: Math.random() * (canvas.width - 20),
-                    y: -20,
-                    type: Math.random() > 0.3 ? 'good' : 'bad', // 70% хороших
-                    speed: 2 + Math.random() * 2
-                });
-            }
-
-            // Логика яблок
-            for(let i = 0; i < apples.length; i++) {
-                let a = apples[i];
+            // Draw Apples
+            for (let i = gApples.length - 1; i >= 0; i--) {
+                let a = gApples[i];
                 a.y += a.speed;
 
-                // Рисуем
-                ctx.font = "20px Arial";
-                ctx.fillStyle = a.type === 'good' ? '#00f0a8' : '#ff4d6d';
-                ctx.fillText('', a.x, a.y); // Используем символ яблока
+                gCtx.beginPath();
+                gCtx.arc(a.x + 15, a.y + 15, 12, 0, Math.PI*2);
+                gCtx.fillStyle = a.type === 'good' ? '#66ffb3' : '#ff6b6b';
+                gCtx.fill();
+                // Glitch effect for bad ones
+                if(a.type === 'bad') {
+                    gCtx.fillStyle = '#fff';
+                    gCtx.fillRect(a.x, a.y+10, 30, 2);
+                }
 
-                // Клик (симуляция через координаты мыши сложнее без слушателя, сделаем проще: они падают, мы кликаем по канвасу)
+                if(a.y > gCanvas.height) {
+                    gApples.splice(i, 1);
+                    if(a.type === 'good') {
+                        gLives--;
+                        updateUI();
+                        if(gLives <= 0) gameOver();
+                    }
+                }
             }
-
-            // Удаляем улетевшие
-            apples = apples.filter(a => a.y < canvas.height);
-
-            // Win/Loss
-            if(hp <= 0) {
-                endGame(false);
-                return;
-            }
-            if(score >= 10) {
-                endGame(true);
-                return;
-            }
-
-            requestAnimationFrame(loop);
+            gLoop = requestAnimationFrame(gameLoop);
         }
 
-        // Обработка клика в игре
-        document.getElementById('game-canvas').addEventListener('mousedown', function(e) {
-            if(!isPlaying) return;
-            const rect = canvas.getBoundingClientRect();
+        // Click handler
+        gCanvas.addEventListener('mousedown', (e) => {
+            if(!gActive) return;
+            const rect = gCanvas.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
 
-            for(let i = 0; i < apples.length; i++) {
-                let a = apples[i];
-                // Простая проверка коллизии
-                if(x > a.x - 10 && x < a.x + 30 && y > a.y - 30 && y < a.y + 10) {
+            for (let i = gApples.length - 1; i >= 0; i--) {
+                let a = gApples[i];
+                let dist = Math.hypot(x - (a.x+15), y - (a.y+15));
+                if(dist < 20) {
                     if(a.type === 'good') {
-                        score++;
+                        gScore++;
+                        gApples.splice(i, 1);
+                        if(gScore >= 20) gameWin();
                     } else {
-                        hp -= 25;
+                        gLives--;
+                        gApples.splice(i, 1);
+                        if(gLives <= 0) gameOver();
                     }
-                    apples.splice(i, 1);
                     updateUI();
-                    break;
                 }
             }
         });
 
-        function endGame(win) {
-            isPlaying = false;
-            ctx.fillStyle = 'rgba(0,0,0,0.8)';
-            ctx.fillRect(0,0,canvas.width, canvas.height);
-            ctx.fillStyle = win ? '#00f0a8' : '#ff4d6d';
-            ctx.font = "20px Courier New";
-            ctx.textAlign = "center";
-            if(win) {
-                ctx.fillText("SYSTEM RESTORED.", canvas.width/2, canvas.height/2);
-                ctx.font = "14px Courier New";
-                ctx.fillStyle = '#fff';
-                ctx.fillText("Renette is happy.", canvas.width/2, canvas.height/2 + 30);
-            } else {
-                ctx.fillText("CRITICAL FAILURE", canvas.width/2, canvas.height/2);
-            }
+        function gameOver() {
+            gActive = false;
+            alert("SYSTEM FAILURE. TRY AGAIN.");
+            document.getElementById('start-btn').style.display = 'block';
         }
+        function gameWin() {
+            gActive = false;
+            alert("SYSTEM RESTORED! RENETTE IS HAPPY.");
+            closeGame();
+        }
+
     </script>
 </body>
 </html>
