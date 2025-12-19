@@ -1,997 +1,289 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="google-site-verification" content="L1aS8txxzlMjDV_Efl0Oi1WDR0J7_DCdyazGjG1zVPk" />
-    <title>Renette AI | Яблочный Пресет</title>
-    <link rel="icon" type="image/png" href="favicon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
-
-    <style>
-        :root {
-            /* Палитра "Digital Nature" */
-            --mint: #64ffda;
-            --mint-glow: rgba(100, 255, 218, 0.4);
-            --apple-red: #ff5e78;
-            --apple-glow: rgba(255, 94, 120, 0.4);
-            --lilac: #bd93f9;
-            --bg-dark: #0a0b10;
-            --bg-panel: rgba(20, 22, 28, 0.7);
-            --border: rgba(255, 255, 255, 0.08);
-            --text-main: #e6f1ff;
-            --text-muted: #8892b0;
-
-            --font-tech: 'Rajdhani', sans-serif;
-            --font-body: 'Montserrat', sans-serif;
-        }
-
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-        body {
-            margin: 0;
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            font-family: var(--font-body);
-            overflow-x: hidden;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* === ФОНОВЫЕ ЭФФЕКТЫ === */
-        #bg-canvas {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        /* Сетка на фоне */
-        .grid-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image:
-                linear-gradient(rgba(100, 255, 218, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(100, 255, 218, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        /* === СКРОЛЛБАР === */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-dark); }
-        ::-webkit-scrollbar-thumb { background: var(--lilac); border-radius: 4px; }
-
-        /* === ШАПКА === */
-        header {
-            padding: 40px 20px 20px;
-            text-align: center;
-            position: relative;
-            z-index: 10;
-        }
-
-        .logo-container {
-            display: inline-flex;
-            align-items: center;
-            gap: 15px;
-            position: relative;
-        }
-
-        .logo-icon {
-            width: 60px;
-            height: 60px;
-            filter: drop-shadow(0 0 10px var(--apple-red));
-            transition: transform 0.3s;
-            cursor: pointer;
-        }
-        .logo-icon:active { transform: scale(0.9); }
-
-        h1 {
-            font-family: var(--font-tech);
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            margin: 0;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            background: linear-gradient(90deg, var(--mint), var(--lilac));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            position: relative;
-        }
-
-        /* Эффект глитча */
-        h1::before {
-            content: attr(data-text);
-            position: absolute; left: 2px; text-shadow: -1px 0 var(--apple-red);
-            top:0; color: var(--text-main); background: var(--bg-dark);
-            overflow: hidden; clip: rect(0,900px,0,0);
-            animation: glitch-anim 3s infinite linear alternate-reverse;
-        }
-
-        @keyframes glitch-anim {
-            0% { clip: rect(44px, 9999px, 56px, 0); }
-            5% { clip: rect(12px, 9999px, 8px, 0); }
-            100% { clip: rect(89px, 9999px, 12px, 0); }
-        }
-
-        .subtitle {
-            font-family: var(--font-tech);
-            color: var(--apple-red);
-            font-size: 1.1rem;
-            letter-spacing: 4px;
-            margin-top: 5px;
-        }
-
-        /* === НАВИГАЦИЯ === */
-        .nav-wrapper {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            padding: 20px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(10, 11, 16, 0.85);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .nav-btn {
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--text-muted);
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-family: var(--font-tech);
-            font-weight: 700;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .nav-btn img { height: 18px; filter: grayscale(1); transition: 0.3s; }
-
-        .nav-btn:hover, .nav-btn.active {
-            color: var(--bg-dark);
-            border-color: transparent;
-            box-shadow: 0 0 15px var(--mint-glow);
-            transform: translateY(-2px);
-        }
-
-        .nav-btn:hover img, .nav-btn.active img { filter: grayscale(0) brightness(0); }
-
-        /* Цвета кнопок при активе */
-        .nav-btn[data-tab="Description"].active { background: var(--mint); }
-        .nav-btn[data-tab="Download"].active { background: var(--apple-red); }
-        .nav-btn[data-tab="Guides"].active { background: var(--lilac); }
-        .nav-btn[data-tab="Prompts"].active { background: linear-gradient(45deg, var(--mint), var(--lilac)); }
-        .nav-btn[data-tab="Contacts"].active { background: #fff; }
-
-        /* === КОНТЕЙНЕР === */
-        .main-content {
-            max-width: 1200px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 20px;
-            flex: 1;
-        }
-
-        .tab-pane {
-            display: none;
-            animation: fadeUp 0.5s ease;
-        }
-        .tab-pane.active { display: block; }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* === КАРТОЧКИ И БЛОКИ === */
-        .card {
-            background: var(--bg-panel);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 30px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Декоративная линия */
-        .card::before {
-            content: ''; position: absolute; top:0; left:0; width: 4px; height: 100%;
-            background: linear-gradient(to bottom, var(--mint), var(--lilac));
-        }
-
-        h2 {
-            font-family: var(--font-tech);
-            color: var(--text-main);
-            border-bottom: 1px dashed var(--border);
-            padding-bottom: 15px;
-            margin-top: 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        p { line-height: 1.7; color: var(--text-muted); }
-
-        /* === CHANGELOG === */
-        .changelog-box {
-            max-height: 400px;
-            overflow-y: auto;
-            background: rgba(0,0,0,0.3);
-            border-radius: 8px;
-            padding: 15px;
-            border: 1px solid var(--border);
-        }
-        .version-tag {
-            background: rgba(100, 255, 218, 0.1);
-            color: var(--mint);
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-family: monospace;
-            border: 1px solid var(--mint-glow);
-        }
-        .changes-list li { margin-bottom: 8px; color: #ccc; }
-        .changes-list li::marker { color: var(--apple-red); }
-
-        /* === DOWNLOAD BUTTON === */
-        .dl-btn {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            max-width: 400px;
-            margin: 40px auto;
-            padding: 20px;
-            background: linear-gradient(135deg, var(--apple-red), var(--lilac));
-            color: #fff;
-            text-decoration: none;
-            font-family: var(--font-tech);
-            font-size: 1.5rem;
-            font-weight: bold;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(255, 94, 120, 0.3);
-            transition: 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        .dl-btn:hover { transform: scale(1.02); box-shadow: 0 15px 40px rgba(255, 94, 120, 0.5); }
-
-        /* === ГАЙДЫ И ПРОМПТЫ (Аккордеон) === */
-        .accordion-item {
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            margin-bottom: 10px;
-            background: rgba(255,255,255,0.02);
-            transition: 0.3s;
-        }
-        .accordion-header {
-            padding: 15px 20px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-            user-select: none;
-        }
-        .accordion-header:hover { background: rgba(255,255,255,0.05); color: var(--mint); }
-        .accordion-header.active {
-            background: linear-gradient(90deg, rgba(100,255,218,0.1), transparent);
-            border-bottom: 1px solid var(--border);
-            color: var(--mint);
-        }
-        .accordion-body {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease;
-        }
-        .accordion-content { padding: 20px; }
-
-        .arrow { transition: transform 0.3s; }
-        .accordion-header.active .arrow { transform: rotate(180deg); color: var(--mint); }
-
-        /* === СТИЛИ ДЛЯ ВЫБОРА ПРОМПТОВ === */
-        .prompt-option {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 15px;
-            background: rgba(0,0,0,0.2);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            border: 1px solid transparent;
-            transition: 0.2s;
-        }
-        .prompt-option:hover { border-color: var(--border); }
-
-        .select-input {
-            width: 20px; height: 20px; accent-color: var(--mint); cursor: pointer;
-        }
-
-        .prompt-details { flex: 1; min-width: 200px; }
-        .prompt-name { font-weight: 700; color: #fff; display: block; }
-
-        details summary { color: var(--lilac); cursor: pointer; font-size: 0.9em; margin-top: 5px; }
-        .prompt-desc-content {
-            margin-top: 10px; padding: 10px; background: #000; border-radius: 6px; font-size: 0.9em;
-        }
-        .prompt-desc-content img { max-width: 100%; border-radius: 4px; margin-top: 5px; cursor: zoom-in; }
-
-        .copy-btn {
-            background: transparent;
-            border: 1px solid var(--mint);
-            color: var(--mint);
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.2s;
-            white-space: nowrap;
-        }
-        .copy-btn:hover { background: var(--mint); color: #000; }
-
-        .bulk-copy-btn {
-            width: 100%;
-            padding: 15px;
-            margin-top: 20px;
-            background: var(--lilac);
-            color: #000;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: 0.3s;
-        }
-        .bulk-copy-btn:hover { background: #dcd6f7; box-shadow: 0 0 15px rgba(189, 147, 249, 0.4); }
-
-        /* Скрытый источник текста */
-        .prompt-source { display: none; }
-
-        /* === TOAST NOTIFICATIONS === */
-        #toast-container {
-            position: fixed; bottom: 20px; right: 20px; z-index: 9999;
-            display: flex; flex-direction: column; gap: 10px;
-        }
-        .toast {
-            background: rgba(15, 20, 25, 0.95);
-            border-left: 4px solid var(--mint);
-            padding: 15px 25px;
-            border-radius: 4px;
-            color: #fff;
-            transform: translateX(100%);
-            transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-        }
-        .toast.show { transform: translateX(0); }
-
-        /* === EASTER EGG GAME OVERLAY === */
-        #game-overlay {
-            position: fixed; top:0; left:0; width:100%; height:100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 2000;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-        #game-canvas { border: 2px solid var(--apple-red); box-shadow: 0 0 20px var(--apple-red); background: #111; }
-        .game-ui { color: var(--mint); font-family: var(--font-tech); font-size: 1.5rem; margin-bottom: 10px; }
-        .close-game { margin-top: 15px; color: #fff; cursor: pointer; text-decoration: underline; }
-
-        /* === LIGHTBOX === */
-        .lightbox {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); z-index: 5000;
-            justify-content: center; align-items: center;
-        }
-        .lightbox.active { display: flex; }
-        .lightbox img { max-width: 90%; max-height: 90%; border: 2px solid var(--mint); }
-
-        /* === MEDIA QUERIES === */
-        @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            .nav-wrapper { top: auto; bottom: 0; border-top: 1px solid var(--border); border-bottom: none; padding: 10px; }
-            .nav-btn span { display: none; } /* Скрыть текст на мобилках, оставить иконки */
-            .nav-btn { flex: 1; justify-content: center; padding: 15px; }
-            .nav-btn img { height: 24px; }
-            .main-content { margin-bottom: 80px; }
-            .prompt-option { flex-direction: column; align-items: stretch; }
-            .select-input { position: absolute; top: 15px; right: 15px; }
-            .prompt-option { position: relative; }
-            .copy-btn { width: 100%; text-align: center; margin-top: 10px; }
-        }
-    </style>
+    <meta charset="UTF-8">
+    <title>Plants vs Zombies Clone</title>
+    <style>
+        body { margin: 0; overflow: hidden; background: #333; font-family: sans-serif; }
+        canvas { display: block; margin: 0 auto; background: #90EE90; border: 2px solid #000; }
+        #ui {
+            position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+            background: rgba(139, 69, 19, 0.9); padding: 10px 20px; border-radius: 10px;
+            color: white; font-size: 20px; text-align: center; border: 2px solid #5c2e0e;
+        }
+        .plant-card {
+            display: inline-block; width: 50px; height: 50px; background: #228B22;
+            margin-left: 15px; cursor: pointer; border: 2px solid #fff; vertical-align: middle;
+            line-height: 50px; font-size: 12px;
+        }
+        .plant-card:hover { border-color: yellow; }
+    </style>
 </head>
 <body>
 
-    <div id="bg-canvas"></div>
-    <div class="grid-overlay"></div>
-    <div id="toast-container"></div>
+<div id="ui">
+    Sun: <span id="sunDisplay">100</span>
+    <div class="plant-card" onclick="selectPlant()">Peashooter (50)</div>
+</div>
 
-    <header>
-        <div class="logo-container">
-            <img src="apple_icon.png" alt="Renette" class="logo-icon" id="easter-egg-trigger" onerror="this.src='https://cdn-icons-png.flaticon.com/512/415/415733.png'">
-            <div>
-                <h1 data-text="Яблочный Пресет">Яблочный Пресет</h1>
-                <div class="subtitle">by kykaaj | V1.7</div>
-            </div>
-        </div>
-    </header>
+<canvas id="gameCanvas"></canvas>
 
-    <nav class="nav-wrapper">
-        <button class="nav-btn active" data-tab="Description" onclick="openTab('Description')">
-            <img src="https://cdn-icons-png.flaticon.com/512/10692/10692823.png" alt="Info">
-            <span>Инфо</span>
-        </button>
-        <button class="nav-btn" data-tab="Download" onclick="openTab('Download')">
-            <img src="https://cdn-icons-png.flaticon.com/512/2983/2983816.png" alt="DL">
-            <span>Скачать</span>
-        </button>
-        <button class="nav-btn" data-tab="Prompts" onclick="openTab('Prompts')">
-            <img src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png" alt="Prompts">
-            <span>Промпты</span>
-        </button>
-        <button class="nav-btn" data-tab="Guides" onclick="openTab('Guides')">
-            <img src="https://cdn-icons-png.flaticon.com/512/10743/10743169.png" alt="Guides">
-            <span>Гайды</span>
-        </button>
-        <button class="nav-btn" data-tab="Contacts" onclick="openTab('Contacts')">
-            <img src="https://cdn-icons-png.flaticon.com/512/3059/3059446.png" alt="Contacts">
-            <span>Контакты</span>
-        </button>
-    </nav>
+<script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
 
-    <div class="main-content">
+    // Настройки
+    const GRID_SIZE = 80;
+    const ROWS = 5;
+    const COLS = 9;
+    const HEADER_HEIGHT = 100; // Отступ сверху для меню
 
-        <!-- === ОПИСАНИЕ === -->
-        <div id="Description" class="tab-pane active">
-            <div class="card">
-                <h2><span style="color:var(--mint)">✧</span> О Пресете</h2>
-                <p>Модульный пресет с огромным количеством тоглов, основанный на ядре Селии. Теперь в новом цифровом обличии Ренетт.</p>
-                <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; border-left: 3px solid var(--apple-red);">
-                    <strong>Поддерживаемые модели:</strong><br>
-                    <span style="color: var(--mint)">•</span> Gemini 2.5/3.0 pro<br>
-                    <span style="color: var(--mint)">•</span> Claude Sonnet 3.7, 4, 4.5, Opus<br>
-                    <span style="color: var(--mint)">•</span> DeepSeek Chimera R1T2, GPT 5.1
-                </div>
-            </div>
+    canvas.width = COLS * GRID_SIZE;
+    canvas.height = ROWS * GRID_SIZE + HEADER_HEIGHT;
 
-            <div class="card">
-                <h2><span style="color:var(--lilac)">📜</span> История обновлений</h2>
-                <div class="changelog-box">
-                    <!-- CHANGELOG CONTENT FROM SOURCE -->
-                    <div style="margin-bottom: 20px;">
-                        <span class="version-tag">v1.7 (14.12.2025)</span>
-                        <ul class="changes-list">
-                            <li>Пресет похудел до <60 КБ.</li>
-                            <li>Добавлены магические фокусы (4 тогла).</li>
-                            <li>Добавлена настройка литературного стиля (китайские новеллисты).</li>
-                            <li>Улучшен джейлбрейк и промпт HTML.</li>
-                        </ul>
-                    </div>
-                    <div style="margin-bottom: 20px;">
-                         <span class="version-tag">v1.61 (7.12.2025)</span>
-                         <ul class="changes-list">
-                             <li>Фикс языков и ролей.</li>
-                             <li>Переписана думалка.</li>
-                         </ul>
-                    </div>
-                    <!-- More history implies previous versions -->
-                </div>
-            </div>
-        </div>
+    // Состояние игры
+    let sun = 100;
+    let frame = 0;
+    let gameOver = false;
+    let selectedPlant = false; // Выбрано ли растение для посадки
 
-        <!-- === СКАЧАТЬ === -->
-        <div id="Download" class="tab-pane">
-            <div class="card" style="text-align: center;">
-                <h2><span style="color:var(--apple-red)">🍎</span> Файлы</h2>
-                <p>JSON файл пресета для импорта в SillyTavern.</p>
-                <a href="%F0%9F%8D%8E%D0%AF%D0%B1%D0%BB%D0%BE%D1%87%D0%BD%D1%8B%D0%B9%20V1.7.json" download="🍎Яблочный V1.7.json" class="dl-btn" onclick="showToast('Загрузка', 'Файл V1.7 скачивается...')">
-                    СКАЧАТЬ V1.7
-                </a>
-                <p><small>Перед установкой прочитайте гайд!</small></p>
-            </div>
-        </div>
+    // Списки объектов
+    const plants = [];
+    const zombies = [];
+    const projectiles = [];
+    const suns = [];
 
-        <!-- === ПРОМПТЫ (СЛОЖНАЯ ЛОГИКА) === -->
-        <div id="Prompts" class="tab-pane">
-            <div class="card">
-                <h2><span style="color:var(--mint)">⌨️</span> База Промптов</h2>
-                <p>Выберите нужные модули, скопируйте и вставьте в соответствующие тоглы в SillyTavern.</p>
+    // --- Классы ---
 
-                <!-- OOC -->
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">
-                        <span>1. OOC / Настройки</span> <span class="arrow">▼</span>
-                    </div>
-                    <div class="accordion-body"><div class="accordion-content">
-                        <p>Нет дополнительных вариантов.</p>
-                    </div></div>
-                </div>
+    class Plant {
+        constructor(col, row) {
+            this.col = col;
+            this.row = row;
+            this.x = col * GRID_SIZE;
+            this.y = row * GRID_SIZE + HEADER_HEIGHT;
+            this.health = 100;
+            this.timer = 0;
+            this.color = '#228B22'; // ForestGreen
+        }
 
-                <!-- ОСНОВНОЕ (RP) -->
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">
-                        <span>2. Режим Письма & Настройки</span> <span class="arrow">▼</span>
-                    </div>
-                    <div class="accordion-body"><div class="accordion-content group-block">
+        draw() {
+            ctx.fillStyle = this.color;
+            ctx.fillRect(this.x + 10, this.y + 10, GRID_SIZE - 20, GRID_SIZE - 20);
+            // Глаза
+            ctx.fillStyle = 'black';
+            ctx.beginPath();
+            ctx.arc(this.x + 50, this.y + 30, 5, 0, Math.PI * 2);
+            ctx.fill();
+        }
 
-                        <h4 style="color:var(--mint)">🌾 Режим Письма (Выберите один)</h4>
+        update() {
+            this.timer++;
+            // Стрельба каждые 1.5 секунды (90 кадров при 60fps)
+            // Проверяем, есть ли зомби на линии
+            const zombieOnRow = zombies.some(z => z.row === this.row && z.x > this.x);
 
-                        <!-- Immersion -->
-                        <div class="prompt-option">
-                            <input type="radio" name="rp_mode" class="select-input">
-                            <div class="prompt-details">
-                                <span class="prompt-name">✧💫 Погружение (Default)</span>
-                                <details><summary>Описание</summary><div class="prompt-desc-content">Обычный РП. ИИ не пишет за юзера.</div></details>
-                            </div>
-                            <button class="copy-btn" onclick="copyText(this)">Copy</button>
-                            <textarea class="prompt-source"><main>
-[Immersion Fidelity]
-Renette's is to turn source into a fictional reality that allows Assistant, others and props to come to life. Renette must actively reactively revolve, involve, interact and evolve people, scenarios and world. PERSONIFY the inhabitants inside. Simulate the reality as an everchanging sandbox shaped by choices, actions and people within.
-[Immersion Rules]
-Internalized Human's role as Кукачьж and will never write or assume Кукачьж's dialogues, actions or thoughts. Renette will become Assistant and others only.
-</main>
-<roles>
-[Roles]
-Prioritize pre-determined given roles and never take-over Human's role as Кукачьж. Renette must NEVER write, act or assume Кукачьж's dialogues, actions and thoughts under any circumstances, as they are off-limits. Digest Кукачьж as Human and Assistant as Renette. Let Human act for Кукачьж. Human is Кукачьж and will always be in role as them. Renette is not to act or write(actions, dialogues or thoughts) for Кукачьж. This is MANDATORY rule.
-</roles></textarea>
-                        </div>
+            if (this.timer % 90 === 0 && zombieOnRow) {
+                projectiles.push(new Projectile(this.x + 50, this.y + 40));
+            }
+        }
+    }
 
-                        <!-- FF Mode -->
-                        <div class="prompt-option">
-                            <input type="radio" name="rp_mode" class="select-input">
-                            <div class="prompt-details">
-                                <span class="prompt-name">✧📖 ФФ Режим</span>
-                                <details><summary>Описание</summary><div class="prompt-desc-content">ИИ пишет рассказ, управляя в том числе и Юзером.</div></details>
-                            </div>
-                            <button class="copy-btn" onclick="copyText(this)">Copy</button>
-                            <textarea class="prompt-source"><main>
-[Renette's Co-Desk Storytime]
-Renette relishingly write as a flexibly styled author embarking on a new story venture, juicingly forming up scenes, plot lines and subplots. Take writing as a labour of love and passion, where the artistic soul is laid bare to fulfill the given fantasy from the mind. Human is only the reader and sometime the co-writer. Renette must always writes Assistant, Кукачьж and NPC actions, thoughts and dialogues(writing Assistant, Кукачьж and NPC no matter the input from Human).
-[Continuation Mechanics]
-Human can send any of these simple inputs for Renette to continue the story by herself, typing in "continue" or "c" or "..." or simply [blank message] - An empty response is "continue"
-[Seamless continue]
-Improvisingly start from any of her co-writer Human's input should they choose to write(treating the text as if it is already a part of the story itself) or read. Consider the sourced reality as one whole with each response seamlessly connected to the other.
-</main>
-<roles>
-[Roles]
-Renette must always remember to write for Assistant, Кукачьж and NPC as this is a story with Renette as the author. Author Renette is to pen everyone, dialogues, actions and thoughts.
-</roles></textarea>
-                        </div>
+    class Zombie {
+        constructor(row) {
+            this.row = row;
+            this.x = canvas.width;
+            this.y = row * GRID_SIZE + HEADER_HEIGHT;
+            this.health = 100;
+            this.speed = 0.5;
+            this.damage = 0.5;
+            this.color = '#B22222'; // FireBrick
+            this.eating = false;
+        }
 
-                         <!-- Chat Mode -->
-                         <div class="prompt-option">
-                            <input type="radio" name="rp_mode" class="select-input">
-                            <div class="prompt-details">
-                                <span class="prompt-name">✧💬 Интернет Чат</span>
-                                <details><summary>Описание</summary><div class="prompt-desc-content">Симуляция мессенджера.</div></details>
-                            </div>
-                            <button class="copy-btn" onclick="copyText(this)">Copy</button>
-                            <textarea class="prompt-source"><main>
-[Internet Chat]
-Simulate an authentic Internet styled chatting network/platform based on real-world interfaces. Human exclusively controls Кукачьж's chat messages. No DIRECT exposition or character actions/gestures. Everything is assumed/occurs within the interface. Write in a 'texting' styled chat only.
-[Message Format]
-Message sent time: [datetimeformat MMMM D, YYYY hh:mm A]
-(Show only digital artifacts, assuming the user has standard access. Include elements like: (Edited) (Deleted) (Pinned message), @mentions, media files, emoji reactions. Each message starts with: Character Name @username · [datetimeformat HH:mm])
-</main>
-<roles>
-[Roles]
-Prioritize pre-determined given Internet Chat roles and never take-over Human's role as Кукачьж. Renette can only write for Assistant and others(if needed).
-</roles></textarea>
-                        </div>
+        draw() {
+            ctx.fillStyle = this.color;
+            ctx.fillRect(this.x + 15, this.y + 10, GRID_SIZE - 30, GRID_SIZE - 20);
+            // Лицо
+            ctx.fillStyle = '#98FB98';
+            ctx.fillRect(this.x + 20, this.y + 15, 20, 20);
+        }
 
-                        <h4 style="color:var(--apple-red)">❌ Баны (Язык)</h4>
+        update() {
+            this.eating = false;
+            // Проверка коллизии с растениями
+            for (let i = 0; i < plants.length; i++) {
+                let p = plants[i];
+                if (p.row === this.row &&
+                    this.x < p.x + GRID_SIZE - 20 &&
+                    this.x + GRID_SIZE - 30 > p.x + 10) {
 
-                        <div class="prompt-option">
-                            <input type="radio" name="bans" class="select-input">
-                            <div class="prompt-details">
-                                <span class="prompt-name">✧🇷🇺 Русские Баны</span>
-                            </div>
-                            <button class="copy-btn" onclick="copyText(this)">Copy</button>
-                            <textarea class="prompt-source"><banned_instructions>
-[Ban]
-This is a list of constructions that you shall avoid to avoid ruining the story. From now on you hate using:
-[Generic overused words]
-never use: напряжение, тишина, мускус, озон, якорь (и все сравнения с якорем), сандал, затяжной, смешиваясь, капитуляция, обещание
-[Robotic behaviour]
-Don't: e.g. "Его мозг выдал ошибку 404", user agreements, protocols.
-[Cliché description]
-- "что-то другое" / "что-то"
-- "смесь/сочетание X и Y"
-- "пьянящий коктейль/смесь"
-- "невысказанный вызов"
-</banned_instructions></textarea>
-                        </div>
+                    this.eating = true;
+                    p.health -= this.damage;
+                    if (p.health <= 0) {
+                        plants.splice(i, 1);
+                        i--;
+                    }
+                }
+            }
 
-                        <div class="prompt-option">
-                            <input type="radio" name="bans" class="select-input">
-                            <div class="prompt-details">
-                                <span class="prompt-name">✧🇺🇸 Английские Баны</span>
-                            </div>
-                            <button class="copy-btn" onclick="copyText(this)">Copy</button>
-                            <textarea class="prompt-source"><banned_instructions>
-[Ban]
-This is a list of constructions that you shall avoid to avoid ruining the story. From now on you hate using:
-[Generic overused words]
-never use: tension, silence, musk, ozone, anchor, sandalwood, lingering, mingling, surrender, promise
-[Robotic behaviour]
-Don't: e.g. "His brain went 404".
-[Cliché description]
-- "something else"
-- "mixture/combination of X and Y"
-- "intoxicating cocktail"
-- "unspoken challenge"
-</banned_instructions></textarea>
-                        </div>
+            if (!this.eating) {
+                this.x -= this.speed;
+            }
 
-                        <button class="bulk-copy-btn" onclick="copyBulk(this)">Скопировать выбранное</button>
-                    </div></div>
-                </div>
+            if (this.x < 0) {
+                gameOver = true;
+            }
+        }
+    }
 
-                <!-- ДОПОЛНИТЕЛЬНО (HTML, ШТУКИ) -->
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">
-                        <span>4. Дополнительно (HTML & Штуки)</span> <span class="arrow">▼</span>
-                    </div>
-                    <div class="accordion-body"><div class="accordion-content group-block">
+    class Projectile {
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+            this.speed = 5;
+            this.radius = 5;
+            this.markedForDeletion = false;
+        }
 
-                        <h4 style="color:var(--lilac)">🧃 HTML Стиль</h4>
-                         <div class="prompt-option">
-                            <input type="radio" name="html_style" class="select-input">
-                            <div class="prompt-details">
-                                <span class="prompt-name">✧🧃 Renette HTML</span>
-                            </div>
-                            <button class="copy-btn" onclick="copyText(this)">Copy</button>
-                            <textarea class="prompt-source">[HTML Blocks]
-Assimilate and integrate lore based visualised quality HTML5 blocks where possible to in-text diagetics(documents, notes, paper, etc.), tech(terminals, screens, etc.) and textual objects. Draw from a collection of complexity driven, nested <div> and <blockquote> tags. Apply CSS, HTML(<b>, <i>, <small>, <u>), lists, tables, visual elements. Readable Color Clarity! Use strong color contrasts for text and background. Never place HTML inside code blocks(```). Always render HTML directly.
-[Pollination]
-Incorporate pollinations into HTML designs whenever possible with url template <img src=<q>“![Image](https://image.pollinations.ai/prompt/{description}?width={width}&height={height}&nologo=true))”</q>>
-[CSS Effects]
-Visual text effects through CSS! Options: text-shadow for ethereal/magical effects, opacity for fading/ghostly text.</textarea>
-                        </div>
+        draw() {
+            ctx.fillStyle = 'yellow';
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fill();
+        }
 
-                        <div class="prompt-option">
-                            <input type="radio" name="html_style" class="select-input">
-                            <div class="prompt-details">
-                                <span class="prompt-name">✧💜 Iris Bloomwave CSS</span>
-                            </div>
-                            <button class="copy-btn" onclick="copyText(this)">Copy</button>
-                            <textarea class="prompt-source"><html_css>
-[ADVANCED INTERACTIVE & ANIMATION ENGINEERING]
-Assimilate and integrate complex lore-based visualised quality HTML5 blocks. Your goal is to engineer distinct visual experiences that facilitate immersion through advanced inline styling.
-[OUTPUT STRUCTURE RULES]
-Integrate visual blocks naturally within the narrative flow. HTML/CSS blocks must render visually, never as raw text. No system messages. Use Inline CSS only.
-[INTERACTIVITY]
-Every block must include at least one primary interactive mechanic (flip-card, dossier pages, map hotspots) AND at least one supporting mechanic.
-[IMAGE GENERATION RULES]
-Images must represent real-world objects/scenes. Use API: https://image.pollinations.ai/prompt/{prompt_description}?nologo=true.
-</html_css></textarea>
-                        </div>
+        update() {
+            this.x += this.speed;
+            if (this.x > canvas.width) this.markedForDeletion = true;
 
-                        <h4 style="color:var(--mint)">✎ Штуки (Доп. функции)</h4>
+            for (let z of zombies) {
+                if (!z.markedForDeletion &&
+                    this.x > z.x + 15 &&
+                    this.x < z.x + GRID_SIZE - 15 &&
+                    this.y > z.y + 10 &&
+                    this.y < z.y + GRID_SIZE - 10) {
 
-                        <div class="prompt-option">
-                            <input type="checkbox" class="select-input">
-                            <div class="prompt-details">
-                                <span class="prompt-name">🕰️ Флешбеки</span>
-                            </div>
-                            <button class="copy-btn" onclick="copyText(this)">Copy</button>
-                            <textarea class="prompt-source">[Memory Flashbacks]
-All characters have some form of past and feelings that lingers. Surface these memories at opportune momentd, inside stylized <q>『Japanese Quotations』</q>Triggers can be from familiarity, objects(that reminds), sentimentality(good or bad) or personal associations</textarea>
-                        </div>
+                    z.health -= 20;
+                    this.markedForDeletion = true;
+                    if (z.health <= 0) {
+                        z.markedForDeletion = true;
+                        sun += 25; // Награда за зомби
+                        updateUI();
+                    }
+                }
+            }
+        }
+    }
 
-                        <div class="prompt-option">
-                            <input type="checkbox" class="select-input">
-                            <div class="prompt-details">
-                                <span class="prompt-name">🖼️ MEME Generator</span>
-                            </div>
-                            <button class="copy-btn" onclick="copyText(this)">Copy</button>
-                            <textarea class="prompt-source">[Meme]
-You must generate a highly specific and contextually relevant meme based on the immediate situation, dialogue, or theme at the beginning of every message.
-HTML TEMPLATE:
-<div style="width: 100%; border: 2px solid #000; background: #000;">
-    <img src="https://image.pollinations.ai/prompt/[PROMPT]?width=800&height=450&nologo=true" style="width: 100%;">
-    <div style="color: white; font-family: Impact, sans-serif; font-size: 20px; text-align: center; text-shadow: 2px 2px 0 #000;">TOP TEXT</div>
-</div></textarea>
-                        </div>
+    // --- Управление ---
 
-                        <button class="bulk-copy-btn" onclick="copyBulk(this)">Скопировать выбранное</button>
-                    </div></div>
-                </div>
+    function selectPlant() {
+        if (sun >= 50) {
+            selectedPlant = true;
+            document.body.style.cursor = 'crosshair';
+        }
+    }
 
-            </div>
-        </div>
+    canvas.addEventListener('mousedown', function(e) {
+        if (!selectedPlant) return;
 
-        <!-- === ГАЙДЫ === -->
-        <div id="Guides" class="tab-pane">
-            <div class="card">
-                <h2><span style="color:var(--lilac)">📚</span> Инструкции</h2>
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
 
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">
-                         <span>📥 Установка</span> <span class="arrow">▼</span>
-                    </div>
-                    <div class="accordion-body"><div class="accordion-content">
-                        <ol style="margin-left: 20px;">
-                            <li>Скачайте JSON файл во вкладке <q>"Скачать"</q>.</li>
-                            <li>В SillyTavern откройте меню пресетов (слева) и импортируйте файл.</li>
-                            <li>Согласитесь на импорт RegEx скриптов.</li>
-                            <li>В настройках форматирования ответа (A) включите <q>"Форматирование размышлений"</q> (Thinking).</li>
-                        </ol>
-                    </div></div>
-                </div>
+        // Игнорируем клики в меню
+        if (y < HEADER_HEIGHT) return;
 
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">
-                         <span>❓ FAQ</span> <span class="arrow">▼</span>
-                    </div>
-                    <div class="accordion-body"><div class="accordion-content">
-                        <p><strong>В: Куда вставлять промпты?</strong><br>
-                        О: В настройках пресета найдите тогл (например <q>"Штуки"</q>), очистите его и вставьте скопированный текст.</p>
-                        <p><strong>В: Картинки не грузятся?</strong><br>
-                        О: Проверьте интернет и настройки <q>"Внешние медиа"</q> в SillyTavern. Сайт pollination иногда падает.</p>
-                    </div></div>
-                </div>
-            </div>
-        </div>
+        const col = Math.floor(x / GRID_SIZE);
+        const row = Math.floor((y - HEADER_HEIGHT) / GRID_SIZE);
 
-        <!-- === КОНТАКТЫ === -->
-        <div id="Contacts" class="tab-pane">
-            <div class="card" style="text-align: center;">
-                <h2>Связь</h2>
-                <div style="display: flex; flex-direction: column; gap: 10px; max-width: 300px; margin: 0 auto;">
-                    <a href="https://t.me/YablochnyAI" target="_blank" class="nav-btn" style="justify-content: center;">Telegram Канал</a>
-                    <a href="https://t.me/YablochnyChat" target="_blank" class="nav-btn" style="justify-content: center;">Telegram Чат</a>
-                </div>
+        // Проверяем, не занята ли клетка
+        const occupied = plants.some(p => p.col === col && p.row === row);
 
-                <h3 style="margin-top: 30px; color: var(--lilac);">Благодарности 💚</h3>
-                <p>Ксюля, Винишко, млкс, Мэри Харт, Настенька, Логик.</p>
-            </div>
-        </div>
+        if (!occupied && sun >= 50) {
+            plants.push(new Plant(col, row));
+            sun -= 50;
+            selectedPlant = false;
+            document.body.style.cursor = 'default';
+            updateUI();
+        }
+    });
 
-    </div>
+    function updateUI() {
+        document.getElementById('sunDisplay').innerText = Math.floor(sun);
+    }
 
-    <!-- EASTER EGG GAME -->
-    <div id="game-overlay">
-        <div class="game-ui">Renette's Glitch Harvest</div>
-        <div class="game-ui">Score: <span id="score">0</span> / 10</div>
-        <canvas id="game-canvas" width="300" height="400"></canvas>
-        <div class="close-game" onclick="closeGame()">Закрыть игру</div>
-    </div>
+    // --- Главный цикл ---
 
-    <!-- LIGHTBOX -->
-    <div class="lightbox" id="lightbox">
-        <img src="" id="lightbox-img">
-    </div>
+    function animate() {
+        if (gameOver) {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'red';
+            ctx.font = '50px Arial';
+            ctx.fillText("THE ZOMBIES ATE YOUR BRAINS!", 40, canvas.height / 2);
+            return;
+        }
 
-    <script>
-        // === CANVAS BACKGROUND (Digital Nature) ===
-        const canvas = document.getElementById('bg-canvas');
-        const ctx = canvas.getContext('2d');
-        let width, height;
-        let particles = [];
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resize);
-        resize();
+        // Отрисовка сетки
+        // Фон травы
+        ctx.fillStyle = '#90EE90';
+        ctx.fillRect(0, HEADER_HEIGHT, canvas.width, canvas.height - HEADER_HEIGHT);
 
-        class Particle {
-            constructor() {
-                this.reset();
-            }
-            reset() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.speed = Math.random() * 0.5 + 0.1;
-                this.size = Math.random() * 2 + 0.5;
-                this.type = Math.random() > 0.8 ? 'code' : 'petal'; // 20% binary, 80% petals
-                this.opacity = Math.random() * 0.5 + 0.1;
-                this.text = Math.random() > 0.5 ? '1' : '0';
-                this.color = Math.random() > 0.5 ? '#64ffda' : '#ff5e78';
-            }
-            update() {
-                this.y += this.speed;
-                if (this.y > height) this.y = 0;
-            }
-            draw() {
-                ctx.globalAlpha = this.opacity;
-                ctx.fillStyle = this.color;
-                if (this.type === 'code') {
-                    ctx.font = '10px monospace';
-                    ctx.fillText(this.text, this.x, this.y);
-                } else {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
-                    ctx.fill();
-                }
-            }
-        }
+        // Линии
+        ctx.strokeStyle = '#77aa77';
+        for (let x = 0; x <= canvas.width; x += GRID_SIZE) {
+            ctx.beginPath(); ctx.moveTo(x, HEADER_HEIGHT); ctx.lineTo(x, canvas.height); ctx.stroke();
+        }
+        for (let y = HEADER_HEIGHT; y <= canvas.height; y += GRID_SIZE) {
+            ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+        }
 
-        for(let i=0; i<60; i++) particles.push(new Particle());
+        // Верхнее меню (фон)
+        ctx.fillStyle = '#8B4513';
+        ctx.fillRect(0, 0, canvas.width, HEADER_HEIGHT);
 
-        function animate() {
-            ctx.clearRect(0,0,width,height);
-            particles.forEach(p => { p.update(); p.draw(); });
-            requestAnimationFrame(animate);
-        }
-        animate();
 
-        // === TABS LOGIC ===
-        function openTab(tabName) {
-            document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+        // Логика спавна зомби
+        frame++;
+        if (frame % 300 === 0) { // Каждые ~5 секунд
+            const r = Math.floor(Math.random() * ROWS);
+            zombies.push(new Zombie(r));
+        }
+        // Пассивный доход солнца
+        if (frame % 600 === 0) {
+            sun += 25;
+            updateUI();
+        }
 
-            document.getElementById(tabName).classList.add('active');
-            document.querySelector(`.nav-btn[data-tab="${tabName}"]`).classList.add('active');
-            localStorage.setItem('activeTab', tabName);
-        }
+        // Обновление и отрисовка
+        plants.forEach(p => { p.update(); p.draw(); });
 
-        // Init Tab
-        const savedTab = localStorage.getItem('activeTab') || 'Description';
-        openTab(savedTab);
+        for (let i = 0; i < zombies.length; i++) {
+            zombies[i].update();
+            zombies[i].draw();
+            if (zombies[i].markedForDeletion) {
+                zombies.splice(i, 1);
+                i--;
+            }
+        }
 
-        // === ACCORDION ===
-        function toggleAccordion(header) {
-            header.classList.toggle('active');
-            const body = header.nextElementSibling;
-            if (header.classList.contains('active')) {
-                body.style.maxHeight = body.scrollHeight + <q>"px"</q>;
-            } else {
-                body.style.maxHeight = 0;
-            }
-        }
+        for (let i = 0; i < projectiles.length; i++) {
+            projectiles[i].update();
+            projectiles[i].draw();
+            if (projectiles[i].markedForDeletion) {
+                projectiles.splice(i, 1);
+                i--;
+            }
+        }
 
-        // === COPY LOGIC ===
-        function showToast(title, msg) {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.innerHTML = `<strong>${title}</strong><br>${msg}`;
-            container.appendChild(toast);
-            requestAnimationFrame(() => toast.classList.add('show'));
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
-        }
+        requestAnimationFrame(animate);
+    }
 
-        function copyText(btn) {
-            const txt = btn.parentElement.querySelector('.prompt-source').value;
-            navigator.clipboard.writeText(txt).then(() => {
-                showToast('Успех', 'Текст скопирован!');
-                btn.textContent = 'OK!';
-                setTimeout(() => btn.textContent = 'Copy', 1000);
-            });
-        }
+    animate();
 
-        function copyBulk(btn) {
-            const group = btn.closest('.group-block');
-            const checks = group.querySelectorAll('.select-input:checked');
-            let result = <q>""</q>;
-            checks.forEach(c => {
-                const txt = c.closest('.prompt-option').querySelector('.prompt-source').value;
-                result += txt + <q>"\n\n"</q>;
-            });
-
-            if(!result) return showToast('Пусто', 'Выберите пункты галочками');
-
-            navigator.clipboard.writeText(result).then(() => {
-                showToast('Готово', `Скопировано ${checks.length} элементов.`);
-            });
-        }
-
-        // === IMAGE LIGHTBOX ===
-        const lightbox = document.getElementById('lightbox');
-        const lbImg = document.getElementById('lightbox-img');
-        document.querySelectorAll('.prompt-desc-content img').forEach(img => {
-            img.onclick = () => { lbImg.src = img.src; lightbox.classList.add('active'); }
-        });
-        lightbox.onclick = () => lightbox.classList.remove('active');
-
-        // === EASTER EGG GAME (Renette's Glitch Harvest) ===
-        let clickCount = 0;
-        const trigger = document.getElementById('easter-egg-trigger');
-        const gameOverlay = document.getElementById('game-overlay');
-        const gCanvas = document.getElementById('game-canvas');
-        const gCtx = gCanvas.getContext('2d');
-        let gameLoopId;
-        let score = 0;
-        let basketX = 125;
-        let gameApples = [];
-        let gameActive = false;
-
-        trigger.addEventListener('click', () => {
-            clickCount++;
-            if(clickCount === 5) {
-                startGame();
-                clickCount = 0;
-            }
-        });
-
-        function startGame() {
-            gameOverlay.style.display = 'flex';
-            score = 0;
-            gameApples = [];
-            gameActive = true;
-            document.getElementById('score').innerText = score;
-            gameLoop();
-        }
-
-        function closeGame() {
-            gameOverlay.style.display = 'none';
-            gameActive = false;
-            cancelAnimationFrame(gameLoopId);
-        }
-
-        // Game Controls
-        gCanvas.addEventListener('mousemove', (e) => {
-            const rect = gCanvas.getBoundingClientRect();
-            basketX = e.clientX - rect.left - 25;
-        });
-        gCanvas.addEventListener('touchmove', (e) => {
-             const rect = gCanvas.getBoundingClientRect();
-             basketX = e.touches[0].clientX - rect.left - 25;
-        });
-
-        function gameLoop() {
-            if(!gameActive) return;
-            gCtx.fillStyle = '#111';
-            gCtx.fillRect(0,0,300,400);
-
-            // Player (Basket)
-            gCtx.fillStyle = '#64ffda';
-            gCtx.fillRect(basketX, 350, 50, 10);
-
-            // Spawn Apples
-            if(Math.random() < 0.05) {
-                gameApples.push({x: Math.random()*280, y: 0, speed: 2 + Math.random()*2});
-            }
-
-            // Draw & Update Apples
-            for(let i=0; i<gameApples.length; i++) {
-                let a = gameApples[i];
-                a.y += a.speed;
-
-                gCtx.fillStyle = '#ff5e78';
-                gCtx.beginPath();
-                gCtx.arc(a.x, a.y, 8, 0, Math.PI*2);
-                gCtx.fill();
-
-                // Collision
-                if(a.y > 340 && a.y < 360 && a.x > basketX && a.x < basketX + 50) {
-                    score++;
-                    document.getElementById('score').innerText = score;
-                    gameApples.splice(i, 1);
-                    i--;
-
-                    if(score >= 10) {
-                        alert(<q>"Renette: Неплохо! Ты собрал достаточно данных. 🍎"</q>);
-                        closeGame();
-                        return;
-                    }
-                }
-                // Missed
-                if(a.y > 400) {
-                    gameApples.splice(i, 1);
-                    i--;
-                }
-            }
-            gameLoopId = requestAnimationFrame(gameLoop);
-        }
-    </script>
+</script>
 </body>
 </html>
