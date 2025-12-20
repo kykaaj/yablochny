@@ -1,1 +1,980 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renette: System Override | Яблочный Пресет</title>
+    <meta name="google-site-verification" content="L1aS8txxzlMjDV_Efl0Oi1WDR0J7_DCdyazGjG1zVPk" />
 
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;500;700&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            /* Palette */
+            --bg-deep: #121214;
+            --bg-panel: #1a1a1d;
+            --bg-card: #202024;
+
+            --mint: #6fffe9;
+            --mint-dim: #6fffe940;
+            --apple-red: #ff4d4d;
+            --apple-dim: #ff4d4d40;
+            --lilac: #d8b4fe;
+            --lilac-glow: #d8b4fe60;
+
+            --text-main: #e1e1e6;
+            --text-sub: #a0a0b0;
+
+            --grid-line: rgba(111, 255, 233, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
+
+            --font-tech: 'Orbitron', sans-serif;
+            --font-ui: 'Rajdhani', sans-serif;
+            --font-code: 'Fira Code', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scrollbar-width: thin; }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: var(--font-ui);
+            overflow-x: hidden;
+            background-image:
+                linear-gradient(var(--grid-line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* --- DECORATIONS --- */
+        .decor-line {
+            position: fixed;
+            background: var(--mint);
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        /* --- INTERACTIVE BG --- */
+        #neural-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        /* --- HEADER / HUD --- */
+        .hud-header {
+            display: grid;
+            grid-template-columns: 250px 1fr 200px;
+            align-items: center;
+            padding: 20px 40px;
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            background: rgba(18, 18, 20, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            height: 80px;
+        }
+
+        .brand {
+            font-family: var(--font-tech);
+            font-size: 1.5rem;
+            color: var(--mint);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand i { color: var(--apple-red); animation: pulse 2s infinite; }
+
+        .nav-center {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        .nav-link {
+            color: var(--text-sub);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            position: relative;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: -5px; left: 0; width: 0; height: 2px;
+            background: var(--apple-red);
+            transition: 0.3s;
+        }
+
+        .nav-link:hover { color: var(--text-main); text-shadow: 0 0 10px var(--mint-dim); }
+        .nav-link:hover::before { width: 100%; }
+
+        .sys-status {
+            font-family: var(--font-code);
+            font-size: 0.7rem;
+            color: var(--lilac);
+            text-align: right;
+            border-left: 2px solid var(--border);
+            padding-left: 15px;
+        }
+
+        /* --- HERO --- */
+        .hero-section {
+            margin-top: 100px;
+            padding: 60px 40px;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 50px;
+            align-items: center;
+            min-height: 70vh;
+            position: relative;
+        }
+
+        .hero-content h1 {
+            font-family: var(--font-tech);
+            font-size: 4.5rem;
+            line-height: 0.9;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #fff, var(--mint), var(--lilac));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-glitch {
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-desc {
+            font-size: 1.2rem;
+            color: var(--text-sub);
+            max-width: 600px;
+            border-left: 3px solid var(--apple-red);
+            padding-left: 20px;
+            margin-bottom: 40px;
+        }
+
+        .hero-visual {
+            position: relative;
+            height: 500px;
+            background: radial-gradient(circle, var(--bg-panel) 30%, transparent 70%);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Mascot Container */
+        .mascot-img {
+            width: 80%;
+            height: auto;
+            filter: drop-shadow(0 0 20px var(--lilac-glow));
+            z-index: 2;
+        }
+
+        /* --- BUILDER INTERFACE (Tabs) --- */
+        .builder-container {
+            max-width: 1600px;
+            margin: 0 auto 100px auto;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 0;
+            border: 1px solid var(--border);
+            background: var(--bg-panel);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .tabs-sidebar {
+            background: #151518;
+            border-right: 1px solid var(--border);
+            padding: 20px 0;
+        }
+
+        .tab-btn {
+            width: 100%;
+            padding: 18px 30px;
+            background: transparent;
+            border: none;
+            color: var(--text-sub);
+            text-align: left;
+            font-family: var(--font-tech);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            border-left: 3px solid transparent;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tab-btn:hover { background: rgba(255,255,255,0.02); color: var(--text-main); }
+        .tab-btn.active {
+            background: linear-gradient(90deg, rgba(111,255,233,0.05), transparent);
+            color: var(--mint);
+            border-left-color: var(--mint);
+        }
+
+        .tab-btn .count {
+            font-family: var(--font-code);
+            font-size: 0.7rem;
+            background: #000;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .tab-content-area {
+            padding: 40px;
+            min-height: 600px;
+            background-image: radial-gradient(circle at top right, rgba(216, 180, 254, 0.05), transparent 40%);
+        }
+
+        .tab-pane { display: none; animation: fadeIn 0.4s ease; }
+        .tab-pane.active { display: block; }
+
+        /* --- SUB-SECTIONS & CARDS --- */
+        .section-title {
+            font-family: var(--font-tech);
+            color: var(--text-main);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .group-fieldset {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            background: rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .group-legend {
+            font-family: var(--font-code);
+            color: var(--lilac);
+            font-weight: bold;
+            padding: 0 10px;
+            background: var(--bg-panel);
+            position: absolute;
+            top: -10px; left: 20px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        .limit-badge {
+            font-size: 0.7rem;
+            color: var(--apple-red);
+            border: 1px solid var(--apple-red);
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 10px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        /* Option Card */
+        .option-card {
+            background: var(--bg-card);
+            border: 1px solid transparent;
+            padding: 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option-card:hover { border-color: var(--text-sub); }
+
+        .option-card.selected {
+            background: rgba(111, 255, 233, 0.05);
+            border-color: var(--mint);
+        }
+
+        .option-card.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 5px; right: 10px;
+            color: var(--mint);
+            font-weight: bold;
+        }
+
+        .opt-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--text-main);
+        }
+
+        .opt-desc {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            line-height: 1.4;
+        }
+
+        .radio-indicator {
+            width: 12px; height: 12px;
+            border-radius: 50%;
+            border: 2px solid var(--text-sub);
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        .selected .radio-indicator {
+            border-color: var(--mint);
+            background: var(--mint);
+            box-shadow: 0 0 10px var(--mint);
+        }
+
+        /* --- FOOTER / OUTPUT --- */
+        .output-bar {
+            position: fixed;
+            bottom: 0; left: 0; width: 100%;
+            background: #0f0f10;
+            border-top: 2px solid var(--mint);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 2000;
+            box-shadow: 0 -10px 50px rgba(0,0,0,0.8);
+        }
+
+        .stats-box {
+            display: flex;
+            gap: 30px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-val { font-family: var(--font-code); font-size: 1.2rem; color: var(--mint); }
+        .stat-label { font-size: 0.7rem; color: var(--text-sub); text-transform: uppercase; }
+
+        .btn-harvest {
+            background: var(--mint);
+            color: #000;
+            font-family: var(--font-tech);
+            font-weight: 900;
+            padding: 15px 40px;
+            border: none;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            cursor: pointer;
+            transition: 0.2s;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+        }
+
+        .btn-harvest:hover {
+            background: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px var(--mint);
+        }
+
+        /* --- MODAL --- */
+        .modal {
+            position: fixed;
+            top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 3000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active { display: flex; }
+
+        .modal-box {
+            width: 900px;
+            max-height: 90vh;
+            background: var(--bg-panel);
+            border: 1px solid var(--lilac);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            overflow: hidden;
+            box-shadow: 0 0 50px var(--lilac-glow);
+        }
+
+        .modal-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-right: 1px solid var(--border);
+        }
+
+        .modal-info { padding: 40px; overflow-y: auto; }
+
+        @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; text-shadow: 0 0 10px red; } 100% { opacity: 0.5; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-section { grid-template-columns: 1fr; text-align: center; }
+            .hero-desc { margin: 0 auto 40px auto; border: none; }
+            .builder-container { grid-template-columns: 1fr; }
+            .tabs-sidebar { display: flex; overflow-x: auto; border-right: none; border-bottom: 1px solid var(--border); }
+            .tab-btn { white-space: nowrap; padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="neural-canvas"></canvas>
+
+    <!-- HEADER -->
+    <header class="hud-header">
+        <div class="brand">
+            <i class="fa-solid fa-apple-whole"></i>
+            <span>Renette_OS</span>
+        </div>
+        <nav class="nav-center">
+            <a href="#" class="nav-link">Главная</a>
+            <a href="#builder" class="nav-link">Сборка</a>
+            <a href="https://github.com/YOUR_REPO" target="_blank" class="nav-link">GitHub</a>
+        </nav>
+        <div class="sys-status">
+            <div>STATUS: ONLINE</div>
+            <div style="color: var(--mint);">VER: 2.4.1</div>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <div style="color: var(--lilac); font-family: var(--font-code); margin-bottom: 10px;">> SYSTEM_OVERRIDE_INITIATED</div>
+            <h1>DIGITAL<br>ORCHARD_V2</h1>
+            <p class="hero-desc">
+                Продвинутый конструктор пресета "Яблочный". Адаптируйте симуляцию под себя.
+                Мятная эстетика, абсолютная кастомизация, кибернетический дух.
+            </p>
+            <a href="#builder" class="btn-harvest" style="text-decoration:none; display:inline-block;">Начать Сборку</a>
+        </div>
+        <div class="hero-visual">
+            <div style="position:absolute; top:10px; left:10px; font-family:var(--font-code); color:var(--text-sub); font-size:0.8rem;">
+                TARGET: RENETTE<br>TYPE: SPIRIT<br>ORIGIN: APPLE_TREE
+            </div>
+            <!-- Сюда вставь картинку Ренетт без фона (PNG) -->
+            <img src="https://files.catbox.moe/placeholder_renette_transparent.png" alt="Renette" class="mascot-img">
+
+            <!-- Tech decoration -->
+            <div style="position:absolute; bottom:20px; right:20px; text-align:right; font-family:var(--font-code); font-size:2rem; color:rgba(255,255,255,0.05); font-weight:bold;">
+                88:92:11
+            </div>
+        </div>
+    </section>
+
+    <!-- PROMPT BUILDER -->
+    <div id="builder" class="builder-container">
+
+        <!-- Sidebar Tabs -->
+        <div class="tabs-sidebar" id="tabSidebar">
+            <!-- JS will populate this -->
+        </div>
+
+        <!-- Content Area -->
+        <div class="tab-content-area" id="tabContent">
+            <!-- JS will populate this -->
+        </div>
+    </div>
+
+    <div style="height: 150px;"></div> <!-- Spacer -->
+
+    <!-- FOOTER OUTPUT BAR -->
+    <div class="output-bar">
+        <div class="stats-box">
+            <div class="stat-item">
+                <span class="stat-val" id="totalSize">0kb</span>
+                <span class="stat-label">Размер Пакета</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-val" id="modulesCount">0</span>
+                <span class="stat-label">Модулей</span>
+            </div>
+        </div>
+
+        <div style="display:flex; gap: 20px; align-items:center;">
+            <div id="copyFeedback" style="color:var(--mint); opacity:0; transition:0.3s;">ДАННЫЕ ЗАГРУЖЕНЫ</div>
+            <button class="btn-harvest" onclick="harvestData()">
+                <i class="fa-solid fa-microchip"></i> СКОПИРОВАТЬ
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal" id="infoModal">
+        <div class="modal-box">
+            <img src="" id="modalImg" class="modal-img">
+            <div class="modal-info">
+                <h2 id="modalTitle" style="color:var(--mint); font-family:var(--font-tech); margin-bottom:20px;">Title</h2>
+                <p id="modalDesc" style="line-height:1.6; color:var(--text-sub);">Desc</p>
+                <button onclick="document.getElementById('infoModal').classList.remove('active')"
+                        style="margin-top:30px; background:transparent; border:1px solid var(--border); color:var(--text-main); padding:10px 20px; cursor:pointer;">
+                    ЗАКРЫТЬ [ESC]
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- DATA STRUCTURE (Сложная структура с группами) ---
+        // type: "single" (без вариантов), "radio" (выбор одного), "checkbox" (мульти)
+        // content: Текст промпта. [placeholder]
+
+        const SECTIONS = [
+            {
+                id: "ooc",
+                name: "1. OOC",
+                desc: "Настройки внеролевого общения",
+                groups: [
+                    {
+                        title: "Базовый модуль",
+                        type: "single",
+                        items: [
+                            { id: "ooc_base", name: "OOC: Renette", desc: "Стандартная личность Ренетт, каомоджи, помощь юзеру.", content: `[placeholder] - OOC Renette` }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "main",
+                name: "2. Основное",
+                desc: "Режим письма, баны, язык, стиль",
+                groups: [
+                    {
+                        title: "🌾 Режим Письма (Выбрать один)",
+                        type: "radio", // Только один вариант
+                        items: [
+                            { id: "write_v1", name: "Вариант 1 (Стандарт)", desc: "Базовый режим", content: `[placeholder] - Write V1` },
+                            { id: "write_v2", name: "Вариант 2 (Жесткий)", desc: "Строгое следование роли", content: `[placeholder] - Write V2` },
+                            { id: "write_v3", name: "Вариант 3 (Свободный)", desc: "Больше импровизации", content: `[placeholder] - Write V3` }
+                        ]
+                    },
+                    {
+                        title: "❌ Баны (Выбрать один)",
+                        type: "radio",
+                        items: [
+                            { id: "ban_v1", name: "Анти-Клише", desc: "Запрет на пошлые фразы", content: `[placeholder] - Ban V1` },
+                            { id: "ban_v2", name: "Анти-Повторы", desc: "Строгий контроль лексики", content: `[placeholder] - Ban V2` },
+                            { id: "ban_v3", name: "Лайт версия", desc: "Минимальные ограничения", content: `[placeholder] - Ban V3` }
+                        ]
+                    },
+                    {
+                        title: "📓 Лит. Стиль (Выбрать один)",
+                        type: "radio",
+                        items: [
+                            { id: "style_1", name: "Liu Zhenyun", desc: "Сухой юмор, абсурд", content: `[placeholder] Style 1` },
+                            { id: "style_2", name: "Gothic", desc: "Мрачный, тягучий", content: `[placeholder] Style 2` },
+                            { id: "style_3", name: "Modern Pop", desc: "Легкий, быстрый", content: `[placeholder] Style 3` },
+                            { id: "style_4", name: "Classic", desc: "Книжный стандарт", content: `[placeholder] Style 4` },
+                            { id: "style_5", name: "Cyberpunk", desc: "Техно-сленг", content: `[placeholder] Style 5` },
+                            { id: "style_6", name: "Poetic", desc: "Много метафор", content: `[placeholder] Style 6` }
+                        ]
+                    },
+                    {
+                        title: "🌱 Темп (Выбрать один)",
+                        type: "radio",
+                        items: [
+                            { id: "pace_slow", name: "Slow Burn", desc: "Медленное сближение", content: `[placeholder] Slow` },
+                            { id: "pace_fast", name: "Fast Paced", desc: "Быстрое развитие", content: `[placeholder] Fast` }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "rating",
+                name: "3. Рейтинг",
+                desc: "NSFW и ограничения",
+                groups: [
+                    {
+                        title: "Контент",
+                        type: "single",
+                        items: [
+                            { id: "nsfw_main", name: "NSFW Rules", desc: "Полные правила R-18", content: `[placeholder] NSFW` }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "extra",
+                name: "4. Дополнительно",
+                desc: "HTML, Шаблоны, UI, Фичи",
+                groups: [
+                    {
+                        title: "🧃 HTML (Визуал)",
+                        type: "radio",
+                        items: [
+                            { id: "html_full", name: "Full HTML", desc: "Максимальные эффекты", content: `[placeholder] HTML Full` },
+                            { id: "html_light", name: "Light HTML", desc: "Облегченная версия", content: `[placeholder] HTML Light` }
+                        ]
+                    },
+                    {
+                        title: "🌗 Тема HTML",
+                        type: "radio",
+                        items: [
+                            { id: "theme_dark", name: "Dark Mode", desc: "Темная эстетика", content: `[placeholder] Dark Theme` },
+                            { id: "theme_contrast", name: "High Contrast", desc: "Для чтения", content: `[placeholder] Contrast Theme` }
+                        ]
+                    },
+                    // THE BIG "STUFF" TEMPLATE SECTION
+                    {
+                        title: "✎🧺 Штуки (Компоненты шаблона)",
+                        type: "mixed_container", // Custom logic container
+                        subgroups: [
+                            {
+                                type: "checkbox",
+                                title: "Базовые модули (Мультивыбор)",
+                                items: Array.from({length: 8}, (_, i) => ({
+                                    id: `stuff_base_${i}`, name: `Модуль ${i+1}`, desc: "Полезная штука", content: `[placeholder] Stuff Base ${i}`
+                                }))
+                            },
+                            {
+                                type: "radio",
+                                title: "Инфоблоки (Выбрать 1 из 5)",
+                                items: Array.from({length: 5}, (_, i) => ({
+                                    id: `infoblock_${i}`, name: `Инфоблок v${i+1}`, desc: "Стиль отображения статуса", content: `[placeholder] Info ${i}`
+                                }))
+                            },
+                            {
+                                type: "radio",
+                                title: "Режим Настройки (Выбрать 1 из 2)",
+                                items: [
+                                    { id: "setup_1", name: "Auto Setup", desc: "Авто-настройка", content: `[placeholder] Setup 1` },
+                                    { id: "setup_2", name: "Manual", desc: "Ручная настройка", content: `[placeholder] Setup 2` }
+                                ]
+                            },
+                            {
+                                type: "radio",
+                                title: "Fancy UI (Выбрать 1 из 3)",
+                                items: [
+                                    { id: "ui_1", name: "Minimal UI", desc: "", content: `[placeholder] UI 1` },
+                                    { id: "ui_2", name: "Cyber UI", desc: "", content: `[placeholder] UI 2` },
+                                    { id: "ui_3", name: "Apple UI", desc: "", content: `[placeholder] UI 3` }
+                                ]
+                            },
+                            {
+                                type: "checkbox",
+                                title: "Скрытые блоки (Мультивыбор)",
+                                items: Array.from({length: 4}, (_, i) => ({
+                                    id: `hidden_${i}`, name: `Hidden Feature ${i+1}`, desc: "Секретный контент", content: `[placeholder] Hidden ${i}`
+                                }))
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "think",
+                name: "5. Думалка",
+                desc: "CoT (Chain of Thought)",
+                groups: [
+                    {
+                        title: "Thinking Logic",
+                        type: "single",
+                        items: [
+                            { id: "think_main", name: "Smart Thinker", desc: "Логика размышлений перед ответом", content: `[placeholder] Think` }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "prefill",
+                name: "6. Префил",
+                desc: "Начало ответа",
+                groups: [
+                    {
+                        title: "Prefill Start",
+                        type: "single",
+                        items: [
+                            { id: "prefill_main", name: "Standard Prefill", desc: "Задает тон первому сообщению", content: `[placeholder] Prefill` }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        // --- STATE MANAGEMENT ---
+        let state = {}; // { itemId: true }
+
+        // --- RENDER FUNCTIONS ---
+        function initBuilder() {
+            const sidebar = document.getElementById('tabSidebar');
+            const content = document.getElementById('tabContent');
+
+            SECTIONS.forEach((sec, index) => {
+                // Sidebar Tab
+                const btn = document.createElement('button');
+                btn.className = `tab-btn ${index === 0 ? 'active' : ''}`;
+                btn.innerHTML = `<span>${sec.name}</span> <span class="count">${sec.groups.length}</span>`;
+                btn.onclick = () => switchTab(index);
+                sidebar.appendChild(btn);
+
+                // Content Pane
+                const pane = document.createElement('div');
+                pane.className = `tab-pane ${index === 0 ? 'active' : ''}`;
+                pane.id = `pane-${index}`;
+
+                // Header
+                pane.innerHTML = `<div class="section-title"><h2>${sec.name}</h2> <span>${sec.desc}</span></div>`;
+
+                // Groups rendering
+                sec.groups.forEach(group => {
+                    const fieldset = document.createElement('div');
+                    fieldset.className = 'group-fieldset';
+
+                    if(group.type === 'mixed_container') {
+                        // Special handling for the "Stuff" container
+                        fieldset.innerHTML = `<legend class="group-legend">${group.title}</legend>`;
+                        group.subgroups.forEach(sub => {
+                             const subHeader = document.createElement('div');
+                             subHeader.style = "margin-top: 20px; color: var(--mint); font-family: var(--font-code); font-size: 0.9rem;";
+                             subHeader.innerHTML = `${sub.title} ${sub.type === 'radio' ? '<span class="limit-badge">ONE ONLY</span>' : ''}`;
+                             fieldset.appendChild(subHeader);
+
+                             const grid = document.createElement('div');
+                             grid.className = 'options-grid';
+                             sub.items.forEach(item => {
+                                 grid.appendChild(createCard(item, sub.type, sub.items.map(i=>i.id)));
+                             });
+                             fieldset.appendChild(grid);
+                        });
+                    } else {
+                        // Standard groups
+                        const legend = `<legend class="group-legend">${group.title} ${group.type==='radio' ? '<span class="limit-badge">1 CHOICE</span>' : ''}</legend>`;
+                        fieldset.innerHTML = legend;
+                        const grid = document.createElement('div');
+                        grid.className = 'options-grid';
+
+                        // Pass sibling IDs for radio logic
+                        const siblingIds = group.items.map(i => i.id);
+
+                        group.items.forEach(item => {
+                            grid.appendChild(createCard(item, group.type, siblingIds));
+                        });
+                        fieldset.appendChild(grid);
+                    }
+                    pane.appendChild(fieldset);
+                });
+
+                content.appendChild(pane);
+            });
+        }
+
+        function createCard(item, type, siblings) {
+            const card = document.createElement('div');
+            card.className = 'option-card';
+            card.id = `card-${item.id}`;
+            card.onclick = (e) => toggleItem(item.id, type, siblings, e);
+
+            card.innerHTML = `
+                <div class="opt-header">
+                    <div style="display:flex; align-items:center;">
+                        <span class="radio-indicator" style="border-radius: ${type==='radio'?'50%':'4px'}"></span>
+                        ${item.name}
+                    </div>
+                    <i class="fa-solid fa-circle-info" style="color:var(--text-sub); opacity:0.5; cursor:help;" onclick="showInfo('${item.id}', event)"></i>
+                </div>
+                <div class="opt-desc">${item.desc}</div>
+            `;
+            return card;
+        }
+
+        function switchTab(idx) {
+            document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+            document.querySelectorAll('.tab-pane').forEach((p, i) => p.classList.toggle('active', i === idx));
+        }
+
+        // --- LOGIC ---
+        function toggleItem(id, type, siblings, event) {
+            // If clicking info icon, don't toggle
+            if(event && event.target.classList.contains('fa-circle-info')) return;
+
+            const card = document.getElementById(`card-${id}`);
+
+            if (type === 'radio') {
+                // Deselect all siblings
+                siblings.forEach(sibId => {
+                    delete state[sibId];
+                    document.getElementById(`card-${sibId}`).classList.remove('selected');
+                });
+                // Select clicked
+                state[id] = true;
+                card.classList.add('selected');
+            } else if (type === 'checkbox' || type === 'single') {
+                if (state[id]) {
+                    delete state[id];
+                    card.classList.remove('selected');
+                } else {
+                    state[id] = true;
+                    card.classList.add('selected');
+                }
+            } else {
+                // Fallback for single (always select if clicked, toggle off?)
+                 if (state[id]) {
+                    delete state[id];
+                    card.classList.remove('selected');
+                } else {
+                    state[id] = true;
+                    card.classList.add('selected');
+                }
+            }
+            updateStats();
+        }
+
+        function updateStats() {
+            const count = Object.keys(state).length;
+            document.getElementById('modulesCount').innerText = count;
+            // Fake size calculation
+            document.getElementById('totalSize').innerText = (count * 1.2).toFixed(1) + 'kb';
+        }
+
+        function harvestData() {
+            let clipboardText = "";
+
+            // Iterate through structure to maintain order
+            SECTIONS.forEach(sec => {
+                sec.groups.forEach(grp => {
+                    if(grp.type === 'mixed_container') {
+                        grp.subgroups.forEach(sub => {
+                            sub.items.forEach(item => {
+                                if(state[item.id]) clipboardText += `### ${item.name}\n${item.content}\n\n`;
+                            });
+                        });
+                    } else {
+                        grp.items.forEach(item => {
+                            if(state[item.id]) clipboardText += `### ${item.name}\n${item.content}\n\n`;
+                        });
+                    }
+                });
+            });
+
+            if(!clipboardText) {
+                alert("СИСТЕМА ПУСТА. ВЫБЕРИТЕ МОДУЛИ.");
+                return;
+            }
+
+            navigator.clipboard.writeText(clipboardText).then(() => {
+                const fb = document.getElementById('copyFeedback');
+                fb.style.opacity = 1;
+                setTimeout(() => fb.style.opacity = 0, 2000);
+            });
+        }
+
+        function showInfo(id, e) {
+            e.stopPropagation(); // Stop toggle
+            // Find data (inefficient search but fine for this size)
+            let itemData = null;
+            SECTIONS.forEach(s => s.groups.forEach(g => {
+                if(g.type === 'mixed_container') {
+                    g.subgroups.forEach(sub => {
+                        const found = sub.items.find(i => i.id === id);
+                        if(found) itemData = found;
+                    });
+                } else {
+                    const found = g.items.find(i => i.id === id);
+                    if(found) itemData = found;
+                }
+            }));
+
+            if(itemData) {
+                document.getElementById('modalTitle').innerText = itemData.name;
+                document.getElementById('modalDesc').innerText = itemData.desc + "\n\nPREVIEW:\n" + itemData.content.substring(0, 100) + "...";
+                document.getElementById('modalImg').src = "https://via.placeholder.com/600x800/1a1a1d/6fffe9?text=IMG_" + itemData.name;
+                document.getElementById('infoModal').classList.add('active');
+            }
+        }
+
+        // --- INTERACTIVE BACKGROUND (Neural Web) ---
+        const canvas = document.getElementById('neural-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let points = [];
+        const mouse = { x: 0, y: 0 };
+
+        function initBg() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            points = [];
+            for(let i=0; i<80; i++) {
+                points.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    size: Math.random() * 2
+                });
+            }
+        }
+
+        function drawBg() {
+            ctx.clearRect(0,0,width,height);
+            ctx.fillStyle = '#6fffe9';
+            ctx.strokeStyle = '#6fffe9';
+
+            points.forEach((p, i) => {
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if(p.x < 0 || p.x > width) p.vx *= -1;
+                if(p.y < 0 || p.y > height) p.vy *= -1;
+
+                // Mouse interaction
+                const dx = mouse.x - p.x;
+                const dy = mouse.y - p.y;
+                const dist = Math.sqrt(dx*dx + dy*dy);
+                if(dist < 200) {
+                    ctx.beginPath();
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(mouse.x, mouse.y);
+                    ctx.globalAlpha = 1 - dist/200;
+                    ctx.stroke();
+                }
+
+                ctx.globalAlpha = 0.3;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+                ctx.fill();
+            });
+            requestAnimationFrame(drawBg);
+        }
+
+        window.addEventListener('mousemove', e => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+        window.addEventListener('resize', initBg);
+
+        // START
+        initBg();
+        drawBg();
+        initBuilder();
+
+    </script>
+</body>
+</html>
