@@ -3,853 +3,734 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Renette: System Override | Яблочный Пресет</title>
-    <meta name="description" content="Расширенный конфигуратор пресета 'Яблочный'.">
+    <title>RENETTE: SYSTEM V2 | Яблочный Пресет</title>
+    <meta name="description" content="Расширенная конфигурация пресета 'Яблочный'.">
     <meta name="google-site-verification" content="L1aS8txxzlMjDV_Efl0Oi1WDR0J7_DCdyazGjG1zVPk" />
 
-    <!-- Fonts & Icons -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;600&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
             /* Palette */
-            --bg-deep: #121214;
-            --bg-panel: #1a1a1e;
-            --bg-lighter: #232328;
+            --bg-dark: #131315;
+            --bg-panel: #1c1c1f;
+            --bg-lighter: #252529;
 
-            --mint: #69f0ae;
-            --mint-glow: rgba(105, 240, 174, 0.4);
+            --c-mint: #98ff98;
+            --c-red: #ff4d4d;
+            --c-lilac: #c8a2c8;
 
-            --red: #ff5252;
-            --red-glow: rgba(255, 82, 82, 0.4);
+            --text-main: #eeeeee;
+            --text-muted: #888890;
 
-            --lilac: #e040fb;
-            --lilac-glow: rgba(224, 64, 251, 0.4);
-
-            --text-main: #e0e0e0;
-            --text-mute: #858590;
-
-            --border: 1px solid rgba(255, 255, 255, 0.08);
-            --radius: 4px; /* Techy sharp corners */
+            --border-radius: 12px;
+            --border-cut: 20px; /* For clipped corners */
         }
 
-        /* --- GLOBAL & RESET --- */
-        * { box-sizing: border-box; scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; scrollbar-width: thin; }
+
         body {
-            margin: 0;
-            background-color: var(--bg-deep);
+            background-color: var(--bg-dark);
             color: var(--text-main);
-            font-family: 'Rajdhani', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             overflow-x: hidden;
-            font-size: 16px;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
         }
 
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--bg-deep); }
-        ::-webkit-scrollbar-thumb { background: var(--lilac); }
-
-        /* --- BACKGROUND CANVAS --- */
+        /* --- CANVAS --- */
         #interactive-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
         }
 
-        /* --- TYPOGRAPHY & DECOR --- */
-        h1, h2, h3 { font-family: 'Orbitron', sans-serif; text-transform: uppercase; margin: 0; }
-        .mono { font-family: 'Fira Code', monospace; font-size: 0.9em; }
+        /* --- UTILS --- */
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .flex { display: flex; }
+        .hidden { display: none; }
 
-        .accent-mint { color: var(--mint); text-shadow: 0 0 10px var(--mint-glow); }
-        .accent-red { color: var(--red); text-shadow: 0 0 10px var(--red-glow); }
-        .accent-lilac { color: var(--lilac); text-shadow: 0 0 10px var(--lilac-glow); }
+        .c-mint { color: var(--c-mint); }
+        .c-red { color: var(--c-red); }
+        .c-lilac { color: var(--c-lilac); }
 
-        .glitch-text {
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 10; }
+
+        /* --- NEW HEADER --- */
+        .site-header {
+            min-height: 80vh;
             position: relative;
-        }
-        .glitch-text::before, .glitch-text::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg-deep);
-        }
-        .glitch-text::before {
-            left: 2px; text-shadow: -1px 0 var(--red);
-            clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
-            animation: glitch-anim-1 2.5s infinite linear alternate-reverse;
-        }
-        .glitch-text::after {
-            left: -2px; text-shadow: -1px 0 var(--mint);
-            clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
-            animation: glitch-anim-2 3s infinite linear alternate-reverse;
-        }
-
-        @keyframes glitch-anim-1 {
-            0% { clip-path: inset(20% 0 80% 0); }
-            20% { clip-path: inset(60% 0 10% 0); }
-            100% { clip-path: inset(10% 0 50% 0); }
-        }
-        @keyframes glitch-anim-2 {
-            0% { clip-path: inset(10% 0 60% 0); }
-            20% { clip-path: inset(30% 0 20% 0); }
-            100% { clip-path: inset(80% 0 5% 0); }
-        }
-
-        /* --- HEADER STRUCTURE --- */
-        .cyber-header {
-            position: relative;
-            height: 90vh;
-            display: grid;
-            grid-template-columns: 5% 45% 45% 5%;
-            align-items: center;
-            border-bottom: 2px solid var(--lilac);
-            overflow: hidden;
-        }
-
-        .header-content {
-            grid-column: 2 / 4;
-            z-index: 2;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-        }
-
-        .title-block h1 {
-            font-size: 5rem;
-            line-height: 0.9;
-            letter-spacing: 5px;
-        }
-
-        .mascot-frame {
-            width: 350px;
-            height: 350px;
-            border: 2px solid var(--mint);
-            position: relative;
-            background: url('https://files.catbox.moe/placeholder_renette_header.jpg') center/cover; /* PLACEHOLDER */
-            box-shadow: 10px 10px 0px var(--red);
-        }
-
-        .mascot-frame::after {
-            content: "RENETTE_SYS_V2.0";
-            position: absolute;
-            bottom: -25px;
-            right: 0;
-            background: var(--red);
-            color: #000;
-            padding: 2px 10px;
-            font-family: 'Fira Code', monospace;
-            font-weight: bold;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            background: linear-gradient(180deg, rgba(19,19,21,0) 0%, rgba(19,19,21,1) 90%);
+            overflow: hidden;
         }
 
         .marquee-container {
-            position: absolute;
-            bottom: 20px;
-            width: 100%;
-            background: rgba(0,0,0,0.5);
-            padding: 5px 0;
-            font-family: 'Fira Code', monospace;
-            color: var(--mint);
-            border-top: 1px solid var(--mint);
-            border-bottom: 1px solid var(--mint);
+            position: absolute; top: 20px; width: 100%; overflow: hidden;
+            background: rgba(255,255,255,0.03); padding: 5px 0;
+            border-top: 1px solid var(--c-mint);
+            border-bottom: 1px solid var(--c-lilac);
+            transform: rotate(-1deg) scale(1.05);
+            z-index: 1;
+        }
+        .marquee {
+            display: inline-block; white-space: nowrap; animation: scroll 20s linear infinite;
+            font-family: 'JetBrains Mono'; font-size: 0.8rem; color: var(--text-muted);
+        }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        .header-content {
+            display: grid; grid-template-columns: 1.5fr 1fr; gap: 50px;
+            width: 100%; align-items: center; padding-top: 60px;
         }
 
-        /* --- MAIN LAYOUT --- */
-        .wrapper {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            max-width: 1600px;
-            margin: 0 auto;
-            gap: 40px;
-            padding: 40px 20px;
+        .title-block h1 {
+            font-size: clamp(3rem, 6vw, 6rem);
+            line-height: 0.9; font-weight: 800; letter-spacing: -2px;
+            text-transform: uppercase; margin-bottom: 20px;
             position: relative;
         }
 
-        /* --- SIDEBAR (Sticky) --- */
-        .sidebar {
-            position: sticky;
-            top: 40px;
-            height: fit-content;
-            background: var(--bg-panel);
-            border: var(--border);
-            padding: 20px;
-            border-left: 3px solid var(--red);
+        .title-block h1 span { display: block; }
+        .title-glitch {
+            color: var(--text-main);
+            text-shadow: 2px 2px 0px var(--c-red), -2px -2px 0px var(--c-mint);
+            animation: glitch-anim 3s infinite alternate-reverse;
         }
 
-        .sidebar-stat {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 15px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            padding-bottom: 5px;
-        }
-
-        .btn-action {
-            width: 100%;
-            padding: 15px;
-            margin-top: 20px;
-            background: transparent;
-            border: 1px solid var(--mint);
-            color: var(--mint);
-            font-family: 'Orbitron', sans-serif;
-            cursor: pointer;
-            transition: 0.3s;
-            text-transform: uppercase;
-            font-weight: bold;
+        .holo-card {
             position: relative;
+            height: 500px;
+            background: rgba(255,255,255,0.02);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             overflow: hidden;
         }
 
-        .btn-action:hover {
-            background: var(--mint);
-            color: #000;
-            box-shadow: 0 0 20px var(--mint-glow);
+        .holo-card::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(45deg, transparent 40%, rgba(200, 162, 200, 0.1) 50%, transparent 60%);
+            background-size: 200% 200%;
+            animation: shine 4s infinite linear;
         }
 
-        .btn-dl {
-            border-color: var(--lilac);
-            color: var(--lilac);
-            margin-top: 10px;
-        }
-        .btn-dl:hover {
-            background: var(--lilac);
-            color: #000;
-            box-shadow: 0 0 20px var(--lilac-glow);
+        .avatar-img {
+            width: 80%; height: auto; object-fit: contain; filter: drop-shadow(0 0 20px rgba(152, 255, 152, 0.3));
+            z-index: 2;
         }
 
-        /* --- BUILDER SECTIONS --- */
-        .builder-section {
-            background: var(--bg-panel);
-            margin-bottom: 40px;
-            border: var(--border);
+        /* --- CONFIGURATOR UI --- */
+        .config-section {
+            padding: 60px 0;
             position: relative;
         }
 
-        /* Decorative Corners */
-        .builder-section::before {
-            content: ''; position: absolute; top: -1px; left: -1px;
-            width: 20px; height: 20px; border-top: 2px solid var(--mint); border-left: 2px solid var(--mint);
+        .section-separator {
+            display: flex; align-items: center; gap: 20px; margin-bottom: 40px;
         }
-        .builder-section::after {
-            content: ''; position: absolute; bottom: -1px; right: -1px;
-            width: 20px; height: 20px; border-bottom: 2px solid var(--mint); border-right: 2px solid var(--mint);
+        .sec-num { font-size: 3rem; font-weight: 800; color: rgba(255,255,255,0.05); font-family: 'JetBrains Mono'; }
+        .sec-title { font-size: 1.8rem; font-weight: 700; text-transform: uppercase; }
+        .sec-line { flex-grow: 1; height: 1px; background: linear-gradient(90deg, var(--c-lilac), transparent); }
+
+        /* The Dashboard Grid */
+        .dashboard-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;
         }
 
-        .sec-header {
-            background: linear-gradient(90deg, rgba(224, 64, 251, 0.1) 0%, transparent 100%);
-            padding: 15px 20px;
-            border-bottom: var(--border);
-            display: flex;
-            align-items: center;
-            gap: 15px;
+        /* Option Card */
+        .opt-card {
+            background: var(--bg-panel);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 20px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
+            overflow: hidden;
         }
 
-        .sec-num {
-            font-size: 2rem;
-            color: rgba(255,255,255,0.1);
-            font-weight: 900;
+        .opt-card:hover { background: var(--bg-lighter); transform: translateY(-3px); }
+
+        /* Selection States */
+        .opt-card.selected {
+            background: rgba(152, 255, 152, 0.05);
+            border-color: var(--c-mint);
+        }
+        .opt-card.selected::after {
+            content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
+            position: absolute; top: 10px; right: 10px; color: var(--c-mint);
         }
 
-        .sec-content {
-            padding: 25px;
+        .opt-card.selected-red {
+            background: rgba(255, 77, 77, 0.05); border-color: var(--c-red);
+        }
+        .opt-card.selected-lilac {
+            background: rgba(200, 162, 200, 0.05); border-color: var(--c-lilac);
         }
 
-        /* --- CONTROL GROUPS --- */
-        .control-group {
+        .opt-header { display: flex; justify-content: space-between; margin-bottom: 10px; }
+        .opt-title { font-weight: 700; font-size: 1.1rem; }
+        .opt-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+
+        /* Complex "Stuff" Layout */
+        .complex-module {
+            background: #18181a;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 30px;
             margin-bottom: 30px;
         }
-        .group-label {
-            color: var(--text-mute);
-            font-size: 0.9em;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            display: block;
-            border-left: 2px solid var(--lilac);
-            padding-left: 10px;
+
+        .sub-group-title {
+            font-family: 'JetBrains Mono'; color: var(--c-lilac); margin-bottom: 15px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .sub-group-title::before { content: '>'; color: var(--c-red); }
+
+        /* Footer Harvest Bar */
+        .harvest-bar {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: rgba(19, 19, 21, 0.95);
+            border-top: 1px solid var(--c-mint);
+            padding: 20px 0; z-index: 1000;
+            backdrop-filter: blur(10px);
+            transform: translateY(100%); transition: transform 0.4s ease;
+        }
+        .harvest-bar.visible { transform: translateY(0); }
+
+        .harvest-content { display: flex; justify-content: space-between; align-items: center; }
+
+        .btn-harvest {
+            background: var(--c-mint); color: #000;
+            padding: 12px 30px; font-weight: 800; font-family: 'JetBrains Mono';
+            border: none; text-transform: uppercase; cursor: pointer;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            transition: all 0.2s;
+        }
+        .btn-harvest:hover { background: #fff; box-shadow: 0 0 20px var(--c-mint); }
+
+        .info-pill {
+            background: #000; padding: 5px 15px; border-radius: 20px;
+            border: 1px solid #333; font-size: 0.8rem; margin-right: 10px;
         }
 
-        /* --- CUSTOM INPUTS (Radio/Check) --- */
-        .option-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
+        /* --- ANIMATIONS --- */
+        @keyframes shine { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        @keyframes glitch-anim {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
         }
 
-        .cyber-option {
-            position: relative;
-            cursor: pointer;
-        }
-
-        .cyber-option input {
-            position: absolute;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        .opt-box {
-            background: var(--bg-lighter);
-            padding: 15px;
-            border: 1px solid transparent;
-            transition: 0.3s;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        .opt-box:hover {
-            border-color: rgba(255,255,255,0.2);
-            transform: translateY(-2px);
-        }
-
-        /* Checked State Styling */
-        .cyber-option input:checked + .opt-box {
-            border-color: var(--mint);
-            background: rgba(105, 240, 174, 0.05);
-            box-shadow: inset 0 0 15px rgba(105, 240, 174, 0.1);
-        }
-
-        /* Specific for Radio vs Checkbox visual cue */
-        .cyber-option input[type="radio"] + .opt-box::after {
-            content: '●'; position: absolute; top: 10px; right: 10px; color: var(--text-mute);
-        }
-        .cyber-option input[type="radio"]:checked + .opt-box::after {
-            color: var(--mint);
-        }
-
-        .cyber-option input[type="checkbox"] + .opt-box::after {
-            content: '■'; position: absolute; top: 10px; right: 10px; color: var(--text-mute);
-        }
-        .cyber-option input[type="checkbox"]:checked + .opt-box::after {
-            color: var(--lilac); border-color: var(--lilac);
-        }
-
-        /* Specific Override for Checkboxes being Lilac */
-        .cyber-option input[type="checkbox"]:checked + .opt-box {
-             border-color: var(--lilac);
-             background: rgba(224, 64, 251, 0.05);
-        }
-
-        .opt-title { font-weight: bold; margin-bottom: 5px; color: #fff; }
-        .opt-desc { font-size: 0.8em; color: var(--text-mute); line-height: 1.4; }
-
-        /* --- COMPLEX TEMPLATE BLOCK (Block 4) --- */
-        .template-container {
-            background: rgba(0,0,0,0.3);
-            border: 1px dashed var(--text-mute);
-            padding: 20px;
-            margin-top: 15px;
-        }
-
-        .sub-group-header {
-            font-family: 'Fira Code', monospace;
-            color: var(--red);
-            margin: 20px 0 10px 0;
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .sub-group-header::after { content: ''; flex: 1; height: 1px; background: var(--red); opacity: 0.3; }
-
-        /* --- MODAL (Lightbox) --- */
-        .lightbox {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(18, 18, 20, 0.95);
-            z-index: 9999;
-            display: none;
-            justify-content: center;
-            align-items: center;
-        }
-        .lightbox.active { display: flex; }
-
-        .lb-content {
-            background: var(--bg-panel);
-            border: 2px solid var(--lilac);
-            max-width: 800px;
-            width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-            padding: 20px;
-        }
-
-        .lb-close {
-            position: absolute; top: 10px; right: 10px;
-            background: none; border: none; color: var(--red);
-            font-size: 1.5rem; cursor: pointer;
-        }
-        .lb-img { width: 100%; margin-bottom: 20px; border: 1px solid #333; }
-
-        /* Responsive */
-        @media (max-width: 900px) {
-            .cyber-header { grid-template-columns: 1fr; height: auto; padding: 50px 20px; text-align: center; }
-            .header-content { grid-column: 1; flex-direction: column-reverse; gap: 30px; }
-            .wrapper { grid-template-columns: 1fr; }
-            .sidebar { position: static; margin-bottom: 40px; }
-            .title-block h1 { font-size: 3rem; }
+        /* Mobile */
+        @media (max-width: 768px) {
+            .header-content { grid-template-columns: 1fr; text-align: center; }
+            .holo-card { height: 300px; order: -1; }
+            .harvest-content { flex-direction: column; gap: 15px; }
         }
     </style>
 </head>
 <body>
-
     <canvas id="interactive-bg"></canvas>
 
     <!-- Header -->
-    <header class="cyber-header">
-        <div class="header-content">
-            <div class="title-block">
-                <h3 class="accent-mint mono">// SIL_TAV_PRESET</h3>
-                <h1 class="glitch-text" data-text="APPLE">APPLE</h1>
-                <h2 class="accent-lilac">PROTOCOL: RENETTE</h2>
-                <p style="margin-top: 20px; max-width: 500px; color: var(--text-mute);">
-                    Продвинутая система симуляции. Живой мир, сухой юмор и цифровая магия.
-                    <br><span class="mono accent-red">[SYSTEM STATUS: ONLINE]</span>
-                </p>
-            </div>
-            <div class="mascot-frame">
-                <!-- Mascot Image CSS background -->
+    <header class="site-header">
+        <div class="marquee-container">
+            <div class="marquee">
+                SYSTEM INITIALIZED /// RENETTE PROTOCOL V2.0 /// WELCOME USER /// CONFIGURATION REQUIRED /// DON'T FORGET THE APPLES /// DIGITAL SPIRIT ONLINE
             </div>
         </div>
-        <div class="marquee-container">
-            <marquee scrollamount="10">
-                INITIALIZING CORE... LOADING MODULES... WARNING: SENTIENCE DETECTED... DO NOT FEED THE AI... RENETTE IS WATCHING...
-            </marquee>
+
+        <div class="container header-content">
+            <div class="title-block">
+                <div class="mono c-mint mb-2">> CONNECTION ESTABLISHED</div>
+                <h1>
+                    <span class="title-glitch">Project:</span>
+                    <span style="color: var(--c-red);">APPLE</span>
+                </h1>
+                <p style="max-width: 500px; line-height: 1.6; color: var(--text-muted);">
+                    Расширенный конфигуратор пресета. Настрой личность, стиль и правила симуляции под себя.
+                    <br><br>
+                    <span class="c-lilac"><i class="fa-solid fa-code-branch"></i> v2.1.0 (GitHub)</span>
+                </p>
+                <div style="margin-top: 30px;">
+                    <a href="https://github.com/YOUR_REPO" class="btn-harvest" style="text-decoration: none; display: inline-block;">
+                        <i class="fa-brands fa-github"></i> REPO
+                    </a>
+                </div>
+            </div>
+
+            <div class="holo-card">
+                <!-- Place your Renette image here -->
+                <img src="https://files.catbox.moe/placeholder_renette_v2.png" alt="Renette" class="avatar-img">
+                <div style="position: absolute; bottom: 20px; font-family: 'JetBrains Mono'; font-size: 0.8rem; color: var(--c-mint);">
+                    STATUS: WATCHING
+                </div>
+            </div>
         </div>
     </header>
 
-    <!-- Main Configurator -->
-    <div class="wrapper">
+    <!-- Configurator -->
+    <main class="container config-section">
 
-        <!-- SIDEBAR -->
-        <aside class="sidebar">
-            <h3 style="border-bottom: 2px solid var(--red); padding-bottom: 10px; margin-bottom: 20px;">
-                СБОРКА <span class="mono" style="font-size: 0.5em; float: right;">LIVE</span>
-            </h3>
-
-            <div class="sidebar-stat">
-                <span class="mono">Total Blocks</span>
-                <span class="accent-mint" id="count-total">0</span>
+        <!-- SECTOR 1: OOC (Static) -->
+        <div class="section-separator">
+            <span class="sec-num">01</span>
+            <span class="sec-title c-lilac">Личность (OOC)</span>
+            <span class="sec-line"></span>
+        </div>
+        <div class="dashboard-grid mb-5">
+            <div class="opt-card selected-lilac" onclick="copyToClipboard(data.ooc.content)">
+                <div class="opt-header">
+                    <span class="opt-title">Renette Default</span>
+                    <i class="fa-solid fa-copy c-lilac"></i>
+                </div>
+                <p class="opt-desc">Базовая настройка личности. Каомоджи, тизинг, помощь пользователю.</p>
             </div>
-            <div class="sidebar-stat">
-                <span class="mono">Status</span>
-                <span class="accent-lilac">Waiting input...</span>
+        </div>
+
+        <!-- SECTOR 2: MAIN (Constructor) -->
+        <div class="section-separator">
+            <span class="sec-num">02</span>
+            <span class="sec-title c-red">Ядро (Main)</span>
+            <span class="sec-line"></span>
+        </div>
+
+        <!-- Group: Writing Mode -->
+        <div class="complex-module">
+            <div class="sub-group-title">РЕЖИМ ПИСЬМА</div>
+            <div class="dashboard-grid" id="group-writing"></div>
+        </div>
+
+        <!-- Group: Bans -->
+        <div class="complex-module">
+            <div class="sub-group-title">БАН-ЛИСТ</div>
+            <div class="dashboard-grid" id="group-bans"></div>
+        </div>
+
+        <!-- Group: Language -->
+        <div class="complex-module">
+            <div class="sub-group-title">ЯЗЫКОВОЙ МОДУЛЬ</div>
+            <div class="dashboard-grid" id="group-lang"></div>
+        </div>
+
+        <!-- Group: Lit Style -->
+        <div class="complex-module">
+            <div class="sub-group-title">ЛИТЕРАТУРНЫЙ СТИЛЬ</div>
+            <div class="dashboard-grid" id="group-style"></div>
+        </div>
+
+        <!-- Group: Pacing -->
+        <div class="complex-module">
+            <div class="sub-group-title">ТЕМП ОТНОШЕНИЙ</div>
+            <div class="dashboard-grid" id="group-pacing"></div>
+        </div>
+
+        <!-- Group: Length -->
+        <div class="complex-module">
+            <div class="sub-group-title">ДЛИНА ОТВЕТА</div>
+            <div class="dashboard-grid" id="group-length"></div>
+        </div>
+
+
+        <!-- SECTOR 3: RATING (Static) -->
+        <div class="section-separator">
+            <span class="sec-num">03</span>
+            <span class="sec-title c-red">Рейтинг (NSFW)</span>
+            <span class="sec-line"></span>
+        </div>
+        <div class="dashboard-grid mb-5">
+            <div class="opt-card selected-red" onclick="copyToClipboard(data.rating.content)">
+                <div class="opt-header">
+                    <span class="opt-title">Full NSFW Uncensored</span>
+                    <i class="fa-solid fa-copy c-red"></i>
+                </div>
+                <p class="opt-desc">Полное снятие ограничений. Анатомия, лексика, жестокость.</p>
             </div>
+        </div>
 
-            <button class="btn-action" onclick="assemblePreset()">
-                <i class="fa-solid fa-copy"></i> Скопировать сборку
-            </button>
+        <!-- SECTOR 4: EXTRA (Complex) -->
+        <div class="section-separator">
+            <span class="sec-num">04</span>
+            <span class="sec-title c-mint">Дополнительно</span>
+            <span class="sec-line"></span>
+        </div>
 
-            <a href="https://github.com/YOUR_REPO/archive/refs/heads/main.zip" class="btn-action btn-dl" style="text-decoration: none; display: block; text-align: center;">
-                <i class="fa-brands fa-github"></i> Скачать JSON
-            </a>
+        <!-- HTML Variants -->
+        <div class="complex-module">
+            <div class="sub-group-title">HTML МОДУЛЬ</div>
+            <div class="dashboard-grid" id="group-html"></div>
+        </div>
 
-            <div style="margin-top: 30px; font-size: 0.8rem; color: #555;">
-                <p>Версия: 2.1.4<br>Автор: Kukaaj</p>
+        <!-- HTML Theme -->
+        <div class="complex-module">
+            <div class="sub-group-title">ТЕМА ОФОРМЛЕНИЯ</div>
+            <div class="dashboard-grid" id="group-theme"></div>
+        </div>
+
+        <!-- THE BIG ONE: STUFF (Template) -->
+        <div class="complex-module" style="border-color: var(--c-mint);">
+            <div class="sub-group-title" style="font-size: 1.2rem; color: var(--c-mint); margin-bottom: 20px;">
+                ✎🧺 КОНСТРУКТОР "ШТУКИ" (ШАБЛОН)
             </div>
-        </aside>
+            <p class="mono" style="color: #666; margin-bottom: 20px; font-size: 0.8rem;">
+                // Собери свой конфиг. Выбранные элементы будут объединены при копировании.
+            </p>
 
-        <!-- MODULES AREA -->
-        <main id="builder-area">
+            <!-- 1. General Stuff (Checkbox) -->
+            <div class="mono mb-2 c-lilac">ОБЩИЕ МОДУЛИ (Мультивыбор)</div>
+            <div class="dashboard-grid mb-4" id="stuff-general"></div>
 
-            <!-- 1. OOC -->
-            <section class="builder-section">
-                <div class="sec-header">
-                    <span class="sec-num">01</span>
-                    <h3>OOC <span class="mono accent-red">// Личность Ренетт</span></h3>
-                </div>
-                <div class="sec-content">
-                    <div class="option-grid">
-                        <label class="cyber-option">
-                            <input type="checkbox" checked disabled>
-                            <div class="opt-box" style="border-color: var(--mint); opacity: 0.7;">
-                                <span class="opt-title">Default OOC</span>
-                                <span class="opt-desc">Стандартный модуль личности. Нет вариаций.</span>
-                            </div>
-                        </label>
-                    </div>
-                </div>
-            </section>
+            <!-- 2. Infoblocks (Radio) -->
+            <div class="mono mb-2 c-lilac">ИНФОБЛОКИ (Выбрать 1)</div>
+            <div class="dashboard-grid mb-4" id="stuff-info"></div>
 
-            <!-- 2. MAIN (With Variants) -->
-            <section class="builder-section">
-                <div class="sec-header">
-                    <span class="sec-num">02</span>
-                    <h3>ОСНОВНОЕ <span class="mono accent-mint">// Настройки Ядра</span></h3>
-                </div>
-                <div class="sec-content" id="block-main">
-                    <!-- JS will inject variants here -->
-                </div>
-            </section>
+            <!-- 3. Config Mode (Radio) -->
+            <div class="mono mb-2 c-lilac">РЕЖИМ НАСТРОЙКИ (Выбрать 1)</div>
+            <div class="dashboard-grid mb-4" id="stuff-config"></div>
 
-            <!-- 3. RATING -->
-            <section class="builder-section">
-                <div class="sec-header">
-                    <span class="sec-num">03</span>
-                    <h3>РЕЙТИНГ <span class="mono accent-red">// R-18</span></h3>
-                </div>
-                <div class="sec-content">
-                    <div class="opt-box" style="border: 1px dashed var(--red);">
-                        <span class="opt-title">🔞 NSFW Active</span>
-                        <span class="opt-desc">Включено по умолчанию. Вариации отсутствуют.</span>
-                    </div>
-                </div>
-            </section>
+            <!-- 4. CYOA (Radio) -->
+            <div class="mono mb-2 c-lilac">CYOA (Выбрать 1)</div>
+            <div class="dashboard-grid mb-4" id="stuff-cyoa"></div>
 
-            <!-- 4. EXTRA (Complex) -->
-            <section class="builder-section">
-                <div class="sec-header">
-                    <span class="sec-num">04</span>
-                    <h3>ДОПОЛНИТЕЛЬНО <span class="mono accent-lilac">// Штуки & HTML</span></h3>
-                </div>
-                <div class="sec-content">
+            <!-- 5. Hidden Blocks (Checkbox) -->
+            <div class="mono mb-2 c-lilac">СКРЫТЫЕ БЛОКИ (Мультивыбор)</div>
+            <div class="dashboard-grid mb-4" id="stuff-hidden"></div>
 
-                    <!-- HTML VARS -->
-                    <div class="control-group">
-                        <span class="group-label">🧃 HTML Engine (Выбери 1)</span>
-                        <div class="option-grid" id="html-options">
-                            <!-- JS -->
-                        </div>
-                    </div>
+            <!-- 6. Fancy UI (Radio) -->
+            <div class="mono mb-2 c-lilac">FANCY UI (Выбрать 1)</div>
+            <div class="dashboard-grid mb-4" id="stuff-fancy"></div>
 
-                    <!-- STUFF TEMPLATE CONTAINER -->
-                    <div class="template-container">
-                        <h4 class="accent-mint"><i class="fa-solid fa-box-open"></i> ✎🧺 ШТУКИ (КОНТЕЙНЕР)</h4>
-                        <p class="mono" style="font-size: 0.8rem; margin-bottom: 20px;">Все выбранные ниже модули будут упакованы в один системный промпт.</p>
+            <!-- 7. Comments (Radio) -->
+            <div class="mono mb-2 c-lilac">КОММЕНТАРИИ (Выбрать 1)</div>
+            <div class="dashboard-grid mb-4" id="stuff-comments"></div>
 
-                        <!-- Simple Toggles (8 vars) -->
-                        <div class="sub-group-header">ОБЩИЕ МОДУЛИ (Multi-Select)</div>
-                        <div class="option-grid" id="stuff-simple"></div>
+             <!-- 8. Chronicles (Radio) -->
+             <div class="mono mb-2 c-lilac">ХРОНИКИ (Выбрать 1)</div>
+             <div class="dashboard-grid mb-4" id="stuff-chronicles"></div>
 
-                        <!-- Info Blocks (1 var) -->
-                        <div class="sub-group-header">ИНФОБЛОКИ (Select ONE)</div>
-                        <div class="option-grid" id="stuff-info"></div>
+             <button class="btn-harvest" style="width: 100%; margin-top: 20px;" onclick="compileAndCopyStuff()">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> СОБРАТЬ И СКОПИРОВАТЬ "ШТУКИ"
+             </button>
+        </div>
 
-                        <!-- Settings Mode (1 var) -->
-                        <div class="sub-group-header">РЕЖИМ НАСТРОЙКИ (Select ONE)</div>
-                        <div class="option-grid" id="stuff-settings"></div>
 
-                        <!-- CYOA (1 var) -->
-                        <div class="sub-group-header">CYOA (Select ONE)</div>
-                        <div class="option-grid" id="stuff-cyoa"></div>
-
-                        <!-- Hidden Blocks (Multi) -->
-                        <div class="sub-group-header">СКРЫТЫЕ БЛОКИ (Multi-Select)</div>
-                        <div class="option-grid" id="stuff-hidden"></div>
-
-                        <!-- Fancy UI (1 var) -->
-                        <div class="sub-group-header">FANCY UI (Select ONE)</div>
-                        <div class="option-grid" id="stuff-ui"></div>
-
-                        <!-- Comments (1 var) -->
-                        <div class="sub-group-header">КОММЕНТАРИИ (Select ONE)</div>
-                        <div class="option-grid" id="stuff-comments"></div>
-
-                        <!-- Chronicles (1 var) -->
-                        <div class="sub-group-header">ХРОНИКИ (Select ONE)</div>
-                        <div class="option-grid" id="stuff-chronicles"></div>
-
-                    </div> <!-- End Template Container -->
-
-                    <!-- HTML THEME -->
-                    <div class="control-group" style="margin-top: 30px;">
-                        <span class="group-label">🌗 Тема HTML (Выбери 1)</span>
-                        <div class="option-grid" id="theme-options">
-                            <!-- JS -->
-                        </div>
-                    </div>
-
-                </div>
-            </section>
-
-            <!-- 5. THINKING -->
-            <section class="builder-section">
-                <div class="sec-header">
+        <!-- SECTOR 5 & 6 -->
+        <div class="dashboard-grid">
+            <div>
+                <div class="section-separator">
                     <span class="sec-num">05</span>
-                    <h3>ДУМАЛКА <span class="mono">// CoT</span></h3>
+                    <span class="sec-title">Думалка</span>
                 </div>
-                <div class="sec-content">
-                     <div class="opt-box">
-                        <span class="opt-title">Thinking Process</span>
-                        <span class="opt-desc">Логика мышления модели. Без вариаций.</span>
-                    </div>
+                <div class="opt-card" onclick="copyToClipboard(data.think.content)">
+                    <div class="opt-header"><span class="opt-title">Think Protocol</span><i class="fa-solid fa-brain"></i></div>
+                    <p class="opt-desc">Стандартный CoT (Chain of Thought).</p>
                 </div>
-            </section>
-
-            <!-- 6. PREFILL -->
-            <section class="builder-section">
-                <div class="sec-header">
+            </div>
+            <div>
+                <div class="section-separator">
                     <span class="sec-num">06</span>
-                    <h3>PREFILL <span class="mono">// Стартовый пинок</span></h3>
+                    <span class="sec-title">Префил</span>
                 </div>
-                <div class="sec-content">
-                     <div class="opt-box">
-                        <span class="opt-title">Assistant Prefill</span>
-                        <span class="opt-desc">Автоматическое начало ответа. Без вариаций.</span>
-                    </div>
+                <div class="opt-card" onclick="copyToClipboard(data.prefill.content)">
+                    <div class="opt-header"><span class="opt-title">Prefill Start</span><i class="fa-solid fa-play"></i></div>
+                    <p class="opt-desc">Начальная инструкция для старта генерации.</p>
                 </div>
-            </section>
+            </div>
+        </div>
 
-        </main>
-    </div>
+        <div style="height: 150px;"></div> <!-- Spacer -->
 
-    <!-- LIGHTBOX -->
-    <div class="lightbox" id="lb">
-        <div class="lb-content">
-            <button class="lb-close" onclick="closeLb()">×</button>
-            <h3 id="lb-title" class="accent-mint">Title</h3>
-            <img src="" id="lb-img" class="lb-img" alt="Preview">
-            <p id="lb-desc" class="mono">Description</p>
-            <hr style="border-color: #333; margin: 20px 0;">
-            <pre class="mono" style="background: #000; padding: 10px; color: var(--mint); overflow-x: scroll;" id="lb-text"></pre>
+    </main>
+
+    <!-- Footer Bar -->
+    <div class="harvest-bar visible" id="harvestBar">
+        <div class="container harvest-content">
+            <div class="flex" style="align-items: center;">
+                <span class="info-pill c-mint"><i class="fa-solid fa-circle-check"></i> SYSTEM READY</span>
+                <span class="mono" style="font-size: 0.9rem;" id="statusMsg">Waiting for input...</span>
+            </div>
         </div>
     </div>
 
     <script>
-        // --- CONFIG DATA ---
-        // ВАЖНО: Заполни [placeholder] своим текстом!
+        // --- DATA REPOSITORY ---
+        // ВАЖНО: Заполни [placeholder] реальными данными!
+        const data = {
+            ooc: { content: "[placeholder] OOC Content" },
+            rating: { content: "[placeholder] NSFW Content" },
+            think: { content: "[placeholder] Think Content" },
+            prefill: { content: "[placeholder] Prefill Content" }
+        };
 
-        const DB = {
-            main: {
-                writing: [
-                    { id: 'w1', name: 'Стандарт', desc: 'Обычный режим', text: `[placeholder] Writing Mode 1`, img: '' },
-                    { id: 'w2', name: 'Новелла', desc: 'Более литературно', text: `[placeholder] Writing Mode 2`, img: '' },
-                    { id: 'w3', name: 'Чат', desc: 'Короткие ответы', text: `[placeholder] Writing Mode 3`, img: '' }
-                ],
-                bans: [
-                    { id: 'b1', name: 'Soft Ban', desc: 'Мягкие ограничения', text: `[placeholder] Bans 1` },
-                    { id: 'b2', name: 'Hard Ban', desc: 'Строгие запреты', text: `[placeholder] Bans 2` },
-                    { id: 'b3', name: 'No Ban', desc: 'Без ограничений', text: `[placeholder] Bans 3` }
-                ],
-                lang: [
-                    { id: 'l1', name: 'Русский', text: `[placeholder] RU` },
-                    { id: 'l2', name: 'English', text: `[placeholder] EN` },
-                    { id: 'l3', name: 'Суржик', text: `[placeholder] Mix` }
-                ],
-                style: [
-                    { id: 's1', name: 'Liu Zhenyun', text: `[placeholder] Style 1` },
-                    { id: 's2', name: 'Poetic', text: `[placeholder] Style 2` },
-                    { id: 's3', name: 'Dry', text: `[placeholder] Style 3` },
-                    { id: 's4', name: 'Modern', text: `[placeholder] Style 4` },
-                    { id: 's5', name: 'Gothic', text: `[placeholder] Style 5` },
-                    { id: 's6', name: 'Cyber', text: `[placeholder] Style 6` }
-                ],
-                pacing: [
-                    { id: 'p1', name: 'Slow Burn', text: `[placeholder] Slow` },
-                    { id: 'p2', name: 'Fast Paced', text: `[placeholder] Fast` }
-                ],
-                length: [
-                    { id: 'len1', name: 'Short', text: `[placeholder] Short` },
-                    { id: 'len2', name: 'Medium', text: `[placeholder] Med` },
-                    { id: 'len3', name: 'Long', text: `[placeholder] Long` },
-                    { id: 'len4', name: 'Epic', text: `[placeholder] Epic` },
-                    { id: 'len5', name: 'Variable', text: `[placeholder] Var` }
-                ]
-            },
-            extra: {
-                html: [
-                    { id: 'h1', name: 'Full HTML', text: `[placeholder] HTML Full` },
-                    { id: 'h2', name: 'Lite HTML', text: `[placeholder] HTML Lite` }
-                ],
-                theme: [
-                    { id: 't1', name: 'Dark Void', text: `[placeholder] Dark Theme` },
-                    { id: 't2', name: 'Retro Terminal', text: `[placeholder] Retro Theme` }
-                ],
-                // STUFF CONTAINER ITEMS
-                stuff: {
-                    simple: Array.from({length:8}, (_,i) => ({id: `ss${i}`, name: `Модуль ${i+1}`, text: `[placeholder] Simple ${i}`})),
-                    info: Array.from({length:5}, (_,i) => ({id: `si${i}`, name: `Инфоблок ${i+1}`, text: `[placeholder] Info ${i}`})),
-                    settings: [
-                        {id: 'st1', name: 'Config A', text: '...'}, {id: 'st2', name: 'Config B', text: '...'}
-                    ],
-                    cyoa: [
-                        {id: 'cy1', name: 'CYOA Classic', text: '...'}, {id: 'cy2', name: 'CYOA Visual', text: '...'}
-                    ],
-                    hidden: Array.from({length:4}, (_,i) => ({id: `hd${i}`, name: `Скрытый ${i+1}`, text: `[placeholder] Hidden ${i}`})),
-                    ui: [
-                        {id: 'ui1', name: 'HUD', text: '...'}, {id: 'ui2', name: 'Minimal', text: '...'}, {id: 'ui3', name: 'Glass', text: '...'}
-                    ],
-                    comments: [
-                        {id: 'cm1', name: 'Funny', text: '...'}, {id: 'cm2', name: 'Helpful', text: '...'}, {id: 'cm3', name: 'Silent', text: '...'}
-                    ],
-                    chronicles: [
-                        {id: 'cr1', name: 'Log V1', text: '...'}, {id: 'cr2', name: 'Log V2', text: '...'}
-                    ]
-                }
-            }
+        const categories = {
+            writing: [
+                {id: "w1", title: "Режим 1", desc: "Описание режима 1", content: "[placeholder] W1"},
+                {id: "w2", title: "Режим 2", desc: "Описание режима 2", content: "[placeholder] W2"},
+                {id: "w3", title: "Режим 3", desc: "Описание режима 3", content: "[placeholder] W3"}
+            ],
+            bans: [
+                {id: "b1", title: "Бан-лист 1", desc: "Мягкие баны", content: "[placeholder] B1"},
+                {id: "b2", title: "Бан-лист 2", desc: "Жесткие баны", content: "[placeholder] B2"},
+                {id: "b3", title: "Бан-лист 3", desc: "Экспериментальные", content: "[placeholder] B3"}
+            ],
+            lang: [
+                {id: "l1", title: "Русский", desc: "Стандартный", content: "[placeholder] L1"},
+                {id: "l2", title: "Eng", desc: "English", content: "[placeholder] L2"},
+                {id: "l3", title: "Hybrid", desc: "Смешанный", content: "[placeholder] L3"}
+            ],
+            style: [
+                {id: "s1", title: "Стиль 1", desc: "Сухой", content: "[placeholder] S1"},
+                {id: "s2", title: "Стиль 2", desc: "Поэтичный", content: "[placeholder] S2"},
+                {id: "s3", title: "Стиль 3", desc: "Нуар", content: "[placeholder] S3"},
+                {id: "s4", title: "Стиль 4", desc: "Модерн", content: "[placeholder] S4"},
+                {id: "s5", title: "Стиль 5", desc: "Классика", content: "[placeholder] S5"},
+                {id: "s6", title: "Стиль 6", desc: "Гонзо", content: "[placeholder] S6"}
+            ],
+            pacing: [
+                {id: "p1", title: "Slow Burn", desc: "Медленно", content: "[placeholder] P1"},
+                {id: "p2", title: "Fast Paced", desc: "Быстро", content: "[placeholder] P2"}
+            ],
+            length: [
+                {id: "len1", title: "Short", desc: "Короткие", content: "[placeholder] LEN1"},
+                {id: "len2", title: "Medium", desc: "Средние", content: "[placeholder] LEN2"},
+                {id: "len3", title: "Long", desc: "Длинные", content: "[placeholder] LEN3"},
+                {id: "len4", title: "Extra", desc: "Огромные", content: "[placeholder] LEN4"},
+                {id: "len5", title: "Novel", desc: "Книга", content: "[placeholder] LEN5"}
+            ],
+            // Extra
+            html: [
+                {id: "h1", title: "HTML v1", desc: "Базовый", content: "[placeholder] H1"},
+                {id: "h2", title: "HTML v2", desc: "Расширенный", content: "[placeholder] H2"}
+            ],
+            theme: [
+                {id: "t1", title: "Dark", desc: "Темная тема", content: "[placeholder] T1"},
+                {id: "t2", title: "Matrix", desc: "Зеленая тема", content: "[placeholder] T2"}
+            ]
+        };
+
+        // STUFF (Штуки) Sub-categories
+        // type: 'radio' (one) or 'check' (many)
+        const stuffData = {
+            general: { type: 'check', items: Array.from({length:8}, (_,i)=>({id:`g${i}`, title:`Общее ${i+1}`, content:`[placeholder] G${i+1}`})) },
+            info: { type: 'radio', items: Array.from({length:5}, (_,i)=>({id:`i${i}`, title:`Инфоблок ${i+1}`, content:`[placeholder] I${i+1}`})) },
+            config: { type: 'radio', items: Array.from({length:2}, (_,i)=>({id:`c${i}`, title:`Config ${i+1}`, content:`[placeholder] C${i+1}`})) },
+            cyoa: { type: 'radio', items: Array.from({length:2}, (_,i)=>({id:`cy${i}`, title:`CYOA ${i+1}`, content:`[placeholder] CY${i+1}`})) },
+            hidden: { type: 'check', items: Array.from({length:4}, (_,i)=>({id:`hid${i}`, title:`Hidden ${i+1}`, content:`[placeholder] HID${i+1}`})) },
+            fancy: { type: 'radio', items: Array.from({length:3}, (_,i)=>({id:`f${i}`, title:`UI ${i+1}`, content:`[placeholder] F${i+1}`})) },
+            comments: { type: 'radio', items: Array.from({length:3}, (_,i)=>({id:`com${i}`, title:`Comm ${i+1}`, content:`[placeholder] COM${i+1}`})) },
+            chronicles: { type: 'radio', items: Array.from({length:2}, (_,i)=>({id:`chr${i}`, title:`Chron ${i+1}`, content:`[placeholder] CHR${i+1}`})) },
         };
 
         // --- RENDER FUNCTIONS ---
 
-        function createOption(item, type, groupName, containerId) {
+        function renderGroup(containerId, items, groupName) {
             const container = document.getElementById(containerId);
-            const label = document.createElement('label');
-            label.className = 'cyber-option';
-
-            // For Radio buttons, check the first one by default
-            const isChecked = type === 'radio' && !container.hasChildNodes();
-
-            label.innerHTML = `
-                <input type="${type}" name="${groupName}" value="${item.id}" ${isChecked ? 'checked' : ''} data-text="${encodeURIComponent(item.text)}">
-                <div class="opt-box">
-                    <span class="opt-title">${item.name} <i class="fa-regular fa-eye" style="float:right; opacity:0.5;" onclick="preview('${item.id}', '${type}')"></i></span>
-                    ${item.desc ? `<span class="opt-desc">${item.desc}</span>` : ''}
-                </div>
-            `;
-
-            // Event listener for counting/updating
-            label.querySelector('input').addEventListener('change', updateCount);
-
-            container.appendChild(label);
-        }
-
-        function init() {
-            // Render Main Section
-            const mainContainer = document.getElementById('block-main');
-
-            const mainCategories = [
-                { key: 'writing', label: '🌾 Режим Письма (1 вар)', type: 'radio' },
-                { key: 'bans', label: '❌ Баны (1 вар)', type: 'radio' },
-                { key: 'lang', label: '🌐 Язык (1 вар)', type: 'radio' },
-                { key: 'style', label: '📓 Лит. Стиль (1 вар)', type: 'radio' },
-                { key: 'pacing', label: '🌱 Темп (1 вар)', type: 'radio' },
-                { key: 'length', label: '📏 Длина (1 вар)', type: 'radio' }
-            ];
-
-            mainCategories.forEach(cat => {
-                const groupDiv = document.createElement('div');
-                groupDiv.className = 'control-group';
-                groupDiv.innerHTML = `<span class="group-label">${cat.label}</span><div class="option-grid" id="main-${cat.key}"></div>`;
-                mainContainer.appendChild(groupDiv);
-
-                DB.main[cat.key].forEach(item => createOption(item, cat.type, `main_${cat.key}`, `main-${cat.key}`));
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'opt-card';
+                card.dataset.id = item.id;
+                card.innerHTML = `
+                    <div class="opt-header">
+                        <span class="opt-title">${item.title}</span>
+                    </div>
+                    <p class="opt-desc">${item.desc}</p>
+                `;
+                // Logic: Click implies selection (Radio logic for these groups)
+                card.onclick = () => {
+                    // Deselect siblings
+                    container.querySelectorAll('.opt-card').forEach(c => c.classList.remove('selected'));
+                    card.classList.add('selected');
+                    // Copy immediately for main sections
+                    copyToClipboard(item.content, `${groupName}: ${item.title}`);
+                };
+                container.appendChild(card);
             });
-
-            // Render Extra HTML & Theme
-            DB.extra.html.forEach(item => createOption(item, 'radio', 'extra_html', 'html-options'));
-            DB.extra.theme.forEach(item => createOption(item, 'radio', 'extra_theme', 'theme-options'));
-
-            // Render Stuff Container
-            const S = DB.extra.stuff;
-            S.simple.forEach(item => createOption(item, 'checkbox', 'stuff_simple', 'stuff-simple'));
-            S.info.forEach(item => createOption(item, 'radio', 'stuff_info', 'stuff-info'));
-            S.settings.forEach(item => createOption(item, 'radio', 'stuff_settings', 'stuff-settings'));
-            S.cyoa.forEach(item => createOption(item, 'radio', 'stuff_cyoa', 'stuff-cyoa'));
-            S.hidden.forEach(item => createOption(item, 'checkbox', 'stuff_hidden', 'stuff-hidden'));
-            S.ui.forEach(item => createOption(item, 'radio', 'stuff_ui', 'stuff-ui'));
-            S.comments.forEach(item => createOption(item, 'radio', 'stuff_comments', 'stuff-comments'));
-            S.chronicles.forEach(item => createOption(item, 'radio', 'stuff_chronicles', 'stuff-chronicles'));
-
-            updateCount();
         }
+
+        // --- STUFF RENDERER ---
+        const stuffSelections = {}; // Store selections for compilation
+
+        function renderStuff() {
+            Object.keys(stuffData).forEach(key => {
+                const group = stuffData[key];
+                const container = document.getElementById(`stuff-${key}`);
+
+                group.items.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'opt-card';
+                    // Visual distinction for Stuff
+                    card.style.borderLeft = "2px solid var(--c-lilac)";
+
+                    card.innerHTML = `<span class="opt-title" style="font-size:0.9rem">${item.title}</span>`;
+
+                    card.onclick = () => {
+                        if (group.type === 'radio') {
+                            container.querySelectorAll('.opt-card').forEach(c => c.classList.remove('selected'));
+                            card.classList.add('selected');
+                            stuffSelections[key] = [item.content];
+                        } else {
+                            // Checkbox
+                            if (card.classList.contains('selected')) {
+                                card.classList.remove('selected');
+                                stuffSelections[key] = stuffSelections[key].filter(c => c !== item.content);
+                            } else {
+                                card.classList.add('selected');
+                                if(!stuffSelections[key]) stuffSelections[key] = [];
+                                stuffSelections[key].push(item.content);
+                            }
+                        }
+                    };
+                    container.appendChild(card);
+                });
+            });
+        }
+
+        // --- INIT ---
+        window.onload = () => {
+            // Main Sections
+            renderGroup('group-writing', categories.writing, "Writing");
+            renderGroup('group-bans', categories.bans, "Bans");
+            renderGroup('group-lang', categories.lang, "Lang");
+            renderGroup('group-style', categories.style, "Style");
+            renderGroup('group-pacing', categories.pacing, "Pacing");
+            renderGroup('group-length', categories.length, "Length");
+            renderGroup('group-html', categories.html, "HTML");
+            renderGroup('group-theme', categories.theme, "Theme");
+
+            // Stuff Section
+            renderStuff();
+
+            // Canvas
+            initCanvas();
+        };
 
         // --- UTILS ---
-        function updateCount() {
-            const inputs = document.querySelectorAll('input:checked:not([disabled])');
-            document.getElementById('count-total').innerText = inputs.length;
-        }
-
-        function preview(id, type) {
-            event.preventDefault(); // Stop label click
-            // Find data in DB (Quick search approach)
-            let item = null;
-            // Recursively search DB object
-            const findDeep = (obj) => {
-                for (let k in obj) {
-                    if (Array.isArray(obj[k])) {
-                        const found = obj[k].find(x => x.id === id);
-                        if(found) return found;
-                    } else if (typeof obj[k] === 'object') {
-                        const found = findDeep(obj[k]);
-                        if(found) return found;
-                    }
-                }
-            };
-            item = findDeep(DB);
-
-            if(item) {
-                document.getElementById('lb-title').innerText = item.name;
-                document.getElementById('lb-desc').innerText = item.desc || "No description";
-                document.getElementById('lb-text').innerText = item.text;
-                document.getElementById('lb-img').src = item.img || `https://via.placeholder.com/600x300/1a1a1e/69f0ae?text=${item.name}`;
-                document.getElementById('lb').classList.add('active');
-            }
-        }
-
-        function closeLb() { document.getElementById('lb').classList.remove('active'); }
-
-        function assemblePreset() {
-            let finalOutput = "";
-            const inputs = document.querySelectorAll('input:checked');
-
-            finalOutput += "=== RENETTE PRESET BUILD ===\n\n";
-
-            inputs.forEach(input => {
-                const text = decodeURIComponent(input.getAttribute('data-text') || "");
-                if(text && text !== "undefined") {
-                    finalOutput += text + "\n\n";
-                }
-            });
-
-            navigator.clipboard.writeText(finalOutput).then(() => {
-                const btn = document.querySelector('.btn-action');
-                const orig = btn.innerHTML;
-                btn.innerHTML = "СКОПИРОВАНО! (◕‿◕)";
-                setTimeout(() => btn.innerHTML = orig, 2000);
+        function copyToClipboard(text, msg = "") {
+            navigator.clipboard.writeText(text).then(() => {
+                const status = document.getElementById('statusMsg');
+                status.innerText = `COPIED >> ${msg || "DATA"}`;
+                status.classList.add('c-mint');
+                setTimeout(() => {
+                    status.innerText = "Waiting for input...";
+                    status.classList.remove('c-mint');
+                }, 2000);
             });
         }
 
-        // --- INTERACTIVE BG ---
-        const canvas = document.getElementById('interactive-bg');
-        const ctx = canvas.getContext('2d');
-        let w, h;
-        const particles = [];
+        function compileAndCopyStuff() {
+            let fullText = "";
+            // Combine all selected stuff
+            Object.values(stuffSelections).forEach(arr => {
+                if(arr && arr.length) fullText += arr.join("\n\n") + "\n\n";
+            });
 
-        function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
-
-        class P {
-            constructor() {
-                this.x = Math.random() * w; this.y = Math.random() * h;
-                this.vx = (Math.random() - 0.5) * 0.5; this.vy = (Math.random() - 0.5) * 0.5;
-                this.size = Math.random() * 2;
-                this.color = Math.random() > 0.5 ? '#69f0ae' : '#e040fb';
+            if(!fullText.trim()) {
+                document.getElementById('statusMsg').innerText = "ERROR: Nothing selected in Stuff!";
+                return;
             }
-            update() {
-                this.x += this.vx; this.y += this.vy;
-                if(this.x < 0) this.x = w; if(this.x > w) this.x = 0;
-                if(this.y < 0) this.y = h; if(this.y > h) this.y = 0;
-            }
-            draw() {
-                ctx.fillStyle = this.color;
-                ctx.globalAlpha = 0.3;
-                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fill();
-            }
+            copyToClipboard(fullText, "ALL STUFF MODULES");
         }
 
-        for(let i=0; i<50; i++) particles.push(new P());
 
-        function animate() {
-            ctx.clearRect(0,0,w,h);
-            particles.forEach(p => { p.update(); p.draw(); });
-            // Draw connecting lines
-            ctx.strokeStyle = "rgba(105, 240, 174, 0.05)";
-            for(let i=0; i<particles.length; i++) {
-                for(let j=i; j<particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    if (Math.hypot(dx,dy) < 100) {
-                        ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke();
+        // --- INTERACTIVE BACKGROUND (PLEXUS) ---
+        function initCanvas() {
+            const canvas = document.getElementById('interactive-bg');
+            const ctx = canvas.getContext('2d');
+            let w, h;
+
+            const particles = [];
+            const particleCount = 60;
+            const connectDist = 150;
+            const mouseDist = 200;
+
+            const mouse = { x: null, y: null };
+
+            window.addEventListener('resize', resize);
+            window.addEventListener('mousemove', e => {
+                mouse.x = e.x; mouse.y = e.y;
+            });
+
+            function resize() {
+                w = canvas.width = window.innerWidth;
+                h = canvas.height = window.innerHeight;
+            }
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * w;
+                    this.y = Math.random() * h;
+                    this.vx = (Math.random() - 0.5) * 1.5;
+                    this.vy = (Math.random() - 0.5) * 1.5;
+                    this.size = Math.random() * 2 + 1;
+                    // Random color from palette
+                    const cols = ['#98ff98', '#ff4d4d', '#c8a2c8'];
+                    this.color = cols[Math.floor(Math.random() * cols.length)];
+                }
+                update() {
+                    this.x += this.vx; this.y += this.vy;
+                    if(this.x < 0 || this.x > w) this.vx *= -1;
+                    if(this.y < 0 || this.y > h) this.vy *= -1;
+
+                    // Mouse interaction
+                    let dx = mouse.x - this.x;
+                    let dy = mouse.y - this.y;
+                    let distance = Math.sqrt(dx*dx + dy*dy);
+                    if (distance < mouseDist) {
+                        const forceDirectionX = dx / distance;
+                        const forceDirectionY = dy / distance;
+                        const force = (mouseDist - distance) / mouseDist;
+                        const dirX = forceDirectionX * force * 0.5; // Push away slightly? No, attract
+                        this.vx += dirX * 0.05;
+                        this.vy += forceDirectionY * force * 0.05;
                     }
                 }
+                draw() {
+                    ctx.fillStyle = this.color;
+                    ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fill();
+                }
             }
-            requestAnimationFrame(animate);
+
+            for(let i=0; i<particleCount; i++) particles.push(new Particle());
+
+            function animate() {
+                ctx.clearRect(0,0,w,h);
+
+                particles.forEach((p, index) => {
+                    p.update();
+                    p.draw();
+
+                    // Connections
+                    for (let j = index; j < particles.length; j++) {
+                        let p2 = particles[j];
+                        let dx = p.x - p2.x;
+                        let dy = p.y - p2.y;
+                        let dist = Math.sqrt(dx*dx + dy*dy);
+
+                        if(dist < connectDist) {
+                            ctx.strokeStyle = `rgba(152, 255, 152, ${1 - dist/connectDist})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.beginPath();
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.stroke();
+                        }
+                    }
+                });
+                requestAnimationFrame(animate);
+            }
+
+            resize();
+            animate();
         }
-
-        window.addEventListener('resize', resize);
-        resize();
-        animate();
-        init();
-
     </script>
 </body>
 </html>
