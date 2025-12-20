@@ -4,689 +4,516 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="L1aS8txxzlMjDV_Efl0Oi1WDR0J7_DCdyazGjG1zVPk" />
-    <title>Renette System | Yablochny Preset</title>
+    <title>Renette Project | Яблочный Пресет</title>
 
-    <!-- Шрифты: Технологичный и Органичный -->
+    <!-- Шрифты: Технический + Элегантный -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Quicksand:wght@300;500;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
-
-    <!-- Иконки -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,600&family=JetBrains+Mono:wght@400;700&family=Manrope:wght@300;600;800&display=swap" rel="stylesheet">
 
     <style>
-        /* --- CORE VARIABLES --- */
+        /* === CORE VARIABLES === */
         :root {
-            --bg-dark: #050505;
-            --bg-panel: rgba(20, 20, 20, 0.6);
-            --glass: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --neon-green: #4fffa3;
-            --apple-red: #ff4d6d;
+            --bg-deep: #050505;
+            --bg-panel: rgba(20, 20, 20, 0.7);
+            --accent-primary: #9dff00; /* Toxic Apple */
+            --accent-secondary: #00ffaa; /* Cyber Stream */
             --text-main: #e0e0e0;
-            --text-muted: #8a8a8a;
-            --font-tech: 'Orbitron', sans-serif;
-            --font-body: 'Quicksand', sans-serif;
-            --font-code: 'JetBrains Mono', monospace;
-            --ease: cubic-bezier(0.23, 1, 0.32, 1);
+            --text-dim: #8a8a8a;
+            --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+            --glow: 0 0 20px rgba(157, 255, 0, 0.15);
+            --font-tech: 'JetBrains Mono', monospace;
+            --font-organic: 'Cormorant Garamond', serif;
+            --font-ui: 'Manrope', sans-serif;
         }
 
-        /* --- RESET & BASE --- */
+        /* === RESET & BASE === */
         * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
 
         body {
-            background-color: var(--bg-dark);
+            background-color: var(--bg-deep);
             color: var(--text-main);
-            font-family: var(--font-body);
+            font-family: var(--font-ui);
             overflow-x: hidden;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            line-height: 1.6;
         }
 
-        /* Фоновый шум и частицы */
-        #canvas-bg {
+        /* Скроллбар */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-deep); }
+        ::-webkit-scrollbar-thumb { background: var(--accent-primary); border-radius: 4px; }
+
+        /* === BACKGROUND FX === */
+        .ambient-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
-            opacity: 0.4;
+            background:
+                radial-gradient(circle at 15% 50%, rgba(157, 255, 0, 0.03) 0%, transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(0, 255, 170, 0.03) 0%, transparent 25%);
+            pointer-events: none;
         }
 
-        /* --- LAYOUT --- */
-        .app-wrapper {
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            max-width: 1600px;
-            width: 100%;
-            margin: 0 auto;
-            min-height: 100vh;
+        /* Сетка на фоне */
+        .grid-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            mask-image: radial-gradient(circle, black 40%, transparent 80%);
+            -webkit-mask-image: radial-gradient(circle, black 40%, transparent 80%);
         }
 
-        /* --- SIDEBAR (Mascot & Nav) --- */
-        .sidebar {
-            background: var(--bg-panel);
-            backdrop-filter: blur(20px);
-            border-right: 1px solid var(--glass-border);
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-            position: sticky;
-            top: 0;
-            height: 100vh;
-        }
-
-        .mascot-container {
+        /* === TYPOGRAPHY & UTILS === */
+        h1, h2, h3 { font-weight: 800; text-transform: uppercase; letter-spacing: -0.02em; }
+        .glitch-text {
+            font-family: var(--font-tech);
             position: relative;
+            color: var(--text-main);
+        }
+        .organic-text { font-family: var(--font-organic); font-style: italic; color: var(--accent-primary); }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* === HERO SECTION === */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            flex-direction: column;
             text-align: center;
         }
 
-        .renette-avatar {
-            width: 150px;
-            height: 150px;
+        .mascot-avatar {
+            width: 200px;
+            height: 200px;
             border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--apple-red);
-            box-shadow: 0 0 20px rgba(255, 77, 109, 0.3);
-            margin-bottom: 1rem;
-            transition: transform 0.5s var(--ease);
-        }
-
-        .renette-avatar:hover { transform: scale(1.05) rotate(3deg); }
-
-        .brand-title {
-            font-family: var(--font-tech);
-            font-size: 1.5rem;
-            background: linear-gradient(45deg, var(--apple-red), var(--neon-green));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 2px;
-            margin-bottom: 0.5rem;
-        }
-
-        .status-badge {
-            font-size: 0.8rem;
-            color: var(--neon-green);
-            border: 1px solid var(--neon-green);
-            padding: 2px 8px;
-            border-radius: 12px;
-            text-transform: uppercase;
-        }
-
-        /* Navigation */
-        .nav-menu {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .nav-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            padding: 1rem;
-            text-align: left;
-            font-family: var(--font-tech);
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .nav-btn:hover, .nav-btn.active {
-            background: var(--glass);
-            color: var(--text-main);
-            padding-left: 1.5rem;
-            border-left: 3px solid var(--apple-red);
-        }
-
-        .nav-btn i { width: 20px; text-align: center; }
-
-        /* --- MAIN CONTENT --- */
-        .main-content {
-            padding: 3rem;
-            overflow-y: auto;
-        }
-
-        .section {
-            display: none;
-            animation: fadeIn 0.6s var(--ease);
-        }
-
-        .section.active { display: block; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        h2 {
-            font-family: var(--font-tech);
-            font-size: 2.5rem;
+            background: #111;
+            border: 2px solid var(--accent-primary);
+            box-shadow: var(--glow);
             margin-bottom: 2rem;
             position: relative;
-            display: inline-block;
+            overflow: hidden;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        h2::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 60%;
-            height: 3px;
-            background: var(--neon-green);
-            box-shadow: 0 0 10px var(--neon-green);
+        .mascot-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .mascot-avatar:hover { transform: scale(1.05) rotate(3deg); }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 1;
+            margin-bottom: 1rem;
+            background: linear-gradient(180deg, #fff, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        /* --- PROMPT BUILDER CARDS --- */
-        .prompt-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            max-width: 600px;
+            margin-bottom: 3rem;
         }
 
-        .card {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 1.5rem;
-            transition: all 0.4s var(--ease);
+        .cta-btn {
+            padding: 1rem 2.5rem;
+            background: transparent;
+            border: 1px solid var(--accent-primary);
+            color: var(--accent-primary);
+            font-family: var(--font-tech);
+            font-weight: 700;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: 0.3s;
             position: relative;
             overflow: hidden;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: var(--apple-red);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1rem;
-        }
-
-        .card-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        /* Checkbox custom style */
-        .select-check {
-            appearance: none;
-            width: 24px;
-            height: 24px;
-            border: 2px solid var(--text-muted);
-            border-radius: 6px;
-            cursor: pointer;
-            position: relative;
-            transition: 0.3s;
-        }
-
-        .select-check:checked {
-            background: var(--neon-green);
-            border-color: var(--neon-green);
-        }
-
-        .select-check:checked::after {
-            content: '✔';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #000;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        .card-desc {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-            line-height: 1.5;
-        }
-
-        .preview-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: none;
-            color: var(--apple-red);
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            font-family: var(--font-tech);
-            margin-bottom: 1rem;
-            width: 100%;
-            transition: 0.3s;
-        }
-
-        .preview-btn:hover { background: rgba(255, 77, 109, 0.1); }
-
-        /* Hidden code storage */
-        .code-source { display: none; }
-
-        /* --- GLOBAL ACTION BAR --- */
-        .action-bar {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            display: flex;
-            gap: 15px;
-            z-index: 100;
-        }
-
-        .float-btn {
-            background: var(--apple-red);
-            color: white;
-            border: none;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            cursor: pointer;
-            box-shadow: 0 0 20px rgba(255, 77, 109, 0.4);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .float-btn:hover { transform: scale(1.1); }
-        .float-btn:active { transform: scale(0.9); }
-
-        .float-btn.secondary {
-            background: var(--bg-dark);
-            border: 1px solid var(--neon-green);
-            color: var(--neon-green);
-            box-shadow: 0 0 10px rgba(79, 255, 163, 0.2);
-        }
-
-        /* --- MODAL (Image Preview) --- */
-        .modal {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s;
-        }
-
-        .modal.open { opacity: 1; pointer-events: all; }
-
-        .modal-content {
-            max-width: 80%;
-            max-height: 80vh;
-            border: 1px solid var(--neon-green);
-            box-shadow: 0 0 30px rgba(79, 255, 163, 0.2);
-        }
-
-        /* --- GUIDE SECTION --- */
-        .guide-item {
-            border-left: 2px solid var(--glass-border);
-            padding-left: 2rem;
-            margin-bottom: 3rem;
-            position: relative;
-        }
-
-        .guide-item::before {
+        .cta-btn::before {
             content: '';
             position: absolute;
-            left: -6px; top: 0;
-            width: 10px; height: 10px;
-            background: var(--neon-green);
-            border-radius: 50%;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: var(--accent-primary);
+            transition: 0.3s;
+            z-index: -1;
         }
 
-        .guide-title {
-            color: var(--neon-green);
-            margin-bottom: 0.5rem;
-            font-family: var(--font-tech);
+        .cta-btn:hover { color: #000; }
+        .cta-btn:hover::before { left: 0; }
+
+        /* === SECTIONS === */
+        section { padding: 80px 0; }
+
+        .section-header {
+            margin-bottom: 3rem;
+            border-left: 3px solid var(--accent-primary);
+            padding-left: 1.5rem;
+        }
+
+        .section-header h2 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .section-header span { font-family: var(--font-tech); color: var(--accent-secondary); font-size: 0.9rem; }
+
+        /* === PROMPTS MODULE (The "Apple Core" Logic) === */
+        .prompts-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .prompt-card {
+            background: var(--bg-panel);
+            border: var(--glass-border);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .prompt-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid transparent;
+        }
+
+        .prompt-header:hover { background: rgba(255,255,255,0.02); }
+        .prompt-title { font-weight: 700; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; }
+        .prompt-title::before { content: '>'; color: var(--accent-primary); font-family: var(--font-tech); transition: 0.3s; }
+
+        .prompt-card.active .prompt-title::before { transform: rotate(90deg); }
+        .prompt-card.active .prompt-header { border-bottom: var(--glass-border); }
+
+        .prompt-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+
+        .prompt-inner {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+        }
+
+        .prompt-text-area {
+            position: relative;
         }
 
         .code-block {
-            background: #0f0f0f;
-            border: 1px solid var(--glass-border);
-            padding: 1rem;
+            background: #000;
+            padding: 1.5rem;
             border-radius: 8px;
-            font-family: var(--font-code);
-            font-size: 0.85rem;
-            color: #dcdcdc;
+            font-family: var(--font-tech);
+            font-size: 0.9rem;
+            color: #aaddff;
             overflow-x: auto;
-            position: relative;
+            border: 1px solid #333;
             margin-top: 1rem;
+            white-space: pre-wrap;
         }
 
-        .copy-icon {
-            position: absolute;
-            top: 10px; right: 10px;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .copy-icon:hover { color: var(--neon-green); }
-
-        /* --- MOBILE ADAPTIVE --- */
-        @media (max-width: 768px) {
-            .app-wrapper { grid-template-columns: 1fr; }
-            .sidebar {
-                height: auto;
-                position: relative;
-                padding: 1.5rem;
-                border-bottom: 1px solid var(--glass-border);
-            }
-            .renette-avatar { width: 100px; height: 100px; }
-            .main-content { padding: 1.5rem; }
-            .action-bar { bottom: 20px; right: 20px; }
-            .float-btn { width: 50px; height: 50px; }
+        .prompt-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
         }
 
-        /* Toast notification */
-        .toast {
-            position: fixed;
-            bottom: -50px; left: 50%;
-            transform: translateX(-50%);
-            background: var(--neon-green);
+        .preview-img {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #1a1a1a;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid #333;
+        }
+
+        .copy-btn {
+            background: var(--accent-primary);
             color: #000;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-weight: bold;
-            transition: bottom 0.3s ease;
-            z-index: 2000;
+            border: none;
+            padding: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: 0.2s;
         }
-        .toast.show { bottom: 30px; }
+
+        .copy-btn:hover { filter: brightness(1.1); }
+        .copy-btn:active { transform: scale(0.98); }
+
+        /* === GUIDES GRID === */
+        .guides-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .guide-card {
+            background: var(--bg-panel);
+            border: var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            position: relative;
+            transition: 0.4s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .guide-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border-color: var(--accent-secondary);
+        }
+
+        .guide-badge {
+            position: absolute;
+            top: 1rem; right: 1rem;
+            background: rgba(0, 255, 170, 0.1);
+            color: var(--accent-secondary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-family: var(--font-tech);
+        }
+
+        .guide-img {
+            width: 100%;
+            height: 180px;
+            background: #222;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            object-fit: cover;
+        }
+
+        /* === FOOTER === */
+        footer {
+            text-align: center;
+            padding: 4rem 0;
+            border-top: var(--glass-border);
+            margin-top: 4rem;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+
+        .renette-sign {
+            margin-top: 1rem;
+            font-family: var(--font-organic);
+            font-size: 1.2rem;
+            color: var(--accent-primary);
+        }
+
+        /* === MOBILE RESPONSIVENESS === */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3rem; }
+            .prompt-inner { grid-template-columns: 1fr; }
+            .preview-img { display: none; } /* Скрываем картинку в промптах на телефоне для экономии места */
+            .section-header h2 { font-size: 2rem; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- Background Animation Canvas -->
-    <canvas id="canvas-bg"></canvas>
+    <div class="ambient-canvas"></div>
+    <div class="grid-overlay"></div>
 
-    <div class="app-wrapper">
-        <!-- SIDEBAR -->
-        <aside class="sidebar">
-            <div class="mascot-container">
-                <!-- ВСТАВЬ СЮДА ПУТЬ К СВОЕЙ КАРТИНКЕ -->
-                <img src="placeholder-renette.jpg" alt="Renette" class="renette-avatar" onerror="this.src='https://via.placeholder.com/150/ff4d6d/FFFFFF?text=Renette'">
-                <h1 class="brand-title">YABLOCHNY</h1>
-                <span class="status-badge">● Online</span>
-                <p style="margin-top: 10px; font-size: 0.8rem; color: var(--text-muted);">
-                    "Привет! Я оцифровала твои фантазии. Выбирай нужные модули справа."
-                </p>
+    <!-- HERO -->
+    <header class="hero">
+        <div class="mascot-avatar">
+            <!-- [PLACEHOLDER] СЮДА СТАВЬ ССЫЛКУ НА РЕНЕТТ -->
+            <img src="https://image.pollinations.ai/prompt/anime%20girl%20digital%20spirit%20green%20hair%20cyberpunk%20apple%20tree%20glitch?width=400&height=400&nologo=true" alt="Renette">
+        </div>
+        <h1 class="glitch-text">Яблочный <span class="organic-text">Пресет</span></h1>
+        <p>Симбиоз природной харизмы и цифровой точности. <br>Добро пожаловать в мой цифровой сад.</p>
+        <a href="#prompts" class="cta-btn">Открыть Терминал</a>
+    </header>
+
+    <div class="container">
+
+        <!-- PROMPTS SECTION -->
+        <section id="prompts">
+            <div class="section-header">
+                <span>// DATABASE_ACCESS</span>
+                <h2>Коллекция Промптов</h2>
+                <p style="color:var(--text-dim)">Выбери модуль для инъекции в SillyTavern.</p>
             </div>
 
-            <nav class="nav-menu">
-                <button class="nav-btn active" onclick="switchTab('prompts')">
-                    <i class="fa-solid fa-microchip"></i> Ядро (Промпты)
-                </button>
-                <button class="nav-btn" onclick="switchTab('guides')">
-                    <i class="fa-solid fa-book-journal-whills"></i> Архив (Гайды)
-                </button>
-                <button class="nav-btn" onclick="switchTab('about')">
-                    <i class="fa-solid fa-seedling"></i> О Пресете
-                </button>
-            </nav>
-        </aside>
+            <div class="prompts-grid">
 
-        <!-- MAIN AREA -->
-        <main class="main-content">
-
-            <!-- SECTION 1: PROMPTS -->
-            <section id="prompts" class="section active">
-                <h2>Модули Ядра</h2>
-                <p style="margin-bottom: 2rem; color: var(--text-muted);">
-                    Отметь нужные компоненты чекбоксами и нажми красную кнопку "Копировать всё" внизу.
-                </p>
-
-                <div class="prompt-grid">
-
-                    <!-- CARD 1: MAIN -->
-                    <div class="card">
-                        <div class="card-header">
-                            <span class="card-title">Main (Основа)</span>
-                            <input type="checkbox" class="select-check" data-target="p-main">
-                        </div>
-                        <p class="card-desc">Базовая логика и инструкции. Обязательный модуль для работы.</p>
-                        <!-- Кнопка превью картинки -->
-                        <button class="preview-btn" onclick="showImage('https://via.placeholder.com/800x600/101010/4fffa3?text=Main+Settings+Screen')">
-                            <i class="fa-regular fa-image"></i> Скриншот настроек
-                        </button>
-                        <!-- Скрытый текст промпта -->
-                        <textarea id="p-main" class="code-source">
-[PLACEHOLDER: ВСТАВЬ СЮДА ТЕКСТ MAIN ПРОМПТА]
-Сюда вставляется основной текст инструкции.
-                        </textarea>
+                <!-- Промпт 1 -->
+                <div class="prompt-card">
+                    <div class="prompt-header" onclick="togglePrompt(this)">
+                        <div class="prompt-title">Main Prompt (Основной)</div>
+                        <span style="font-family: var(--font-tech); font-size: 0.8rem; color: #666;">v3.0</span>
                     </div>
-
-                    <!-- CARD 2: NSFW -->
-                    <div class="card">
-                        <div class="card-header">
-                            <span class="card-title">NSFW Module</span>
-                            <input type="checkbox" class="select-check" data-target="p-nsfw">
+                    <div class="prompt-content">
+                        <div class="prompt-inner">
+                            <div class="prompt-text-area">
+                                <p>Базовая логика пресета. Отвечает за стиль речи и поведение.</p>
+                                <div class="code-block" id="p1">[PLACEHOLDER] Вставь сюда текст своего Main Prompt. Текст должен быть длинным и красивым, чтобы заполнить это место.</div>
+                            </div>
+                            <div class="prompt-meta">
+                                <!-- [PLACEHOLDER] Скриншот настроек -->
+                                <img src="https://via.placeholder.com/400x250/111/333?text=Settings+Screen" class="preview-img" alt="Settings">
+                                <button class="copy-btn" onclick="copyText('p1')">
+                                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                    Скопировать
+                                </button>
+                            </div>
                         </div>
-                        <p class="card-desc">Разблокировка взрослого контента и анатомических подробностей.</p>
-                        <button class="preview-btn" onclick="showImage('https://via.placeholder.com/800x600/101010/ff4d6d?text=NSFW+Settings')">
-                            <i class="fa-regular fa-image"></i> Скриншот
-                        </button>
-                        <textarea id="p-nsfw" class="code-source">
-[PLACEHOLDER: ВСТАВЬ СЮДА NSFW ПРОМПТ]
-Инструкции для NSFW режима.
-                        </textarea>
-                    </div>
-
-                    <!-- CARD 3: JAILBREAK -->
-                    <div class="card">
-                        <div class="card-header">
-                            <span class="card-title">Jailbreak</span>
-                            <input type="checkbox" class="select-check" data-target="p-jb">
-                        </div>
-                        <p class="card-desc">Снятие моральных ограничений модели.</p>
-                        <button class="preview-btn" onclick="showImage('https://via.placeholder.com/800x600/101010/ffffff?text=Jailbreak')">
-                            <i class="fa-regular fa-image"></i> Скриншот
-                        </button>
-                        <textarea id="p-jb" class="code-source">
-[PLACEHOLDER: ВСТАВЬ СЮДА JB]
-Текст джейлбрейка.
-                        </textarea>
-                    </div>
-
-                    <!-- Добавь больше карточек копированием блока <div class="card">...</div> -->
-
-                </div>
-            </section>
-
-            <!-- SECTION 2: GUIDES -->
-            <section id="guides" class="section">
-                <h2>Архив Знаний</h2>
-
-                <div class="guide-item">
-                    <h3 class="guide-title">01. Первая Синхронизация</h3>
-                    <p>Как правильно установить пресет в SillyTavern. Описание процесса.</p>
-                    <button class="preview-btn" style="width: auto; margin-top: 10px;" onclick="showImage('https://via.placeholder.com/800x600?text=Guide+Step+1')">
-                        Смотреть скриншот
-                    </button>
-                    <div class="code-block">
-                        <i class="fa-solid fa-copy copy-icon" onclick="copySingle(this)"></i>
-                        Impersonate Presets -> Import -> Select File
                     </div>
                 </div>
 
-                <div class="guide-item">
-                    <h3 class="guide-title">02. Настройка Context Template</h3>
-                    <p>Для корректной работы Ренетт требует особого шаблона контекста. Скопируйте настройки ниже.</p>
-                    <div class="code-block">
-                        <i class="fa-solid fa-copy copy-icon" onclick="copySingle(this)"></i>
-                        { "story_string": "{{description}}", "example_separator": "" }
+                <!-- Промпт 2 -->
+                <div class="prompt-card">
+                    <div class="prompt-header" onclick="togglePrompt(this)">
+                        <div class="prompt-title">Jailbreak (Взлом)</div>
+                        <span style="font-family: var(--font-tech); font-size: 0.8rem; color: #666;">NSFW+</span>
+                    </div>
+                    <div class="prompt-content">
+                        <div class="prompt-inner">
+                            <div class="prompt-text-area">
+                                <p>Модуль для снятия ограничений и расширения свободы действий.</p>
+                                <div class="code-block" id="p2">[PLACEHOLDER] Вставь сюда текст Jailbreak промпта. Свобода воли для ИИ.</div>
+                            </div>
+                            <div class="prompt-meta">
+                                <img src="https://via.placeholder.com/400x250/111/333?text=Jailbreak+Proof" class="preview-img" alt="Jailbreak">
+                                <button class="copy-btn" onclick="copyText('p2')">
+                                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                    Скопировать
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </section>
 
-            <!-- SECTION 3: ABOUT -->
-            <section id="about" class="section">
-                <h2>О Системе</h2>
-                <p>Версия пресета: <strong>2.0 "Digital Eden"</strong></p>
-                <p style="margin-top: 1rem;">
-                    Это не просто набор промптов. Это попытка оживить интерфейс взаимодействия.
-                    Маскот Ренетт сопровождает вас на каждом этапе.
-                </p>
-                <hr style="border: 0; border-top: 1px solid var(--glass-border); margin: 2rem 0;">
-                <p style="font-size: 0.8rem; color: var(--text-muted);">Design by Renette AI</p>
-            </section>
+                <!-- Добавь больше блоков .prompt-card по аналогии -->
 
-        </main>
+            </div>
+        </section>
+
+        <!-- GUIDES SECTION -->
+        <section id="guides">
+            <div class="section-header">
+                <span>// KNOWLEDGE_BASE</span>
+                <h2>Руководства</h2>
+                <p style="color:var(--text-dim)">Как настроить и не сломать реальность.</p>
+            </div>
+
+            <div class="guides-grid">
+
+                <!-- Гайд 1 -->
+                <article class="guide-card">
+                    <span class="guide-badge">Установка</span>
+                    <!-- [PLACEHOLDER] Картинка гайда -->
+                    <img src="https://via.placeholder.com/400x250/151515/333?text=Guide+Image" class="guide-img" alt="Install">
+                    <h3>Быстрый старт</h3>
+                    <p style="margin-top: 1rem; color: var(--text-dim); flex-grow: 1;">
+                        [PLACEHOLDER] Описание того, как установить пресет. Краткая инструкция.
+                        1. Скачать JSON.
+                        2. Импортировать.
+                        3. Наслаждаться.
+                    </p>
+                    <div class="code-block" style="margin-top: 1rem; font-size: 0.8rem; color: var(--accent-secondary);">
+                        [PLACEHOLDER] Важная заметка или мини-код
+                    </div>
+                </article>
+
+                <!-- Гайд 2 -->
+                <article class="guide-card">
+                    <span class="guide-badge">Настройки</span>
+                    <img src="https://via.placeholder.com/400x250/151515/333?text=Context+Settings" class="guide-img" alt="Context">
+                    <h3>Контекст и Параметры</h3>
+                    <p style="margin-top: 1rem; color: var(--text-dim); flex-grow: 1;">
+                        [PLACEHOLDER] Описание настроек контекста. Какие галочки нажать, чтобы Ренетт была умной.
+                    </p>
+                </article>
+
+            </div>
+        </section>
+
     </div>
 
-    <!-- ACTION BUTTONS -->
-    <div class="action-bar">
-        <!-- Кнопка для копирования выбранных промптов -->
-        <button class="float-btn" onclick="copySelected()" title="Скопировать выбранные">
-            <i class="fa-solid fa-copy"></i>
-        </button>
-        <!-- Кнопка GitHub (опционально) -->
-        <a href="https://github.com/твоя_ссылка" target="_blank" class="float-btn secondary" title="GitHub Repo">
-            <i class="fa-brands fa-github"></i>
-        </a>
-    </div>
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <p>© 2024 Яблочный Пресет Project. Open Source.</p>
+            <div class="renette-sign">Created with love by Renette & Human</div>
+        </div>
+    </footer>
 
-    <!-- IMAGE MODAL -->
-    <div id="imgModal" class="modal" onclick="closeModal()">
-        <img id="modalImg" class="modal-content" src="" alt="Preview">
-    </div>
-
-    <!-- TOAST -->
-    <div id="toast" class="toast">Данные скопированы в буфер!</div>
-
+    <!-- SCRIPTS -->
     <script>
-        // --- PARTICLES BACKGROUND (Digital Petals) ---
-        const canvas = document.getElementById('canvas-bg');
-        const ctx = canvas.getContext('2d');
+        // Логика "Аккордеона" для промптов
+        function togglePrompt(header) {
+            const card = header.parentElement;
+            const content = card.querySelector('.prompt-content');
 
-        let width, height;
-        let particles = [];
-
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resize);
-        resize();
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.size = Math.random() * 3 + 1;
-                this.speedY = Math.random() * 1 + 0.5;
-                this.speedX = (Math.random() - 0.5) * 0.5;
-                this.color = Math.random() > 0.8 ? '#ff4d6d' : '#4fffa3'; // Red or Green
-                this.opacity = Math.random() * 0.5 + 0.1;
-            }
-            update() {
-                this.y += this.speedY;
-                this.x += this.speedX;
-                if (this.y > height) {
-                    this.y = 0;
-                    this.x = Math.random() * width;
+            // Закрываем другие (если хочешь, чтобы только один был открыт - раскомментируй нижние строки)
+            /*
+            document.querySelectorAll('.prompt-card').forEach(c => {
+                if (c !== card) {
+                    c.classList.remove('active');
+                    c.querySelector('.prompt-content').style.maxHeight = null;
                 }
-            }
-            draw() {
-                ctx.fillStyle = this.color;
-                ctx.globalAlpha = this.opacity;
-                ctx.fillRect(this.x, this.y, this.size, this.size); // Digital squares, not circles
-            }
-        }
-
-        function initParticles() {
-            for(let i=0; i<70; i++) particles.push(new Particle());
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
             });
-            requestAnimationFrame(animate);
-        }
+            */
 
-        initParticles();
-        animate();
+            card.classList.toggle('active');
 
-        // --- UI LOGIC ---
-
-        // 1. Tab Switching
-        function switchTab(tabId) {
-            // Hide all sections
-            document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
-
-            // Show target
-            document.getElementById(tabId).classList.add('active');
-
-            // Highlight nav
-            const btn = Array.from(document.querySelectorAll('.nav-btn')).find(b => b.getAttribute('onclick').includes(tabId));
-            if(btn) btn.classList.add('active');
-        }
-
-        // 2. Image Modal
-        function showImage(src) {
-            document.getElementById('modalImg').src = src;
-            document.getElementById('imgModal').classList.add('open');
-        }
-        function closeModal() {
-            document.getElementById('imgModal').classList.remove('open');
-        }
-
-        // 3. Copy System
-        function showToast(msg) {
-            const t = document.getElementById('toast');
-            t.textContent = msg;
-            t.classList.add('show');
-            setTimeout(() => t.classList.remove('show'), 3000);
-        }
-
-        // Copy Selected Prompts (Combined)
-        function copySelected() {
-            const checks = document.querySelectorAll('.select-check:checked');
-            if (checks.length === 0) {
-                showToast("Сначала выберите модули (чекбоксы)!");
-                return;
+            if (card.classList.contains('active')) {
+                content.style.maxHeight = content.scrollHeight + "px";
+            } else {
+                content.style.maxHeight = null;
             }
-
-            let finalClipboard = "";
-            checks.forEach(chk => {
-                const targetId = chk.getAttribute('data-target');
-                const text = document.getElementById(targetId).value;
-                finalClipboard += text + "\n\n";
-            });
-
-            navigator.clipboard.writeText(finalClipboard).then(() => {
-                showToast(`Скопировано модулей: ${checks.length}`);
-            });
         }
 
-        // Copy Single Block (for Guides)
-        function copySingle(btn) {
-            const text = btn.parentElement.innerText;
+        // Логика копирования
+        function copyText(elementId) {
+            const text = document.getElementById(elementId).innerText;
             navigator.clipboard.writeText(text).then(() => {
-                showToast("Скопировано!");
-                btn.style.color = "#4fffa3";
-                setTimeout(() => btn.style.color = "", 1000);
+                // Визуальный фидбек
+                const btn = document.querySelector(`button[onclick="copyText('${elementId}')"]`);
+                const originalHTML = btn.innerHTML;
+
+                btn.innerHTML = "Скопировано!";
+                btn.style.background = "#fff";
+
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                    btn.style.background = "var(--accent-primary)";
+                }, 2000);
             });
         }
+
+        // Плавный скролл для якорей
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
     </script>
 </body>
 </html>
