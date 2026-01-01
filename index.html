@@ -4245,27 +4245,24 @@ HTML structure:
                         <div class="glossary-grid">
                             <div class="glossary-item">
                                 <div class="glossary-term">COT</div>
-                                <div class="glossary-def">«Думалка» — модель размышляет в <think></div>
+                                <div class="glossary-def"><p>«Думалка». Размышления модели перед постом.</p></div>
                             </div>
                             <div class="glossary-item">
                                 <div class="glossary-term">Prefill</div>
-                                <div class="glossary-def">Текст в начале ответа модели</div>
+                                <div class="glossary-def"><p>Текст в начале ответа модели.</p><p>Всё что надо знать - это используется для пробива цензы/нормальной работы думалки.</p></div>
                             </div>
                             <div class="glossary-item">
                                 <div class="glossary-term">OOC</div>
-                                <div class="glossary-def">Внеролевые комментарии</div>
+                                <div class="glossary-def"><p>Внеролевые комментарии</p>.<p>В них в моём пресете (да и в целом) можно давать указания по типу:</p>
+									<p>[OOC: давай здесь сделаем такой поворот в сюжете:...]</p><p>То есть буквально как соролу пишешь предложения и обсуждения вне ролевой.</p></div>
                             </div>
                             <div class="glossary-item">
                                 <div class="glossary-term">Тогл</div>
-                                <div class="glossary-def">Переключатель промпта</div>
-                            </div>
-                            <div class="glossary-item">
-                                <div class="glossary-term">CYOA</div>
-                                <div class="glossary-def">Варианты выбора в конце</div>
+                                <div class="glossary-def">Переключатель. Все эти пункты в пресете в которых находятся промпты.</div>
                             </div>
                             <div class="glossary-item">
                                 <div class="glossary-term">Things Sample</div>
-                                <div class="glossary-def">Тогл для кастомных штук</div>
+                                <div class="glossary-def"><p>Тогл для кастомных штук/промптов.</p><p>Вы можете засунуть туда до кучи свои промпты и модель будет учитывать их в думалке.</p><p>Сделано в первую очередь для визуальных приколов, но можно засунуть и промпты иного рода.</p></div>
                             </div>
                         </div>
                     </div></div>
@@ -4294,16 +4291,35 @@ HTML structure:
                 <img src="example6.jpg" alt="Скриншот 6">
             </div>
         </div>
-        <div class="step">
+		<div class="step">
             <div class="step-num">3</div>
             <div class="step-content">
-                <h4>Форматирование размышлений</h4>
-                <p>Заходим в раздел <strong>формата ответа ИИ</strong> (третья кнопка слева), листаем вниз, разворачиваем <strong>"форматирование размышлений"</strong> и ставим всё точно так же как на скрине.</p>
-                <img src="example8.jpg" alt="Скриншот 8">
+                <h4>Пост-обработка</h4>
+                <p>Рекомендую, если вы используете гемини или клод, поставить <strong>постобработку промпта</strong> в настройках подключения.</p><p>Перейдите во вкладку подключения API и прямо над кнопкой подключиться будет эта строка.</p>
+				<p>Выберите semi-strict или strict (no tools обычно, но вроде разницы нет). Я обычно использую semi-strict.</p>
+				<p>По опыту: меньше шизы, вероятность багов с тем что модель за юзера пишет и тд снижаются, плюс модель лучше слушается.</p>
+				<img src="ex13.jpg" alt="Скриншот 128">
+				<img src="ex14.jpg" alt="Скриншот 1248">
             </div>
         </div>
         <div class="step">
             <div class="step-num">4</div>
+            <div class="step-content">
+                <h4>Форматирование размышлений: Клод и Гемини</h4>
+                <p>Заходим в раздел <strong>формата ответа ИИ</strong> (третья кнопка слева), листаем вниз, разворачиваем <strong>"форматирование размышлений"</strong> и ставим всё точно так же как на скрине.</p>
+                <img src="example8.jpg" alt="Скриншот 8">
+            </div>
+        </div>
+		<div class="step">
+            <div class="step-num">4.1</div>
+            <div class="step-content">
+                <h4>Форматирование размышлений: ГПТ</h4>
+                <p>Версия форматирования размышлений для ГПТ. Вообще для гпт лучше вообще отрубать всю думалку и префил до кучи чтобы меньше напарываться на цензу, но вот настройки для случая если думалка включена:</p>
+                <img src="ex15.jpg" alt="Скриншот 1112">
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-num">5</div>
             <div class="step-content">
                 <h4>Выбор Промптов</h4>
                 <p>Многие промпты являются <strong>"Шаблонами"</strong> либо <strong>"Заменяемыми"</strong>.</p>
@@ -4451,11 +4467,14 @@ HTML structure:
                     <div class="guide-body"><div class="guide-inner">
                         <div class="step">
                             <div class="step-num q">?</div>
-                            <div class="step-content"><h4>Куда вставлять штуки?</h4><p>В тогл Things Sample (⑦)</p></div>
+                            <div class="step-content"><h4>Почему картинки в HTML не работают?</h4><p>Дикие беды с Pollinations. Ждите апдейтов.</p></div>
                         </div>
                         <div class="step">
                             <div class="step-num q">?</div>
-                            <div class="step-content"><h4>DeepSeek?</h4><p>Отключи Prefill полностью</p></div>
+                            <div class="step-content"><h4>DeepSeek?</h4><p>Отключите Prefill и все тоглы в думалке от <'think> до <'/think> (там нет черточек название у меня на сайта здесь баги с этими тегами дурацкими) полностью. Ещё надо обязательно поиграться с температурой в пользу её уменьшения, я к сожалению потеряла инфу по ней от Димочки, позже добавлю надеюсь..</p></div>
+							<div class="step">
+                            <div class="step-num q">?</div>
+                            <div class="step-content"><h4>П*па</h4><p>Всё, я всё позабывала, по остальным вопросам в мой <a href="https://t.me/YablochnyAI" target="_blank">тгк</a> или <a href="https://t.me/YablochnyChat" target="_blank">чат</a>. Следите за апдейтами, я часто пишу по всяким микро фиксам.</p></div>
                         </div>
                     </div></div>
                 </div>
