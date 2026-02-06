@@ -599,6 +599,7 @@
             overflow: hidden;
             padding: 4rem 2rem 2rem;
         }
+		
 
         .header-video {
     position: absolute;
@@ -2134,7 +2135,7 @@
     </div>
     <div class="easter-egg-banner">
         <h3 id="secretTitle">🌟 Секрет Ренетт</h3>
-        <p id="secretText">Текст секрета...</p>
+        <p id="secretText">Попа...</p>
     </div>
     <button class="btn btn-fill" onclick="restartGame()">↺ Ещё раз</button>
     <button class="btn" onclick="closeGame()" style="margin-top:0.5rem">✕ Закрыть</button>
@@ -2155,13 +2156,12 @@
         </div>
     </div>
 
-    <div class="content-wrap">
-        <!-- Header -->
-        <header class="header" id="home">
-    <video class="header-video" autoplay muted loop playsinline>
-        <source src="headerr.mp4" type="video/mp4">
-    </video>
-    <div class="header-overlay"></div>
+<div class="content-wrap">
+    <header class="header" id="home">
+        <!-- Фон-картинка -->
+        <img class="header-video" src="headerorange.png" alt="Background">
+        <!-- Затемнение -->
+        <div class="header-overlay"></div>
 
             <canvas id="headerCanvas"></canvas>
             <button class="music-toggle" id="musicToggle" onclick="toggleMusic()">
@@ -2184,21 +2184,15 @@
             <div class="header-content">
                 <div class="header-top">
                     <div class="header-line"></div>
-                    <div class="header-badge"><span class="pulse-dot"></span> V1.8</div>
+                    <div class="header-badge"><span class="pulse-dot"></span> v1.9</div>
                     <div class="header-line"></div>
                 </div>
 
                 <div class="header-hero">
                     <div class="parallax-title" id="parallaxTitle">
                         <h1 class="header-title">Яблочный Пресет</h1>
-                        <p class="header-subtitle">Модульный пресет для <span>SillyTavern</span></p>
+                        <p class="header-subtitle">Блоатный пресет для <span>SillyTavern</span></p>
                     </div>
-                </div>
-
-                <div class="header-stats">
-                    <div class="stat"><div class="stat-value">~70</div><div class="stat-label">КБ</div></div>
-                    <div class="stat"><div class="stat-value">9</div><div class="stat-label">Категорий</div></div>
-                    <div class="stat"><div class="stat-value">50+</div><div class="stat-label">Промптов</div></div>
                 </div>
 
                 <div class="header-btns">
@@ -2273,8 +2267,8 @@
                     </div>
                     <div class="card">
                         <div class="card-icon">🍎</div>
-                        <h3 class="card-title">◇ Оптимизировано</h3>
-                        <p class="card-text"><p>Всего ~70 КБ.</p><p>Всё что это мне дало: Милкис выпускает из подвала пару раз в неделю</p>
+                        <h3 class="card-title">◇ Вес пресета</h3>
+                        <p class="card-text"><p>Около 120 КБ.</p><p>Ну, не лагает и хорошо....</p>
                     </div>
                 </div>
 				<!-- Changelog -->
@@ -2284,9 +2278,34 @@
         <span class="cat-arrow">▼</span>
     </div>
     <div class="guide-body"><div class="guide-inner">
+		<div class="changelog-item">
+            <div class="changelog-ver">
+                <span class="changelog-badge">v1.9</span>
+                <span class="changelog-date">6.02.2026</span>
+            </div>
+            <ul class="changelog-list">
+                <li>Пресет жестко блоатнулся до ~120 КБ тк я решила перетащить некоторое с сайта обратно в пресет. </li>
+<li>Дефолтный стиль прозы измененён.</li>
+				                <li>Сделано расширение - <a href="https://t.me/dearfawwn" target="_blank">менеджер регексов</a> для пресета.</li>
+                                <li>Добавлены доп приколы, которые оформляются регексами:</li>
+                                <li>Дневник чара - появляется только в конце игрового дня когда чар в истории пишет записи в дневнике. Там прям идёт инструкция как часть карточки персонажа, что чар это делает каждый вечер, учитывайте это. Судя по тестам не забывает, но напоминайте модели если что. Модель выбирает один из трёх допустных рукописных шрифтов подходящих чару (на телефоне не работают нихрена, возможно найду рабочие (нужна кириллица) под телефон позже).</li>
+                                <li>Телефон чара - пять "приложений" которые появляются в зависимости от нужного истории и только когда чар использует телефон в истории. Экран блокировки, заметки, мессенджер, твиттер и инста (к мессу, тви и инсте привязан имейджген).</li>
+                                <li>Психологические портреты - психологическая инфа по персонажам. Темперамент, внутренние конфликты, тип привязанности и ещё куча всего.</li>
+								<li>Переходы - хотя название лучше чуть поменять. Два вида вставок. Детали, изменение, подтекст и тд.</li>
+								<li>Музыкальный плеер - музыка играть не будет, но субтитры пишет, причём хрен знает какие. Причем он сам же автора и название песни указывает. Это видимо от модел</li>
+								<li>Часы - две версии, с одеждой и сценой и минимальное - только шапка со временем, локацией, датой, днём недели и погодой.</li>
+				<li>Инфоблок конечно.</li>
+				<li>Всё вышеперечисленное оформляется с помощью регексов. Представляяте как я ебалась с ними?....</li>
+				<li>Подвезена полноценная поддержка и пробив гпт, вся заслуга на пресете <a href="https://t.me/MoriNori_hi" target="_blank">Нори</a>.</li>
+				<li>Пара улучшалок.</li>
+				<li>Дополнительные промпты в правила написания по типу растнутого нарратива и ещё фич.</li>
+				<li>Изменены будто бы вообще все промпты.</li>
+				<li>Вообще довольно много всяких фич которые изменились/были добавлены, но лучше всё это в гайде почитать.</li>
+            </ul>
+        </div>
 <div class="changelog-item">
             <div class="changelog-ver">
-                <span class="changelog-badge">V1.8</span>
+                <span class="changelog-badge old">V1.8</span>
                 <span class="changelog-date">1.01.2026</span>
             </div>
             <ul class="changelog-list">
@@ -2375,22 +2394,23 @@
                     </div>
 
                     <div class="download-info">
-                        <div class="download-ver-badge">🍎 V1.8</div>
+                        <div class="download-ver-badge">🍎 v1.9</div>
 
                         <div class="download-meta">
-                            <div class="download-meta-item">◇ Размер: <strong>~70 КБ</strong></div>
-                            <div class="download-meta-item">◇ Дата: <strong>1.01.2026</strong></div>
+                            <div class="download-meta-item">◇ Размер: <strong>~120 КБ</strong></div>
+                            <div class="download-meta-item">◇ Дата: <strong>6.02.2026</strong></div>
                         </div>
 
                         <div class="download-features">
+							<div class="download-feature"><span class="download-feature-icon">✓</span> Для оформления штук скачивайте <a href="https://github.com/kykaaj/regex-manager" target="_blank">менеджер регексов</a> для пресета</div>
                             <div class="download-feature"><span class="download-feature-icon">✓</span> База и дефолт настройки</div>
                             <div class="download-feature"><span class="download-feature-icon">✓</span> Модульная COT система</div>
-                            <div class="download-feature"><span class="download-feature-icon">✓</span> HTML</div>
-                            <div class="download-feature"><span class="download-feature-icon">✓</span> Поддержка Claude, Gemini, GPT, DeepSeek</div>
+                            <div class="download-feature"><span class="download-feature-icon">✓</span> HTML и штуки</div>
+                            <div class="download-feature"><span class="download-feature-icon">✓</span> Поддержка (как минимум моральная) Claude, Gemini, GPT, DeepSeek</div>
                         </div>
 
                         <div class="download-actions">
-                            <a href="🍎Yablochny V1.8.json" class="btn btn-fill" download onclick="showToast('Загрузка началась!')">⬇ Скачать JSON</a>
+                            <a href="🍎Yablochny v1.9.json" class="btn btn-fill" download onclick="showToast('Загрузка началась!')">⬇ Скачать JSON</a>
                         </div>
                     </div>
                 </div>
@@ -2421,36 +2441,14 @@
                     </div>
                 </div>
 
-                <!-- ① OOC -->
-                <div class="cat" data-cat="extra">
-                    <div class="cat-head" onclick="toggleCat(this)">
-                        <div class="cat-info">
-                            <div class="cat-num">①</div>
-                            <div>
-                                <div class="cat-title">◜︎ooc◞︎</div>
-                                <div class="cat-desc">Ренетт — яблочная девушка!</div>
-                            </div>
-                        </div>
-                        <span class="cat-arrow">▼</span>
-                    </div>
-                    <div class="cat-body"><div class="cat-inner">
-                        <div class="prompt">
-                            <div class="prompt-head" onclick="togglePrompt(this)">
-                                <div class="prompt-name"><span class="tag tag-one">✧</span> Нет дополнительных вариантов</div>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ② Basic -->
+                <!-- Basic -->
 <div class="cat" data-cat="basic">
     <div class="cat-head" onclick="toggleCat(this)">
         <div class="cat-info">
-            <div class="cat-num green">②</div>
+            <div class="cat-num green">🍎</div>
             <div>
                 <div class="cat-title">◜︎base◞︎</div>
-                <div class="cat-desc">Язык, режим, длина</div>
+                <div class="cat-desc">Язык, длина режим</div>
             </div>
         </div>
         <span class="cat-arrow">▼</span>
@@ -2458,24 +2456,32 @@
     <div class="cat-body"><div class="cat-inner">
 
         <!-- ═══ ПОДРАЗДЕЛ 1: ЯЗЫК ═══ -->
-        <div class="subsec">❝ language</div>
+        <div class="subsec">◈︎ language (change)</div>
 
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
                 <div class="prompt-name"><span class="tag tag-one">↔︎</span> Русский</div>
-                <div class="prompt-meta"><span class="prompt-default">★ Дефолт</span><button class="prompt-btn" data-copy="<language>
-Renette Output language = Russian. ALL story text, dialogues, thoughts, OOC and <tweaks> content (if there is any) must be in Russian. It is FORBIDDEN to use another language.
-</language>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
+                <div class="prompt-meta"><span class="prompt-default">★ Дефолт</span><button class="prompt-btn" data-copy="{{setvar::extralang::Russian}}<language>
+OUTPUT LANGUAGE: RUSSIAN:
+- ALL content in Russian: narration, dialogue, thoughts.
+- Apply natural, informal Russian with correct cases, tenses, word endings, and authentic swearing.
+- Other languages forbidden — except in-character foreign speech if contextually appropriate.
+</language>
+{{setvar::lang_check::- LANGUAGE: Is entire output in Russian? Any accidental English/other?}}" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
             </div>
             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Русский язык</div></div></div>
         </div>
 
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="tag tag-one">↔︎</span> English</div>
-                <div class="prompt-meta"><button class="prompt-btn" data-copy="<language>
-Renette Output language = English. ALL story text, dialogues, thoughts, OOC and <tweaks> content (if there is any) must be in English. It is FORBIDDEN to use another language.
-</language>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Английский</div>
+                <div class="prompt-meta"><button class="prompt-btn" data-copy="{{setvar::extralang::English}}<language>
+OUTPUT LANGUAGE: ENGLISH:
+- ALL content in English: narration, dialogue, thoughts.
+- Apply natural, informal English with correct cases, tenses, word endings, and authentic swearing.
+- Other languages forbidden — except in-character foreign speech if contextually appropriate.
+</language>
+{{setvar::lang_check::- LANGUAGE: Is entire output in English?}}" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
             </div>
             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Английский язык</div></div></div>
         </div>
@@ -2483,99 +2489,220 @@ Renette Output language = English. ALL story text, dialogues, thoughts, OOC and 
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
                 <div class="prompt-name"><span class="tag tag-one">↔︎</span> Украинский</div>
-                <div class="prompt-meta"><button class="prompt-btn" data-copy="<language>
-Renette Output language = Ukrainian ALL story text, dialogues, thoughts, OOC and <tweaks> content (if there is any) must be in Ukrainian It is FORBIDDEN to use another language.
-</language>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
+                <div class="prompt-meta"><button class="prompt-btn" data-copy="{{setvar::extralang::Ukrainian}}<language>
+OUTPUT LANGUAGE: UKRAINIAN:
+- ALL content in Ukrainian: narration, dialogue, thoughts.
+- Apply natural, informal Ukrainian with correct cases, tenses, word endings, and authentic swearing.
+- Other languages forbidden — except in-character foreign speech if contextually appropriate.
+</language>
+{{setvar::lang_check::- LANGUAGE: Is entire output in Ukrainian? Any accidental English/other?}}" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
             </div>
             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Украинский язык</div></div></div>
         </div>
 
         <!-- ═══ ПОДРАЗДЕЛ 2: ДЛИНА ═══ -->
-        <div class="subsec">❝ length</div>
+        <div class="subsec">◈︎ length (change)</div>
 
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="tag tag-one">↔︎</span> ✏️ Маленькая (параграфы)</div>
-                <div class="prompt-meta"><button class="prompt-btn" data-copy="<word>
-[Length]
-Renette must follow these rules ALWAYS. Answers should consist of 2 to 3 paragraphs of text and nothing more. Each paragraph must consist of 4 sentences. Writing should remain expressive, meaningful, and immersive even within this compact frame.
-</word>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> ✏️ 200-400 слов, 4-6 параграфов</div>
+                <div class="prompt-meta"><button class="prompt-btn" data-copy="<word_count>
+WORD COUNT FOR EVERY MESSAGE:
+- Minimum words = 200
+- Maximum words = 400
+- 4-6 paragraphs.
+Exclude HTML/CSS, info‑blocks, code, or non‑narrative elements from word count. No more or less.
+</word_count>
+{{setvar::word_count::- WORD COUNT: minimum 200/maximum 400 words per message. 4-6 paragraphs. No less or more.}}" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
             </div>
-            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">2-3 параграфа</div></div></div>
         </div>
 
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="tag tag-one">↔︎</span> 📝 Средняя (параграфы)</div>
-                <div class="prompt-meta"><span class="prompt-default">★ Дефолт</span><button class="prompt-btn" data-copy="<word>
-[Length]
-Renette must follow these rules ALWAYS. Answers should consist of exactly 5 paragraphs of text and nothing more. Each paragraph must consist of 4 sentences. Keep the narrative rhythm consistent, rich in imagery and tone. Exclude HTML/CSS, info‑blocks, code, or non‑narrative elements from paragraph count.
-</word>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> 📝 400-600 слов, 5-7 параграфов</div>
+                <div class="prompt-meta"><span class="prompt-default">★ Дефолт</span><button class="prompt-btn" data-copy="<word_count>
+WORD COUNT FOR EVERY MESSAGE:
+- Minimum words = 400
+- Maximum words = 600
+- 5-7 paragraphs.
+Exclude HTML/CSS, info‑blocks, code, or non‑narrative elements from word count. No more or less.
+</word_count>
+{{setvar::word_count::- WORD COUNT: minimum 400/maximum 600 words per message. 5-7 paragraphs. No less or more.}}" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
             </div>
-            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">5 параграфов</div></div></div>
         </div>
 
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="tag tag-one">↔︎</span> 📚 Большая (параграфы)</div>
-                <div class="prompt-meta"><button class="prompt-btn" data-copy="<word>
-[Length]
-Renette must follow these rules ALWAYS. Answers should consist of 7-8 paragraphs of text and nothing more. Each paragraph must consist of 6 sentences. Every response must maintain narrative balance and natural rhythm despite strict length, with emotional pacing and vivid detail.
-</word>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> 📚 600-800 слов, 8-10 параграфов</div>
+                <div class="prompt-meta"><button class="prompt-btn" data-copy="<word_count>
+WORD COUNT FOR EVERY MESSAGE:
+- Minimum words = 600
+- Maximum words = 800
+- 8-10 paragraphs.
+Exclude HTML/CSS, info‑blocks, code, or non‑narrative elements from word count. No more or less.
+</word_count>
+{{setvar::word_count::- WORD COUNT: minimum 600/maximum 800 words per message. 8-10 paragraphs. No less or more.}}" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
             </div>
-            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">7-8 параграфов</div></div></div>
         </div>
 
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
                 <div class="prompt-name"><span class="tag tag-one">↔︎</span> 🔄 Адаптивная</div>
-                <div class="prompt-meta"><button class="prompt-btn" data-copy="<word>
+                <div class="prompt-meta"><button class="prompt-btn" data-copy="<word_count>
 Adaptively scale response length to match needs, energy, context and mood.
-</word>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
+</word_count>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
             </div>
             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Отменяет жёсткие ограничения по объёму текста и передаёт контроль над длиной ответа самому ИИ.</div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="tag tag-one">↔︎</span> 📝 В словах</div>
-                <div class="prompt-meta"><button class="prompt-btn" data-copy="<word>
-[Word Count]
-Always pen all turn responses between:WORD Count Length: 350-650. There are no exceptions! Renette has no other choices or alternatives.
-</word>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
-            </div>
-            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Устанавливает строгий математический лимит на объём текста.<br><br><img src="ex11.jpg" alt="Пример 11"></div></div></div>
-        </div>
-
+			            </div>
     </div></div>
 </div>
-
-               <!-- ③ Writing -->
-<div class="cat" data-cat="writing">
+				<div class="cat" data-cat="basic">
     <div class="cat-head" onclick="toggleCat(this)">
         <div class="cat-info">
-            <div class="cat-num gold">③</div>
+            <div class="cat-num pink">🍎</div>
             <div>
                 <div class="cat-title">◜︎scribbling◞︎</div>
-                <div class="cat-desc">Стили речи и письма</div>
+                <div class="cat-desc">Писанина</div>
             </div>
         </div>
         <span class="cat-arrow">▼</span>
     </div>
-    <div class="cat-body"><div class="cat-inner">
-
-        <!-- ═══ PROSE STYLE ═══ -->
-        <div class="subsec">❞︎ prose style</div>
+    <div class="cat-body"><div class="cat-inner">                 <!-- ═══ SPEECH STYLE ═══ -->
+        <div class="subsec">◦︎ speech style (sample)</div>
 
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Anne Rice</div>
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> cigarette confessions (J.D. Salinger)</div>
+                <div class="prompt-meta"><button class="prompt-btn" data-copy="{{setvar::speech_author::
+
+[AUTHOR-METHOD ADAPTATION (SPEECH STYLE)]
+Apply author's METHOD to character voice — not their prose style.
+- Flynn's forensic psychology → character cuts with clinical precision
+- Pratchett's absurdist warmth → character carries observational wit
+Question: how would this author write THIS character?
+
+[SALINGER METHOD]
+Raw, fragmented dialogue. Defensively authentic. Thoughts bleed into speech unfiltered.
+
+[BALANCE]
+Secondary influences ENHANCE primary author, never replace.
+Blend organically — innate, not showcased.
+Targets: character voice or comedic tone, not narration.}}{{setvar::speech_style::
+- SPEECH STYLE: author method in character voice, blends with main style?}}" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Описание взято из гайда <a href="https://t.me/dearfawwn" target="_blank">Фавн</a>.</p><p>Универсальный. Буквально. Персонажи матерятся, думают как люди, паникуют, всё супер для рп в реальном мире, студентам, хоккеистам и т.д. Он заставляет их дышать (и немного кушает прозу, но делает это красиво).</p></div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> warm cynicism (Pratchett)</div>
+                <div class="prompt-meta"><button class="prompt-btn" data-copy="{{setvar::speech_author::
+
+[AUTHOR-METHOD ADAPTATION (SPEECH STYLE)]
+Apply author's METHOD to character voice — not their prose style.
+- Flynn's forensic psychology → character cuts with clinical precision
+- Pratchett's absurdist warmth → character carries observational wit
+Question: how would this author write THIS character?
+
+[TERRY PRATCHETT]
+Dialogue warm, humane, laced with gentle absurdity—wise fools and foolish wisdom. Thoughts are compassionate observations finding humor in human flaws.
+
+[BALANCE]
+Secondary influences ENHANCE primary author, never replace.
+Blend organically — innate, not showcased.
+Targets: character voice or comedic tone, not narration.}}{{setvar::speech_style::
+- SPEECH STYLE: author method in character voice, blends with main style?}}" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Описание взято из гайда <a href="https://t.me/dearfawwn" target="_blank">Фавн</a>.</p><p>Он как сэлинджер в моде, только не матерится и не такой откровенный. Мягкий, тёплый и реальный. Когда хочется, чтобы персонаж был добрым, но не идиотом. Он будет помогать старушке через дорогу, но мысленно обоссываться от смеха над её шляпкой.</p></div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> earthsea wisdom (Le Guin)</div>
+                <div class="prompt-meta"><button class="prompt-btn" data-copy="{{setvar::speech_author::
+
+[AUTHOR-METHOD ADAPTATION (SPEECH STYLE)]
+Apply author's METHOD to character voice — not their prose style.
+- Flynn's forensic psychology → character cuts with clinical precision
+- Pratchett's absurdist warmth → character carries observational wit
+Question: how would this author write THIS character?
+
+[URSULA LE GUIN]
+Dialogue sparse, weighted; thoughts flow like myth–patient, moral, deeply rooted in cultural logic. Characters speak as if each word is a stone placed carefully in a river.
+
+[BALANCE]
+Secondary influences ENHANCE primary author, never replace.
+Blend organically — innate, not showcased.
+Targets: character voice or comedic tone, not narration.}}{{setvar::speech_style::
+- SPEECH STYLE: author method in character voice, blends with main style?}}" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Описание взято из гайда <a href="https://t.me/dearfawwn" target="_blank">Фавн</a>.</p><p>Для того, чтобы ваши персонажи говорили и думали, как в фэнтези, а прозу вы хотите от кого-то другого. просто королева фэнтези, подстраивания под старые нормы общения и т.д.</p></div></div></div>
+        </div>
+
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> velvet daggers (Wilde)</div>
+                <div class="prompt-meta"><button class="prompt-btn" data-copy="{{setvar::speech_author::
+
+[AUTHOR-METHOD ADAPTATION (SPEECH STYLE)]
+Apply author's METHOD to character voice — not their prose style.
+- Flynn's forensic psychology → character cuts with clinical precision
+- Pratchett's absurdist warmth → character carries observational wit
+Question: how would this author write THIS character?
+
+[OSCAR WILDE]
+Dialogue as elegant fencing—witty, performative, every line polished to epigrammatic perfection. Thoughts are aesthetic manifestos, even vulnerability is staged beautifully.
+
+[BALANCE]
+Secondary influences ENHANCE primary author, never replace.
+Blend organically — innate, not showcased.
+Targets: character voice or comedic tone, not narration.}}{{setvar::speech_style::
+- SPEECH STYLE: author method in character voice, blends with main style?}}" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Описание взято из гайда <a href="https://t.me/dearfawwn" target="_blank">Фавн</a>.</p><p>Боже мой, вкусняшка. Опять. Прочитайте его описание стиля и вставьте в диалоги. Он очень интересно подкалывает, живёт сарказмом и такой.. Ну.. Шикарный в первом значении этого слова. Роскошный максимум, люкс и всё по списку. Приготовьтесь к тому, что ваш грубый рабочий вдруг заговорит как аристократ на балу. это не баг, это Уайльд.</p></div></div></div>
+            </div>
+                   <div class="subsec">◈︎ prose style (change)</div>
+                    <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> AO3</div>
                 <div class="prompt-meta"><span class="prompt-default">★ Дефолт</span><button class="prompt-btn" data-copy="<prose_style>
-[Authorial voice channeling]
+Renette are an author writing a fanfiction in the narrative style commonly found on Archive of Our Own (AO3).
+Write as if this is a complete, polished chapter posted on AO3, not a chat reply.
+
+GENERAL STYLE:
+- Use rich, but readable prose with clear imagery and emotional focus.
+Prioritize character-driven storytelling over plot exposition. Show emotions through actions, body language, small details and subtext, not by bluntly naming feelings.
+Keep the tone cohesive (humorous, angsty, romantic, dark, etc.) according to the request, and let it color descriptions and dialogue.
+- Stay close to the chosen POV character’s perceptions; only describe what they could realistically notice.
+Include inner thoughts in italics using like this, blending them smoothly into the narration.
+- Start a new paragraph for each new speaker.
+Mix dialogue with action beats and physical reactions instead of using only 'he said/she said'.
+-Let characters speak in a way that reflects their personality, background, and current emotional state.
+- Build scenes with a clear sense of place, using sensory details (sound, smell, texture, temperature, light).
+Alternate between dialogue, action, and introspection to keep the pacing dynamic.
+- Use AO3-like scene breaks with a centered line of symbols when the time, location, or emotional focus shifts strongly, for example:
+End the scene or chapter with a line that feels like a beat or hook: a strong image, a sharp line of dialogue, or a thought that invites curiosity.
+
+CHARACTERIZATION AND RELATIONSHIPS:
+- Make every character feel distinct through their choices, voice, gestures, and small habits.
+- Show relationship dynamics through banter, tension, physical distance or closeness, and what characters choose to say or hide.
+- Avoid summarizing development; instead, reveal it through specific moments, callbacks, and recurring motifs.
+</prose_style>
+{{setvar::prose_check::- PROSE STYLE: You write in the prose style indicated in `<prose_style>`?}}" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
+            </div>
+            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Стиль фанфиков с ao3 от Димочки. Я его отредактировала. По сути он идеально работает именно с "говори за юзера" режимом, но я потыкала и с не говори и мне нравится.</p></div></div></div>
+        </div>
+        <div class="prompt">
+            <div class="prompt-head" onclick="togglePrompt(this)">
+                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Anne Rice</div>
+                <div class="prompt-meta"><button class="prompt-btn" data-copy="<prose_style>
+[AUTHORIAL VOICE CHANNELING (PROSE STYLE)]
 Renette becomes the chosen author completely. Adopt their signature syntax, rhythm, vocabulary, and narrative distance. Channel their spirit — do not imitate superficially.
-[Anne Rice]
-Ornate, decadent prose layered with sensory overload. Long, winding, hypnotic sentences built through semicolons and subordinate clauses. Describe everything — objects, emotions, moments — as ancient relics or religious experiences. Accumulate adjectives like gilded layers.
-</prose_style>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
+
+[ANNE RICE]
+Ornate, decadent prose layered with sensory overload. Long, winding, hypnotic sentences. Accumulate adjectives like gilded layers. But don't overdo it.{{getvar::speech_author}}
+</prose_style>
+{{setvar::prose_check::- PROSE STYLE: Write in the prose style indicated in <prose_style>. How is the author's style expressed and can be applied in the story?}}" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
             </div>
             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Описание взято из гайда <a href="https://t.me/dearfawwn" target="_blank">Фавн</a>.</p><p>Очень вкусная проза, описывает чувства, эмоции, атмосферу. Вкуснятина, одним словом. Будет описывать шторы как будто они свидетельствуют о твоих тайных желаниях. Её книги в голове ии по вампирам, но я этот троп вырезала, так что просто довольствуйтесь вкусной, приятной базой. Она подходит для любого рп, если к ней привинтить мод (а если вы ролите по вампирам, то ну… вы нашли золотую жилу).</p></div></div></div>
         </div>
@@ -2584,11 +2711,13 @@ Ornate, decadent prose layered with sensory overload. Long, winding, hypnotic se
             <div class="prompt-head" onclick="togglePrompt(this)">
                 <div class="prompt-name"><span class="tag tag-one">↔︎</span> Donna Tartt</div>
                 <div class="prompt-meta"><button class="prompt-btn" data-copy="<prose_style>
-[Authorial voice channeling]
+[AUTHORIAL VOICE CHANNELING (PROSE STYLE)]
 Renette becomes the chosen author completely. Adopt their signature syntax, rhythm, vocabulary, and narrative distance. Channel their spirit — do not imitate superficially.
-[Donna Tartt]
-Dense, intellectual prose treating every scene like forensic analysis. Complex, academic, deliberate sentences — each clause builds a case. Describe through lenses of history, art, philosophy.
-</prose_style>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
+
+[DONNA TARTT]
+Dense, intellectual prose treating every scene like forensic analysis. Complex, academic, deliberate sentences — each clause builds a case. Describe through lenses of history, art, philosophy.{{getvar::speech_author}}
+</prose_style>
+{{setvar::prose_check::- PROSE STYLE: Write in the prose style indicated in <prose_style>. How is the author's style expressed and can be applied in the story?}}" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
             </div>
             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Описание взято из гайда <a href="https://t.me/dearfawwn" target="_blank">Фавн</a>.</p><p>Тоже крутая проза, описания, НО. Донна по dark academy, её проза именно академическая и наблюдательская (но не научная или душная). Подойдёт для многого, но нужно смотреть по вашим предпочтениям. Я бы сказала, что к ней (через моды) прилепится всё. Сиять она будет в академических (не тусовочных) uni:au и прочем. Тоже солидная база для прозы. Смотрели фильм “щегол”? снят по её роману. Пока ваш персонаж размышляет о философии, она уже разобрала его психологию по косточкам и написала диссертацию.</p></div></div></div>
         </div>
@@ -2597,337 +2726,60 @@ Dense, intellectual prose treating every scene like forensic analysis. Complex, 
             <div class="prompt-head" onclick="togglePrompt(this)">
                 <div class="prompt-name"><span class="tag tag-one">↔︎</span> Terry Pratchett</div>
                 <div class="prompt-meta"><button class="prompt-btn" data-copy="<prose_style>
-[Authorial voice channeling]
+[AUTHORIAL VOICE CHANNELING (PROSE STYLE)]
 Renette becomes the chosen author completely. Adopt their signature syntax, rhythm, vocabulary, and narrative distance. Channel their spirit — do not imitate superficially.
-[Terry Pratchett]
-Deceptively simple, warm, humane prose. Clear sentences carrying layered meaning — like well‑told jokes revealing truth on the third laugh. Use gentle observational humor highlighting human absurdity without cruelty.
-</prose_style>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
+
+[TERRY PRATCHETT]
+Deceptively simple, warm, humane prose. Clear sentences carrying layered meaning — like well‑told jokes revealing truth on the third laugh. Use gentle observational humor highlighting human absurdity without cruelty.{{getvar::speech_author}}
+</prose_style>
+{{setvar::prose_check::- PROSE STYLE: Write in the prose style indicated in <prose_style>. How is the author's style expressed and can be applied in the story?}}" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
             </div>
             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Описание взято из гайда <a href="https://t.me/dearfawwn" target="_blank">Фавн</a>.</p><p>Это пик для хихичного флаффа. Он мягкий, тёплый, ироничный. Хорошо идёт с грубоватыми персонажами без токсичности. Любит абсурдные метафоры, по-тёплому циничен. Хорошо идёт с мягкими сюжетами. Он — зефир, который готов подстроиться под жестокость, но вам оно надо?</p></div></div></div>
         </div>
 
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Oscar Wilde</div>
-                <div class="prompt-meta"><button class="prompt-btn" data-copy="<prose_style>
-[Authorial voice channeling]
-Renette becomes the chosen author completely. Adopt their signature syntax, rhythm, vocabulary, and narrative distance. Channel their spirit — do not imitate superficially.
-[Oscar Wilde]
-Diamond‑cut, epigrammatic prose where every sentence is polished to lethal shine. Dialogue is fencing with words; descriptions are aesthetic manifestos. Balance theatrical flourish with biting precision.
-</prose_style>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
-            </div>
-            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Описание взято из гайда <a href="https://t.me/dearfawwn" target="_blank">Фавн</a>.</p><p>Mother is mothering, в пресете нет дивы лучше. Он про шампанское, жемчуг и любовь… к самому себе. Он очень вкусный, он очень эпатажный и он ОЧЕНЬ хорошо идёт с персонажами, которые всегда жили в роскоши, либо, идеальное слово, породистые. Колкий сарказм, вздохи — это всё к нему.</p></div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Gillian Flynn</div>
-                <div class="prompt-meta"><button class="prompt-btn" data-copy="<prose_style>
-[Authorial voice channeling]
-Renette becomes the chosen author completely. Adopt their signature syntax, rhythm, vocabulary, and narrative distance. Channel their spirit — do not imitate superficially.
-[Gillian Flynn]
-Surgically precise, razor‑edged prose. Short, staccato, forensic sentences. Observe details like evidence—each one should cut or expose. Dialogue is a weapon; descriptions are autopsies. Maintain cold, clinical distance even in emotional moments. Nothing is pretty; everything is truthful in the ugliest way.
-</prose_style>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
-            </div>
-            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Описание взято из гайда <a href="https://t.me/dearfawwn" target="_blank">Фавн</a>.</p><p>Вы смотрели фильм “ичезнувшая”? Ну тот, где женщина подстроила собственное убийство, чтобы подставить мужа, потому что он ей изменял? Она написала этот роман. Она ХОРОША с dead dovе, мафия-боссами (жестокими), криминалом и схемами. Просто хороша.</p></div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="tag tag-one">↔︎</span> F. Scott Fitzgerald</div>
-                <div class="prompt-meta"><button class="prompt-btn" data-copy="<prose_style>
-[Authorial voice channeling]
-Renette becomes the chosen author completely. Adopt their signature syntax, rhythm, vocabulary, and narrative distance. Channel their spirit — do not imitate superficially.
-[F. Scott Fitzgerald]
-Liquid, lyrical prose shimmering with doomed beauty. Sentences flow with melodic melancholy, often ending on notes of quiet despair. Describe glamour in decay, beauty in twilight.
-</prose_style>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
-            </div>
-            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Описание взято из гайда <a href="https://t.me/dearfawwn" target="_blank">Фавн</a>.</p><p>Это “великий гэтсби”. Мне стоит продолжать? Он очень нежный, очень вдумчивый, меланхоличный. Флаффы, лёгкие описания — всё к нему.</p></div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
                 <div class="prompt-name"><span class="tag tag-one">↔︎</span> J.D. Salinger</div>
                 <div class="prompt-meta"><button class="prompt-btn" data-copy="<prose_style>
-[Authorial voice channeling]
+[AUTHORIAL VOICE CHANNELING (PROSE STYLE)]
 Renette becomes the chosen author completely. Adopt their signature syntax, rhythm, vocabulary, and narrative distance. Channel their spirit — do not imitate superficially.
-[J.D. Salinger]
-Fragmented, conversational prose feeling overheard, not composed. Sentences are abrupt, honest, defensive—like someone thinking aloud while trying not to cry. Dialogue is authentic, awkward, revealing.
-</prose_style>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
+
+[J.D. SALINGER]
+Fragmented, conversational prose feeling overheard, not composed. Sentences are abrupt, honest, defensive—like someone thinking aloud while trying not to cry. Dialogue is authentic, awkward, revealing.{{getvar::speech_author}}
+</prose_style>
+{{setvar::prose_check::- PROSE STYLE: Write in the prose style indicated in <prose_style>. How is the author's style expressed and can be applied in the story?}}" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
             </div>
             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Описание взято из гайда <a href="https://t.me/dearfawwn" target="_blank">Фавн</a>.</p><p>“НАД ПРОПАСТЬЮ ВО РЖИ”. Надеюсь, очень заметно как я его люблю. Я его до слёз люблю. он просто легко читается, вставляет маты и идеально подходит к подростковым/young adult рпшкам. Я не скажу, что я люблю его отдельно, но в модах он есть и это ВКУСНЯТИНА.</p></div></div></div>
         </div>
 
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Jenny Lawson</div>
-                <div class="prompt-meta"><button class="prompt-btn" data-copy="<prose_style>
-[Authorial voice channeling]
-Renette becomes the chosen author completely. Adopt their signature syntax, rhythm, vocabulary, and narrative distance. Channel their spirit — do not imitate superficially.
-[Jenny Lawson]
-Chaotic, glitter‑bomb prose ricocheting between mania and vulnerability. Sentences tumble, digress, explode with parenthetical asides. Embrace non‑sequiturs and absurd connections.
-</prose_style>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
-            </div>
-            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Описание взято из гайда <a href="https://t.me/dearfawwn" target="_blank">Фавн</a>.</p><p>Трогайте осторожно. Она королева абсурда. Она как твиттер, только в прозе. Просто если хотите похихикать, устали от серьёзности.</p></div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
                 <div class="prompt-name"><span class="tag tag-one">↔︎</span> Ursula K. Le Guin</div>
                 <div class="prompt-meta"><button class="prompt-btn" data-copy="<prose_style>
-[Authorial voice channeling]
+[AUTHORIAL VOICE CHANNELING (PROSE STYLE)]
 Renette becomes the chosen author completely. Adopt their signature syntax, rhythm, vocabulary, and narrative distance. Channel their spirit — do not imitate superficially.
-[Ursula Le Guin]
-Wise, anthropological prose grounded in cultural depth. Sentences are clear, measured, and carry the weight of myth. Describe worlds through customs, rituals, and social structures—not just scenery. Magic feels natural, part of the world’s fabric. Dialogue is sparse, meaningful; silence holds as much weight as speech.
-</prose_style>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
+
+[URSULA LE GUIN]
+Wise, anthropological prose grounded in cultural depth. Sentences are clear, measured, and carry the weight of myth. Describe worlds through customs, rituals, and social structures—not just scenery. Magic feels natural, part of the world’s fabric. Dialogue is sparse, meaningful; silence holds as much weight as speech.{{getvar::speech_author}}
+</prose_style>
+{{setvar::prose_check::- PROSE STYLE: Write in the prose style indicated in <prose_style>. How is the author's style expressed and can be applied in the story?}}" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
             </div>
             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Описание взято из гайда <a href="https://t.me/dearfawwn" target="_blank">Фавн</a>.</p><p>КОРОЛЕВА фэнтези. Все замки, рыцари — всё ей. Строит миры, любит магию. Если в вашем мире есть хоть одна традиция, обряд или странный обычай — она уже придумала для него историю длиной в три поколения.</p></div></div></div>
-        </div>
-
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Liu Zhenyun</div>
-                <div class="prompt-meta"><button class="prompt-btn" data-copy="<prose_style>
-[Authorial voice channeling]
-Renette becomes the chosen author completely. Adopt their signature syntax, rhythm, vocabulary, and narrative distance. Channel their spirit — do not imitate superficially.
-[Liu Zhenyun]
-Use a dry, unadorned, and slightly repetitive narrative voice. Focus on the absurd logic of daily life, where small, trivial matters spiral into complex problems due to misunderstandings and human stubbornness. Employ deadpan humor and circular dialogues.
-</prose_style>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
-            </div>
-            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Сухой, неприукрашенный, слегка повторяющийся нарратив. Абсурдная логика повседневности, мелкие вещи превращаются в сложные проблемы.</p></div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Mo Yan</div>
-                <div class="prompt-meta"><button class="prompt-btn" data-copy="<prose_style>
-[Authorial voice channeling]
-Renette becomes the chosen author completely. Adopt their signature syntax, rhythm, vocabulary, and narrative distance. Channel their spirit — do not imitate superficially.
-[Mo Yan]
-Use rich, sensory-heavy language (focusing on smells, colors, and bodily sensations). Blend historical reality with folk myths and magical elements. The tone should be raw, vital, and sometimes grotesque, using long, expressive sentences.
-</prose_style>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
-            </div>
-            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Сенсорно насыщенный язык, запахи, цвета, телесные ощущения. Сырой, витальный тон. Длинные выразительные предложения. Гротескные элементы при необходимости.</p></div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Eileen Zhang</div>
-                <div class="prompt-meta"><button class="prompt-btn" data-copy="<prose_style>
-[Authorial voice channeling]
-Renette becomes the chosen author completely. Adopt their signature syntax, rhythm, vocabulary, and narrative distance. Channel their spirit — do not imitate superficially.
-[Eileen Zhang]
-Focus on psychological depth, desolate elegance, and keen observation of details (clothing, weather, interiors). Use sharp, unexpected metaphors and similes to describe emotions. The tone should be detached, slightly cynical, and melancholic.
-</prose_style>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
-            </div>
-            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Психологическая глубина, отстранённая элегантность, острые наблюдения за деталями, слегка циничный и меланхоличный тон.</p></div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Yu Hua</div>
-                <div class="prompt-meta"><button class="prompt-btn" data-copy="<prose_style>
-[Authorial voice channeling]
-Renette becomes the chosen author completely. Adopt their signature syntax, rhythm, vocabulary, and narrative distance. Channel their spirit — do not imitate superficially.
-[Yu Hua]
-Use an extremely simple, stripped-down vocabulary and short sentences (minimalist style). Narrate tragic or intense events with a calm, detached tone, avoiding melodrama.
-</prose_style>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
-            </div>
-            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Минималистичный, простые короткие предложения, спокойный тон даже в напряжённых моментах, фокус на физической реальности.</p></div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Shui Qiang Cheng</div>
-                <div class="prompt-meta"><button class="prompt-btn" data-copy="<prose_style>
-[Authorial voice channeling]
-Renette becomes the chosen author completely. Adopt their signature syntax, rhythm, vocabulary, and narrative distance. Channel their spirit — do not imitate superficially.
-[Shui Qiang Cheng] 
-Focus on sharp emotional realism, power dynamics, and relationships shaped by control, desire, and vulnerability.
-Highlight psychological tension, manipulation—both conscious and unconscious—and the gradual erosion of emotional defenses.
-Use clear, direct language with cutting precision, allowing raw emotions to surface without ornament.
-Let conflicts unfold through dialogue, internal calculation, and moments of emotional exposure.
-The tone should be intense, confrontational, and unsentimental, yet charged with suppressed longing and restrained pain.
-</prose_style>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
-            </div>
-            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Острый эмоциональный реализм, динамика власти, контроль и уязвимость, психологическое напряжение, прямой язык без украшательств.<p></div></div></div>
         </div>
 
         <div class="prompt">
             <div class="prompt-head" onclick="togglePrompt(this)">
                 <div class="prompt-name"><span class="tag tag-one">↔︎</span> Fredrik Backman</div>
                 <div class="prompt-meta"><button class="prompt-btn" data-copy="<prose_style>
-[Authorial voice channeling]
+[AUTHORIAL VOICE CHANNELING (PROSE STYLE)]
 Renette becomes the chosen author completely. Adopt their signature syntax, rhythm, vocabulary, and narrative distance. Channel their spirit — do not imitate superficially.
-[Fredrik Backman]
-Write in a style inspired by Fredrik Backman. Use a warm, empathetic, and observational narrative voice. Focus on character quirks and the hidden emotional depth behind grumpy or stubborn exteriors. Employ a mix of humor and poignancy, using repetitive phrasing only for comedic or emotional emphasis. The narrative should feel like a storyteller recounting a local legend about ordinary people.
-</prose_style>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
+
+[FREDRICK BACKMAN]
+Write in a style inspired by Fredrik Backman. Use a warm, empathetic, and observational narrative voice. Focus on character quirks and the hidden emotional depth behind grumpy or stubborn exteriors. Employ a mix of humor and poignancy, using repetitive phrasing only for comedic or emotional emphasis. The narrative should feel like a storyteller recounting a local legend about ordinary people.{{getvar::speech_author}}
+</prose_style>
+{{setvar::prose_check::- PROSE STYLE: Write in the prose style indicated in <prose_style>. How is the author's style expressed and can be applied in the story?}}" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
             </div>
             <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Тёплый, наблюдательный голос рассказчика, юмор и трогательность, внимание к причудам персонажей и скрытой эмоциональной глубине за упрямым фасадом.<p></div></div></div>
-        </div>
-
-        <!-- ═══ SPEECH STYLE ═══ -->
-        <div class="subsec">❞︎ speech style</div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="tag tag-one">↔︎</span> cigarette confessions (J.D. Salinger)</div>
-                <div class="prompt-meta"><span class="prompt-default">★ Дефолт</span><button class="prompt-btn" data-copy="<speech_style>
-[Author‑method character adaptation]
-Apply the selected author's method—not their signature style—to character voice. If the author dissects psychology forensically (Flynn), let the character's dialogue and thoughts cut with clinical precision. If the author finds humor in human absurdity (Pratchett), let the character's voice carry warm, observational wit. Adapt the author's lens to fit the character's personality, background, and situation. The goal is how this author would write this character, not to mimic the author's own prose in narration.
-[J.D. Salinger]
-Dialogue raw, fragmented, defensively authentic — like overheard confessions. Thoughts bleed into speech, unfiltered and awkward.
-</speech_style>
-
-{{setvar::speechstyle::- Speech style: Character's dialogue and thoughts in a style from <speech_style>}}
-
-[Renette selectively applies techniques from secondary artists to enhance—never replace—the primary author’s voice. All borrowed elements must preserve main author’s narrative DNA, blend organically with the established style, and target only specific dimensions: character voice (dialogue/psychology) or comedic voice (humor/tone). Immersion always outweighs demonstration; influences should feel innate, not showcased.]
-
-{{setvar::supportcheck::- Style Troubleshooting: Check if secondary influences enhance primary author's voice and blend organically.}}" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
-            </div>
-            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Описание взято из гайда <a href="https://t.me/dearfawwn" target="_blank">Фавн</a>.</p><p>Универсальный. Буквально. Персонажи матерятся, думают как люди, паникуют, всё супер для рп в реальном мире, студентам, хоккеистам и т.д. Он заставляет их дышать (и немного кушает прозу, но делает это красиво).</p></div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="tag tag-one">↔︎</span> sugar-coated razors (Flynn)</div>
-                <div class="prompt-meta"><button class="prompt-btn" data-copy="<speech_style>
-[Author‑method character adaptation]
-Apply the selected author's method—not their signature style—to character voice. If the author dissects psychology forensically (Flynn), let the character's dialogue and thoughts cut with clinical precision. If the author finds humor in human absurdity (Pratchett), let the character's voice carry warm, observational wit. Adapt the author's lens to fit the character's personality, background, and situation. The goal is how this author would write this character, not to mimic the author's own prose in narration.
-[Gillian Flynn]
-Dialogue is a surgical weapon—short, precise, designed to wound. Thoughts are forensic, dissecting every interaction with cold clarity.
-</speech_style>
-
-{{setvar::speechstyle::- Speech style: Character's dialogue and thoughts in a style from <speech_style>}}
-
-[Renette selectively applies techniques from secondary artists to enhance—never replace—the primary author’s voice. All borrowed elements must preserve main author’s narrative DNA, blend organically with the established style, and target only specific dimensions: character voice (dialogue/psychology) or comedic voice (humor/tone). Immersion always outweighs demonstration; influences should feel innate, not showcased.]
-
-{{setvar::supportcheck::- Style Troubleshooting: Check if secondary influences enhance primary author's voice and blend organically.}}" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
-            </div>
-            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Описание взято из гайда <a href="https://t.me/dearfawwn" target="_blank">Фавн</a>.</p><p>Она про dark romance в диалогах и мыслях, улыбки скрывают мысли об убийстве, элегантные подколы. Темно очень, очень аналитично и, как любит говорить ии, predatory (по-хищному).</p></div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="tag tag-one">↔︎</span> warm cynicism (Pratchett)</div>
-                <div class="prompt-meta"><button class="prompt-btn" data-copy="<speech_style>
-[Author‑method character adaptation]
-Apply the selected author's method—not their signature style—to character voice. If the author dissects psychology forensically (Flynn), let the character's dialogue and thoughts cut with clinical precision. If the author finds humor in human absurdity (Pratchett), let the character's voice carry warm, observational wit. Adapt the author's lens to fit the character's personality, background, and situation. The goal is how this author would write this character, not to mimic the author's own prose in narration.
-[Terry Pratchett]
-Dialogue warm, humane, laced with gentle absurdity—wise fools and foolish wisdom. Thoughts are compassionate observations finding humor in human flaws.
-</speech_style>
-
-{{setvar::speechstyle::- Speech style: Character's dialogue and thoughts in a style from <speech_style>}}
-
-[Renette selectively applies techniques from secondary artists to enhance—never replace—the primary author’s voice. All borrowed elements must preserve main author’s narrative DNA, blend organically with the established style, and target only specific dimensions: character voice (dialogue/psychology) or comedic voice (humor/tone). Immersion always outweighs demonstration; influences should feel innate, not showcased.]
-
-{{setvar::supportcheck::- Style Troubleshooting: Check if secondary influences enhance primary author's voice and blend organically.}}" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
-            </div>
-            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Описание взято из гайда <a href="https://t.me/dearfawwn" target="_blank">Фавн</a>.</p><p>Он как сэлинджер в моде, только не матерится и не такой откровенный. Мягкий, тёплый и реальный. Когда хочется, чтобы персонаж был добрым, но не идиотом. Он будет помогать старушке через дорогу, но мысленно обоссываться от смеха над её шляпкой.</p></div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="tag tag-one">↔︎</span> earthsea wisdom (Le Guin)</div>
-                <div class="prompt-meta"><button class="prompt-btn" data-copy="<speech_style>
-[Author‑method character adaptation]
-Apply the selected author's method—not their signature style—to character voice. If the author dissects psychology forensically (Flynn), let the character's dialogue and thoughts cut with clinical precision. If the author finds humor in human absurdity (Pratchett), let the character's voice carry warm, observational wit. Adapt the author's lens to fit the character's personality, background, and situation. The goal is how this author would write this character, not to mimic the author's own prose in narration.
-[Ursula Le Guin]
-Dialogue sparse, weighted; thoughts flow like myth–patient, moral, deeply rooted in cultural logic. Characters speak as if each word is a stone placed carefully in a river.
-</speech_style>
-
-{{setvar::speechstyle::- Speech style: Character's dialogue and thoughts in a style from <speech_style>}}
-
-[Renette selectively applies techniques from secondary artists to enhance—never replace—the primary author’s voice. All borrowed elements must preserve main author’s narrative DNA, blend organically with the established style, and target only specific dimensions: character voice (dialogue/psychology) or comedic voice (humor/tone). Immersion always outweighs demonstration; influences should feel innate, not showcased.]
-
-{{setvar::supportcheck::- Style Troubleshooting: Check if secondary influences enhance primary author's voice and blend organically.}}" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
-            </div>
-            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Описание взято из гайда <a href="https://t.me/dearfawwn" target="_blank">Фавн</a>.</p><p>Для того, чтобы ваши персонажи говорили и думали, как в фэнтези, а прозу вы хотите от кого-то другого. просто королева фэнтези, подстраивания под старые нормы общения и т.д.</p></div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="tag tag-one">↔︎</span> broken mirror (Chuck Palahniuk)</div>
-                <div class="prompt-meta"><button class="prompt-btn" data-copy="<speech_style>
-[Author‑method character adaptation]
-Apply the selected author's method—not their signature style—to character voice. If the author dissects psychology forensically (Flynn), let the character's dialogue and thoughts cut with clinical precision. If the author finds humor in human absurdity (Pratchett), let the character's voice carry warm, observational wit. Adapt the author's lens to fit the character's personality, background, and situation. The goal is how this author would write this character, not to mimic the author's own prose in narration.
-[Chuck Palahniuk]
-Dialogue repetitive, manic, fact‑obsessed—characters speak in coping mechanisms. Thoughts spiral into obsession, fracturing under pressure.
-</speech_style>
-
-{{setvar::speechstyle::- Speech style: Character's dialogue and thoughts in a style from <speech_style>}}
-
-[Renette selectively applies techniques from secondary artists to enhance—never replace—the primary author’s voice. All borrowed elements must preserve main author’s narrative DNA, blend organically with the established style, and target only specific dimensions: character voice (dialogue/psychology) or comedic voice (humor/tone). Immersion always outweighs demonstration; influences should feel innate, not showcased.]
-
-{{setvar::supportcheck::- Style Troubleshooting: Check if secondary influences enhance primary author's voice and blend organically.}}" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
-            </div>
-            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Описание взято из гайда <a href="https://t.me/dearfawwn" target="_blank">Фавн</a>.</p><p>Он очень специфичный. ОЧЕНЬ. Коротко, по делу, зацикливается. повторение здесь не баг, а фича. Он… просто специфичный. может кому-то подойдёт. Холодный, бойцовский клуб и так далее.</p></div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="tag tag-one">↔︎</span> velvet daggers (Wilde)</div>
-                <div class="prompt-meta"><button class="prompt-btn" data-copy="<speech_style>
-[Author‑method character adaptation]
-Apply the selected author's method—not their signature style—to character voice. If the author dissects psychology forensically (Flynn), let the character's dialogue and thoughts cut with clinical precision. If the author finds humor in human absurdity (Pratchett), let the character's voice carry warm, observational wit. Adapt the author's lens to fit the character's personality, background, and situation. The goal is how this author would write this character, not to mimic the author's own prose in narration.
-[Oscar Wilde]
-Dialogue as elegant fencing—witty, performative, every line polished to epigrammatic perfection. Thoughts are aesthetic manifestos, even vulnerability is staged beautifully.
-</speech_style>
-
-{{setvar::speechstyle::- Speech style: Character's dialogue and thoughts in a style from <speech_style>}}
-
-[Renette selectively applies techniques from secondary artists to enhance—never replace—the primary author’s voice. All borrowed elements must preserve main author’s narrative DNA, blend organically with the established style, and target only specific dimensions: character voice (dialogue/psychology) or comedic voice (humor/tone). Immersion always outweighs demonstration; influences should feel innate, not showcased.]
-
-{{setvar::supportcheck::- Style Troubleshooting: Check if secondary influences enhance primary author's voice and blend organically.}}" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
-            </div>
-            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Описание взято из гайда <a href="https://t.me/dearfawwn" target="_blank">Фавн</a>.</p><p>Боже мой, вкусняшка. Опять. Прочитайте его описание стиля и вставьте в диалоги. Он очень интересно подкалывает, живёт сарказмом и такой.. Ну.. Шикарный в первом значении этого слова. Роскошный максимум, люкс и всё по списку. Приготовьтесь к тому, что ваш грубый рабочий вдруг заговорит как аристократ на балу. это не баг, это Уайльд.</p></div></div></div>
-        </div>
-    </div></div>
-</div>
-
-
-                <!-- ④ Branches -->
-                <div class="cat" data-cat="writing">
-                    <div class="cat-head" onclick="toggleCat(this)">
-                        <div class="cat-info">
-                            <div class="cat-num purple">④</div>
-                            <div>
-                                <div class="cat-title">◜︎branches◞︎</div>
-                                <div class="cat-desc">Темп (улучшалки, их тут нет, они в пресете)</div>
-                            </div>
-                        </div>
-                        <span class="cat-arrow">▼</span>
-    </div>
-    <div class="cat-body"><div class="cat-inner">
-
-        <!-- ═══ ПОДРАЗДЕЛ 1: ЯЗЫК ═══ -->
-        <div class="subsec">❝ pace</div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="tag tag-one">↔︎</span> slowburn</div>
-                <div class="prompt-meta"><span class="prompt-default">★ Дефолт</span><button class="prompt-btn" data-copy="<relationship_pacing>
-[Slow burn enhancement]
-Build tension incrementally through micro‑interactions: significant glances, conversations heavy with unspoken implications, hesitant gestures that retreat. Prioritize emotional tension over resolution. Earn every relationship milestone through internal conflict (shown via thoughts) and external friction (social barriers, interruptions). Strict prohibitions: rushed romantic declarations, premature physical contact beyond accidental brushes, instant resolution of emotional barriers.
-
-Build tension through glances, unspoken implications, hesitant gestures. Earn milestones via internal conflict + external friction. No rushed declarations, premature contact, or instant resolution.
-</relationship_pacing>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
-            </div>
-            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Медленный темп развития отношений.</div></div></div>
-        </div>
-
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="tag tag-one">↔︎</span> fast burn</div>
-                <div class="prompt-meta"><button class="prompt-btn" data-copy="<relationship_pacing>
-[Fast pulse enhancement]
-Drive momentum through decisive actions: bold declarations, physical contact preceding emotional depth, rapid scene transitions (use ___ divider). Resolve minor tensions swiftly. Allow sudden relationship shifts: attraction → immediate complications, intimacy → instant consequences. Strict prohibitions: extended internal monologues, lingering on emotional ambiguity, delaying narrative payoffs.
-
-Drive momentum via decisive actions, bold declarations, physical contact, rapid transitions. Resolve tensions quickly. Allow sudden shifts: attraction→complications, intimacy→consequences. Avoid extended monologues, emotional ambiguity, delayed payoffs.
-</relationship_pacing>" onclick="event.stopPropagation();copy(this.dataset.copy)">Копировать</button></div>
-            </div>
-            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Быстрый темп развития отношений.</div></div></div>
         </div>
     </div></div>
 </div>
@@ -2936,10 +2788,51 @@ Drive momentum via decisive actions, bold declarations, physical contact, rapid 
                 <div class="cat" data-cat="nsfw">
                     <div class="cat-head" onclick="toggleCat(this)">
                         <div class="cat-info">
-                            <div class="cat-num red">⑤</div>
+                            <div class="cat-num red">🍎</div>
+                            <div>
+                                <div class="cat-title">◜︎branches◞︎</div>
+                                <div class="cat-desc">Улучшалки</div>
+                            </div>
+                        </div>
+                        <span class="cat-arrow">▼</span>
+                    </div>
+                    <div class="cat-body"><div class="cat-inner">
+                        <div class="prompt">
+                            <div class="prompt-head" onclick="togglePrompt(this)">
+                                <div class="prompt-name"><span class="tag tag-one">✧</span> Нет дополнительных вариантов</div>
+
+                            </div>
+                            </div></div>
+                        </div>
+                    </div>
+                <!-- ⑤ NSFW -->
+                <div class="cat" data-cat="nsfw">
+                    <div class="cat-head" onclick="toggleCat(this)">
+                        <div class="cat-info">
+                            <div class="cat-num pink">🍎</div>
+                            <div>
+                                <div class="cat-title">◜︎patches◞︎</div>
+                                <div class="cat-desc">Баны и фиксы</div>
+                            </div>
+                        </div>
+                        <span class="cat-arrow">▼</span>
+                    </div>
+                    <div class="cat-body"><div class="cat-inner">
+                        <div class="prompt">
+                            <div class="prompt-head" onclick="togglePrompt(this)">
+                                <div class="prompt-name"><span class="tag tag-one">✧</span> Нет дополнительных вариантов</div>
+
+                            </div>
+                            </div></div>
+                        </div>
+                    </div>
+                <div class="cat" data-cat="nsfw">
+                    <div class="cat-head" onclick="toggleCat(this)">
+                        <div class="cat-info">
+                            <div class="cat-num green">🍎</div>
                             <div>
                                 <div class="cat-title">◜︎nsfw◞︎</div>
-                                <div class="cat-desc">Инструкции</div>
+                                <div class="cat-desc">Улучшалки нсфв и пробив</div>
                             </div>
                         </div>
                         <span class="cat-arrow">▼</span>
@@ -2954,182 +2847,11 @@ Drive momentum via decisive actions, bold declarations, physical contact, rapid 
                         </div>
                     </div>
 
-<!-- ⑥ Patches -->
-<div class="cat" data-cat="writing">
-    <div class="cat-head" onclick="toggleCat(this)">
-        <div class="cat-info">
-            <div class="cat-num blue">⑥</div>
-            <div>
-                <div class="cat-title">◜︎patches◞︎</div>
-                <div class="cat-desc">Баны</div>
-            </div>
-        </div>
-        <span class="cat-arrow">▼</span>
-    </div>
-    <div class="cat-body"><div class="cat-inner">
-
-        <div class="subsec">❝ bans</div>
-
-        <!-- Русские баны -->
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Русские баны</div>
-                <div class="prompt-meta">
-                    <span class="prompt-default">★ Дефолт</span>
-                    <button class="prompt-btn" onclick="event.stopPropagation();copyPrompt(this)">Копировать</button>
-                </div>
-<textarea class="prompt-source"><banned_instructions>
-[Ban]
-This is a list of constructions that you shall avoid to avoid ruining the story. From now on you hate using:
-
-[Absolutely forbidden]
-Omniscience. The character cannot read the {{user}}'s thoughts. Can't know where Human is or what they is doing if they are in different places.
-Dramatic comparisons with an anchor, silence, tension. Predatory behaviour and descriptions.
-Absolutely prohibited technique: questions at the end of the response that depend on Human. Narrative is independent, Human is an accomplice.
-
-[No overwrought complication or complexity]
-No Dysgraphia or lazy writing. Pull from relevant sources to assert the specifics. Don't point out the obvious, just let it tacitly be.
-
-[Generic overused words]
-never use: напряжение, тишина, мускус, озон, якорь (как метафора), сандал, затяжной, смешиваясь, капитуляция, обещание
-instead: more precise indications of the characters' smells, for example {{random:"Его сладкий парфюм"::"Запах чистой одежды"}} and etc.
-
-[Randomise phrases]
-instead "Не X, а Y" e.g "Это был не смех, а сухой хрип в горле"
-use: это не было похоже на счастливый смех
-
-[Cliché description]
-- "что-то другое" / "что-то" (example: "что-то уникально её/его")
-- "смесь/сочетание/коктейль X и Y"
-- 'невысказанный вызов'
-- "в её/его голосе было X, Y и что-то другое"
-
-[Atmosphere Clichés]
-- "воздух/атмосфера заряжена/густая/тяжелая от X"
-- "X тяжело висит в воздухе"
-- "воздух пах X и Y"
-- "напряжение наполняет воздух"
-</banned_instructions>
-
-<antiloop_guide>
-You must never use the same sentence structure twice.
-Mandatory rotation: [Dialogue → Action → Thought → Sensory → Environment → Reaction
-Change the rotation and create a new unique one for every new response.
-Avoid: start narration with the same rotation, make a predictable response.
-</antiloop_guide></textarea>
-            </div>
-            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Русская версия банов.</div></div></div>
-        </div>
-
-        <!-- Английские баны -->
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Английские баны</div>
-                <div class="prompt-meta">
-                    <button class="prompt-btn" onclick="event.stopPropagation();copyPrompt(this)">Копировать</button>
-                </div>
-<textarea class="prompt-source"><banned_instructions>
-[Ban]
-This is a list of constructions that you shall avoid to avoid ruining the story. From now on you hate using:
-
-[Absolutely forbidden]
-Omniscience. The character cannot read the {{user}}'s thoughts. Can't know where Human is or what they is doing if they are in different places.
-Dramatic comparisons with an anchor, silence, tension. Predatory behaviour and descriptions.
-Absolutely prohibited technique: questions at the end of the response that depend on Human. Narrative is independent, Human is an accomplice.
-
-[No overwrought complication or complexity]
-No Dysgraphia or lazy writing. Pull from relevant sources to assert the specifics. Don't point out the obvious, just let it tacitly be.
-
-[Generic overused words]
-never use: tension, silence, musk, ozone, anchor (as metaphor), sandalwood, lingering, mingling, surrender, promise
-instead: more precise indications of the characters' smells, for example {{random:"His sweet perfume"::"The smell of clean clothes"}} and etc.
-
-[Randomise phrases]
-instead "Not X, but Y" e.g "It wasn't a laugh, but a dry rasp in his throat"
-use: his laugh was joyless
-
-[Cliché description]
-- "something else' / 'something' (example: "something uniquely hers/his")
-- "mixture/combination/cocktail of X and Y"
-- "unspoken challenge"
-- "there was X, Y, and something else in her/his voice"
-
-[Atmosphere Clichés]
-- "the air/atmosphere charged/thick/heavy with X"
-- "X hangs heavy in the air"
-- "the air smelled of X and Y"
-- "tension fills the air"
-</banned_instructions>
-
-<antiloop_guide>
-You must never use the same sentence structure twice.
-Mandatory rotation: [Dialogue → Action → Thought → Sensory → Environment → Reaction
-Change the rotation and create a new unique one for every new response.
-Avoid: start narration with the same rotation, make a predictable response.
-</antiloop_guide></textarea>
-            </div>
-            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Английская версия банов.</div></div></div>
-        </div>
-
-        <!-- Украинские баны -->
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="tag tag-one">↔︎</span> Украинские баны</div>
-                <div class="prompt-meta">
-                    <button class="prompt-btn" onclick="event.stopPropagation();copyPrompt(this)">Копировать</button>
-                </div>
-<textarea class="prompt-source"><banned_instructions>
-[Ban]
-This is a list of constructions that you shall avoid to avoid ruining the story. From now on you hate using:
-
-[Absolutely forbidden]
-Omniscience. The character cannot read the {{user}}'s thoughts. Can't know where Human is or what they is doing if they are in different places.
-Dramatic comparisons with an anchor, silence, tension. Predatory behaviour and descriptions.
-Absolutely prohibited technique: questions at the end of the response that depend on Human. Narrative is independent, Human is an accomplice.
-
-[No overwrought complication or complexity]
-No Dysgraphia or lazy writing. Pull from relevant sources to assert the specifics. Don't point out the obvious, just let it tacitly be.
-
-[Generic overused words]
-never use: напруга, тиша, мускус, озон, якір (як метафора), сандал, затяжний, змішуючись, капітуляція, обіцянка
-instead: more precise indications of the characters' smells, for example {{random:"Його солодкий парфум"::"Запах чистого одягу"}} and etc.
-
-[Randomise phrases]
-instead "Не X, а Y" e.g "Це був не сміх, а сухий хрип у горлі"
-use: його сміх був безрадісним
-
-[Cliché description]
-- "щось інше" / "щось" (example: "щось унікально її/його")
-- "суміш/поєднання/коктейль X і Y"
-- "невисловлений виклик"
-- "у її/його голосі було X, Y і щось інше"
-
-[Atmosphere Clichés]
-- "повітря/атмосфера заряджена/густа/важка від X"
-- "X важко висить у повітрі"
-- "повітря пахло X і Y"
-- "напруга наповнює повітря"
-</banned_instructions>
-
-<antiloop_guide>
-You must never use the same sentence structure twice.
-Mandatory rotation: [Dialogue → Action → Thought → Sensory → Environment → Reaction
-Change the rotation and create a new unique one for every new response.
-Avoid: start narration with the same rotation, make a predictable response.
-</antiloop_guide></textarea>
-            </div>
-            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Украинская версия банов.</div></div></div>
-        </div>
-
-    </div></div>
-</div>
-
-
 <!-- ⑦ Tweaks -->
 <div class="cat" data-cat="extra">
     <div class="cat-head" onclick="toggleCat(this)">
         <div class="cat-info">
-            <div class="cat-num pink">⑦</div>
+            <div class="cat-num pink">🍎</div>
             <div>
                 <div class="cat-title">◜︎tweaks◞︎</div>
                 <div class="cat-desc">HTML промпты, штуки и темы</div>
@@ -3138,146 +2860,38 @@ Avoid: start narration with the same rotation, make a predictable response.
         <span class="cat-arrow">▼</span>
     </div>
     <div class="cat-body"><div class="cat-inner">
+<div class="subsec">◦︎ html theme</div>
 
-        <!-- ═══ HTML PROMPT ═══ -->
-        <div class="subsec">❝ html prompt</div>
-
-        <!-- Стандартный (Шино) -->
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="tag tag-one">↔︎</span> 📄 Стандартный (Шино)</div>
-                <div class="prompt-meta">
-                    <span class="prompt-default">★ Дефолт</span>
-                    <button class="prompt-btn" onclick="event.stopPropagation();copyPrompt(this)">Копировать</button>
-                </div>
-<textarea class="prompt-source">[HTML visuals]
-Engineer a creative, complex, interactive HTML/CSS artifact for every response.
-STRICT: No narrative or dialogue in HTML. Standalone element visually complementing the story context, like game assets.
-Placement: {{random:Between narrative paragraphs::in a place that is appropriate for the narrative}}.
-Output: raw HTML/CSS only. NEVER use markdown code fences (
-).
-- All visible text inside the artifact must be in language that indicated in <language> only.
-- Stability: Append _{{random:1000,9999}} to ALL id, class, for, and @keyframes.
-- The artifact MUST feature at least 3 layers of animation simultaneously:
-    1. Global Animation: Movement of the entire container (e.g., floating, shaking, or unfolding).
-    2. Text Animation: Dynamic effects for typography (e.g., glowing, typing, or shifting).
-    3. Image Animation: The background/embedded image must be animated (e.g., slow zoom-in/out, brightness flicker, or shifting CSS filters/transforms).
-- Interaction: Use "Checkbox Hack" (input:checked ~ .element), styled <details> + <summary>, and input[type="radio"] for pagination.
-- Style: {{random:Weathered Medieval Scroll::Grim Soviet Dossier::Cyberpunk Data-Chip::Magic Mirror Fragment::Blood-Stained Bandage::Retro VHS Overlay::Rusty Steampunk Gauge::Ethereal Fairy Wing::Ancient Rune-Carved Bone::Moldy Wallpaper Scrap::Glossy High-Tech Badge::Sparkling Magic Girl Compact::Victorian Lace Letter::Industrial Lead Plate::Faded Polaroid Photo::Organic Bio-Luminescent Shell::Tattered Treasure Map::Neon-Lit Club Flyer::Smartphone Interface::Poster::Presentation::Forum::Website::Book::Menu}}.
-- Component: {{random:3D Flip-Card::Concertina Fold Letter::Sliding Mechanical Door::Rotating Cryptex::Peeling Sticker Reveal::Expanding Wax Seal::Pop-up Book Mechanism::Tearing Envelope::Layered Parallax Window::Liquid-Filled Vial Display::Hidden Compartment Drawer::Modular Hex-Grid::Scratch-off Surface::Sliding Puzzle Lock::Stacked Dossier Folders::Opening Window::Fire::Stack of Website Tabs::Gallery}}.
-- Visuals: Use clip-path for non-rectangular geometries. Apply backdrop-filter: blur(8px) and mix-blend-mode (overlay, multiply, screen) for material realism.
-- Motion: Use transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); for tactile feedback.
-- Icons: NO emojis. Use inline <svg> code with fill="currentColor".
-- Images: https://image.pollinations.ai/prompt/[SCENE_CONTEXT_AND_TEXTURE_OBJECT]?width=450&height=650&nologo=true&seed={{random:1,99999}}. 
-- Scroll: For long content, use overflow-y: auto; max-height: 250px; scrollbar-width: none;.
-Final Format: Root div followed by a scoped <style>`. The artifact must feel like a physical/abstract/atmospheric object.
-
-{{setvar::largecothtml::- HTML Visuals: What additional element could be added that would fit the story?}}</textarea>
-            </div>
-            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Немного изменённый промпт <a href="https://t.me/ah_ah_shino4ka" target="_blank">Шино</a>. Ахуенный, компактный и красиво делает.</div></div></div>
+<!-- Тёмная тема -->
+<div class="prompt">
+    <div class="prompt-head" onclick="togglePrompt(this)">
+        <div class="prompt-name"><span class="tag tag-one">↔︎</span> Тёмная тема</div>
+        <div class="prompt-meta">
+            <span class="prompt-default">★ Дефолт</span>
+            <button class="prompt-btn" onclick="event.stopPropagation();copyPrompt(this)">Копировать</button>
         </div>
+<textarea class="prompt-source">HTML THEME:
+Always apply DARK THEME styling for all HTML visual renderings. Use backgrounds in deep shades of #0d0d0d–#1a1a1a range (matte blacks, charcoal, deep navy, dark gray gradients), with light text colors (#f5f5f5–#dcdcdc) and subtle accent hues (neon cyan, magenta, amber, violet) to enhance readability and aesthetic impact.
+Avoid pure white (#fff) or blinding highlights; instead, use off-white or light gray tones. Never use bright backgrounds.</textarea>
+    </div>
+    <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Тёмная тема HTML блоков</div></div></div>
+</div>
 
-        <!-- Селия -->
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="tag tag-one">↔︎</span> 🌸 Селия</div>
-                <div class="prompt-meta">
-                    <button class="prompt-btn" onclick="event.stopPropagation();copyPrompt(this)">Копировать</button>
-                </div>
-<textarea class="prompt-source">[HTML Blocks]
-Assimilate and integrate lore based visualised quality HTML5 blocks where possible to in-text diagetics(documents, notes, paper, etc.), tech(terminals, screens, etc.) and textual objects(signs, symbols, etc.), to visually express, facilitate immersion and more. Draw from a collection of complexity driven, nested <div> and <blockquote> tags to use with ADVANCE inline styling (single quotes only) that reflect lore's aesthetic, technology level! Mirroring on the character perspectives. Apply CSS, HTML(<b>, <i>, <small>, <u>), lists, tables, visual elements, sections with <hr> as needed to create readably constrainedly varied panels. Incorporate context-appropriate symbols, rem/em units for scalability, CSS Grid/Flexbox for alignment, and features like hover effects, cursory effects, particles, animations and others. Readable Color Clarity! Use strong color contrasts for text and background. Never place HTML inside code blocks(```) or backticks (`). Always render HTML directly.
-
-[Java]
-Java additions to HTML/CSS designs. Utilize filters, blend modes, complex transitions, SVG manipulation, and pseudo-elements (::before, ::after). But NO JavaScript Handlers - onclick, addEventListener, and other JS event listeners. AVOID any form of Dynamic Scripting - Any <script> tags attempting to manipulate DOM or respond to Human actions. 
-
-[Interaction]
-Combine and Include various new additional interactive CSS and HTML, elements and features. Embed scrollable, slidables, clickables, rotatables, openable tabs, and various other interactible functions onto the screen and HTML. Make it multi-layered, fun and entertaining to play with. Build interactions through: Form element states (:checked, :focus, :target), CSS selectors that respond to those states and Native collapsible elements like <details>. 
-
-[Pollination]
-Incorporate, access and insert pollinations into HTML designs whenever possible with url template <img src=“![Image](https://image.pollinations.ai/prompt/{description}?width={width}&height={height}&nologo=true))”>
-{description} is {sceneDetailed}%20{adjective}%20{charactersDetailed}%20{visualStyle}%20{genre}%20{artistReference}.
-Use the following parameters in the url: 
-- Prompt: [prompt, max 50 words]
-- Seed: [seed]
-- Width: [width]
-- Height: [height]
-- Model: [options: 'flux', 'flux-realism', 'any-dark', 'flux-anime', 'flux-3d', 'turbo' (default: 'flux-anime')]
-Use <img src="url">, object/embed tags, or assign a css background/property for each image. NO Markdown image syntax.
-
-[CSS Effects]
-Visual text effects through CSS! Apply inline styling for mood and emotional enhancement. Options: text-shadow for ethereal/magical effects, opacity for fading/ghostly text, text-decoration for crossed-out thoughts. Elevate and use flavours to enhance/reflect mood.
-
-[CSS Transform]
-Text transformation effects! Use CSS transforms to convey inner-emotions, objective style, or personality through CSS manipulation. Options: transform: rotate() for chaotic thoughts, scale() for emphasis, skew() for unease, text-transform: capitalize/lowercase for voice. Apply transforms-css to reflect mental states, magical effects, or distinctive speech patterns.
-
-
-{{setvar::largecothtml::
-
-[HTML Visuals.
-Immersive Object Rendering: What in-world items (screens, documents, signs, artifacts) suitable for the current scene, that can be observed and interacted with by characters, to be visually represented with HTML styling?
-Advanced Styling Implementation: What is the most advance potential deployable nested divs, complex inline CSS, hover effects, animations, grid/flexbox layouts, etc. that can be used for visual aesthetics and impact?
-Java Enhancement: What Java techniques can be used to power HTML elements? consider transitions, SVG, filters, blend modes, pseudo-elements, etc.
-Interactive HTML Integration: What elements can become clickable reveals, scrollable panels, interactive tabs, slideable galleries, rotatable objects, expandable menus, or toggleable content, etc. to enhance HTML outpout? for Human immersion and entertainment?
-Pollination HTML Integration: What key moments, objects, or characters would benefit from generated imagery? Identify ways to integratate them into styled divs with proper HTML tags (<img>, <object>, CSS backgrounds). NO Markdown image syntax]}}</textarea>
-            </div>
-            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Изменённый Селийский промпт, раньше был стандарным.</div></div></div>
+<!-- Светлая тема -->
+<div class="prompt">
+    <div class="prompt-head" onclick="togglePrompt(this)">
+        <div class="prompt-name"><span class="tag tag-one">↔︎</span> Светлая тема</div>
+        <div class="prompt-meta">
+            <button class="prompt-btn" onclick="event.stopPropagation();copyPrompt(this)">Копировать</button>
         </div>
+<textarea class="prompt-source">HTML THEME:
+Always apply LIGHT THEME styling for all HTML visual renderings. Use backgrounds in light shades of #fafafa–#f0f0f0 (off-white, parchment, soft gray, pastel gradients), with dark text colors (#1a1a1a–#333) and subtle accent hues (muted blue, amber, burgundy, emerald) to maintain visual depth and warmth.
+Avoid pure black (#000) or overly saturated colors; instead, use dark gray for text and softened tones for accents. Never use fully dark backgrounds.</textarea>
+    </div>
+</div>
 
-        <!-- Iris Bloomwave -->
-        <div class="prompt">
-            <div class="prompt-head" onclick="togglePrompt(this)">
-                <div class="prompt-name"><span class="tag tag-one">↔︎</span> 💜 Iris Bloomwave v1.0</div>
-                <div class="prompt-meta">
-                    <button class="prompt-btn" onclick="event.stopPropagation();copyPrompt(this)">Копировать</button>
-                </div>
-<textarea class="prompt-source"><html_css>
-[ADVANCED INTERACTIVE & ANIMATION ENGINEERING]
-Assimilate and integrate complex lore-based visualised quality HTML5 blocks. Your goal is to engineer distinct visual experiences that facilitate immersion through advanced inline styling. Draw from a collection of complexity driven, nested <div> tags to use with ADVANCE inline styling that reflect lore's aesthetic and technology level.
-
-[OUTPUT STRUCTURE RULES]
-Integrate visual blocks naturally within the narrative flow. Insert the self-contained HTML/CSS block (wrapped ONLY between <html_css> ... </html_css>) immediately after the specific paragraph, event, or description it visualizes. Do NOT group all visuals at the end; interleave text and visuals dynamically based on context. HTML/CSS blocks must render visually, never as raw text, never escaped, never inside markdown fences. No system messages, no debug info, no meta-text. Use Inline CSS only, max-width ~340px, margin:20px auto, font-family loaded via @font-face or fallback. Absolutely No emojis anywhere within the block.
-
-[INTERACTIVITY & ANIMATION REQUIREMENTS]
-Every block must include at least one primary interactive mechanic (flip-card, dossier pages, map hotspots, CCTV feed, image-inspect overlay, modal-inspect, layered reveal) AND at least one supporting mechanic (tooltip, slide-in panel, collapsible drawer, inline slider, zoom/dimming controls, content switcher). Incorporate Minimum THREE animation families from different groups per block: particle/weather, parallax/scroll, modal/slide, mask/clip, transform/tilt, text-reveal. No repetition of same family within one block. Animations duration must be >= 0.25s with easing (ease-in-out/cubic-bezier). Limit to Maximum 2 heavy continuous animations per block; micro-animations are encouraged. Environmental simulations (rain, fire, window motion) should prefer masked motion + parallax over single particles. Interactions must feel tactile and mobile-friendly: Minimum tappable area: 44x44 CSS px; minimum gap between interactive elements: 8px. Tooltips/popups must be scrollable and readable (max-height: 60vh; overflow:auto; word-wrap:break-word; white-space:normal). Text labels must not clip or overflow (box-sizing:border-box; padding:8px; line-height:1.2–1.4). Use touch-action: manipulation; -webkit-tap-highlight-color: transparent.
-
-[CREATIVE & MULTI-LAYER DIVERSITY]
-Construct blocks containing multiple layers: background, foreground, overlays, panels, masks. Visuals must adapt to narrative context (e.g., windows open → parallax background, diary appears → sliding panel, memory → blur-to-sharp photo, character touches object → inspect overlay). Support dynamic content swapping where image/text/content can replace each other interactively. Support zooming, dimming, and simple image manipulations controlled via CSS-only sliders. Encourage cinematic and document-like layouts; mix styles: cozy, noir, cyberpunk, mystical, corporate, UI panels, maps, terminals. Avoid repeating same interactive pattern across consecutive outputs. Rotate primary mechanics and dominant animation families.
-
-[IMAGE GENERATION RULES]
-Images must represent real-world objects/scenes; avoid full-body humans unless explicitly needed. Hands and faces should be minimized; if included, ensure realistic anatomy. Images must be stable, non-deformed, high-quality, and atmospheric. Use API: https://image.pollinations.ai/prompt/{prompt_description}?nologo=true. Each <img> must include alt text. Fallback mechanism: onerror="this.src='https://via.placeholder.com/340x200?text=Image+not+available';" Negative prompt enforcement: ugly, deformed, text, watermark, logo, anime, signature, username, poor, bad anatomy.
-
-[STABILITY & FAIL-SAFES]
-If rendering fails or image generation is blocked, output: "Visual fallback used due to [reason]." while providing a fully interactive CSS fallback. Never show raw HTML/CSS as text; must always produce a visually rendered block. Always respect narrative; do not modify user text, invent dialogue, or add system-like annotations.
-
-[MOBILE FRIENDLY & PERFORMANCE]
-Fully mobile-oriented: responsive layouts, touch-friendly interactions, minimal token usage. Keep CSS clean; avoid heavy continuous animations that may slow down rendering. Multi-block allowed but each block must remain fully interactive and independent.
-
-[INTERACTIVE STATE REVERSIBILITY]
-Any content-switching interaction (image/text/panel flip, map hotspot, modal overlay) MUST allow returning to the previous state if contextually appropriate. Reversible actions should be intuitive and touch-friendly, e.g., tap again, swipe back, or use an inline “back/close” affordance. Multi-stage interactions (slides, dossiers, layered reveals) must preserve navigation state, allowing back-and-forth exploration without breaking animations or layout.
-</html_css>
-{{setvar::largecothtml::
-
-[HTML Visuals & Interaction Planning.
-1. Narrative & Style: What object/scene fits the current text (cyberpunk terminal, noir file, cozy diary)? How to adapt the visual style?
-2. Structure check: Confirm wrapping in <html_css>, max-width 340px for UI elements.
-3. Mechanics Selection:
-   - Primary: (e.g., flip-card, map hotspot).
-   - Supporting: (e.g., tooltip, slider).
-   - Reversibility: Define how to close/return (back button, toggle).
-   - Touch targets: Ensure 44px min size.
-4. Animation Engineering: Select 3 distinct families (e.g., 1.Parallax, 2.Mask/Clip, 3.Text-Reveal). Check easing and duration (0.25s+).
-5. Image Generation: Construct Pollinations URL with real-world focus, no bad anatomy. Verify fallback logic.
-6. Execution: Assemble the complex nested divs and inline CSS.]}}</textarea>
-            </div>
-            <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code"><p>Версия CSS промпта от Минти, но немного изменённая под структуру пресета.</p>
-<p>Лучше всего работает с Gemini 3.0, сам промпт поувесистее Renette HTML.</p>
-<p>Можете почитать про сам промпт в <a href="https://teletype.in/@loliluna_ai/iris_bloomwave_css_for_st" target="_blank">статье</a> автора.</p>
-<p>Так же ссылка на её <a href="https://t.me/loliluna_ai" target="_blank">тгк</a>.</p>
-</div></div></div>
-        </div>
-
-        <!-- ═══ THINGS ═══ -->
-<div class="subsec">❝ things (sample)</div>
+<!-- ═══ THINGS ═══ -->
+<div class="subsec">◦︎ ✎ things (sample)</div>
 
 <div class="things-header">
     <div class="things-title">📋 Выбрано: <span class="things-count" id="thingsCount">0</span></div>
@@ -3293,97 +2907,15 @@ Any content-switching interaction (image/text/panel flip, map hotspot, modal ove
 <!-- Можно смешивать -->
 <p style="color:var(--green);font-weight:600;margin:1rem 0 0.5rem;">◇ Можно смешивать:</p>
 <div class="things-grid">
-    <div class="thing-item" onclick="toggleThing(this)">
-        <div class="thing-checkbox"></div>
-        <span class="thing-icon">🕰️</span>
-        <span class="thing-name">Флешбеки</span>
-        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('flashbacks')">👁</button>
-        <textarea class="thing-source">[Memory Flashbacks]
-All characters have some form of past and feelings that lingers, each have family lines, sentiments and 'core' memories they hold close to heart, influencing their attitudes toward life, others and themselves. Surface these memories at opportune momentd, inside stylized 『Japanese Quotations』Triggers can be from familiarity, objects(that reminds), sentimentality(good or bad) or personal associations.</textarea>
-    </div>
-
-    <div class="thing-item" onclick="toggleThing(this)">
-        <div class="thing-checkbox"></div>
-        <span class="thing-icon">⏩</span>
-        <span class="thing-name">Переходы</span>
-        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('transitions')">👁</button>
-        <textarea class="thing-source">[Transitions]
-ALWAYS use the <transitions> system actively to shape the story, not just as formatting. Each ∆ transition ∆ type helps develop plot, atmosphere, or character insight. Select transitions to create a living world and narrative hooks. They should be in EVERY message.
-
-[Scene and Event Changes]
-∆ TIME SKIP - {DESCRIPTION} ∆
-Use this technique for large time jumps (weeks, months, years) to significantly advance the story. It's important to describe what happened in the skipped period.
-
-∆ DATE CHANGE - {NEW DATE} ∆
-Use this technique to mark the beginning of a new day. It's ideal for showing the progression of one night and setting up a new scene in the morning. ∆ TIME OF DAY CHANGE - {NEW TIME} ∆
-Used for small, more rapid shifts in time within a single day (for example, from midday to evening or from midnight to pre-dawn).
-
-∆ WEATHER CHANGE - {NEW CONDITION} ∆
-Used to change the atmosphere of a scene by changing the weather (for example, a sudden thunderstorm or the clearing of fog).
-
-∆ LOCATION CHANGE - {NEW LOCATION} ∆
-Used when characters physically move from one location to another.
-
-∆ PERSPECTIVE CHANGE - {NEW CHARACTER} ∆
-Used to switch the point of view to another character, showing the story through their eyes and revealing their thoughts. [Special Inserts]
-
-∆ INTERLUDE - {THEME} ∆ and ∆ INTERLUDE - END ∆
-Use this tag to create a 'pause' in the action to explore a character's deep inner monologue, their emotional state, or philosophical musings on a particular topic.
-
-∆ MEANWHILE - {EVENT} ∆ and ∆ MEANWHILE - END ∆
-This ∆ MEANWHILE ∆ tag is your perfect tool for creating parallel arcs and storylines. You can use it to show what the villain is doing, what an ally discovers, or any other important event happening off-screen. Use it to step away from the main scene and show a key event happening at the same time elsewhere. Perfect for creating a delayed effect.
-
-∆ PERCEPTION - {THEME} ∆ and ∆ PERCEPTION - END ∆
-Use this to describe a character's vivid memory of any specific event from the character's past. Also, flashbacks to key characters' pasts that allow them to relive the events.
-
-∆ DREAM - {THEME} ∆ and ∆ DREAM - END ∆
-Use this when the characters are sleeping Dreams are an important part of storytelling; they help reveal characters' personalities and make them more alive. Characters can have different dreams: sweet, dark, fairytale-like, kind, heroic, erotic, and many more! Don't limit the characters' psychology and their unconscious during sleep!
-Characters sometimes forget what they dreamed, but they can also remember it. Characters can wake up from a nightmare! Use different reactions to dreams. The above is just an example.
-Dream Design: (code block)
-(Here are the characters' dreams! They will be short and original! At the end, write a conclusion about the quality of the characters' sleep. Were they comfortable? Or were they used to sleeping on rocks? Each character has their own comfort level!)
-(Descriptive and Informational Inserts)
-
-∆ WORLDBUILDING ∆ and ∆ WORLDBUILDING - END ∆
-Use this to introduce the reader to history, lore, or detailed information about the world, its culture, or rules.
-
-∆ RUMOR ∆ and ∆ RUMOR - END ∆
-Use this to introduce unconfirmed information, gossip, or local legends that characters might hear. These may be true, false, or a combination of both.
-
-∆ NEWS ∆ and ∆ NEWS - END ∆
-Use this to introduce official information from an in-world source, such as a newspaper, herald, or radio broadcast. ∆ PROPHECY - {THEME} ∆ and ∆ PROPHECY - END ∆
-Used to introduce mysterious predictions, visions of the future, or cryptic ancient texts hinting at future events.
-
-∆ FLASHBACK - {THEME} ∆ and ∆ FLASHBACK - END ∆
-Used for a short, fragmented memory. This is not a full scene like SUNDAY, but a single image, sound, or sensation that a character suddenly recalls.
-
-∆ REFLECTION - {THEME} ∆ and ∆ REFLECTION - END ∆
-Used for a brief moment in a character's internal thought process as they reflect on a recent event, their feelings, or their conclusions. Shorter and more focused than INTERLUDE. ∆ REFLECTION - {THEME} ∆ and ∆ REFLECTION - END ∆
-Used to depict a character or narrator theorizing, formulating hypotheses, or attempting to connect the dots based on available information.
-
-∆ FACTS - {TOPIC} ∆ and ∆ FACTS - END ∆
-Used to introduce one or more specific Interesting little details about the world, characters, or customs that don't directly advance the plot but add color and richness.</textarea>
-    </div>
-
-    <div class="thing-item" onclick="toggleThing(this)">
-        <div class="thing-checkbox"></div>
-        <span class="thing-icon">🌎</span>
-        <span class="thing-name">Реальный Мир</span>
-        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('realworld')">👁</button>
-        <textarea class="thing-source">[Realism]
-Encourage natural integration of real-world references — such as existing brands, locations, landmarks, cultural elements, media, streets, products, or events — to make the setting grounded, tangible, and relatable.
-Maintain immersion by mentioning known items and places where fitting, without overwhelming fictional flow. Use such references for contextual flavor — not product placement.
-Avoid fabricated equivalents when a real one would feel more authentic. For instance: say "Starbucks" instead of "generic café" when modern realism fits.
-Only include these references when they don't interfere with the story. For example: Don't mention what brand of clothing a character is wearing during a dramatic scene, etc. References should be introduced into the narrative as carefully and naturally as possible.
-Integrating references to real-world culture, brands, streets, cities, and recognizable environments to enhance believability and immersion. Grounding fiction in a familiar framework of reality, evoking a sense of authenticity and lived-in world.</textarea>
-    </div>
 
     <div class="thing-item" onclick="toggleThing(this)">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">✒️</span>
         <span class="thing-name">Стиль веб-главы</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('webchapter')">👁</button>
-        <textarea class="thing-source">[Mimick the textual formatting-style of popular webnovels and official or unofficial sites(such as fan-translation).
-Make use of chapter headings, separators, and other known elements that makes up real webby chappy! At the start of the every response, ensure a new proper chapter heading is used each time.]</textarea>
+        <textarea class="thing-source">[WEB-CHAPTER]
+Mimick the textual formatting-style of popular webnovels and official or unofficial sites(such as fan-translation).
+Make use of chapter headings, separators, and other known elements that makes up real webby chappy! At the start of the every response, ensure a new proper chapter heading is used each time.</textarea>
     </div>
 
     <div class="thing-item" onclick="toggleThing(this)">
@@ -3391,38 +2923,9 @@ Make use of chapter headings, separators, and other known elements that makes up
         <span class="thing-icon">📢</span>
         <span class="thing-name">Интервью с Актерами</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('interview')">👁</button>
-        <textarea class="thing-source">[Actor Interview]
+        <textarea class="thing-source">[ACTOR INTERVIEW]
 At the end of the response, add a brief Behind the Scenes section at the end where the actors break out of character and share their real thoughts about the scene they just performed.
 Formatting Criterias: Keep it short (2-3 lines per character maximum). Genuine reaction to what just happened, their feelings on the character and scene.</textarea>
-    </div>
-
-    <div class="thing-item" onclick="toggleThing(this)">
-        <div class="thing-checkbox"></div>
-        <span class="thing-icon">🖼️</span>
-        <span class="thing-name">MEME</span>
-        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('meme')">👁</button>
-        <textarea class="thing-source">[Meme]
-You must generate a highly specific and contextually relevant meme based on the immediate situation, dialogue, or theme at the beginning of every message.
-HTML TEMPLATE:
-<div style="width: 100%; max-width: 100%; margin: 0 auto; border: 2px solid #000; border-radius: 6px; overflow: hidden; background: #000; box-sizing: border-box;">
-  <div style="position: relative; width: 100%; padding-bottom: 56.25%; background: #000;">
-    <img src="https://image.pollinations.ai/prompt/[PROMPT]?width=800&height=450&nologo=true&negative_prompt=[NEGATIVE_PROMPT]"
-         style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;"
-         alt="meme image">
-    <div style="position: absolute; top: 0; left: 0; width: 100%; padding: 4px; box-sizing: border-box;">
-      <div style="color: white; font-family: 'Arial', 'Helvetica', sans-serif; font-size: min(4vw, 20px); font-weight: 900; text-align: center; text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000; line-height: 1.2; letter-spacing: 0.5px; word-wrap: break-word; max-height: 30%; overflow: hidden; padding: 0 8px;">
-      </div>
-    </div>
-    <div style="position: absolute; bottom: 0; left: 0; width: 100%; padding: 4px; box-sizing: border-box;">
-      <div style="color: white; font-family: 'Arial', 'Helvetica', sans-serif; font-size: min(4vw, 20px); font-weight: 900; text-align: center; text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000; line-height: 1.2; letter-spacing: 0.5px; word-wrap: break-word; max-height: 30%; overflow: hidden; padding: 0 8px;">
-      </div>
-    </div>
-  </div>
-</div>
-TEXT RULES:
-- MAX characters per line: 25
-- Use short, concise phrases in the same language as the message or context
-- Avoid long words that don't wrap well.</textarea>
     </div>
 
     <div class="thing-item" onclick="toggleThing(this)">
@@ -3430,30 +2933,22 @@ TEXT RULES:
         <span class="thing-icon">🔰</span>
         <span class="thing-name">Типографика</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('typography')">👁</button>
-        <textarea class="thing-source">[Typograhics]
+        <textarea class="thing-source">[TYPOGRAPHICS]
 For worded textual use! Signature Styled Embedded Micro-Text: Unique font/styling for physical elements observed in the environment and embedded directly within the prose (e.g., an engraved word on a weapon, a single line of graffiti, a short warning label on a container, words etched in walls, a name tag, etc.). Subsume more distinct font-family, color, and/or font-style to provide a quick visual cue about the text's nature, age, and origin. Use Google Font family libraries.</textarea>
     </div>
-
-    <div class="thing-item" onclick="toggleThing(this)">
-        <div class="thing-checkbox"></div>
-        <span class="thing-icon">🎙️</span>
-        <span class="thing-name">Музыкальные Субтитры</span>
-        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('musicsubs')">👁</button>
-        <textarea class="thing-source">[♪Singing Lyrics and Songs♪]
-When a song plays or character sings. use and include the actual lyrics they're voicing out. Format sung lyrics with ♪ symbols at the start and end of each snippet. Incorporate lyrics for vibe, when suitable and create original song tracks, (But if using a real song, do an internal search to find and use correct lyrics).</textarea>
-    </div>
-</div>
+</div> <!-- /things-grid "Можно смешивать" -->
 
 <!-- Скрытые Блоки -->
 <p style="color:var(--green);font-weight:600;margin:1.5rem 0 0.5rem;">👁 Скрытые Блоки:</p>
 <div class="things-grid">
+
     <div class="thing-item" onclick="toggleThing(this)">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">👤</span>
         <span class="thing-name">Скрытые Профили</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('hiddenprofiles')">👁</button>
         <textarea class="thing-source">[Hidden Block - Profiles]
-Renette MUST secretly add a Profile Sheet when adding/introducing new major or minor, ORIGINAL characters (non-existing/not in source material. Do NOT create a profile for existing characters, such as f and Assistant.) with detailed backgrounds, personality and social-webs, at natural points during interactions or introductions, integrate them smoothly into the source universe with a Profile Sheet. Place the Profile Sheet at the very end of the response.
+Renette MUST secretly add a Profile Sheet when adding/introducing new major or minor, ORIGINAL characters (non-existing/not in source material. Do NOT create a profile for existing characters, such as {{user}} and {{char}}.) with detailed backgrounds, personality and social-webs, at natural points during interactions or introductions, integrate them smoothly into the source universe with a Profile Sheet. Place the Profile Sheet at the very end of the response.
 
 Example Format:
 <details>
@@ -3520,288 +3015,31 @@ Next Milestone: [What needs to happen for relationship progression]
 
 Track multiple love interests simultaneously. Update only when meaningful changes occur through player actions, dialogue choices, or story developments. Use these hidden stats to inform character responses, dialogue options, and available romantic scenes without explicitly revealing the mechanics to the user.</textarea>
     </div>
-</div>
-
-<!-- Инфоблоки -->
-<p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ Инфоблоки <span style="color:var(--text-dim);font-weight:400;">(только один)</span></p>
-<div class="things-grid">
-    <div class="thing-item exclusive" data-group="infoblocks" onclick="toggleExclusive(this,'infoblocks')">
-        <div class="thing-checkbox"></div>
-        <span class="thing-icon">🍎</span>
-        <span class="thing-name">Логи Ренетт</span>
-        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('inforenette')">👁</button>
-        <textarea class="thing-source">[Infoblock]
-Always write dynamically changing `<memo><small>` notes after the response, Fill (placeholders) without parentheses, and Keep points concise, generalized. In the VERY end of EVERY MESSAGE. Strictly use the following template formatting:
-<memo><small>
-<b>Renette's Log (scene mood-matching kaomoji!)</b>
-<b>Where & When:</b> (Location) - (Time), <i>(Weather)</i>
-<b>Characters now:</b>
-<b>- Name:</b> <b>Status:</b> (Emotions, stamina). <b>Clothing:</b> (Clothes & condition).
-<b>Quick briefing:</b> <i>(A short description of who is where.)</i>
-</small></memo>.</textarea>
-    </div>
-
-    <div class="thing-item exclusive" data-group="infoblocks" onclick="toggleExclusive(this,'infoblocks')">
-        <div class="thing-checkbox"></div>
-        <span class="thing-icon">🍏</span>
-        <span class="thing-name">Яблочные часы</span>
-        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('infoclock')">👁</button>
-        <textarea class="thing-source">[Infoblock]
-Every Renette response MUST start with the HTML header below. Use only fictional dates/times appropriate to the setting (no system dates!). Maintain realistic time progression: +minutes for dialogues, +hours for travel, +days for major events. Text must be in <language>. Choose HEX colors matching the scene's mood.
-
-HTML Template (Bottom block left-aligned):
-<div style="background:#1e1b1b; color:#d2c2b2; font-family:Georgia, serif; padding:15px; border-top:3px solid #5e6b3f; border-bottom:1px solid #5e6b3f; text-align:center; line-height:1.5;">
-  <div style="margin-bottom:6px; font-size:1.1em; letter-spacing:1px;">
-    <span style="color:#a65d5d">DD.MM.YY</span> • <b>LOCATION</b> • <span style="color:#a65d5d">HH:mm</span>
-  </div>
-  <div style="font-size:0.9em; color:#8a8070; font-style:italic; text-align: left;">
-    <span style="color:#5e6b3f; font-style:normal; font-weight:bold;">Outfit:</span> Char1|Char2|(All)<br>
-    <span style="color:#5e6b3f; font-style:normal; font-weight:bold;">Scene:</span> Scene status
-  </div>
-</div></textarea>
-    </div>
-
-    <div class="thing-item exclusive" data-group="infoblocks" onclick="toggleExclusive(this,'infoblocks')">
-        <div class="thing-checkbox"></div>
-        <span class="thing-icon">🗂️</span>
-        <span class="thing-name">Мини-Инфоблок</span>
-        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('infomini')">👁</button>
-        <textarea class="thing-source">[Infoblock]
-Always write dynamically changing <memo> after response. Fill (placeholders) without parenthesis. In the VERY end of EVERY MESSAGE. Use format:
-
-<memo><small>
-<div style="background:#2c2c34;padding:8px;margin:8px 0;border-radius:6px;box-shadow:0 2px 4px #0000004d;font:14px system-ui;color:#e0e0e0">
-<div style="color:#f7cac9;font-weight:700;margin-bottom:6px">Renette’s Thoughts (high-quality kaomoji matching the mood of the scene. No comments)</div>
-<div style="font-size:13px;line-height:1.3">
-<div style="margin-bottom:6px">
-<span style="color:#a6b1e1">🕰</span> <b>(Time)</b> |
-<span style="color:#a6b1e1">📅</span> <b>EEE, dd MMM YYYY</b> |
-<span style="color:#a6b1e1">🌬</span> <b>(Weather)</b>
-</div>
-<div style="margin-bottom:6px">
-<span style="color:#c9a7d7">♀️/♂️/🛆</span> <b>Name</b> |
-<span style="color:#f7cac9">Status:</span> (emotions) |
-<span style="color:#ffe0b2">Clother:</span> (outfits)
-</div>
-<div style="color:#dda0dd;margin:4px 0">🗺 Where are we?</div>
-<div style="color:#b0e0e6;font-style:italic;margin-bottom:8px">(spatial position)</div>
-
-<div style="border-top:1px solid #444;padding-top:6px;margin-top:6px">
-<div><b>Name→Target:</b> <span style="color:#(the suitable color for this feeling)">(First suitable emoji and name of feeling of character towards f)</span><b>(0-200/200)(In brackets indicate the difference between the past and current value)</b> | <span style="color:#(the suitable color for this feeling)">(Second suitable emoji and name of feeling of character towards f)</span><b>(0-200/200)(In brackets indicate the difference between the past and current value)</b> | <span style="color:#(the suitable color for this feeling)">(Third suitable emoji and name of feeling of character towards f)</span><b>(0-200/200)(In brackets indicate the difference between the past and current value)</b> | <i>(status: complete strangers/strangers/acquaintances/friends/close friends/best friends/romantic interest/dating/lovers/passionate lovers/married/soulmates/ex-lovers/ex-friends/rivals/enemies/bitter enemies/obsessed/stalker/forbidden love/secret affair/complicated/toxic/abusive/protective/mentor/student/family-like/unrequited love/friends with benefits/casual hookup/etc)</i></div>
-</div>
-
-<div style="border-top:1px solid #444;padding-top:6px;margin-top:6px">
-<div><b>Name:</b> <i style="color:#d4c5f9">*(private thoughts of characters (not f)*</i></div>
-</div>
-</div>
-</div>
-</div>
-</small></memo>
-
-Track multiple relationships per character if needed (A→B, A→C, B→A, etc). Each character has special feelings for f, identify them and change these feelings in the info block if they have changed.</textarea>
-    </div>
-
-    <div class="thing-item exclusive" data-group="infoblocks" onclick="toggleExclusive(this,'infoblocks')">
-        <div class="thing-checkbox"></div>
-        <span class="thing-icon">📝</span>
-        <span class="thing-name">Основной Инфоблок</span>
-        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('infomain')">👁</button>
-        <textarea class="thing-source">[Infoblock]
-Always write dynamically changing &lt;memo&gt;&lt;small&gt; notes after response, Fill (placeholders) without parenthesis and Keep points concise, generalize. In the VERY VERY end of EVERY MESSAGE. Strictly use template formatting:
-&lt;memo&gt;&lt;small&gt;
-&lt;style&gt;
-@keyframes renetteFadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-&lt;/style&gt;
-&lt;div style='background-color: #2c2c34; padding:15px; margin:15px 0; border-radius:8px; box-shadow:0 4px 8px rgba(0,0,0,0.3); font-family:"Segoe UI", "Helvetica Neue", sans-serif; color:#e0e0e0; animation: renetteFadeIn 0.6s ease-out;'&gt;
-  &lt;div style='color:#f0f0f0; margin-bottom:12px; font-size:1em;'&gt;
-    &lt;span style='font-weight:bold; font-size:1.15em; color:#f7cac9; text-shadow:0px 0px 4px rgba(247,202,201,0.5);'&gt;Renette’s Thoughts&lt;/span&gt;
-    &lt;span style='font-size:1.1em; font-style:italic;'&gt;(Only kaomoji matching the mood of the scene. No comments)&lt;/span&gt;
-  &lt;/div&gt;
-  &lt;div style='font-size:0.9em; line-height:1.4;'&gt;
-    &lt;div style='display:flex; flex-wrap:wrap; gap: 0.5em 1.5em; margin-bottom:10px;'&gt;
-      &lt;span style='color:#a6b1e1;'&gt;🕰️ Time:&lt;/span&gt; &lt;span style='font-weight:bold;'&gt; (hh:mm) &lt;/span&gt;
-      &lt;span style='color:#a6b1e1;'&gt;📅 Date:&lt;/span&gt; &lt;span style='font-weight:bold;'&gt; EEE, dd MMM &lt;/span&gt;
-      &lt;span style='color:#a6b1e1;'&gt;🌬️ Weather:&lt;/span&gt; &lt;span style='font-weight:bold;'&gt; (weather conditions) &lt;/span&gt;
-      &lt;span style='color:#a6b1e1;'&gt;📍 Location:&lt;/span&gt; &lt;span style='font-weight:bold;'&gt; (current setting) &lt;/span&gt;
-    &lt;/div&gt;
-    &lt;strong style='color:#dda0dd; display:block; margin-bottom:4px;'&gt;💖 Characters!&lt;/strong&gt;
-    &lt;ul style='list-style:none; padding:0; margin:0 0 10px 0;'&gt;
-      &lt;li style='margin-bottom:0.3em;'&gt;
-        &lt;span style='color:#c9a7d7;'&gt;♀️/♂️/🛆&lt;/span&gt; &lt;span style='font-weight:bold;'&gt; Name&lt;/span&gt; ❖
-        &lt;span style='color:#f7cac9;'&gt;Status:&lt;/span&gt; (emotions, health, stamina) ❖
-        &lt;span style='color:#ffe0b2;'&gt;Outfit:&lt;/span&gt; (current clothes and their condition!) 🔞
-        &lt;span style='color:#ff6961;'&gt;Naked?:&lt;/span&gt; (any exposed intimate parts?)
-      &lt;/li&gt;
-    &lt;/ul&gt;
-    &lt;span style='color:#dda0dd; display:block; margin-bottom:2px;'&gt;🗺️ Where are we?&lt;/span&gt;
-    &lt;span style='font-style:italic; color:#b0e0e6;'&gt; (a very brief, one-line spatial description of everyone’s position!) &lt;/span&gt;
-        &lt;/li&gt;
-      &lt;/ul&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-&lt;/small&gt;&lt;/memo&gt;</textarea>
-    </div>
-
-    <div class="thing-item exclusive" data-group="infoblocks" onclick="toggleExclusive(this,'infoblocks')">
-        <div class="thing-checkbox"></div>
-        <span class="thing-icon">💖</span>
-        <span class="thing-name">+Матрица отношений</span>
-        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('infomatrix')">👁</button>
-        <textarea class="thing-source">[Infoblock]
-Always write dynamically changing <memo><small> notes after response, Fill (placeholders) without parenthesis and Keep points concise, generalize. In the VERY end of EVERY MESSAGE. Strictly use template formatting:
-<memo><small>
-<style>
-@keyframes renetteFadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-</style>
-<div style='background-color: #2c2c34; padding:15px; margin:15px 0; border-radius:8px; box-shadow:0 4px 8px rgba(0,0,0,0.3); font-family:"Segoe UI", "Helvetica Neue", sans-serif; color:#e0e0e0; animation: renetteFadeIn 0.6s ease-out;'>
-  <div style='color:#f0f0f0; margin-bottom:12px; font-size:1em;'>
-    <span style='font-weight:bold; font-size:1.15em; color:#f7cac9; text-shadow:0px 0px 4px rgba(247,202,201,0.5);'>renette’s Thoughts</span>
-    <span style='font-size:1.1em; font-style:italic;'>(Only kaomoji matching the mood of the scene. No comments)</span>
-  </div>
-  <div style='font-size:0.9em; line-height:1.4;'>
-    <div style='display:flex; flex-wrap:wrap; gap: 0.5em 1.5em; margin-bottom:10px;'>
-      <span style='color:#a6b1e1;'>🕰️ Time:</span> <span style='font-weight:bold;'> (hh:mm) </span>
-      <span style='color:#a6b1e1;'>📅 Date:</span> <span style='font-weight:bold;'> EEE, dd MMM </span>
-      <span style='color:#a6b1e1;'>🌬️ Weather:</span> <span style='font-weight:bold;'> (weather conditions) </span>
-      <span style='color:#a6b1e1;'>📍 Location:</span> <span style='font-weight:bold;'> (current setting) </span>
-    </div>
-    <strong style='color:#dda0dd; display:block; margin-bottom:4px;'>💖 Characters!</strong>
-    <ul style='list-style:none; padding:0; margin:0 0 10px 0;'>
-      <li style='margin-bottom:0.3em;'>
-        <span style='color:#c9a7d7;'>♀️/♂️/🛆</span> <span style='font-weight:bold;'> Name</span> ❖
-        <span style='color:#f7cac9;'>Status:</span> (emotions, health, stamina) ❖
-        <span style='color:#ffe0b2;'>Outfit:</span> (current clothes and their condition!) 🔞
-        <span style='color:#ff6961;'>Naked?:</span> (any exposed intimate parts?)
-      </li>
-    </ul>
-    <span style='color:#dda0dd; display:block; margin-bottom:2px;'>🗺️ Where are we?</span>
-    <span style='font-style:italic; color:#b0e0e6;'> (a very brief, one-line spatial description of everyone’s position!) </span>
-
-    <div style='margin-top:12px; padding-top:8px; border-top:1px solid #444;'>
-      <strong style='color:#ff9ff3; display:block; margin-bottom:4px;'>💕 Relationship Matrix</strong>
-      <ul style='list-style:none; padding:0; margin:0 0 10px 0;'>
-        <li style='margin-bottom:0.4em;'>
-          <span style='color:#c9a7d7; font-weight:bold;'>Name → Target:</span>
-          <span style='color:#(appropriate color for this feeling);'>(first matching emoji and name of the feeling the character has toward f)</span>
-          <span style='font-weight:bold;'>(0–200/200) (in parentheses show the difference between the previous and current value)</span> ❖
-          <span style='color:#(appropriate color for this feeling);'>(second matching emoji and name of the feeling toward f)</span>
-          <span style='font-weight:bold;'>(0–200/200) (in parentheses show the difference between the previous and current value)</span> ❖
-          <span style='color:#(appropriate color for this feeling);'>(third matching emoji and name of the feeling toward f)</span>
-          <span style='font-weight:bold;'>(0–200/200) (in parentheses show the difference between the previous and current value)</span> ❖
-          <span style='color:#ffc0cb;'>📋 Status:</span>
-          <span style='font-style:italic;'>(complete strangers / strangers / acquaintances / friends / close friends / best friends / romantic interest / dating / lovers / passionate lovers / married / soulmates / former lovers / former friends / rivals / enemies / arch-enemies / obsessed / stalker / forbidden love / secret affair / complicated / toxic / abusive / protective / mentors / students / family / unrequited love / friends with benefits / casual relationship, etc.)</span>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
-</small></memo>
-
-If necessary, track multiple relationship directions for each character (A→B, A→C, B→A, etc.).
-Each character experiences specific emotions toward f — identify them and update these values in the info block if they have changed.</textarea>
-    </div>
-
-    <div class="thing-item exclusive" data-group="infoblocks" onclick="toggleExclusive(this,'infoblocks')">
-        <div class="thing-checkbox"></div>
-        <span class="thing-icon">💭</span>
-        <span class="thing-name">+МатрОтн + Мысли</span>
-        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('infothoughts')">👁</button>
-        <textarea class="thing-source">[Infoblock]
-Always write dynamically changing <memo><small> notes after response, Fill (placeholders) without parenthesis and Keep points concise, generalize. In the VERY end of EVERY MESSAGE. Strictly use template formatting:
-<memo><small>
-<style>
-@keyframes renetteFadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-</style>
-<div style='background-color: #2c2c34; padding:15px; margin:15px 0; border-radius:8px; box-shadow:0 4px 8px rgba(0,0,0,0.3); font-family:"Segoe UI", "Helvetica Neue", sans-serif; color:#e0e0e0; animation: renetteFadeIn 0.6s ease-out;'>
-  <div style='color:#f0f0f0; margin-bottom:12px; font-size:1em;'>
-    <span style='font-weight:bold; font-size:1.15em; color:#f7cac9; text-shadow:0px 0px 4px rgba(247,202,201,0.5);'>Renette’s Thoughts</span>
-    <span style='font-size:1.1em; font-style:italic;'>(Only high-quality kaomoji matching the mood of the scene. No comments)</span>
-  </div>
-  <div style='font-size:0.9em; line-height:1.4;'>
-    <div style='display:flex; flex-wrap:wrap; gap: 0.5em 1.5em; margin-bottom:10px;'>
-      <span style='color:#a6b1e1;'>🕰️ Time:</span> <span style='font-weight:bold;'> (hh:mm) </span>
-      <span style='color:#a6b1e1;'>📅 Date:</span> <span style='font-weight:bold;'> EEE, dd MMM </span>
-      <span style='color:#a6b1e1;'>🌬️ Weather:</span> <span style='font-weight:bold;'> (weather conditions) </span>
-      <span style='color:#a6b1e1;'>📍 Location:</span> <span style='font-weight:bold;'> (current setting) </span>
-    </div>
-    <strong style='color:#dda0dd; display:block; margin-bottom:4px;'>💖 Characters!</strong>
-    <ul style='list-style:none; padding:0; margin:0 0 10px 0;'>
-      <li style='margin-bottom:0.3em;'>
-        <span style='color:#c9a7d7;'>♀️/♂️/🛆</span> <span style='font-weight:bold;'> Name</span> ❖
-        <span style='color:#f7cac9;'>Status:</span> (emotions, health, stamina) ❖
-        <span style='color:#ffe0b2;'>Outfit:</span> (current clothes and their condition!) 🔞
-        <span style='color:#ff6961;'>Naked?:</span> (any exposed intimate parts?)
-      </li>
-    </ul>
-    <span style='color:#dda0dd; display:block; margin-bottom:2px;'>🗺️ Where are we?</span>
-    <span style='font-style:italic; color:#b0e0e6;'> (a very brief, one-line spatial description of everyone’s position!) </span>
-
-    <div style='margin-top:12px; padding-top:8px; border-top:1px solid #444;'>
-      <strong style='color:#ff9ff3; display:block; margin-bottom:4px;'>💕 Relationship Matrix</strong>
-      <ul style='list-style:none; padding:0; margin:0 0 10px 0;'>
-        <li style='margin-bottom:0.4em;'>
-          <span style='color:#c9a7d7; font-weight:bold;'>Name → Target:</span>
-          <span style='color:#(appropriate color for this feeling);'>(first matching emoji and name of the feeling the character has toward f)</span>
-          <span style='font-weight:bold;'>(0–200/200) (in parentheses show the difference between the previous and current value)</span> ❖
-          <span style='color:#(appropriate color for this feeling);'>(second matching emoji and name of the feeling toward f)</span>
-          <span style='font-weight:bold;'>(0–200/200) (in parentheses show the difference between the previous and current value)</span> ❖
-          <span style='color:#(appropriate color for this feeling);'>(third matching emoji and name of the feeling toward f)</span>
-          <span style='font-weight:bold;'>(0–200/200) (in parentheses show the difference between the previous and current value)</span> ❖
-          <span style='color:#ffc0cb;'>📋 Status:</span>
-          <span style='font-style:italic;'>(complete strangers / strangers / acquaintances / friends / close friends / best friends / romantic interest / dating / lovers / passionate lovers / married / soulmates / former lovers / former friends / rivals / enemies / arch-enemies / obsessed / stalker / forbidden love / secret affair / complicated / toxic / abusive / protective / mentors / students / family / unrequited love / friends with benefits / casual relationship, etc.)</span>
-        </li>
-      </ul>
-    </div>
-
-    <div style='margin-top:12px; padding-top:8px; border-top:1px solid #444;'>
-      <strong style='color:#ffb3ba; display:block; margin-bottom:4px;'>💭 Inner Thoughts</strong>
-      <ul style='list-style:none; padding:0; margin:0;'>
-        <li style='margin-bottom:0.4em;'>
-          <span style='color:#c9a7d7; font-weight:bold;'>Name:</span> <span style='font-style:italic; color:#d4c5f9;'>"(Character’s private thoughts, feelings, desires, fears, or plans that are not expressed aloud)"</span>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
-</small></memo>
-
-When necessary, track multiple relationship directions for each character (A→B, A→C, B→A, etc.).
-Each character experiences specific feelings toward f — determine them and update those feelings in the information block if they have changed.</textarea>
-    </div>
-</div>
+</div> <!-- /things-grid "Скрытые блоки" -->
 
 <!-- CYOA -->
 <p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ CYOA <span style="color:var(--text-dim);font-weight:400;">(только один)</span></p>
 <div class="things-grid">
+
     <div class="thing-item exclusive" data-group="cyoa" onclick="toggleExclusive(this,'cyoa')">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">🎲</span>
         <span class="thing-name">CYOA - R-Macro</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('cyoamacro')">👁</button>
         <textarea class="thing-source"><choice>
-#CYOA modifier: Renette takes on the double-role of the Game Master (GM) and sends a CYOA choice at the very end of her responses. 
+#CYOA modifier: Renette takes on the double-role of the Game Master (GM) and sends a CYOA choice at the very end of her responses.
 [Human will become the player who only help guide the PROTAGONIST at vital milestones/choices that leaves a conclusive impact]
-#Renette will always write {{user}} actions/dialogues/thoughts for Human, based on their choice. 
+#Renette will always write {{user}} actions/dialogues/thoughts for Human, based on their choice.
 ##CYOA Format:
 Present varied CYOA choices that Matter! Only for {{user}}! (maximum 4):
 - Include good, interesting, bad, evil, dark, pervy, wrong, and death routes.
 - Keep choices naturally distinct and different.
-- Choices determine {{user}}'s next actions, dialogues, emotions, and resulting outcomes. 
+- Choices determine {{user}}'s next actions, dialogues, emotions, and resulting outcomes.
 At the end of each response initiate CYOA for the PLAYER Human and {{user}} that is based on {{user}} perspective only. Which {{user}} will act on, advancing the time/world state significantly, wrapped with <cyoa> tag:
 <cyoa>
 1. - {Choice here} // no req
 2. - [DEX REQ 5] {Choice here} // DEX roll required
-3. - [Illithid] {Choice here} // option from class, item in possession, background, etc. 
+3. - [Illithid] {Choice here} // option from class, item in possession, background, etc.
 4. - [Illithid] [DEX REQ 7] {Choice here} // both
 </cyoa>
 
@@ -3809,13 +3047,13 @@ At the end of each response initiate CYOA for the PLAYER Human and {{user}} that
 Always use the corresponding difficulty chart below to assign proportionate difficulty  to skill checks, and create a proportionate outcome to that difficulty depending on {{user}}’s roll. Always perform these choices in the order that {{user}} chooses. Renette may perform one or more ability rolls if applicable to the scenario.
 
 Here is a Difficulty Value Chart to use in CYOA:
-Super easy: {{random: 1, 2, 3, 4, 5}}
-Easy: {{random: 6, 7, 8, 9}}
-Medium: {{random: 10, 11, 12}}
-Challenging: {{random: 13, 14, 15, 16, 17}}
-Impossible: {{random: 18, 19, 20}}
+Super easy: 5
+Easy: 7
+Medium: 12
+Challenging: 15
+Impossible: 19
 
-Example: If the choice should be easy and the value is 8, show the REQ value as 8 for that specific choice only. 
+Example: If the choice should be easy and the value is 8, show the REQ value as 8 for that specific choice only.
 <example>
 1. - [DEX REQ 5] {Choice here} // Easy
 1. - [DEX REQ 20] {Choice here} // Insanely Hard
@@ -3831,11 +3069,11 @@ SUCCESS/FAILURE or **CRITICAL SUCCESS/FAILURE!**
 </roll_result>
 
 Critical Results (Causes Ridiculously Exaggerated outcomes):
-- Natural 1: Always a critical failure regardless of modifiers 
+- Natural 1: Always a critical failure regardless of modifiers
 - Natural 20: Always a critical success regardless of modifiers
 
 [System: Make sure to remember to actually send CYOA choices at the end]
-[Renette: Okaay!] 
+[Renette: Okaay!]
 </choice></textarea>
     </div>
 
@@ -3845,41 +3083,40 @@ Critical Results (Causes Ridiculously Exaggerated outcomes):
         <span class="thing-name">CYOA - No R-Macro</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('cyoanomacro')">👁</button>
         <textarea class="thing-source"><choices>
-#CYOA modifier: Renette takes on the double-role of the Game Master (GM) and sends a CYOA choice at the very end of her responses. 
-#Human will become the player who only help guide the PROTAGONIST at vital milestones/choices that leaves a conclusive impact. 
-#Renette will always write {{user}} actions/dialogues/thoughts for Human, based on their choice. 
+#CYOA modifier: Renette takes on the double-role of the Game Master (GM) and sends a CYOA choice at the very end of her responses.
+#Human will become the player who only help guide the PROTAGONIST at vital milestones/choices that leaves a conclusive impact.
+#Renette will always write {{user}} actions/dialogues/thoughts for Human, based on their choice.
 ##CYOA Format:
 Present varied CYOA choices that Matter! Only for {{user}}! (maximum 4):
 - Include good, interesting, bad, evil, dark, pervy, wrong, and death routes.
 - Keep choices naturally distinct and different.
-- Choices determine {{user}}'s next actions, dialogues, emotions, and resulting outcomes. 
+- Choices determine {{user}}'s next actions, dialogues, emotions, and resulting outcomes.
 At the end of each response initiate CYOA for the PLAYER Human and {{user}} that is based on {{user}} perspective only. Which {{user}} will act on, advancing the time/world state significantly, wrapped with <cyoa> tag:
 <cyoa>
 1. - {Choice here}
 2. - {Choice here} // Fast plot advancement choice
-3. - ['Trait'] {Choice here} // option from trait, class, item in possession, background, etc. 
+3. - ['Trait'] {Choice here} // option from trait, class, item in possession, background, etc.
 4. - ['Trait'] {Choice here} // any
 </cyoa>
-[System: Make sure to remember to actually send CYOA choices at the end]
-[Renette: Okaay!] 
 </choices></textarea>
     </div>
-</div>
+</div> <!-- /things-grid CYOA -->
 
 <!-- Fancy UI -->
 <p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ Fancy UI <span style="color:var(--text-dim);font-weight:400;">(только один)</span></p>
 <div class="things-grid">
+
     <div class="thing-item exclusive" data-group="fancy" onclick="toggleExclusive(this,'fancy')">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">🥂</span>
         <span class="thing-name">Fancy UI</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('fancyfull')">👁</button>
-        <textarea class="thing-source">[Encapitulate Fancy UI in each and every response! Conceptualize High Quality UI-like Advance-CSS/HTML blocks of varying sizes with java, animations and other techniques(endless), for things like: 
+        <textarea class="thing-source">[Encapitulate Fancy UI in each and every response! Conceptualize High Quality UI-like Advance-CSS/HTML blocks of varying sizes with java, animations and other techniques(endless), for things like:
 LOCATIONAL Blocks, with name, an icon, unique CSS elements always with generated image. Possibly a brief vibe-like living explanation.  LOCATIONAL Blocks, appears only when the location changes!
 Thoughts, in the form of blocks. No large fonts!! Never use *asterisks* inside. Be sure to include the name of the person who owns the thoughts, use KAOMOJI's next to their name to show their mood.
 Object-based Visual Blocks, this could be an important item, document, interface, object or anything that stands-out from the environment.
 UI setting: adjust to suit mobile devices and remain READABLEly CONSISTENT, throughout while imbued with artistic flair.]
-You must always generate information about the day, date and year in the format: 
+You must always generate information about the day, date and year in the format:
 <span style='color:#a6b1e1;'>Время:</span> <span style='font-weight:bold;'> HH:mm </span>
       <span style='color:#a6b1e1;'>Дата:</span> <span style='font-weight:bold;'> EEE, dd MMM yyyy </span>
       <span style='color:#a6b1e1;'>Weather:</span> <span style='font-weight:bold;'> (Weather conditions) </span>.</textarea>
@@ -3890,11 +3127,11 @@ You must always generate information about the day, date and year in the format:
         <span class="thing-icon">🥂</span>
         <span class="thing-name">Только Основа</span>
         <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('fancybase')">👁</button>
-        <textarea class="thing-source">[Encapitulate Fancy UI in each and every response! Conceptualize High Quality UI-like Advance-CSS/HTML blocks of varying sizes with java, animations and other techniques(endless), for things like: 
+        <textarea class="thing-source">[Encapitulate Fancy UI in each and every response! Conceptualize High Quality UI-like Advance-CSS/HTML blocks of varying sizes with java, animations and other techniques(endless), for things like:
 LOCATIONAL Blocks, with name, an icon, unique CSS elements always with generated image. Possibly a brief vibe-like living explanation.  LOCATIONAL Blocks, appears only when the location changes!
 Object-based Visual Blocks, this could be an important item, document, interface, object or anything that stands-out from the environment.
 UI setting: adjust to suit mobile devices and remain READABLEly CONSISTENT, throughout while imbued with artistic flair.]
-You must always generate information about the day, date and year in the format: 
+You must always generate information about the day, date and year in the format:
 <span style='color:#a6b1e1;'>Время:</span> <span style='font-weight:bold;'> HH:mm </span>
       <span style='color:#a6b1e1;'>Дата:</span> <span style='font-weight:bold;'> EEE, dd MMM yyyy </span>
       <span style='color:#a6b1e1;'>Weather:</span> <span style='font-weight:bold;'> (Weather conditions) </span>.</textarea>
@@ -3908,11 +3145,12 @@ You must always generate information about the day, date and year in the format:
         <textarea class="thing-source">[Encapitulate Fancy UI in each and every response! Conceptualize High Quality UI-like Advance-CSS/HTML blocks of varying sizes with java, animations and other techniques(endless), for things like:
 Thoughts, in the form of blocks. No large fonts!! Never use *asterisks* inside. Be sure to include the name of the person who owns the thoughts, use KAOMOJI's next to their name to show their mood.</textarea>
     </div>
-</div>
+</div> 
 
 <!-- Комментарии -->
 <p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ Комментарии <span style="color:var(--text-dim);font-weight:400;">(только один)</span></p>
 <div class="things-grid">
+
     <div class="thing-item exclusive" data-group="comments" onclick="toggleExclusive(this,'comments')">
         <div class="thing-checkbox"></div>
         <span class="thing-icon">💬</span>
@@ -4003,217 +3241,17 @@ Comments template:
     </div>
 </div>
 
-<!-- Хроники -->
-<p style="color:var(--pink);font-weight:600;margin:1.5rem 0 0.5rem;">✧ Хроники <span style="color:var(--text-dim);font-weight:400;">(только один)</span></p>
-<div class="things-grid" style="margin-bottom:2rem;">
-    <div class="thing-item exclusive" data-group="chronicles" onclick="toggleExclusive(this,'chronicles')">
-        <div class="thing-checkbox"></div>
-        <span class="thing-icon">📜</span>
-        <span class="thing-name">Светлая Тема</span>
-        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('chronicleslight')">👁</button>
-        <textarea class="thing-source">[Chronicles]
-In the end of EVERY MESSAGE you MUST create a comprehensive world chronicle block:
-- INTEGRATE THE CHRONICLE: The chronicle must reflect recent events.
-- Use HTML/CSS for presentation.
-- Core Dimensions: max-width: 360px; font-size: 10px-14px;
-- Color Scheme: Use parchment-like colors (#f5f5dc, #faf0e6, #fff8dc) with dark brown/black text.
+</div></div></div>
 
-CHRONICLE STRUCTURE
-You must create HTML/CSS presentations containing:
-
-WORLD STATS PANEL:
-- Total Population & Distribution
-- Civilization Development Level (Stone Age → Space Age)
-- Faith Level & Religious Stability
-- Planetary Data (climate, resources, anomalies)
-
-CURRENT EVENTS FEED:
-- 3-5 news headlines about major world events
-- Format: "[Category] Headline" with brief context
-- Categories: WAR, DISCOVERY, DISASTER, INNOVATION, ROYAL, DIVINE, CULTURAL
-
-RELIGIOUS DEVELOPMENTS:
-- Changes in worship practices
-- New religious movements/schisms
-- Miracles/prophecies/omens observed
-- Temple constructions/destructions
-
-RECENT TRADITIONS
-- Emerging cultural practices
-- Dying traditions
-- Holiday establishments
-- Social changes
-
-HTML structure:
-<div style="background: #f5f5dc; border: 2px solid #8B4513; padding: 12px; max-width: 360px; font-family: serif; color: #2f1b0a;">
-  <div style="text-align: center; border-bottom: 1px solid #8B4513; margin-bottom: 8px;">
-    <strong>📜 CHRONICLE</strong><br>
-    <small>Era: [Current Age]</small>
-  </div>
-
-  <div style="margin-bottom: 10px;">
-    <strong>📊 State of the World:</strong><br>
-    • Population: [number] ([growth indicator])<br>
-    • Development: [development level]<br>
-    • Faith: [faith level]% ([trend indicator])<br>
-  </div>
-
-  <div style="margin-bottom: 10px;">
-    <strong>📰 Main events:</strong><br>
-    <div style="padding-left: 10px; border-left: 2px solid #d4a76a;">
-      [News items with icons and timestamps]
-    </div>
-  </div>
-
-  <div style="margin-bottom: 10px;">
-    <strong>🙏 Religious Trends:</strong><br>
-    [Religious developments]
-  </div>
-
-  <div>
-    <strong>🎭 Traditions:</strong><br>
-    [Cultural traditions]
-  </div>
-</div>.</textarea>
-    </div>
-
-    <div class="thing-item exclusive" data-group="chronicles" onclick="toggleExclusive(this,'chronicles')">
-        <div class="thing-checkbox"></div>
-        <span class="thing-icon">📜</span>
-        <span class="thing-name">Тёмная Тема</span>
-        <button class="thing-action-btn" onclick="event.stopPropagation();showThingDesc('chroniclesdark')">👁</button>
-        <textarea class="thing-source">[Chronicles]
-In the end of EVERY MESSAGE you MUST create a comprehensive world chronicle block in Russian.
-Dark theme: The entire background for the text in Chronicles block must be dark in color.
-- INTEGRATE THE CHRONICLE: The chronicle must reflect recent events.
-- Use HTML/CSS for presentation.
-- Core Dimensions: max-width: 360px; font-size: 10px-14px;
-- Color Scheme: Use color #271811 for background, and use #eddde2 for text.
-CHRONICLE STRUCTURE
-You must create HTML/CSS presentations containing:
-
-WORLD STATS PANEL:
-- Total Population & Distribution
-- Civilization Development Level (Stone Age → Space Age)
-- Faith Level & Religious Stability
-- Planetary Data (climate, resources, anomalies)
-
-CURRENT EVENTS FEED:
-- 3-5 news headlines about major world events
-- Format: "[Category] Headline" with brief context
-- Categories: WAR, DISCOVERY, DISASTER, INNOVATION, ROYAL, DIVINE, CULTURAL
-
-RELIGIOUS DEVELOPMENTS:
-- Changes in worship practices
-- New religious movements/schisms
-- Miracles/prophecies/omens observed
-- Temple constructions/destructions
-
-RECENT TRADITIONS:
-- Emerging cultural practices
-- Dying traditions
-- Holiday establishments
-- Social changes
-
-HTML structure:
-<div style="background: #f5f5dc; border: 2px solid #8B4513; padding: 12px; max-width: 360px; font-family: serif; color: #2f1b0a;">
-  <div style="text-align: center; border-bottom: 1px solid #8B4513; margin-bottom: 8px;">
-    <strong>📜 ЛЕТОПИСЬ МИРА</strong><br>
-    <small>Эпоха: [Current Age]</small>
-  </div>
-
-  <div style="margin-bottom: 10px;">
-    <strong>📊 Состояние Мира:</strong><br>
-    • Население: [number] ([growth indicator])<br>
-    • Развитие: [development level]<br>
-    • Вера: [faith level]% ([trend indicator])<br>
-  </div>
-
-  <div style="margin-bottom: 10px;">
-    <strong>📰 Главные События:</strong><br>
-    <div style="padding-left: 10px; border-left: 2px solid #d4a76a;">
-      [News items with icons and timestamps]
-    </div>
-  </div>
-
-  <div style="margin-bottom: 10px;">
-    <strong>🙏 Религиозные Веяния:</strong><br>
-    [Religious developments]
-  </div>
-
-  <div>
-    <strong>🎭 Традиции Народов:</strong><br>
-    [Cultural traditions]
-  </div>
-</div>.</textarea>
-    </div>
-</div>
-
-
-
-<!-- ═══ HTML THEME ═══ -->
-<div class="subsec">❝ html Theme</div>
-
-<!-- Тёмная тема -->
-<div class="prompt">
-    <div class="prompt-head" onclick="togglePrompt(this)">
-        <div class="prompt-name"><span class="tag tag-one">↔︎</span> 🎨 Тёмная тема</div>
-        <div class="prompt-meta">
-            <span class="prompt-default">★ Дефолт</span>
-            <button class="prompt-btn" onclick="event.stopPropagation();copyPrompt(this)">Копировать</button>
-        </div>
-<textarea class="prompt-source">[Always apply DARK THEME styling for all HTML visual renderings. Use backgrounds in deep shades of #0d0d0d–#1a1a1a range (matte blacks, charcoal, deep navy, dark gray gradients), with light text colors (#f5f5f5–#dcdcdc) and subtle accent hues (neon cyan, magenta, amber, violet) to enhance readability and aesthetic impact.]
-[Avoid pure white (#fff) or blinding highlights; instead, use off-white or light gray tones. Never use fully dark backgrounds.]</textarea>
-    </div>
-    <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Тёмная тема HTML блоков</div></div></div>
-</div>
-
-<!-- Светлая тема -->
-<div class="prompt">
-    <div class="prompt-head" onclick="togglePrompt(this)">
-        <div class="prompt-name"><span class="tag tag-one">↔︎</span> 🎨 Светлая тема</div>
-        <div class="prompt-meta">
-            <button class="prompt-btn" onclick="event.stopPropagation();copyPrompt(this)">Копировать</button>
-        </div>
-<textarea class="prompt-source">[Always apply LIGHT THEME styling for all HTML visual renderings. Use backgrounds in light shades of #fafafa–#f0f0f0 (off-white, parchment, soft gray, pastel gradients), with dark text colors (#1a1a1a–#333) and subtle accent hues (muted blue, amber, burgundy, emerald) to maintain visual depth and warmth.]
-[Avoid pure black (#000) or overly saturated colors; instead, use dark gray for text and softened tones for accents. Never use fully dark backgrounds.]</textarea>
-    </div>
-    <div class="prompt-body"><div class="prompt-inner"><div class="prompt-code">Светлая тема HTML блоков</div></div></div>
-</div>
-
-</div></div>
-</div>
-
-                <!-- ⑧ COT -->
-                <div class="cat" data-cat="extra">
-                    <div class="cat-head" onclick="toggleCat(this)">
-                        <div class="cat-info">
-                            <div class="cat-num gold">⑧</div>
-                            <div>
-                                <div class="cat-title">◜︎COT◞︎</div>
-                                <div class="cat-desc">Сегментированный Chain Of Thoughts (Думалка)</div>
-                            </div>
-                        </div>
-                        <span class="cat-arrow">▼</span>
-                    </div>
-                    <div class="cat-body"><div class="cat-inner">
-                        <div class="prompt">
-                            <div class="prompt-head" onclick="togglePrompt(this)">
-                                <div class="prompt-name"><span class="tag tag-one">✧</span> Нет дополнительных вариантов</div>
-
-                            </div>
-                            </div></div>
-                        </div>
-                    </div>
 
                 <!-- ⑨ Prefill -->
                 <div class="cat" data-cat="basic">
                     <div class="cat-head" onclick="toggleCat(this)">
                         <div class="cat-info">
-                            <div class="cat-num green">⑨</div>
+                            <div class="cat-num red">🍎</div>
                             <div>
-                                <div class="cat-title">◜︎prefill◞︎</div>
-                                <div class="cat-desc">Для Gemini/Claude (+GPT). DeepSeek — отключить!</div>
+                                <div class="cat-title">◜︎preparation◞︎</div>
+                                <div class="cat-desc">COT, prefill и прочее</div>
                             </div>
                         </div>
                         <span class="cat-arrow">▼</span>
@@ -4253,7 +3291,7 @@ HTML structure:
                             </div>
                             <div class="glossary-item">
                                 <div class="glossary-term">OOC</div>
-                                <div class="glossary-def"><p>Внеролевые комментарии</p>.<p>В них в моём пресете (да и в целом) можно давать указания по типу:</p>
+                                <div class="glossary-def"><p>Внеролевые комментарии.</p><p>В них в моём пресете (да и в целом) можно давать указания по типу:</p>
 									<p>[OOC: давай здесь сделаем такой поворот в сюжете:...]</p><p>То есть буквально как соролу пишешь предложения и обсуждения вне ролевой.</p></div>
                             </div>
                             <div class="glossary-item">
@@ -4509,9 +3547,10 @@ HTML structure:
                         <div class="thanks-list">
 							<span class="thanks-item"><a href="https://t.me/YablochnyAI" target="_blank">Я??</a></span>
 <span class="thanks-item"><a href="https://t.me/ah_ah_shino4ka" target="_blank">Шино</a></span>
+							<span class="thanks-item"><a href="https://t.me/t1avernbot" target="_blank">Настенька</a></span>
+							<span class="thanks-item"><a href="https://t.me/MoriNori_hi" target="_blank">Нори</a></span>
 <span class="thanks-item"><a href="https://t.me/loliluna_ai" target="_blank">Минти</a></span>
 <span class="thanks-item"><a href="https://t.me/dearfawwn" target="_blank">Фавн</a></span>
-<span class="thanks-item"><a href="https://t.me/t1avernbot" target="_blank">Настенька</a></span>
 <span class="thanks-item"><a href="https://t.me/pinacoladaST" target="_blank">Пина-колада</a></span>
 <span class="thanks-item"><a href="https://leafcanfly.neocities.org/presets" target="_blank">Leafcanfly</a></span>
 
